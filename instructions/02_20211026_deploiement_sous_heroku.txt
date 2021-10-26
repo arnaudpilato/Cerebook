@@ -1,0 +1,16 @@
+# Déploiement sous heroku
+
+1. Installez Heroku-CLI :
+  - https://devcenter.heroku.com/articles/heroku-cli#download-and-install
+
+2. Suivez le tutorial suivant :
+  - https://devcenter.heroku.com/articles/deploying-spring-boot-apps-to-heroku
+
+Avec les différences suivantes ;
+  - oubliez la partie sur la base de donnée pour l'instant
+  - utilisez le repository créé en 2 dans la partie "Creating a pring boot app"
+
+Pensez bien à créer une homepage "Hello world" de votre choix.
+
+Vérifiez sur internet que votre marche bien (et envoyez l'adresse à votre
+formateur)
