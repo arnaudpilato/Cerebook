@@ -17,6 +17,12 @@ settings suivantes :
 2. Mettez le dans votre clone du projet Github (le pom.xml doit être
 à la racine du repository) et pushez le sur github
 
+2.bis : dans le fichier DemoApplication, remplacer @SpringBootApplication par :
+@SpringBootApplication(exclude={DataSourceAutoConfiguration.class})
+
+Comme on n'a pas encore configuré de base de donnée, on doit dire à Spring
+de ne pas essayer de la lancer ...
+
 3. Sous github, ajouter l'intégration continue :
   - actions => setup workflow => java with maven
   (A priori il devrait être proposé rapidement si vous avez bien mis
