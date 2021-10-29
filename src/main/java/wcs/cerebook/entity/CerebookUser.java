@@ -6,16 +6,16 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
 @Entity
-public class User {
+public class CerebookUser {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer id;
     private String name;
 
-    public User() {
+    public CerebookUser() {
     }
 
-    public User(String name) {
+    public CerebookUser(String name) {
         this.name = name;
     }
 

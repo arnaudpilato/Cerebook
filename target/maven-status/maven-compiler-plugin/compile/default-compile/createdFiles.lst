@@ -1,4 +1,4 @@
-wcs/cerebook/entity/User.class
 wcs/cerebook/controller/UserController.class
-wcs/cerebook/repository/UserRepository.class
+wcs/cerebook/entity/CerebookUser.class
 wcs/cerebook/CerebookApplication.class
+wcs/cerebook/repository/UserRepository.class

@@ -1,9 +1,10 @@
 package wcs.cerebook.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import wcs.cerebook.entity.User;
+import wcs.cerebook.entity.CerebookUser;
 import wcs.cerebook.repository.UserRepository;
 
 import java.util.ArrayList;
@@ -14,28 +15,33 @@ public class UserController {
     @Autowired
     private UserRepository userRepository;
 
+    @GetMapping("/")
+    public String index() {
+        return "index";
+    }
+
     @RequestMapping("/create")
-    public User createUser(String name) {
-        User user = new User(name);
+    public CerebookUser createUser(String name) {
+        CerebookUser user = new CerebookUser(name);
 
         return userRepository.save(user);
     }
 
     @RequestMapping("/read")
-    public User getUser(Integer userId) {
+    public CerebookUser getUser(Integer userId) {
         return userRepository.findById(userId).get();
     }
 
     @RequestMapping("/readall")
-    public List <User> getAllUsers() {
-        List<User> cerebookPost = new ArrayList<>();
+    public List <CerebookUser> getAllUsers() {
+        List<CerebookUser> cerebookPost = new ArrayList<>();
         userRepository.findAll().forEach(cerebookPost::add);
         return cerebookPost;
     }
 
     @RequestMapping("/update")
-    public User updateUser(Integer userId, String name) {
-        User userToUpdate = userRepository.findById(userId).get();
+    public CerebookUser updateUser(Integer userId, String name) {
+        CerebookUser userToUpdate = userRepository.findById(userId).get();
         if (name != null) {
             userToUpdate.setName(name);
         }

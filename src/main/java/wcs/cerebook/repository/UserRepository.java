@@ -2,7 +2,9 @@ package wcs.cerebook.repository;
 
 
 import org.springframework.data.repository.CrudRepository;
-import wcs.cerebook.entity.User;
+import org.springframework.stereotype.Repository;
+import wcs.cerebook.entity.CerebookUser;
 
-public interface UserRepository extends CrudRepository<User, Integer> {
+@Repository
+public interface UserRepository extends CrudRepository<CerebookUser, Integer> {
 }
