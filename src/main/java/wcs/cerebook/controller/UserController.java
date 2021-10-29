@@ -6,12 +6,13 @@ import org.springframework.web.bind.annotation.RestController;
 import wcs.cerebook.entity.User;
 import wcs.cerebook.repository.UserRepository;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @RestController
 public class UserController {
     @Autowired
-    UserRepository userRepository;
+    private UserRepository userRepository;
 
     @RequestMapping("/create")
     public User createUser(String name) {
@@ -21,17 +22,19 @@ public class UserController {
     }
 
     @RequestMapping("/read")
-    public User getUser(Long userId) {
+    public User getUser(Integer userId) {
         return userRepository.findById(userId).get();
     }
 
     @RequestMapping("/readall")
     public List <User> getAllUsers() {
-        return userRepository.findAll();
+        List<User> cerebookPost = new ArrayList<>();
+        userRepository.findAll().forEach(cerebookPost::add);
+        return cerebookPost;
     }
 
     @RequestMapping("/update")
-    public User updateUser(Long userId, String name) {
+    public User updateUser(Integer userId, String name) {
         User userToUpdate = userRepository.findById(userId).get();
         if (name != null) {
             userToUpdate.setName(name);
@@ -41,7 +44,7 @@ public class UserController {
     }
 
     @RequestMapping("/delete")
-    public void deleteUser(Long userId) {
+    public void deleteUser(Integer userId) {
        userRepository.deleteById(userId);
     }
 }
