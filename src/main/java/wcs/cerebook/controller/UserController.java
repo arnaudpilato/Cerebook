@@ -12,7 +12,7 @@ import java.util.List;
 
 @RestController
 public class UserController {
-    @Autowired
+    /*@Autowired
     private UserRepository userRepository;
 
     @GetMapping("/")
@@ -52,5 +52,5 @@ public class UserController {
     @RequestMapping("/delete")
     public void deleteUser(Integer userId) {
        userRepository.deleteById(userId);
-    }
+    }*/
 }
