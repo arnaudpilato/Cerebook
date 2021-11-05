@@ -8,6 +8,8 @@ import wcs.cerebook.entity.CerebookUser;
 
 import javax.transaction.Transactional;
 
+import java.util.Date;
+
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -24,22 +26,21 @@ class UserRepositoryTest {
     }
 
     @Test
-    public void findByName() {
-        assertNull(userRepository.findByName("Darth Vador"));
+    public void findByNickName() {
+        assertNull(userRepository.findByNickName("Darth Vador"));
         assertEquals("Wolverine",
-                userRepository.findByName("Wolverine").getName());
+                userRepository.findByNickName("Wolverine").getNickName());
     }
 
     @Test
     public void save() {
         assertEquals(1, userRepository.count());
-        assertThat(userRepository.findByName("Cyclope")).isNull();
+        assertThat(userRepository.findByNickName("Cyclope")).isNull();
 
-        userRepository.save(new CerebookUser(
-                "Cyclope"));
+        userRepository.save(new CerebookUser("Cyclope", "Michel", "Mipoivre", "Paris", "rue des goelans", "roger@gmail.com", "12345", new Date(21,2,2021)));
 
-        assertThat(userRepository.findByName("Cyclope")).isNotNull();
+        assertThat(userRepository.findByNickName("Cyclope")).isNotNull();
         assertEquals("Cyclope",
-                userRepository.findByName("Cyclope").getName());
+                userRepository.findByNickName("Cyclope").getNickName());
     }
 }
