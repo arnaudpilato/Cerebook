@@ -5,6 +5,6 @@ import org.springframework.stereotype.Repository;
 import wcs.cerebook.entity.CerebookUser;
 
 @Repository
-public interface UserRepository extends JpaRepository<CerebookUser, Integer> {
-    CerebookUser findByName(String name);
+public interface UserRepository extends JpaRepository<CerebookUser, Long> {
+    CerebookUser findByNickName(String nickName);
 }
