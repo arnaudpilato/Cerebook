@@ -9,7 +9,7 @@ import java.util.Date;
 @Entity
 public class CerebookUser {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String nickName;
     private String firstName;
