@@ -1,0 +1,164 @@
+@startuml
+!pragma layout smetana
+!theme crt-green
+
+entity user {
+   id
+   firstname
+   lastname
+   city
+   address
+   email
+   password
+   birthday
+
+   message_id
+   post_id
+   comment_id
+   friend_id
+   profil_id
+}
+
+entity profil {
+   activity
+   interestedInWoman
+   interestedInMen
+   hometown
+   relationship
+   religious
+}
+
+entity cartography {
+   id
+   int x
+   int y
+
+   user_id
+}
+
+entity message {
+   id
+   message
+}
+
+entity video {
+   id
+   movie
+}
+
+entity movie {
+   movie
+}
+
+entity event {
+   id
+   title
+   start
+   end
+   location
+   street
+   city
+   phone
+   email
+   image
+   description
+   host
+}
+
+entity role {
+   id
+   role
+
+   user_id
+}
+
+entity post {
+  date
+   id
+   createdAt
+   boolean private
+}
+
+entity picture {
+   id
+   picture
+}
+
+entity comment {
+   id
+   comment
+   date
+}
+
+entity friend {
+   id
+   friend
+}
+
+entity job {
+   employer
+   position
+   city
+   state
+   country
+   startMounth
+   startYear
+
+   user_id
+}
+
+user "1.n" -- "1.1" cartography
+user "1.1" -- "1.n" message
+user "1.n" -- "1.m" event
+user "1.n" -- "1.1" role
+user "1.1" -- "1.n" post
+user "1.m" -- "1.n" picture
+user "1.1" -- "1.n" comment
+user "1.1" -- "1.n" friend
+user "1.n" -- "1.1" job
+user "1.n" -- "1.m" movie
+user "1.1" -- "1.1" profil
+
+post "1.n" -- "1.n" movie
+post "1.1" -- "1.1" message
+post "1.m" -- "1.n" picture
+
+event "1.n" -- "1.1" picture
+
+(user, video) .. user_video
+(user, event) .. user_event
+(user, picture) .. user_picture
+(post, video) .. post_video
+(post, picture) .. post_picture
+(user, movie) .. user_movie
+
+class user_video {
+   user_id
+   video_id
+}
+
+class user_event {
+   user_id
+   event_id
+}
+
+class user_picture {
+   user_id
+   picture_id
+}
+
+class post_video {
+   post_id
+   video_id
+}
+
+class post_picture {
+   post_id
+   picture_id
+}
+
+class user_movie {
+   user_id
+   movie_id
+}
+@enduml
