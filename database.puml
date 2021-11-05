@@ -4,8 +4,9 @@
 
 entity user {
    id
-   firstname
-   lastname
+   nickName
+   firstName
+   lastName
    city
    address
    email
@@ -20,12 +21,13 @@ entity user {
 }
 
 entity profil {
+   id
    activity
-   interestedInWoman
-   interestedInMen
+   avatar
+   isInterestedInWoman
+   isInterestedInMen
    hometown
    relationship
-   religious
 }
 
 entity cartography {
@@ -43,26 +45,26 @@ entity message {
 
 entity video {
    id
-   movie
+   pathVideo
 }
 
 entity movie {
-   movie
+   id
+   title
+   pathMovie
 }
 
 entity event {
    id
    title
-   start
-   end
-   location
-   street
+   startEvent
+   endEvent
+   address
    city
    phone
    email
    image
    description
-   host
 }
 
 entity role {
@@ -73,35 +75,31 @@ entity role {
 }
 
 entity post {
-  date
    id
    createdAt
-   boolean private
+   content
+   isPrivatePost
 }
 
 entity picture {
    id
-   picture
+   picturePath
 }
 
 entity comment {
    id
    comment
-   date
+   createdAt
 }
 
 entity friend {
    id
-   friend
 }
 
 entity job {
+id
    employer
-   position
    city
-   state
-   country
-   startMounth
    startYear
 
    user_id

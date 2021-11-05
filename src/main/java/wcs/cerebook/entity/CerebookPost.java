@@ -13,7 +13,7 @@ public class CerebookPost {
     private Long id;
     private Date createdAt;
     private String content;
-    private boolean idPrivatePost;
+    private boolean isPrivatePost;
 
     public CerebookPost() {
     }
