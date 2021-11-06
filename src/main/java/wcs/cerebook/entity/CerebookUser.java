@@ -23,6 +23,17 @@ public class CerebookUser {
     public CerebookUser() {
     }
 
+    public CerebookUser(String nickName, String firstName, String lastName, String city, String address, String email, String password, Date birthday) {
+        this.nickName = nickName;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.city = city;
+        this.address = address;
+        this.email = email;
+        this.password = password;
+        this.birthday = birthday;
+    }
+
     public Long getId() {
         return id;
     }

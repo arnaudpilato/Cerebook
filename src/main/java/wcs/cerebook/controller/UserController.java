@@ -8,27 +8,26 @@ import wcs.cerebook.entity.CerebookUser;
 import wcs.cerebook.repository.UserRepository;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 @RestController
 public class UserController {
-    /*@Autowired
+    @Autowired
     private UserRepository userRepository;
-
     @GetMapping("/")
     public String index() {
         return "index";
     }
 
     @RequestMapping("/create")
-    public CerebookUser createUser(String name) {
-        CerebookUser user = new CerebookUser(name);
-
+    public CerebookUser createUser(String nickName, String firstName, String lastName, String city, String address, String email, String password, Date birthday) {
+        CerebookUser user = new CerebookUser(nickName, firstName, lastName, city, address, email, password, birthday);
         return userRepository.save(user);
     }
 
     @RequestMapping("/read")
-    public CerebookUser getUser(Integer userId) {
+    public CerebookUser getUser(Long userId) {
         return userRepository.findById(userId).get();
     }
 
@@ -40,17 +39,21 @@ public class UserController {
     }
 
     @RequestMapping("/update")
-    public CerebookUser updateUser(Integer userId, String name) {
+    public CerebookUser updateUser(Long userId, String nickName, String firstName, String lastName, String city, String address, String email, String password, Date birthday) {
         CerebookUser userToUpdate = userRepository.findById(userId).get();
-        if (name != null) {
-            userToUpdate.setName(name);
+        if (userId != null) {
+            userToUpdate.setNickName(nickName);
+            userToUpdate.setFirstName(firstName);
+            userToUpdate.setLastName(lastName);
+            userToUpdate.setCity(city);
+            userToUpdate.setAddress(address);
+            userToUpdate.setPassword(password);
+            userToUpdate.setBirthday(birthday);
         }
-
         return userRepository.save(userToUpdate);
     }
-
     @RequestMapping("/delete")
-    public void deleteUser(Integer userId) {
+    public void deleteUser(Long userId) {
        userRepository.deleteById(userId);
-    }*/
+    }
 }
