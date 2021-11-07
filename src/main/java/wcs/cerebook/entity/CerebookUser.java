@@ -1,9 +1,6 @@
 package wcs.cerebook.entity;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.util.Date;
 
 @Entity
@@ -19,6 +16,16 @@ public class CerebookUser {
     private String email;
     private String password;
     private Date birthday;
+@ManyToOne
+    private CerebookPost post;
+
+    public CerebookPost getPost() {
+        return post;
+    }
+
+    public void setPost(CerebookPost post) {
+        this.post = post;
+    }
 
     public CerebookUser() {
     }

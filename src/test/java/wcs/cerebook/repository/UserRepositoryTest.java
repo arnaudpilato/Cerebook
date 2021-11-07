@@ -1,5 +1,6 @@
 package wcs.cerebook.repository;
 
+
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -20,7 +21,7 @@ class UserRepositoryTest {
     @Autowired
     private UserRepository userRepository;
 
-    @Test
+   /* @Test
     public void essai() {
         assertEquals(1, 1);
     }
@@ -42,5 +43,5 @@ class UserRepositoryTest {
         assertThat(userRepository.findByNickName("Cyclope")).isNotNull();
         assertEquals("Cyclope",
                 userRepository.findByNickName("Cyclope").getNickName());
-    }
+    }*/
 }

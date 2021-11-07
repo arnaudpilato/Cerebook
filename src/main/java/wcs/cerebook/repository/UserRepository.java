@@ -6,5 +6,5 @@ import wcs.cerebook.entity.CerebookUser;
 
 @Repository
 public interface UserRepository extends JpaRepository<CerebookUser, Long> {
-    CerebookUser findByNickName(String nickName);
+
 }
