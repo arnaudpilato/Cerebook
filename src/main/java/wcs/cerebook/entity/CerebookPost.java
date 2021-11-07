@@ -13,8 +13,16 @@ public class CerebookPost {
     private Date createdAt;
     private String content;
     private boolean isPrivatePost;
-    @OneToMany(mappedBy ="post")
-    private List<CerebookUser> cerebookUsers = new ArrayList<CerebookUser>();
+    @ManyToOne(fetch = FetchType.LAZY)
+    private CerebookUser cerebookUser;
+
+    public CerebookUser getCerebookUser() {
+        return cerebookUser;
+    }
+
+    public void setCerebookUser(CerebookUser cerebookUser) {
+        this.cerebookUser = cerebookUser;
+    }
 
     public Long getId() {
         return id;
@@ -51,11 +59,4 @@ public class CerebookPost {
     public CerebookPost() {
     }
 
-    public CerebookPost(Long id, Date createdAt, String content, boolean isPrivatePost, List<CerebookUser> cerebookUsers) {
-        this.id = id;
-        this.createdAt = createdAt;
-        this.content = content;
-        this.isPrivatePost = isPrivatePost;
-        this.cerebookUsers = cerebookUsers;
-    }
 }

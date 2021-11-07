@@ -22,7 +22,7 @@ public class UserController {
 
     @RequestMapping("/create")
     public CerebookUser createUser(String nickName, String firstName, String lastName, String city, String address, String email, String password, Date birthday) {
-        CerebookUser user = new CerebookUser(nickName, firstName, lastName, city, address, email, password, birthday);
+        CerebookUser user = new CerebookUser();
         return userRepository.save(user);
     }
 

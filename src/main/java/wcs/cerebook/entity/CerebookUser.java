@@ -1,7 +1,9 @@
 package wcs.cerebook.entity;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 @Entity
 public class CerebookUser {
@@ -16,29 +18,23 @@ public class CerebookUser {
     private String email;
     private String password;
     private Date birthday;
-@ManyToOne
-    private CerebookPost post;
+    @OneToMany(
+            mappedBy = "cerebookUser",
+            cascade = CascadeType.ALL,
+            orphanRemoval = true
+    )
 
-    public CerebookPost getPost() {
-        return post;
-    }
-
-    public void setPost(CerebookPost post) {
-        this.post = post;
-    }
+    private List<CerebookPost> cerebookPosts = new ArrayList();
 
     public CerebookUser() {
     }
 
-    public CerebookUser(String nickName, String firstName, String lastName, String city, String address, String email, String password, Date birthday) {
-        this.nickName = nickName;
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.city = city;
-        this.address = address;
-        this.email = email;
-        this.password = password;
-        this.birthday = birthday;
+    public List<CerebookPost> getCerebookPosts() {
+        return cerebookPosts;
+    }
+
+    public void setCerebookPosts(List<CerebookPost> cerebookPosts) {
+        this.cerebookPosts = cerebookPosts;
     }
 
     public Long getId() {

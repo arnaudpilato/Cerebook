@@ -1,5 +1,7 @@
 package wcs.cerebook.controller;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -10,15 +12,10 @@ import wcs.cerebook.repository.PostRepository;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-@RestController
+@Controller
 public class PostController {
     @Autowired
     private PostRepository repository;
-    @GetMapping("/")
-    public String index() {
-        return "index";
-    }
-
     @RequestMapping("/createPost")
     public CerebookPost createPost(Date createdAt,String content,Boolean isPrivatePost) {
         CerebookPost post = new CerebookPost();
@@ -30,11 +27,13 @@ public class PostController {
         return repository.findById(postId).get();
     }
 
-    @RequestMapping("/readallPost")
-    public List <CerebookPost> getAllPosts() {
-        List<CerebookPost> cerebookPost = new ArrayList<>();
-        repository.findAll().forEach(cerebookPost::add);
-        return cerebookPost;
+    @RequestMapping("/posts")
+    public String getAllPosts(Model model) {
+        List<CerebookPost> cerebookPosts = repository.findAll();
+
+        model.addAttribute("listPosts",cerebookPosts);
+
+        return "posts";
     }
 
     @RequestMapping("/updatePost")
