@@ -1,10 +1,8 @@
 package wcs.cerebook.entity;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.util.Date;
+import java.util.List;
 
 @Entity
 public class CerebookUser {
@@ -19,7 +17,9 @@ public class CerebookUser {
     private String email;
     private String password;
     private Date birthday;
-
+    @OneToMany(mappedBy = "currentUser")
+    private List<CerebookMessage> messages;
+    
     public CerebookUser() {
     }
 
@@ -33,7 +33,7 @@ public class CerebookUser {
         this.password = password;
         this.birthday = birthday;
     }
-
+    
     public Long getId() {
         return id;
     }
@@ -105,4 +105,13 @@ public class CerebookUser {
     public void setBirthday(Date birthday) {
         this.birthday = birthday;
     }
+   
+    public List<CerebookMessage> getMessages() {
+        return messages;
+    }
+
+    public void setMessages(List<CerebookMessage> messages) {
+        this.messages = messages;
+    }
 }
+    

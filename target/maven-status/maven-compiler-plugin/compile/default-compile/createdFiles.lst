@@ -7,6 +7,7 @@ wcs/cerebook/entity/CerebookMessage.class
 wcs/cerebook/repository/JobRepository.class
 wcs/cerebook/repository/RoleRepository.class
 wcs/cerebook/repository/ProfilRepository.class
+wcs/cerebook/controller/MessagingController.class
 wcs/cerebook/repository/FriendRepository.class
 wcs/cerebook/repository/CommentRepository.class
 wcs/cerebook/repository/UserRepository.class
