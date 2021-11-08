@@ -1,34 +1,49 @@
 -------------------------------------------------------------------------------
 Test set: wcs.cerebook.repository.UserRepositoryTest
 -------------------------------------------------------------------------------
-Tests run: 2, Failures: 0, Errors: 2, Skipped: 0, Time elapsed: 4.244 s <<< FAILURE! - in wcs.cerebook.repository.UserRepositoryTest
-findByName  Time elapsed: 0.001 s  <<< ERROR!
+Tests run: 3, Failures: 0, Errors: 3, Skipped: 0, Time elapsed: 8.941 s <<< FAILURE! - in wcs.cerebook.repository.UserRepositoryTest
+save  Time elapsed: 0.002 s  <<< ERROR!
 java.lang.IllegalStateException: Failed to load ApplicationContext
 Caused by: org.springframework.beans.factory.BeanCreationException: 
-Error creating bean with name 'dataSourceScriptDatabaseInitializer' defined in class path resource [org/springframework/boot/autoconfigure/sql/init/DataSourceInitializationConfiguration.class]: Invocation of init method failed; nested exception is org.springframework.jdbc.datasource.init.ScriptStatementFailedException: Failed to execute SQL script statement #1 of URL [file:/Users/pil/IdeaProjects/Cerebook/target/classes/data.sql]: INSERT INTO cerebook_user(id, name) VALUES (nextval ('hibernate sequence'), 'Wolverine'); nested exception is org.h2.jdbc.JdbcSQLSyntaxErrorException: Séquence "HIBERNATE SEQUENCE" non trouvée
-Sequence "HIBERNATE SEQUENCE" not found; SQL statement:
-INSERT INTO cerebook_user(id, name) VALUES (nextval ('hibernate sequence'), 'Wolverine') -- (NEXTVAL('hibernate sequence'), 'Wolverine') [90036-200]
+Error creating bean with name 'dataSourceScriptDatabaseInitializer' defined in class path resource [org/springframework/boot/autoconfigure/sql/init/DataSourceInitializationConfiguration.class]: Invocation of init method failed; nested exception is org.springframework.jdbc.datasource.init.ScriptStatementFailedException: Failed to execute SQL script statement #1 of URL [file:/home/zizou/Bureau/Wild/Projets/Cerebook/target/classes/data.sql]: INSERT INTO cerebook_user(id, nickName, firstName, lastName, city, address, email, password, birthday) VALUES (nextval ('hibernate_sequence'), 'Wolverine', 'Michel', 'Mipoivre', 'Tanbougtou', 'michelmipoivre', 'rrrr', 'dfdfdfdf', '11/3/2021'); nested exception is org.h2.jdbc.JdbcSQLSyntaxErrorException: Colonne "NICKNAME" non trouvée
+Column "NICKNAME" not found; SQL statement:
+INSERT INTO cerebook_user(id, nickName, firstName, lastName, city, address, email, password, birthday) VALUES (nextval ('hibernate_sequence'), 'Wolverine', 'Michel', 'Mipoivre', 'Tanbougtou', 'michelmipoivre', 'rrrr', 'dfdfdfdf', '11/3/2021') [42122-200]
 Caused by: org.springframework.jdbc.datasource.init.ScriptStatementFailedException: 
-Failed to execute SQL script statement #1 of URL [file:/Users/pil/IdeaProjects/Cerebook/target/classes/data.sql]: INSERT INTO cerebook_user(id, name) VALUES (nextval ('hibernate sequence'), 'Wolverine'); nested exception is org.h2.jdbc.JdbcSQLSyntaxErrorException: Séquence "HIBERNATE SEQUENCE" non trouvée
-Sequence "HIBERNATE SEQUENCE" not found; SQL statement:
-INSERT INTO cerebook_user(id, name) VALUES (nextval ('hibernate sequence'), 'Wolverine') -- (NEXTVAL('hibernate sequence'), 'Wolverine') [90036-200]
+Failed to execute SQL script statement #1 of URL [file:/home/zizou/Bureau/Wild/Projets/Cerebook/target/classes/data.sql]: INSERT INTO cerebook_user(id, nickName, firstName, lastName, city, address, email, password, birthday) VALUES (nextval ('hibernate_sequence'), 'Wolverine', 'Michel', 'Mipoivre', 'Tanbougtou', 'michelmipoivre', 'rrrr', 'dfdfdfdf', '11/3/2021'); nested exception is org.h2.jdbc.JdbcSQLSyntaxErrorException: Colonne "NICKNAME" non trouvée
+Column "NICKNAME" not found; SQL statement:
+INSERT INTO cerebook_user(id, nickName, firstName, lastName, city, address, email, password, birthday) VALUES (nextval ('hibernate_sequence'), 'Wolverine', 'Michel', 'Mipoivre', 'Tanbougtou', 'michelmipoivre', 'rrrr', 'dfdfdfdf', '11/3/2021') [42122-200]
 Caused by: org.h2.jdbc.JdbcSQLSyntaxErrorException: 
-Séquence "HIBERNATE SEQUENCE" non trouvée
-Sequence "HIBERNATE SEQUENCE" not found; SQL statement:
-INSERT INTO cerebook_user(id, name) VALUES (nextval ('hibernate sequence'), 'Wolverine') -- (NEXTVAL('hibernate sequence'), 'Wolverine') [90036-200]
+Colonne "NICKNAME" non trouvée
+Column "NICKNAME" not found; SQL statement:
+INSERT INTO cerebook_user(id, nickName, firstName, lastName, city, address, email, password, birthday) VALUES (nextval ('hibernate_sequence'), 'Wolverine', 'Michel', 'Mipoivre', 'Tanbougtou', 'michelmipoivre', 'rrrr', 'dfdfdfdf', '11/3/2021') [42122-200]
 
-save  Time elapsed: 0 s  <<< ERROR!
+essai  Time elapsed: 0 s  <<< ERROR!
 java.lang.IllegalStateException: Failed to load ApplicationContext
 Caused by: org.springframework.beans.factory.BeanCreationException: 
-Error creating bean with name 'dataSourceScriptDatabaseInitializer' defined in class path resource [org/springframework/boot/autoconfigure/sql/init/DataSourceInitializationConfiguration.class]: Invocation of init method failed; nested exception is org.springframework.jdbc.datasource.init.ScriptStatementFailedException: Failed to execute SQL script statement #1 of URL [file:/Users/pil/IdeaProjects/Cerebook/target/classes/data.sql]: INSERT INTO cerebook_user(id, name) VALUES (nextval ('hibernate sequence'), 'Wolverine'); nested exception is org.h2.jdbc.JdbcSQLSyntaxErrorException: Séquence "HIBERNATE SEQUENCE" non trouvée
-Sequence "HIBERNATE SEQUENCE" not found; SQL statement:
-INSERT INTO cerebook_user(id, name) VALUES (nextval ('hibernate sequence'), 'Wolverine') -- (NEXTVAL('hibernate sequence'), 'Wolverine') [90036-200]
+Error creating bean with name 'dataSourceScriptDatabaseInitializer' defined in class path resource [org/springframework/boot/autoconfigure/sql/init/DataSourceInitializationConfiguration.class]: Invocation of init method failed; nested exception is org.springframework.jdbc.datasource.init.ScriptStatementFailedException: Failed to execute SQL script statement #1 of URL [file:/home/zizou/Bureau/Wild/Projets/Cerebook/target/classes/data.sql]: INSERT INTO cerebook_user(id, nickName, firstName, lastName, city, address, email, password, birthday) VALUES (nextval ('hibernate_sequence'), 'Wolverine', 'Michel', 'Mipoivre', 'Tanbougtou', 'michelmipoivre', 'rrrr', 'dfdfdfdf', '11/3/2021'); nested exception is org.h2.jdbc.JdbcSQLSyntaxErrorException: Colonne "NICKNAME" non trouvée
+Column "NICKNAME" not found; SQL statement:
+INSERT INTO cerebook_user(id, nickName, firstName, lastName, city, address, email, password, birthday) VALUES (nextval ('hibernate_sequence'), 'Wolverine', 'Michel', 'Mipoivre', 'Tanbougtou', 'michelmipoivre', 'rrrr', 'dfdfdfdf', '11/3/2021') [42122-200]
 Caused by: org.springframework.jdbc.datasource.init.ScriptStatementFailedException: 
-Failed to execute SQL script statement #1 of URL [file:/Users/pil/IdeaProjects/Cerebook/target/classes/data.sql]: INSERT INTO cerebook_user(id, name) VALUES (nextval ('hibernate sequence'), 'Wolverine'); nested exception is org.h2.jdbc.JdbcSQLSyntaxErrorException: Séquence "HIBERNATE SEQUENCE" non trouvée
-Sequence "HIBERNATE SEQUENCE" not found; SQL statement:
-INSERT INTO cerebook_user(id, name) VALUES (nextval ('hibernate sequence'), 'Wolverine') -- (NEXTVAL('hibernate sequence'), 'Wolverine') [90036-200]
+Failed to execute SQL script statement #1 of URL [file:/home/zizou/Bureau/Wild/Projets/Cerebook/target/classes/data.sql]: INSERT INTO cerebook_user(id, nickName, firstName, lastName, city, address, email, password, birthday) VALUES (nextval ('hibernate_sequence'), 'Wolverine', 'Michel', 'Mipoivre', 'Tanbougtou', 'michelmipoivre', 'rrrr', 'dfdfdfdf', '11/3/2021'); nested exception is org.h2.jdbc.JdbcSQLSyntaxErrorException: Colonne "NICKNAME" non trouvée
+Column "NICKNAME" not found; SQL statement:
+INSERT INTO cerebook_user(id, nickName, firstName, lastName, city, address, email, password, birthday) VALUES (nextval ('hibernate_sequence'), 'Wolverine', 'Michel', 'Mipoivre', 'Tanbougtou', 'michelmipoivre', 'rrrr', 'dfdfdfdf', '11/3/2021') [42122-200]
 Caused by: org.h2.jdbc.JdbcSQLSyntaxErrorException: 
-Séquence "HIBERNATE SEQUENCE" non trouvée
-Sequence "HIBERNATE SEQUENCE" not found; SQL statement:
-INSERT INTO cerebook_user(id, name) VALUES (nextval ('hibernate sequence'), 'Wolverine') -- (NEXTVAL('hibernate sequence'), 'Wolverine') [90036-200]
+Colonne "NICKNAME" non trouvée
+Column "NICKNAME" not found; SQL statement:
+INSERT INTO cerebook_user(id, nickName, firstName, lastName, city, address, email, password, birthday) VALUES (nextval ('hibernate_sequence'), 'Wolverine', 'Michel', 'Mipoivre', 'Tanbougtou', 'michelmipoivre', 'rrrr', 'dfdfdfdf', '11/3/2021') [42122-200]
+
+findByNickName  Time elapsed: 0 s  <<< ERROR!
+java.lang.IllegalStateException: Failed to load ApplicationContext
+Caused by: org.springframework.beans.factory.BeanCreationException: 
+Error creating bean with name 'dataSourceScriptDatabaseInitializer' defined in class path resource [org/springframework/boot/autoconfigure/sql/init/DataSourceInitializationConfiguration.class]: Invocation of init method failed; nested exception is org.springframework.jdbc.datasource.init.ScriptStatementFailedException: Failed to execute SQL script statement #1 of URL [file:/home/zizou/Bureau/Wild/Projets/Cerebook/target/classes/data.sql]: INSERT INTO cerebook_user(id, nickName, firstName, lastName, city, address, email, password, birthday) VALUES (nextval ('hibernate_sequence'), 'Wolverine', 'Michel', 'Mipoivre', 'Tanbougtou', 'michelmipoivre', 'rrrr', 'dfdfdfdf', '11/3/2021'); nested exception is org.h2.jdbc.JdbcSQLSyntaxErrorException: Colonne "NICKNAME" non trouvée
+Column "NICKNAME" not found; SQL statement:
+INSERT INTO cerebook_user(id, nickName, firstName, lastName, city, address, email, password, birthday) VALUES (nextval ('hibernate_sequence'), 'Wolverine', 'Michel', 'Mipoivre', 'Tanbougtou', 'michelmipoivre', 'rrrr', 'dfdfdfdf', '11/3/2021') [42122-200]
+Caused by: org.springframework.jdbc.datasource.init.ScriptStatementFailedException: 
+Failed to execute SQL script statement #1 of URL [file:/home/zizou/Bureau/Wild/Projets/Cerebook/target/classes/data.sql]: INSERT INTO cerebook_user(id, nickName, firstName, lastName, city, address, email, password, birthday) VALUES (nextval ('hibernate_sequence'), 'Wolverine', 'Michel', 'Mipoivre', 'Tanbougtou', 'michelmipoivre', 'rrrr', 'dfdfdfdf', '11/3/2021'); nested exception is org.h2.jdbc.JdbcSQLSyntaxErrorException: Colonne "NICKNAME" non trouvée
+Column "NICKNAME" not found; SQL statement:
+INSERT INTO cerebook_user(id, nickName, firstName, lastName, city, address, email, password, birthday) VALUES (nextval ('hibernate_sequence'), 'Wolverine', 'Michel', 'Mipoivre', 'Tanbougtou', 'michelmipoivre', 'rrrr', 'dfdfdfdf', '11/3/2021') [42122-200]
+Caused by: org.h2.jdbc.JdbcSQLSyntaxErrorException: 
+Colonne "NICKNAME" non trouvée
+Column "NICKNAME" not found; SQL statement:
+INSERT INTO cerebook_user(id, nickName, firstName, lastName, city, address, email, password, birthday) VALUES (nextval ('hibernate_sequence'), 'Wolverine', 'Michel', 'Mipoivre', 'Tanbougtou', 'michelmipoivre', 'rrrr', 'dfdfdfdf', '11/3/2021') [42122-200]
 
