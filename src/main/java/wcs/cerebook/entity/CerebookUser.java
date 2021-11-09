@@ -23,7 +23,8 @@ public class CerebookUser {
     public CerebookUser() {
     }
 
-    public CerebookUser(String nickName, String firstName, String lastName, String city, String address, String email, String password, Date birthday) {
+    public CerebookUser(String nickName, String firstName, String lastName, String city, String address, String email,
+                        String password, Date birthday) {
         this.nickName = nickName;
         this.firstName = firstName;
         this.lastName = lastName;
