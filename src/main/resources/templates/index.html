@@ -7,8 +7,6 @@
         <link href="/static/css/style.css" rel="stylesheet" />
     </head>
 <body>
-
-
     <header th:replace="/fragments/header.html :: top"></header>
     <h1 th:inline="text">Welcome [[${#httpServletRequest.remoteUser}]]</h1>
     <a href="/user">Creer un user</a>
