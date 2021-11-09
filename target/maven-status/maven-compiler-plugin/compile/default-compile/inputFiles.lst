@@ -1,9 +1,11 @@
 /home/wilder/eclipse-workspace/Cerebook/src/main/java/wcs/cerebook/entity/CerebookProfil.java
+/home/wilder/eclipse-workspace/Cerebook/src/main/java/wcs/cerebook/services/CerebookUserDetailsService.java
 /home/wilder/eclipse-workspace/Cerebook/src/main/java/wcs/cerebook/entity/CerebookMessage.java
 /home/wilder/eclipse-workspace/Cerebook/src/main/java/wcs/cerebook/entity/CerebookJob.java
 /home/wilder/eclipse-workspace/Cerebook/src/main/java/wcs/cerebook/entity/CerebookUser.java
 /home/wilder/eclipse-workspace/Cerebook/src/main/java/wcs/cerebook/entity/CerebookCartography.java
 /home/wilder/eclipse-workspace/Cerebook/src/main/java/wcs/cerebook/repository/FriendRepository.java
+/home/wilder/eclipse-workspace/Cerebook/src/main/java/wcs/cerebook/model/MyUserDetails.java
 /home/wilder/eclipse-workspace/Cerebook/src/main/java/wcs/cerebook/repository/UserRepository.java
 /home/wilder/eclipse-workspace/Cerebook/src/main/java/wcs/cerebook/repository/PostRepository.java
 /home/wilder/eclipse-workspace/Cerebook/src/main/java/wcs/cerebook/repository/ProfilRepository.java
@@ -15,7 +17,6 @@
 /home/wilder/eclipse-workspace/Cerebook/src/main/java/wcs/cerebook/entity/CerebookEvent.java
 /home/wilder/eclipse-workspace/Cerebook/src/main/java/wcs/cerebook/entity/CerebookVideo.java
 /home/wilder/eclipse-workspace/Cerebook/src/main/java/wcs/cerebook/entity/CerebookPost.java
-/home/wilder/eclipse-workspace/Cerebook/src/main/java/wcs/cerebook/entity/CerebookRole.java
 /home/wilder/eclipse-workspace/Cerebook/src/main/java/wcs/cerebook/entity/CerebookMovie.java
 /home/wilder/eclipse-workspace/Cerebook/src/main/java/wcs/cerebook/repository/MessageRepository.java
 /home/wilder/eclipse-workspace/Cerebook/src/main/java/wcs/cerebook/repository/CartographyRepository.java
@@ -24,5 +25,6 @@
 /home/wilder/eclipse-workspace/Cerebook/src/main/java/wcs/cerebook/entity/CerebookFriend.java
 /home/wilder/eclipse-workspace/Cerebook/src/main/java/wcs/cerebook/entity/CerebookComment.java
 /home/wilder/eclipse-workspace/Cerebook/src/main/java/wcs/cerebook/repository/MovieRepository.java
-/home/wilder/eclipse-workspace/Cerebook/src/main/java/wcs/cerebook/repository/RoleRepository.java
+/home/wilder/eclipse-workspace/Cerebook/src/main/java/wcs/cerebook/config/MySecurityConfig.java
 /home/wilder/eclipse-workspace/Cerebook/src/main/java/wcs/cerebook/entity/CerebookPicture.java
+/home/wilder/eclipse-workspace/Cerebook/src/main/java/wcs/cerebook/services/PasswordGenerator.java

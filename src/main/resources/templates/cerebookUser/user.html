@@ -8,8 +8,8 @@
 <h3 th:text="${user.id} ? 'Edit Person' : 'Create Person'">Person</h3>
 <form method="post" th:action="@{/userCreate}" th:object="${user}">
     <input name="id" th:field="*{id}" type="hidden">
-    <label for="user-nickName">nickName:</label>
-    <input id="user-nickName" name="nickName" placeholder="Wolverine" required th:field="*{nickName}" type="text">
+    <label for="user-username">username:</label>
+    <input id="user-username" name="username" placeholder="Wolverine" required th:field="*{username}" type="text">
     <br><br>
     <label for="user-firstName">firstName</label>
     <input id="user-firstName" name="firstName" placeholder="James" required th:field="*{firstName}" type="text">
@@ -31,6 +31,12 @@
     <br><br>
     <label for="user-birthday">birthday</label>
     <input id="user-birthday" name="birthday" required th:field="*{birthday}" type="date">
+    <br><br>
+    <label hidden for="user-role">birthday</label>
+    <input hidden id="user-role" name="role" value="USER">
+    <br><br>
+    <label hidden for="user-enable">birthday</label>
+    <input hidden id="user-enable" name="enable" value=true>
     <br><br>
     <input type="submit" value="Send">
 </form>

@@ -5,7 +5,7 @@
     <title>Index des gens</title>
 </head>
 <body>
-    <h1>Les gens!</h1>
-    <a href="/heros">Liste des héros</a>
+    <h1 th:inline="text">Welcome [[${#httpServletRequest.remoteUser}]]</h1>
+    <a href="/user">Creer un user</a>
 </body>
 </html>

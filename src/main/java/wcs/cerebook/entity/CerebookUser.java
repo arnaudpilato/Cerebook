@@ -11,7 +11,7 @@ public class CerebookUser {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private String nickName;
+    private String username;
     private String firstName;
     private String lastName;
     private String city;
@@ -19,12 +19,15 @@ public class CerebookUser {
     private String email;
     private String password;
     private Date birthday;
+    private String role;
+    private boolean enable;
 
     public CerebookUser() {
     }
 
-    public CerebookUser(String nickName, String firstName, String lastName, String city, String address, String email, String password, Date birthday) {
-        this.nickName = nickName;
+    public CerebookUser(Long id, String username, String firstName, String lastName, String city, String address, String email, String password, Date birthday, String role, boolean enable) {
+        this.id = id;
+        this.username = username;
         this.firstName = firstName;
         this.lastName = lastName;
         this.city = city;
@@ -32,6 +35,8 @@ public class CerebookUser {
         this.email = email;
         this.password = password;
         this.birthday = birthday;
+        this.role = role;
+        this.enable = enable;
     }
 
     public Long getId() {
@@ -42,12 +47,12 @@ public class CerebookUser {
         this.id = id;
     }
 
-    public String getNickName() {
-        return nickName;
+    public String getUsername() {
+        return username;
     }
 
-    public void setNickName(String nickName) {
-        this.nickName = nickName;
+    public void setUsername(String username) {
+        this.username = username;
     }
 
     public String getFirstName() {
@@ -104,5 +109,21 @@ public class CerebookUser {
 
     public void setBirthday(Date birthday) {
         this.birthday = birthday;
+    }
+
+    public String getRole() {
+        return role;
+    }
+
+    public void setRole(String role) {
+        this.role = role;
+    }
+
+    public boolean isEnable() {
+        return enable;
+    }
+
+    public void setEnable(boolean enable) {
+        this.enable = enable;
     }
 }
