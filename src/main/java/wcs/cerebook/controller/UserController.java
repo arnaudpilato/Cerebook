@@ -34,6 +34,7 @@ public class UserController {
     @GetMapping("/users")
     public String getAll(Model model) {
         model.addAttribute("users", userRepository.findAll());
+
         return "/cerebookUser/users";
     }
 

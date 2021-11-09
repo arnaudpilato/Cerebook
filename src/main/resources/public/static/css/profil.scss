@@ -1,0 +1,67 @@
+@import "style.scss";
+
+body {
+  background-color: #C4C4C4;
+}
+
+.baniere {
+  width: 100%;
+  height: 310px;
+  margin-top: 15px;
+  object-fit: cover;
+  border-radius: 10px 10px 0 0;
+}
+
+.banner-logo {
+  width: 50px;
+  height: auto;
+}
+
+.profile-logo {
+  width: 100px;
+  position: relative;
+  top: -50px;
+  z-index: 20;
+  border-radius: 50%;
+}
+
+.ornament-logo {
+  position: absolute;
+  width: 110px;
+  height: auto;
+  top: -55px;
+  left: 55px;
+  background-color: white;
+  border-radius: 50%;
+  z-index: 10;
+  animation:spin 8s linear infinite;
+}
+
+@keyframes spin {
+  100% {
+    -webkit-transform: rotate(360deg);
+    transform:rotate(360deg);
+  }
+}
+
+.banner-logo-list {
+  display: flex;
+  justify-content: space-around;
+  list-style-type: none;
+}
+
+.friend-connected {
+  background-color: $primary;
+}
+
+.friend-connected ul {
+  list-style-type: none;
+}
+
+.friend-connected ul li {
+  margin-bottom: 10px;
+}
+
+.banner-list {
+  background-color: white;
+}
