@@ -7,6 +7,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 public class ProfilController {
     @GetMapping("/profil")
     public String index() {
-        return "profil";
+        return "/cerebookProfil/profil";
     }
 }
