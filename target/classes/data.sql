@@ -1,1 +1,0 @@
-INSERT INTO cerebook_user(id, nickName, firstName, lastName, city, address, email, password, birthday) VALUES (nextval ('hibernate_sequence'), 'Wolverine', 'Michel', 'Mipoivre', 'Tanbougtou', 'michelmipoivre', 'rrrr', 'dfdfdfdf', '11/3/2021');
