@@ -1,11 +1,18 @@
 <!DOCTYPE html>
-<html lang="fr">
-<head>
-    <meta charset="UTF-8">
-    <title>Index des gens</title>
-</head>
+<html lang="fr" xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <meta charset="UTF-8">
+        <title>Cerebook index</title>
+        <link rel="stylesheet" type="text/css" th:href="@{/webjars/bootstrap/css/bootstrap.min.css}" />
+        <link href="/static/css/style.css" rel="stylesheet" />
+    </head>
 <body>
+
+
+    <header th:replace="/fragments/header.html :: top"></header>
     <h1 th:inline="text">Welcome [[${#httpServletRequest.remoteUser}]]</h1>
     <a href="/user">Creer un user</a>
+    <script th:src="@{/jquery-3.5.1.min.js}"></script>
+    <script th:src="@{/bootstrap.min.js}"></script>
 </body>
 </html>

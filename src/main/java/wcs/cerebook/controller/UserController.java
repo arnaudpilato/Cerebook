@@ -5,10 +5,10 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
 import wcs.cerebook.entity.CerebookUser;
 import wcs.cerebook.repository.UserRepository;
 
-import java.util.Date;
 
 @Controller
 public class UserController {
