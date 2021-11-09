@@ -29,4 +29,13 @@ h1 {
   min-height: 100vh;
 }
 
+.aButton {
+  color: white;
+}
+
+.cardHome {
+  background-color: #264653;
+  color: white;
+}
+
 /*# sourceMappingURL=style.css.map */

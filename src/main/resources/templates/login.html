@@ -2,22 +2,21 @@
 <html lang="fr" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Cerebook index</title>
+    <title>Login</title>
     <link rel="stylesheet" type="text/css" th:href="@{/webjars/bootstrap/css/bootstrap.min.css}"/>
     <link href="/static/css/style.css" rel="stylesheet"/>
 </head>
 <body>
-<header th:replace="/fragments/header.html :: top"></header>
-<h1 th:inline="text" class="essai text-center">Welcome [[${#httpServletRequest.remoteUser}]]</h1>
 
 <div class="container-fluid imageAccueil">
     <div class="container accueil">
         <div class="row justify-content-center align-items-center">
             <div class="col-12 text-center">
-                <div class="card cardHome col-12">
-                    <form name="f" th:action="@{/login}" method="post">
-                            <fieldset class="ml-5 mr-5 mt-2">
-                                <legend>Connexion</legend>
+                <div class="card">
+                    <div class="form-group mt-3 ml-5 mr-5">
+                        <form name="f" th:action="@{/login}" method="post">
+                            <fieldset>
+                                <legend>Please Login</legend>
                                 <div th:if="${param.error}" class="alert alert-error">
                                     Invalid username or password.
                                 </div>
@@ -29,13 +28,13 @@
                                 <br>
                                 <label for="password">Password</label>
                                 <input type="password" id="password" name="password">
-                                <div class="form-actions form-group">
-                                    <button type="submit" class="btn-primary">Se connecter</button>
+                                <div class="form-actions">
+                                    <button type="submit" class="btn-primary">Log in</button>
                                 </div>
                             </fieldset>
                         </form>
-                    <div class="form-group">
-                        <button class="btn-primary"><a class="aButton" href="/user">Créer un compte</a></button>
+                        <br>
+                        <a href="/">Back to home</a>
                     </div>
                 </div>
             </div>
@@ -43,7 +42,7 @@
     </div>
 </div>
 
-    <script th:src="@{/jquery-3.5.1.min.js}"></script>
-    <script th:src="@{/bootstrap.min.js}"></script>
+<script th:src="@{/jquery-3.5.1.min.js}"></script>
+<script th:src="@{/bootstrap.min.js}"></script>
 </body>
 </html>
