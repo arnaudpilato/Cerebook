@@ -5,6 +5,8 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import java.sql.Date;
+import javax.persistence.*;
+import java.util.List;
 
 @Entity
 public class CerebookUser {
@@ -22,6 +24,9 @@ public class CerebookUser {
     private String role;
     private boolean enable;
 
+    @OneToMany(mappedBy = "currentUser")
+    private List<CerebookMessage> messages;
+
     public CerebookUser() {
     }
 
@@ -38,7 +43,7 @@ public class CerebookUser {
         this.role = role;
         this.enable = enable;
     }
-
+    
     public Long getId() {
         return id;
     }
@@ -126,4 +131,13 @@ public class CerebookUser {
     public void setEnable(boolean enable) {
         this.enable = enable;
     }
+
+    public List<CerebookMessage> getMessages() {
+        return messages;
+    }
+
+    public void setMessages(List<CerebookMessage> messages) {
+        this.messages = messages;
+    }
 }
+    
