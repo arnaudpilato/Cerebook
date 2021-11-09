@@ -30,4 +30,8 @@ hs_err_pid*
 
 # .env
 .env
+target/
+package-lock.json
+package.json
+node_modules/
 target/*

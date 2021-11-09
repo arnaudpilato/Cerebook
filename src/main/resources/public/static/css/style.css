@@ -43,6 +43,34 @@
   transition: width 0.4s linear;
 }
 
+h1 {
+  color: green;
+}
+
+.accueil {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  min-height: 40vh;
+}
+
+.imageAccueil {
+  background-image: url("/static/css/img/xmenaccueil.jpg");
+  background-size: cover;
+  min-height: 100vh;
+}
+
+.aButton {
+  color: white;
+}
+
+.cardHome {
+  background-color: #264653;
+  color: white;
+}
+
 .search_icon {
   height: 20px;
   width: 20px;

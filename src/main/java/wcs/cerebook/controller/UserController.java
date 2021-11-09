@@ -16,7 +16,7 @@ public class UserController {
     private UserRepository userRepository;
 
     @GetMapping("/")
-    public String index() {
+    public String login() {
         return "index";
     }
 
