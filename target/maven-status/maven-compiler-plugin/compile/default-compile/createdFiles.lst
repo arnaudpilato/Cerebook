@@ -1,0 +1,4 @@
+wcs/cerebook/services/CerebookUserDetailsService.class
+wcs/cerebook/config/MySecurityConfig.class
+wcs/cerebook/services/PasswordGenerator.class
+wcs/cerebook/model/MyUserDetails.class
