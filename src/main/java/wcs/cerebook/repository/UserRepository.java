@@ -12,4 +12,7 @@ public interface UserRepository extends JpaRepository<CerebookUser, Long> {
 
     @Query("SELECT u FROM CerebookUser u WHERE u.username = :username")
     public CerebookUser getCerebookUserByUsername(@Param("username") String username);
+
+
+
 }
