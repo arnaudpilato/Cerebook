@@ -1,5 +1,8 @@
 @import "variables.scss";
 
+
+/***** Bootstrap *****/
+
 .bg-primary {
   background-color: $primary;
 }
@@ -8,10 +11,52 @@
   color: $secondary;
 }
 
-.essai {
-  color: green;
+/***** Navbar *****/
+.logo {
+  display: inline;
+  height: 25px;
+  width: 25px;
 }
 
-h1 {
-  color: green;
+.searchbar{
+  margin-bottom: auto;
+  margin-top: auto;
+  margin-right: 10px;
+  height: 25px;
+  background-color: white;
+  border-radius: 50px;
+}
+
+.search_input{
+  color: $primary;
+  border: 0;
+  outline: 0;
+  background: none;
+  width: 2px;
+  padding-left: 10px;
+  caret-color:transparent;
+  line-height: 10px;
+  transition: width 0.4s linear;
+}
+
+.searchbar:hover > .search_input{
+  padding-left: 10px;
+  padding-bottom: 10px;
+  width: 400px;
+  caret-color:red;
+  transition: width 0.4s linear;
+}
+
+.search_icon{
+  height: 20px;
+  width: 20px;
+  float: left;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 50%;
+  color:white;
+  text-decoration:none;
+  padding-top: 5px;
+  padding-left: 10px;
 }
