@@ -17,6 +17,7 @@ public class MessagingController {
     @GetMapping("/messages")
     public String index(Model model) {
         model.addAttribute("users", userRepository.findAll());
+        System.out.println("truc");
         return "/message/messaging";
     }
 

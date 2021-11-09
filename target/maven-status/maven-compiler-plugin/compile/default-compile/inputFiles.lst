@@ -22,6 +22,7 @@
 /home/zizou/Bureau/Wild/Projets/Cerebook/src/main/java/wcs/cerebook/entity/CerebookCartography.java
 /home/zizou/Bureau/Wild/Projets/Cerebook/src/main/java/wcs/cerebook/controller/MessagingController.java
 /home/zizou/Bureau/Wild/Projets/Cerebook/src/main/java/wcs/cerebook/controller/UserController.java
+/home/zizou/Bureau/Wild/Projets/Cerebook/src/main/java/wcs/cerebook/controller/ProfilController.java
 /home/zizou/Bureau/Wild/Projets/Cerebook/src/main/java/wcs/cerebook/repository/FriendRepository.java
 /home/zizou/Bureau/Wild/Projets/Cerebook/src/main/java/wcs/cerebook/repository/CartographyRepository.java
 /home/zizou/Bureau/Wild/Projets/Cerebook/src/main/java/wcs/cerebook/repository/VideoRepository.java
