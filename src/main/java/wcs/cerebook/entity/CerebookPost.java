@@ -17,7 +17,7 @@ public class CerebookPost {
     @DateTimeFormat(pattern = "dd/MM/yyyy h:mm a")
     private Date createdAt;
     private String content;
-    private boolean isPrivatePost;
+    private boolean privatePost;
     @ManyToOne(fetch = FetchType.LAZY)
     private CerebookUser cerebookUser;
 
@@ -54,11 +54,11 @@ public class CerebookPost {
     }
 
     public boolean isPrivatePost() {
-        return isPrivatePost;
+        return privatePost;
     }
 
     public void setPrivatePost(boolean privatePost) {
-        isPrivatePost = privatePost;
+        this.privatePost = privatePost;
     }
 
     public CerebookPost() {
