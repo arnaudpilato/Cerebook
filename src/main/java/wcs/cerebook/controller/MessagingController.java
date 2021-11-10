@@ -6,6 +6,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import wcs.cerebook.entity.CerebookMessage;
 import wcs.cerebook.entity.CerebookUser;
 import wcs.cerebook.repository.MessageRepository;
@@ -38,11 +39,14 @@ public class MessagingController  {
         return "message/tchat";
     }
 
-    @PostMapping("/messageCreate")
-    public String saveMessage(@ModelAttribute CerebookMessage message, Principal principal,  @Param("messageContent")
-           String messageContent, @RequestParam(required = false) String username
-    ){
-        // Récupération du user actuellement connecter
+
+    @RequestMapping("/createTchatmessage")
+    public String tchatSave ( Model model, Principal principal,
+                              @Param("contentMessage") String contentMessage
+                              )
+    {
+
+
         String usernameCurrent = principal.getName();
         CerebookUser currentUser = userRepository.findByUsername(usernameCurrent);
 
@@ -50,11 +54,10 @@ public class MessagingController  {
         LocalDateTime now = LocalDateTime.now();
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
         String date = now.format(formatter);
-
-        System.out.println(username);
-
-
-        return "redirect:/messages";
+        System.out.println(currentUser.getUsername());
+        System.out.println(date);
+        System.out.println(contentMessage);
+//
+        return "redirect:/message";
     }
-
 }

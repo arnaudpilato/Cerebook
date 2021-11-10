@@ -16,10 +16,10 @@
 </div>
 
     <div class="row justify-content-center">
-        <form th:action="@{/messageCreate(user.username=${user.username})}" >
+        <form th:action="@{/createTchatmessage}" th:method="post">
                 <label for="msg" class="">Message</label>
-                <input type="text" class="form-control " name="messageContent" id="msg" rows="4"></input>
-            <input type="submit" class="btn btn-primary">Envoyer</input>
+                <input type="text"  class="form-control " name="contentMessage" id="msg" rows="4"></input>
+            <input type="button" value="envoyer" class="btn btn-primary"/>
         </form>
     </div>
 </div>
