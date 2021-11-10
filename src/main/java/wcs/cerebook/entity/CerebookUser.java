@@ -14,7 +14,10 @@ public class CerebookUser {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
+    @Column(nullable = false, unique = true)
     private String username;
+
     private String firstName;
     private String lastName;
     private String city;
@@ -24,6 +27,7 @@ public class CerebookUser {
     private Date birthday;
     private String role;
     private boolean enable;
+
     @OneToMany(
             mappedBy = "cerebookUser",
             cascade = CascadeType.ALL,
@@ -34,12 +38,16 @@ public class CerebookUser {
     @OneToMany(mappedBy = "currentUser")
     private List<CerebookMessage> messages;
 
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "profil_id", referencedColumnName = "id")
+    private CerebookProfil profil;
+
     public CerebookUser() {
     }
 
 
     public CerebookUser(Long id, String username, String firstName, String lastName, String city, String address,
-                String email, String password, Date birthday, String role, boolean enable) {
+                        String email, String password, Date birthday, String role, boolean enable) {
         this.id = id;
         this.username = username;
         this.firstName = firstName;
@@ -52,7 +60,7 @@ public class CerebookUser {
         this.role = role;
         this.enable = enable;
     }
-    
+
     public Long getId() {
         return id;
     }
@@ -147,6 +155,14 @@ public class CerebookUser {
 
     public void setMessages(List<CerebookMessage> messages) {
         this.messages = messages;
+    }
+
+    public CerebookProfil getProfil() {
+        return profil;
+    }
+
+    public void setProfil(CerebookProfil profil) {
+        this.profil = profil;
     }
 }
     

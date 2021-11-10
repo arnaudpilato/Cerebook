@@ -2,47 +2,81 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>School</title>
+    <title>Creation utilisateur</title>
+        <th:block th:replace="/fragments/bootstrap.html :: bootstrap-head"></th:block>
+    <link href="/static/css/user.css" rel="stylesheet"/>
 </head>
 <body>
-<h3 th:text="${user.id} ? 'Edit Person' : 'Create Person'">Person</h3>
-<form method="post" th:action="@{/userCreate}" th:object="${user}">
-    <input name="id" th:field="*{id}" type="hidden">
-    <label for="user-username">username:</label>
-    <input id="user-username" name="username" placeholder="Wolverine" required th:field="*{username}" type="text">
-    <br><br>
-    <label for="user-firstName">firstName</label>
-    <input id="user-firstName" name="firstName" placeholder="James" required th:field="*{firstName}" type="text">
-    <br><br>
-    <label for="user-lastName">lastName</label>
-    <input id="user-lastName" name="lastName" placeholder="Howlett" required th:field="*{lastName}" type="text">
-    <br><br>
-    <label for="user-city">city</label>
-    <input id="user-city" name="city" placeholder="New York" required th:field="*{city}" type="text">
-    <br><br>
-    <label for="user-address">address</label>
-    <input id="user-address" name="address" placeholder="1 Av. du champs de mars" required th:field="*{address}" type="text">
-    <br><br>
-    <label for="user-email">email</label>
-    <input id="user-email" name="email" placeholder="Wolverine@x-men.com" required th:field="*{email}" type="email">
-    <br><br>
-    <label for="user-password">password</label>
-    <input id="user-password" name="password" placeholder="password" required th:field="*{password}" type="password">
-    <br><br>
-    <label for="user-birthday">birthday</label>
-    <input id="user-birthday" name="birthday" required th:field="*{birthday}" type="date">
-    <br><br>
-    <label hidden for="user-role">birthday</label>
-    <input hidden id="user-role" name="role" value="USER">
-    <br><br>
-    <label hidden for="user-enable">birthday</label>
-    <input hidden id="user-enable" name="enable" value=true>
-    <br><br>
-    <input type="submit" value="Send">
-</form>
-<br>
-<a href="/users">Return to the list</a>
-<a href="/">Return to the home</a>
 
+<header th:replace="/fragments/header.html :: top"></header>
+
+<div class="container-fluid imageAccueil">
+    <div class="container accueilCreateAccount">
+        <div class="row">
+            <div class="col-12 ">
+                <div class="card cardHome col-12">
+                    <form method="post" th:action="@{/userCreate}" th:object="${user}">
+                        <fieldset class="marginCreateUser">
+                            <legend>Création de compte</legend>
+                            <div th:if="${error}" class="alert alert-danger" role="alert">
+                                Nom d'utilisateur déjà existant.
+                            </div>
+                            <input name="id" th:field="*{id}" type="hidden">
+                            <div class="form-group">
+                                <label for="user-username">Nom d'utilisateur : </label>
+                                <input id="user-username" name="username" placeholder="Wolverine" required
+                                       th:field="*{username}" type="text">
+                            </div>
+                            <div class="form-group">
+                                <label for="user-firstName">Prénom : </label>
+                                <input id="user-firstName" name="firstName" placeholder="James" required
+                                       th:field="*{firstName}" type="text">
+                            </div>
+                            <div class="form-group">
+                                <label for="user-lastName">Nom : </label>
+                                <input id="user-lastName" name="lastName" placeholder="Howlett" required
+                                       th:field="*{lastName}" type="text">
+                            </div>
+                            <div class="form-group">
+                                <label for="user-city">Ville : </label>
+                                <input id="user-city" name="city" placeholder="New York" required th:field="*{city}"
+                                       type="text">
+                            </div>
+                            <div class="form-group">
+                                <label for="user-address">Addresse : </label>
+                                <input id="user-address" name="address" placeholder="1 Av. du champs de mars" required
+                                       th:field="*{address}" type="text">
+                            </div>
+                            <div class="form-group">
+                                <label for="user-email">Adresse e-mail : </label>
+                                <input id="user-email" name="email" placeholder="Wolverine@x-men.com" required
+                                       th:field="*{email}" type="email">
+                            </div>
+                            <div class="form-group birstdayBr">
+                                <label for="user-birthday">Date d'anniversaire : </label>
+                                <input id="user-birthday" name="birthday" required th:field="*{birthday}"
+                                       type="date">
+                            </div>
+                            <div class="form-group">
+                                <label for="user-password">Mot de passe : </label>
+                                <input id="user-password" name="password" placeholder="password" required
+                                       th:field="*{password}" type="password">
+                            </div>
+                            <label hidden for="user-role">role</label>
+                            <input hidden id="user-role" name="role" value="USER">
+                            <label hidden for="user-enable">role</label>
+                            <br>
+                            <input hidden id="user-enable" name="enable" value=true>
+                            <div class="form-actions form-group">
+                                <button type="submit" class="btn btn-primary">Créer le compte</button>
+                            </div>
+                        </fieldset>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<th:block th:replace="/fragments/bootstrap.html :: bootstrap-body"></th:block>
 </body>
 </html>

@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <title>Profil</title>
-    <link rel="stylesheet" type="text/css" th:href="@{/webjars/bootstrap/css/bootstrap.min.css}" />
+    <th:block th:replace="/fragments/bootstrap.html :: bootstrap-head"></th:block>
     <link href="/static/css/profil.css" rel="stylesheet" />
 </head>
     <body>
@@ -19,15 +19,15 @@
                         <div class="row">
                             <div class="col-lg-5 pr-0">
                                 <ul class="banner-logo-list banner-left pl-3">
-                                    <li><a href="#"><img class="banner-logo" src="/static/css/img/secured-profile.png" alt="Logo profil"></a></li>
+                                    <li><a href="/profil/show"><img class="banner-logo" src="/static/css/img/secured-profile.png" alt="Logo profil"></a></li>
                                     <li><a href="#"><img class="banner-logo" src="/static/css/img/map.png" alt="Logo carte"></a></li>
                                     <li><a href="#"><img class="banner-logo" src="/static/css/img/friends.png" alt="Logo amis"></a></li>
                                 </ul>
                             </div>
-                            <div class="col-lg-2 banner-list text-center">
+                            <div class="col-lg-2 banner-list d-flex justify-content-center">
                                 <img class="ornament-logo" src="/static/css/img/ornament.png" alt="Logo circulaire">
                                 <img class="profile-logo" src="/static/css/img/Iron Man.png" alt="Logo de profil">
-                                <h1 class="profile-name">Iron Man</h1>
+                                <h1 class="profile-name" th:text="${user.username}">Iron Man</h1>
                             </div>
                             <div class="col-lg-5 pl-0">
                                 <ul class="banner-logo-list banner-right pl-0 pr-3">
@@ -49,7 +49,6 @@
                     </div>
                 </div>
             </div>
-        <script th:src="@{/jquery-3.5.1.min.js}"></script>
-        <script th:src="@{/bootstrap.min.js}"></script>
+        <th:block th:replace="/fragments/bootstrap.html :: bootstrap-body"></th:block>
     </body>
 </html>

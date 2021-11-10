@@ -20,13 +20,25 @@ public class UserController {
         return "index";
     }
 
+    @GetMapping("/login")
+    public String loginError() {
+        return "index";
+    }
+
     @PostMapping("/userCreate")
-    public String postUser(@ModelAttribute CerebookUser user) {
+    public String postUser(@ModelAttribute CerebookUser user, Model model) {
         BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
         String rawPassword = user.getPassword();
         String encodedPassword = encoder.encode(rawPassword);
         user.setPassword(encodedPassword);
-        userRepository.save(user);
+        try {
+            userRepository.save(user);
+        } catch (Exception e) {
+            boolean error = true;
+            model.addAttribute("error", error);
+            model.addAttribute("user", user);
+            return "/cerebookUser/user";
+        }
 
         return "redirect:/";
     }

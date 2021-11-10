@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="fr" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Profil</title>
+    <th:block th:replace="/fragments/bootstrap.html :: bootstrap-head"></th:block>
+    <link href="/static/css/profil.css" rel="stylesheet" />
+</head>
+<body>
+<header th:replace="/fragments/header.html :: top"></header>
+    <div class="container-fluid" >
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Id</th>
+                    <th>Surnom</th>
+                    <th>Prénom</th>
+                    <th>Nom</th>
+                    <th>Adresse</th>
+                    <th>Ville</th>
+                    <th>Email</th>
+                    <th>Rôle</th>
+                    <th>Date de naissance</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td th:text="${users.id}"></td>
+                    <td th:text="${users.username}"></td>
+                    <td th:text="${users.firstName}"></td>
+                    <td th:text="${users.lastName}"></td>
+                    <td th:text="${users.address}"></td>
+                    <td th:text="${users.city}"></td>
+                    <td th:text="${users.email}"></td>
+                    <td th:text="${users.role}"></td>
+                    <td th:text="${users.birthday}"></td>
+                </tr>
+            </tbody>
+            <!-- Button trigger modal -->
+            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                Launch demo modal
+            </button>
+
+            <!-- Modal -->
+            <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            ...
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                            <button type="button" class="btn btn-primary">Save changes</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </table>
+    </div>
+<th:block th:replace="/fragments/bootstrap.html :: bootstrap-body"></th:block>
+</body>
+</html>
