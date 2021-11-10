@@ -8,29 +8,35 @@ import wcs.cerebook.entity.CerebookUser;
 import wcs.cerebook.repository.PostRepository;
 
 
-import java.text.SimpleDateFormat;
+import javax.servlet.http.HttpServletRequest;
+import java.security.Principal;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
+
+
 import java.util.Date;
 import java.util.List;
 @Controller
 public class PostController {
     @Autowired
     private PostRepository repository;
+    public String currentUserNameSimple(HttpServletRequest request) {
+        Principal principal = request.getUserPrincipal();
+        return principal.getName();
+    }
     @GetMapping("/addPostForm")
     public String addPost(Model model) {
 
         CerebookPost cerebookPost = new CerebookPost();
         model.addAttribute("post", cerebookPost);
-        Date date = new DateTime();
 
-        cerebookPost.setCreatedAt(date);
-        model.addAttribute("localDateTime", date );
+        cerebookPost.setCreatedAt(new Date());
+        model.addAttribute("localDateTime",new Date());
         model.addAttribute("postStatus",cerebookPost.isPrivatePost());
-        return "CerebookPost/addPost";
+
+        return "addPost";
     }
     @PostMapping("/savePost")
-    public String savePost(@ModelAttribute("post") CerebookPost cerebookPost, CerebookUser cerebookUser) {
+    public String savePost(@ModelAttribute("post") CerebookPost cerebookPost,CerebookUser cerebookUser) {
         // save post to database
         repository.save(cerebookPost);
         return "redirect:/";
@@ -55,7 +61,7 @@ public class PostController {
         CerebookPost postToUpdate = repository.findById(postId).get();
         if (postId != null) {
             postToUpdate.setContent(content);
-            postToUpdate.setCreatedAt(createdAt);
+            //postToUpdate.setCreatedAt(createdAt);
             postToUpdate.setPrivatePost(isPrivatePost);
 
         }

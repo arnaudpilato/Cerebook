@@ -22,4 +22,7 @@ public class CerebookUserDetailsService implements UserDetailsService {
         }
         return new MyUserDetails(user);
     }
+    public Long getUserId(){
+        return cerebookUserRepository.
+    }
 }

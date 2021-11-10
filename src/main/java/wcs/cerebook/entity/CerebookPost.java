@@ -1,7 +1,11 @@
 package wcs.cerebook.entity;
 
+import org.springframework.format.annotation.DateTimeFormat;
+
 import javax.persistence.*;
+
 import java.util.ArrayList;
+
 import java.util.Date;
 import java.util.List;
 
@@ -10,6 +14,7 @@ public class CerebookPost {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    @DateTimeFormat(pattern = "dd/MM/yyyy h:mm a")
     private Date createdAt;
     private String content;
     private boolean isPrivatePost;
