@@ -33,7 +33,7 @@ public class MessagingController  {
 
     @GetMapping("/message")
     public String tchat( Model model, @RequestParam(required = false) String username) {
-
+    assert(userRepository.findByUsername(username) != null);
     model.addAttribute("user", userRepository.findByUsername(username));
 
         return "message/tchat";
@@ -42,7 +42,9 @@ public class MessagingController  {
 
     @RequestMapping("/createTchatmessage")
     public String tchatSave ( Model model, Principal principal,
+                              @Param("userId") Long idDestinate,
                               @Param("contentMessage") String contentMessage
+
                               )
     {
 
@@ -54,10 +56,12 @@ public class MessagingController  {
         LocalDateTime now = LocalDateTime.now();
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
         String date = now.format(formatter);
+
         System.out.println(currentUser.getUsername());
         System.out.println(date);
         System.out.println(contentMessage);
+        System.out.println(idDestinate);
 //
-        return "redirect:/message";
+        return "redirect:/messages";
     }
 }

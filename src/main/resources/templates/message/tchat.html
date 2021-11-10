@@ -3,23 +3,28 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" type="text/css" th:href="@{/webjars/bootstrap/css/bootstrap.min.css}" />
-    <link href="/static/css/style.css" rel="stylesheet" />
+    <link rel="stylesheet" type="text/css" th:href="@{/webjars/bootstrap/css/bootstrap.min.css}"/>
+    <link href="/static/css/style.css" rel="stylesheet"/>
     <title>tchat</title>
 </head>
 <body>
 <header th:replace="/fragments/header.html :: top"></header>
 <div class="container-fluid">
     <h1 class="text-center mt-4 mb-4">Conversation</h1>
-<div class="container">
+    <div class="container">
 
-</div>
+    </div>
 
     <div class="row justify-content-center">
-        <form th:action="@{/createTchatmessage}" th:method="post">
-                <label for="msg" class="">Message</label>
-                <input type="text"  class="form-control " name="contentMessage" id="msg" rows="4"></input>
-            <input type="button" value="envoyer" class="btn btn-primary"/>
+        <form th:action="@{/createTchatmessage}" th:object="${user}"th:method="post">
+            <label for="msg" class="">Message</label>
+            <input type="text" class="form-control " name="contentMessage" id="msg" rows="4">
+            <input hidden type="text" th:value="${user.id}" name="userId"/>
+            <input type="submit" value="go" class="btn btn-primary"/>
+
+            <button type="submit" class="btn btn-primary ">Lestgoooo</button>
+
+
         </form>
     </div>
 </div>
