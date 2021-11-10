@@ -14,5 +14,4 @@ public interface UserRepository extends JpaRepository<CerebookUser, Long> {
     public CerebookUser getCerebookUserByUsername(@Param("username") String username);
 
 
-
 }
