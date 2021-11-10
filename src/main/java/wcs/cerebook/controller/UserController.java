@@ -16,7 +16,7 @@ public class UserController {
     private UserRepository userRepository;
 
     @GetMapping("/")
-    public String index() {
+    public String login() {
         return "index";
     }
 
@@ -34,6 +34,7 @@ public class UserController {
     @GetMapping("/users")
     public String getAll(Model model) {
         model.addAttribute("users", userRepository.findAll());
+
         return "/cerebookUser/users";
     }
 

@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Messagerie</title>
+</head>
+<body>
+<h1> Messagerie </h1>
+
+<div th:each="user : ${users}">
+    <p th:text="${user.username}">name</p>
+    <a th:href="@{/message(username=${user.username})}">ajouter</a>
+</div>
+
+</body>
+</html>

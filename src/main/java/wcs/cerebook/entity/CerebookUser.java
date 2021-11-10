@@ -37,7 +37,9 @@ public class CerebookUser {
     public CerebookUser() {
     }
 
-    public CerebookUser(Long id, String username, String firstName, String lastName, String city, String address, String email, String password, Date birthday, String role, boolean enable) {
+
+    public CerebookUser(Long id, String username, String firstName, String lastName, String city, String address,
+                String email, String password, Date birthday, String role, boolean enable) {
         this.id = id;
         this.username = username;
         this.firstName = firstName;
