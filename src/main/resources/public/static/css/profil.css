@@ -8,6 +8,10 @@
 }
 
 /***** Navbar *****/
+.navbar-nav {
+  align-items: center;
+}
+
 .logo {
   display: inline;
   height: 25px;
@@ -41,6 +45,30 @@
   width: 400px;
   caret-color: red;
   transition: width 0.4s linear;
+}
+
+/***** Acuueil *****/
+.accueil {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  min-height: 40vh;
+}
+
+.imageAccueil {
+  background-size: cover;
+  min-height: 100vh;
+}
+
+.aButton {
+  color: white;
+}
+
+.cardHome {
+  background-color: #264653;
+  color: white;
 }
 
 .search_icon {
@@ -107,7 +135,6 @@ body {
     transform: rotate(360deg);
   }
 }
-
 .profile-name {
   font-size: 1.5rem;
   font-weight: bold;
