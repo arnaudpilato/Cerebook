@@ -34,7 +34,7 @@ public class UserController {
         try {
             userRepository.save(user);
         } catch (Exception e) {
-            String error = "Utilisateur déjà existant";
+            boolean error = true;
             model.addAttribute("error", error);
             model.addAttribute("user", user);
             return "/cerebookUser/user";

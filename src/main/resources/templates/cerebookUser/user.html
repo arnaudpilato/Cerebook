@@ -18,11 +18,11 @@
                     <form method="post" th:action="@{/userCreate}" th:object="${user}">
                         <fieldset class="ml-5 mr-5 mt-2">
                             <legend>Création de compte</legend>
+                            <div th:if="${error}" class="alert alert-danger" role="alert">
+                                Nom d'utilisateur déjà existant.
+                            </div>
                             <input name="id" th:field="*{id}" type="hidden">
                             <div class="form-group">
-                                <div th:if="${error}" class="alert alert-danger" role="alert">
-                                    Utilisateur déjà existant
-                                </div>
                                 <label for="user-username">Nom d'utilisateur : </label>
                                 <input id="user-username" name="username" placeholder="Wolverine" required
                                        th:field="*{username}" type="text">
