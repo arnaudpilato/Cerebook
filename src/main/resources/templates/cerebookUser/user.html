@@ -20,6 +20,9 @@
                             <legend>Création de compte</legend>
                             <input name="id" th:field="*{id}" type="hidden">
                             <div class="form-group">
+                                <div th:if="${error}" class="alert alert-danger" role="alert">
+                                    Utilisateur déjà existant
+                                </div>
                                 <label for="user-username">Nom d'utilisateur : </label>
                                 <input id="user-username" name="username" placeholder="Wolverine" required
                                        th:field="*{username}" type="text">
