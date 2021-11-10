@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org"
-      xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity5">>
+      xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
 
 <head>
     <meta charset="UTF-8">
@@ -18,8 +18,9 @@
     <form action="#" th:action="@{/savePost}" th:object="${post}" method="POST">
         <input type="text" th:field="*{content}" placeholder="content" class="form-control mb-4 col-4">
         <input type="text" th:value="${localDateTime}" th:field="*{createdAt}"  placeholder=" created at" class="form-control mb-4 col-4"/> Is private:
-        <input type="text" th:value="${user}"   class="form-control mb-4 col-4">
-        <input type="checkbox"  name="isprivatePost"  th:checked="${postStatus}" class="form-control mb-4 col-4" />
+        <input type="hidden" th:value="${user}"  th:field="${user}"  class="form-control mb-4 col-4">
+        <input  type="checkbox"  name="postStatus" th:checked="${postStatus}" th:field="${post.privatePost}"   class="form-control mb-4 col-4" />
+
 
         <button type="submit" class="btn btn-info col-2"> Save Post</button>
     </form>
