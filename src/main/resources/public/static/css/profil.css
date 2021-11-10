@@ -86,4 +86,97 @@
   padding-left: 10px;
 }
 
-/*# sourceMappingURL=style.css.map */
+body {
+  background-color: #C4C4C4;
+}
+
+.baniere {
+  width: 100%;
+  height: 310px;
+  margin-top: 15px;
+  object-fit: cover;
+  border-radius: 10px 10px 0 0;
+}
+
+.banner-logo {
+  width: 30px;
+  height: auto;
+  transition: 0.3s;
+}
+
+.banner-logo:hover {
+  width: 40px;
+  height: auto;
+  transition: 0.3s;
+}
+
+.profile-logo {
+  width: 80px;
+  position: relative;
+  top: -40px;
+  z-index: 20;
+  border-radius: 50%;
+}
+
+.ornament-logo {
+  position: absolute;
+  width: 110px;
+  height: auto;
+  top: -55px;
+  left: 55px;
+  background-color: white;
+  border-radius: 50%;
+  z-index: 10;
+  animation: spin 8s linear infinite;
+}
+
+@keyframes spin {
+  100% {
+    -webkit-transform: rotate(360deg);
+    transform: rotate(360deg);
+  }
+}
+.profile-name {
+  font-size: 1.5rem;
+  font-weight: bold;
+  position: relative;
+  top: -20px;
+  justify-content: center;
+  background-color: white;
+}
+
+.banner-logo-list {
+  display: flex;
+  justify-content: space-around;
+  list-style-type: none;
+  height: 100px;
+  background-color: white;
+  align-items: center;
+}
+
+.banner-left {
+  border-radius: 0 0 0 10px;
+}
+
+.banner-right {
+  border-radius: 0 0 10px 0;
+}
+
+.friend-connected {
+  background-color: #264653 !important;
+}
+
+.friend-connected ul {
+  list-style-type: none;
+}
+
+.friend-connected ul li {
+  margin-bottom: 10px;
+}
+
+.banner-list {
+  background-color: white;
+  height: 100px;
+}
+
+/*# sourceMappingURL=profil.css.map */
