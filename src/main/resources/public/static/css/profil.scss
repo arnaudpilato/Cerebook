@@ -13,14 +13,21 @@ body {
 }
 
 .banner-logo {
-  width: 50px;
+  width: 30px;
   height: auto;
+  transition: 0.3s;
+}
+
+.banner-logo:hover {
+  width: 40px;
+  height: auto;
+  transition: 0.3s;
 }
 
 .profile-logo {
-  width: 100px;
+  width: 80px;
   position: relative;
-  top: -50px;
+  top: -40px;
   z-index: 20;
   border-radius: 50%;
 }
@@ -34,24 +41,44 @@ body {
   background-color: white;
   border-radius: 50%;
   z-index: 10;
-  animation:spin 8s linear infinite;
+  animation: spin 8s linear infinite;
 }
 
 @keyframes spin {
   100% {
     -webkit-transform: rotate(360deg);
-    transform:rotate(360deg);
+    transform: rotate(360deg);
   }
+}
+
+.profile-name {
+  font-size: 1.5rem;
+  font-weight: bold;
+  position: relative;
+  top: -20px;
+  justify-content: center;
+  background-color: white;
 }
 
 .banner-logo-list {
   display: flex;
   justify-content: space-around;
   list-style-type: none;
+  height: 100px;
+  background-color: white;
+  align-items: center;
+}
+
+.banner-left {
+  border-radius: 0 0 0 10px;
+}
+
+.banner-right {
+  border-radius: 0 0 10px 0;
 }
 
 .friend-connected {
-  background-color: $primary;
+  background-color: #264653 !important;
 }
 
 .friend-connected ul {
@@ -64,4 +91,5 @@ body {
 
 .banner-list {
   background-color: white;
+  height: 100px;
 }

@@ -8,6 +8,10 @@
 }
 
 /***** Navbar *****/
+.navbar-nav {
+  align-items: center;
+}
+
 .logo {
   display: inline;
   height: 25px;
@@ -43,10 +47,7 @@
   transition: width 0.4s linear;
 }
 
-h1 {
-  color: green;
-}
-
+/***** Acuueil *****/
 .accueil {
   display: flex;
   flex-direction: column;
@@ -57,7 +58,6 @@ h1 {
 }
 
 .imageAccueil {
-  background-image: url("/static/css/img/xmenaccueil.jpg");
   background-size: cover;
   min-height: 100vh;
 }
