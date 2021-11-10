@@ -14,9 +14,9 @@
     <div class="container accueil">
         <div class="row justify-content-center align-items-center">
             <div class="col-12 text-center">
-                <div class="card cardHome col-12">
+                <div class="card cardHome col-12 marginAccueil">
                     <form name="f" th:action="@{/login}" method="post">
-                            <fieldset class="ml-5 mr-5 mt-2">
+                            <fieldset class="marginAccueil">
                                 <legend>Connexion</legend>
                                 <div th:if="${param.error}" class="alert alert-error">
                                     Invalid username or password.
@@ -29,12 +29,12 @@
                                 <br>
                                 <label for="password">Password</label>
                                 <input type="password" id="password" name="password">
-                                <div class="form-actions form-group">
+                                <div class="form-actions form-group connexionButton">
                                     <button type="submit" class="btn-primary">Se connecter</button>
                                 </div>
                             </fieldset>
                         </form>
-                    <div class="form-group">
+                    <div class="form-group mb-5 createButton">
                         <button class="btn-primary"><a class="aButton" href="/user">Créer un compte</a></button>
                     </div>
                 </div>
