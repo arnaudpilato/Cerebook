@@ -8,6 +8,10 @@
 }
 
 /***** Navbar *****/
+.navbar-nav {
+  align-items: center;
+}
+
 .logo {
   display: inline;
   height: 25px;
@@ -43,10 +47,7 @@
   transition: width 0.4s linear;
 }
 
-h1 {
-  color: green;
-}
-
+/***** Acuueil *****/
 .accueil {
   display: flex;
   flex-direction: column;
@@ -57,7 +58,6 @@ h1 {
 }
 
 .imageAccueil {
-  background-image: url("/static/css/img/xmenaccueil.jpg");
   background-size: cover;
   min-height: 100vh;
 }
@@ -98,14 +98,21 @@ body {
 }
 
 .banner-logo {
-  width: 50px;
+  width: 30px;
   height: auto;
+  transition: 0.3s;
+}
+
+.banner-logo:hover {
+  width: 40px;
+  height: auto;
+  transition: 0.3s;
 }
 
 .profile-logo {
-  width: 100px;
+  width: 80px;
   position: relative;
-  top: -50px;
+  top: -40px;
   z-index: 20;
   border-radius: 50%;
 }
@@ -128,10 +135,30 @@ body {
     transform: rotate(360deg);
   }
 }
+.profile-name {
+  font-size: 1.5rem;
+  font-weight: bold;
+  position: relative;
+  top: -20px;
+  justify-content: center;
+  background-color: white;
+}
+
 .banner-logo-list {
   display: flex;
   justify-content: space-around;
   list-style-type: none;
+  height: 100px;
+  background-color: white;
+  align-items: center;
+}
+
+.banner-left {
+  border-radius: 0 0 0 10px;
+}
+
+.banner-right {
+  border-radius: 0 0 10px 0;
 }
 
 .friend-connected {
@@ -148,6 +175,7 @@ body {
 
 .banner-list {
   background-color: white;
+  height: 100px;
 }
 
 /*# sourceMappingURL=profil.css.map */

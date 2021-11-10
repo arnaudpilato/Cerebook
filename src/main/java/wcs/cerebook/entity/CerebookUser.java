@@ -7,6 +7,7 @@ import javax.persistence.Id;
 import java.sql.Date;
 import javax.persistence.*;
 import java.util.List;
+import java.util.ArrayList;
 
 @Entity
 public class CerebookUser {
@@ -23,7 +24,13 @@ public class CerebookUser {
     private Date birthday;
     private String role;
     private boolean enable;
+    @OneToMany(
+            mappedBy = "cerebookUser",
+            cascade = CascadeType.ALL,
+            orphanRemoval = true
+    )
 
+    private List<CerebookPost> cerebookPosts = new ArrayList();
     @OneToMany(mappedBy = "currentUser")
     private List<CerebookMessage> messages;
 

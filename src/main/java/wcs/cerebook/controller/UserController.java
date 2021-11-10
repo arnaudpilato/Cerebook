@@ -20,6 +20,11 @@ public class UserController {
         return "index";
     }
 
+    @GetMapping("/login")
+    public String loginError() {
+        return "index";
+    }
+
     @PostMapping("/userCreate")
     public String postUser(@ModelAttribute CerebookUser user) {
         BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();

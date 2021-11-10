@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>List all posts</title>
+    <link th:rel="stylesheet" th:href="@{/webjars/bootstrap/4.0.0-2/css/bootstrap.min.css} "/>
+</head>
+<body>
+<div class="container">
+    <table class="table">
+        <tr>
+            <th>Content</th> <th>Created at:</th> <th>User</th>
+        </tr>
+        <tr th:each="p:${listPosts}">
+            <td th:text="${p.content}"></td>
+            <td th:text="${p.createdAt}"></td>
+            <td th:text="${p.cerebookUser.lastName}"></td>
+
+        </tr>
+</div>
+</table>
+<script th:src="@{/webjars/jquery/3.0.0/jquery.min.js}"></script>
+<script th:src="@{/webjars/popper.js/1.12.9-1/umd/popper.min.js}"></script>
+<script th:src="@{/webjars/bootstrap/4.0.0-2/js/bootstrap.min.js}"></script>
+</body>
+</html>

@@ -8,7 +8,7 @@
 </head>
     <body>
         <header th:replace="/fragments/header.html :: top"></header>
-            <div class="container-fluid">
+            <div class="container-fluid" th:each="user : ${users}">
                 <div class="row">
                     <div class="col-lg-11">
                         <div class="row">
@@ -27,7 +27,7 @@
                             <div class="col-lg-2 banner-list text-center">
                                 <img class="ornament-logo" src="/static/css/img/ornament.png" alt="Logo circulaire">
                                 <img class="profile-logo" src="/static/css/img/Iron Man.png" alt="Logo de profil">
-                                <h1 class="profile-name">Iron Man</h1>
+                                <h1 class="profile-name" th:text="${user.username}"></h1>
                             </div>
                             <div class="col-lg-5 pl-0">
                                 <ul class="banner-logo-list banner-right pl-0 pr-3">
