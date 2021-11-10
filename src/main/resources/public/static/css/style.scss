@@ -1,6 +1,5 @@
 @import "variables.scss";
 
-
 /***** Bootstrap *****/
 
 .bg-primary {
@@ -12,6 +11,11 @@
 }
 
 /***** Navbar *****/
+
+.navbar-nav {
+  align-items: center;
+}
+
 .logo {
   display: inline;
   height: 25px;
@@ -47,9 +51,7 @@
   transition: width 0.4s linear;
 }
 
-h1 {
-  color: green;
-}
+/***** Acuueil *****/
 
 .accueil {
   display: flex;
@@ -87,3 +89,4 @@ h1 {
   padding-top: 5px;
   padding-left: 10px;
 }
+

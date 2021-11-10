@@ -19,8 +19,8 @@
                 <li class="nav-item">
                     <a class="nav-link setting" href="#"><img class="logo" src="/static/css/img/login.png"></a>
                 </li>
-                <li th:classappend="${#httpServletRequest.getRequestURI() == '/profil' ? 'active':''}">
-                    <a class="nav-link" th:href="@{/profil}">Profil <span class="sr-only">(current)</span></a>
+                <li th:classappend="${#httpServletRequest.getRequestURI() == '/profil' ? 'active':''}" sec:authorize="isAuthenticated()">
+                    <a class="nav-link" th:href="@{/profil}"><img style="width: 50px;" class="nav-bar-profile-logo" src="/static/css/img/Iron Man.png" alt="Logo profil">[[${#httpServletRequest.remoteUser}]]</a>
                 </li>
             </ul>
         </div>
