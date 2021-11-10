@@ -19,7 +19,8 @@
         <form th:action="@{/createTchatmessage}" th:object="${user}"th:method="post">
             <label for="msg" class="">Message</label>
             <input type="text" class="form-control " name="contentMessage" id="msg" rows="4">
-            <input hidden type="text" th:value="${user.id}" name="userId"/>
+            <label hidden for="userfriend">userid</label>
+            <input hidden th:value="${user.id}" name="userfriend" id="userfriend" />
             <input type="submit" value="go" class="btn btn-primary"/>
 
             <button type="submit" class="btn btn-primary ">Lestgoooo</button>

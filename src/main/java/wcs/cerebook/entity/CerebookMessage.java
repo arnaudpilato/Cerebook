@@ -3,6 +3,7 @@ package wcs.cerebook.entity;
 import javax.persistence.*;
 import java.sql.Date;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -15,18 +16,16 @@ public class CerebookMessage {
     @ManyToOne(optional = true)
     private CerebookUser currentUser;
     @ManyToMany()
-    private List<CerebookUser> UserDestination;
+    private final List<CerebookUser> UserDestination = new ArrayList<>();
 
 
     public CerebookMessage() {
     }
 
-    public CerebookMessage(String message, LocalDateTime date, CerebookUser currentUser,
-                           List<CerebookUser> userDestination) {
+    public CerebookMessage(String message, LocalDateTime date, CerebookUser currentUser) {
         this.message = message;
         this.date = date;
         this.currentUser = currentUser;
-        UserDestination = userDestination;
     }
 
     public Long getId() {
@@ -37,13 +36,6 @@ public class CerebookMessage {
         this.id = id;
     }
 
-    public List<CerebookUser> getUserDestination() {
-        return UserDestination;
-    }
-
-    public void setUserDestination(List<CerebookUser> userDestination) {
-        UserDestination = userDestination;
-    }
 
     public String getMessage() {
         return message;
@@ -67,5 +59,9 @@ public class CerebookMessage {
 
     public void setDate(LocalDateTime date) {
         this.date = date;
+    }
+
+    public List<CerebookUser> getUserDestination() {
+        return UserDestination;
     }
 }

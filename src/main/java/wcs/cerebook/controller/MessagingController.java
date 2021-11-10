@@ -16,6 +16,7 @@ import javax.servlet.http.HttpServletRequest;
 import java.security.Principal;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.List;
 import java.util.Optional;
 
 @Controller
@@ -42,7 +43,7 @@ public class MessagingController  {
 
     @RequestMapping("/createTchatmessage")
     public String tchatSave ( Model model, Principal principal,
-                              @Param("userId") Long idDestinate,
+                              @Param("userfriend") Long userfriend,
                               @Param("contentMessage") String contentMessage
 
                               )
@@ -60,8 +61,15 @@ public class MessagingController  {
         System.out.println(currentUser.getUsername());
         System.out.println(date);
         System.out.println(contentMessage);
-        System.out.println(idDestinate);
-//
+        System.out.println(userfriend);
+        List<CerebookUser> msgDestination;
+
+
+
+        CerebookMessage message = new CerebookMessage(contentMessage, now, currentUser);
+         msgRepository.save(message);
+        message.getUserDestination().add(new CerebookUser());
+
         return "redirect:/messages";
     }
 }
