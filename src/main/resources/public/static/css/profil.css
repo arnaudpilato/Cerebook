@@ -47,7 +47,7 @@
   transition: width 0.4s linear;
 }
 
-/***** Acuueil *****/
+/***** Accueil *****/
 .accueil {
   display: flex;
   flex-direction: column;
@@ -112,8 +112,8 @@ body {
 
 .profile-logo {
   width: 80px;
-  position: relative;
-  top: -40px;
+  position: absolute;
+  margin-top: -40px;
   z-index: 20;
   border-radius: 50%;
 }
@@ -122,12 +122,12 @@ body {
   position: absolute;
   width: 110px;
   height: auto;
-  top: -55px;
-  left: 55px;
+  justify-content: center;
   background-color: white;
   border-radius: 50%;
   z-index: 10;
   animation: spin 8s linear infinite;
+  margin-top: -55px;
 }
 
 @keyframes spin {
@@ -140,7 +140,7 @@ body {
   font-size: 1.5rem;
   font-weight: bold;
   position: relative;
-  top: -20px;
+  margin-top: 60px;
   justify-content: center;
   background-color: white;
 }
@@ -156,10 +156,14 @@ body {
 
 .banner-left {
   border-radius: 0 0 0 10px;
+  margin-right: -15px;
+  padding: 0;
 }
 
 .banner-right {
   border-radius: 0 0 10px 0;
+  margin-left: -15px;
+  padding: 0;
 }
 
 .friend-connected {
@@ -177,6 +181,7 @@ body {
 .banner-list {
   background-color: white;
   height: 100px;
+  position: relative;
 }
 
 /*# sourceMappingURL=profil.css.map */

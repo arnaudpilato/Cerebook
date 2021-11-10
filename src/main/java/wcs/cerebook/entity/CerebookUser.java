@@ -27,6 +27,7 @@ public class CerebookUser {
     private Date birthday;
     private String role;
     private boolean enable;
+
     @OneToMany(
             mappedBy = "cerebookUser",
             cascade = CascadeType.ALL,
@@ -36,6 +37,10 @@ public class CerebookUser {
     private List<CerebookPost> cerebookPosts = new ArrayList();
     @OneToMany(mappedBy = "currentUser")
     private List<CerebookMessage> messages;
+
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "profil_id", referencedColumnName = "id")
+    private CerebookProfil profil;
 
     public CerebookUser() {
     }
@@ -150,6 +155,14 @@ public class CerebookUser {
 
     public void setMessages(List<CerebookMessage> messages) {
         this.messages = messages;
+    }
+
+    public CerebookProfil getProfil() {
+        return profil;
+    }
+
+    public void setProfil(CerebookProfil profil) {
+        this.profil = profil;
     }
 }
     
