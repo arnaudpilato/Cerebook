@@ -16,12 +16,10 @@
 </div>
 
     <div class="row justify-content-center">
-        <form action="">
-            <div class="form-group">
-                <label for="msg">Message</label>
-                <textarea class="form-control" name="message" id="msg" rows="4"></textarea>
-            </div>
-            <button type="button" class="btn btn-primary">Envoyer</button>
+        <form th:action="@{/messageCreate(user.username=${user.username})}" >
+                <label for="msg" class="">Message</label>
+                <input type="text" class="form-control " name="messageContent" id="msg" rows="4"></input>
+            <input type="submit" class="btn btn-primary">Envoyer</input>
         </form>
     </div>
 </div>

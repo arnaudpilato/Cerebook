@@ -16,11 +16,11 @@ public class UserController {
     private UserRepository userRepository;
 
     @GetMapping("/")
-    public String index() {
+    public String login() {
         return "index";
     }
 
-    @PostMapping("/userCreate")
+    @PostMapping("/messageCreate")
     public String postUser(@ModelAttribute CerebookUser user) {
         BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
         String rawPassword = user.getPassword();

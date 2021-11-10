@@ -1,31 +1,60 @@
 package wcs.cerebook.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.repository.query.Param;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import wcs.cerebook.entity.CerebookMessage;
 import wcs.cerebook.entity.CerebookUser;
+import wcs.cerebook.repository.MessageRepository;
 import wcs.cerebook.repository.UserRepository;
 
+import javax.servlet.http.HttpServletRequest;
+import java.security.Principal;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.Optional;
 
 @Controller
-public class MessagingController {
+public class MessagingController  {
     @Autowired
     private UserRepository userRepository;
+    @Autowired
+    private MessageRepository msgRepository;
 
     @GetMapping("/messages")
     public String index(Model model) {
         model.addAttribute("users", userRepository.findAll());
-        System.out.println("truc");
         return "/message/messaging";
     }
 
-
     @GetMapping("/message")
-    public String tchat( @RequestParam(required = false) String username) {
+    public String tchat( Model model, @RequestParam(required = false) String username) {
+
+    model.addAttribute("user", userRepository.findByUsername(username));
 
         return "message/tchat";
+    }
+
+    @PostMapping("/messageCreate")
+    public String saveMessage(@ModelAttribute CerebookMessage message, Principal principal,  @Param("messageContent")
+           String messageContent, @RequestParam(required = false) String username
+    ){
+        // Récupération du user actuellement connecter
+        String usernameCurrent = principal.getName();
+        CerebookUser currentUser = userRepository.findByUsername(usernameCurrent);
+
+        //Date a l'heure ou le message est envoyé + format correct
+        LocalDateTime now = LocalDateTime.now();
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+        String date = now.format(formatter);
+
+        System.out.println(username);
+
+
+        return "redirect:/messages";
     }
 
 }
