@@ -26,12 +26,19 @@ public class UserController {
     }
 
     @PostMapping("/userCreate")
-    public String postUser(@ModelAttribute CerebookUser user) {
+    public String postUser(@ModelAttribute CerebookUser user, Model model) {
         BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
         String rawPassword = user.getPassword();
         String encodedPassword = encoder.encode(rawPassword);
         user.setPassword(encodedPassword);
-        userRepository.save(user);
+        try {
+            userRepository.save(user);
+        } catch (Exception e) {
+            String error = "Utilisateur déjà existant";
+            model.addAttribute("error", error);
+            model.addAttribute("user", user);
+            return "/cerebookUser/user";
+        }
 
         return "redirect:/";
     }
