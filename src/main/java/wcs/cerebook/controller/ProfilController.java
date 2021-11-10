@@ -14,8 +14,8 @@ public class ProfilController {
     private UserRepository userRepository;
 
     @GetMapping("/profil")
-    public String getAll(Model model) {
-        model.addAttribute("users", userRepository.findAll());
+    public String getAll(Model model, Principal principal) {
+        model.addAttribute("user", userRepository.findByUsername(principal.getName()));
 
         return "/cerebookProfil/profil";
     }

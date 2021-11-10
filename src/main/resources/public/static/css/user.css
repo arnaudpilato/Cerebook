@@ -1,17 +1,13 @@
-@import "variables.scss";
-
 /***** Bootstrap *****/
-
 .bg-primary {
-  background-color: $primary;
+  background-color: #264653 !important;
 }
 
 .navbar-light, .navbar-brand {
-  color: $secondary;
+  color: #F4A261 !important;
 }
 
 /***** Navbar *****/
-
 .navbar-nav {
   align-items: center;
 }
@@ -22,7 +18,7 @@
   width: 25px;
 }
 
-.searchbar{
+.searchbar {
   margin-bottom: auto;
   margin-top: auto;
   margin-right: 10px;
@@ -31,28 +27,27 @@
   border-radius: 50px;
 }
 
-.search_input{
-  color: $primary;
+.search_input {
+  color: #264653 !important;
   border: 0;
   outline: 0;
   background: none;
   width: 2px;
   padding-left: 10px;
-  caret-color:transparent;
+  caret-color: transparent;
   line-height: 10px;
   transition: width 0.4s linear;
 }
 
-.searchbar:hover > .search_input{
+.searchbar:hover > .search_input {
   padding-left: 10px;
   padding-bottom: 10px;
   width: 400px;
-  caret-color:red;
+  caret-color: red;
   transition: width 0.4s linear;
 }
 
-/***** Accueil *****/
-
+/***** Acuueil *****/
 .accueil {
   display: flex;
   flex-direction: column;
@@ -76,7 +71,8 @@
   background-color: #264653;
   color: white;
 }
-.search_icon{
+
+.search_icon {
   height: 20px;
   width: 20px;
   float: left;
@@ -84,9 +80,32 @@
   justify-content: center;
   align-items: center;
   border-radius: 50%;
-  color:white;
-  text-decoration:none;
+  color: white;
+  text-decoration: none;
   padding-top: 5px;
   padding-left: 10px;
 }
 
+.accueilCreateAccount {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  min-height: 85vh;
+  max-width: 39vh;
+}
+
+label {
+  display: block;
+  width: 150px;
+  float: left;
+}
+
+.birstdayBr {
+  float: none;
+}
+
+.form-group {
+  max-width: 15vh;
+}
+
+/*# sourceMappingURL=user.css.map */

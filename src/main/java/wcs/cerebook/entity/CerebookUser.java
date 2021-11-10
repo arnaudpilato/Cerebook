@@ -14,7 +14,10 @@ public class CerebookUser {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
+    @Column(nullable = false, unique = true)
     private String username;
+
     private String firstName;
     private String lastName;
     private String city;
@@ -44,7 +47,7 @@ public class CerebookUser {
 
 
     public CerebookUser(Long id, String username, String firstName, String lastName, String city, String address,
-                String email, String password, Date birthday, String role, boolean enable) {
+                        String email, String password, Date birthday, String role, boolean enable) {
         this.id = id;
         this.username = username;
         this.firstName = firstName;
@@ -57,7 +60,7 @@ public class CerebookUser {
         this.role = role;
         this.enable = enable;
     }
-    
+
     public Long getId() {
         return id;
     }
