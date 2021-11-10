@@ -6,6 +6,8 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import wcs.cerebook.repository.UserRepository;
 
+import java.security.Principal;
+
 @Controller
 public class ProfilController {
     @Autowired
@@ -16,5 +18,12 @@ public class ProfilController {
         model.addAttribute("users", userRepository.findAll());
 
         return "/cerebookProfil/profil";
+    }
+
+    @GetMapping("/profil/show")
+    public String getProfilUser(Model model, Principal principal) {
+        model.addAttribute("users", userRepository.findByUsername(principal.getName()));
+
+        return "/cerebookProfil/show";
     }
 }
