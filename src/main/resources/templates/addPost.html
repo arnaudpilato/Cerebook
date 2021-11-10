@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity5">>
+
+<head>
+    <meta charset="UTF-8">
+    <title>Add post</title>
+    <link th:rel="stylesheet" th:href="@{/webjars/bootstrap/4.0.0-2/css/bootstrap.min.css} "/>
+</head>
+<body>
+<div class="container">
+    <h1>add post</h1>
+    <hr>
+    <h2>Save Post</h2>
+    <!--<h1 th:field="${user}">last name</h1>-->
+    <span>[[${#request.remoteUser}]]</span>
+
+    <form action="#" th:action="@{/savePost}" th:object="${post}" method="POST">
+        <input type="text" th:field="*{content}" placeholder="content" class="form-control mb-4 col-4">
+        <input type="text" th:value="${localDateTime}" th:field="*{createdAt}"  placeholder=" created at" class="form-control mb-4 col-4"/> Is private:
+        <input type="text" th:value="${user}"   class="form-control mb-4 col-4">
+        <input type="checkbox"  name="isprivatePost"  th:checked="${postStatus}" class="form-control mb-4 col-4" />
+
+        <button type="submit" class="btn btn-info col-2"> Save Post</button>
+    </form>
+
+    <hr>
+
+    <a th:href="@{/}"> Back </a>
+</div>
+</table>
+<script th:src="@{/webjars/jquery/3.0.0/jquery.min.js}"></script>
+<script th:src="@{/webjars/popper.js/1.12.9-1/umd/popper.min.js}"></script>
+<script th:src="@{/webjars/bootstrap/4.0.0-2/js/bootstrap.min.js}"></script>
+</body>
+</html>
