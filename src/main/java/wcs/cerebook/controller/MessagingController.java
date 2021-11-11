@@ -20,7 +20,7 @@ import java.util.List;
 import java.util.Optional;
 
 @Controller
-public class MessagingController  {
+public class MessagingController {
     @Autowired
     private UserRepository userRepository;
     @Autowired
@@ -33,42 +33,32 @@ public class MessagingController  {
     }
 
     @GetMapping("/message")
-    public String tchat( Model model, @RequestParam(required = false) String username) {
-    assert(userRepository.findByUsername(username) != null);
-    model.addAttribute("user", userRepository.findByUsername(username));
+    public String tchat(Model model, @RequestParam(required = false) String username) {
+        model.addAttribute("user", userRepository.findByUsername(username));
 
         return "message/tchat";
     }
 
 
     @RequestMapping("/createTchatmessage")
-    public String tchatSave ( Model model, Principal principal,
-                              @Param("userfriend") Long userfriend,
-                              @Param("contentMessage") String contentMessage
-
-                              )
-    {
-
-
+    public String tchatSave(Model model, Principal principal,
+                            @Param("userfriend") Long userfriend,
+                            @Param("contentMessage") String contentMessage
+    ) {
+        // récupération du user connecter
         String usernameCurrent = principal.getName();
         CerebookUser currentUser = userRepository.findByUsername(usernameCurrent);
-
-        //Date a l'heure ou le message est envoyé + format correct
+        //Date a l'heure ou le message est envoy
         LocalDateTime now = LocalDateTime.now();
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
-        String date = now.format(formatter);
-
-        System.out.println(currentUser.getUsername());
-        System.out.println(date);
-        System.out.println(contentMessage);
-        System.out.println(userfriend);
-        List<CerebookUser> msgDestination;
-
-
-
+        //récupération du user qui va etre le destinataire du messahe
+        CerebookUser userDestinate = userRepository.getById(userfriend);
+        // sauvegarde du message en base de donnée
         CerebookMessage message = new CerebookMessage(contentMessage, now, currentUser);
-         msgRepository.save(message);
-        message.getUserDestination().add(new CerebookUser());
+        msgRepository.save(message);
+        // une fois le message sauvegarder j'ajoute le destinataire au message et je le sauvegarde une nouvelle fois
+        // en base de donnée.
+        message.getUserDestination().add(userDestinate);
+        msgRepository.save(message);
 
         return "redirect:/messages";
     }
