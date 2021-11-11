@@ -6,6 +6,7 @@ import org.springframework.web.bind.annotation.*;
 import wcs.cerebook.entity.CerebookPost;
 import wcs.cerebook.entity.CerebookUser;
 import wcs.cerebook.repository.PostRepository;
+import wcs.cerebook.repository.UserRepository;
 
 
 import javax.servlet.http.HttpServletRequest;
@@ -23,21 +24,32 @@ public class PostController {
         Principal principal = request.getUserPrincipal();
         return principal.getName();
     }
+    @Autowired
+    private UserRepository userRepository;
     @GetMapping("/addPostForm")
-    public String addPost(Model model) {
-
+    public String addPost(Principal principal,Model model) {
+    String username = principal.getName();
+    CerebookUser user = userRepository.getCerebookUserByUsername(username);
         CerebookPost cerebookPost = new CerebookPost();
         model.addAttribute("post", cerebookPost);
+        cerebookPost.setCerebookUser(user);
 
+        model.addAttribute("user",user);
         cerebookPost.setCreatedAt(new Date());
         model.addAttribute("localDateTime",new Date());
-        model.addAttribute("postStatus",cerebookPost.isPrivatePost());
+        //cerebookPost.setPrivatePost(cerebookPost.isPrivatePost());
+        boolean postStatu = cerebookPost.isPrivatePost();
+
+        model.addAttribute("postStatus", postStatu);
 
         return "addPost";
     }
-    @PostMapping("/savePost")
-    public String savePost(@ModelAttribute("post") CerebookPost cerebookPost,CerebookUser cerebookUser) {
+    @RequestMapping("/savePost")
+    public String savePost(Principal principal,CerebookPost cerebookPost) {
         // save post to database
+        String username = principal.getName();
+        CerebookUser user = userRepository.getCerebookUserByUsername(username);
+        cerebookPost.setCerebookUser(user);
         repository.save(cerebookPost);
         return "redirect:/";
     }

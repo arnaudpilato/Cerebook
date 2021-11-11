@@ -19,4 +19,11 @@ public class ProfilController {
 
         return "/cerebookProfil/profil";
     }
+
+    @GetMapping("/profil/show")
+    public String getProfilUser(Model model, Principal principal) {
+        model.addAttribute("users", userRepository.findByUsername(principal.getName()));
+
+        return "/cerebookProfil/show";
+    }
 }
