@@ -13,11 +13,10 @@
 <div class="container">
 
     <form action="#" th:action="@{/updatePost/{id}(id=*{id})}" th:object="${post}" method="POST">
-        <input type="text" th:field="*{id}" placeholder="content" class="form-control mb-4 col-4">
-        <input type="text" th:field="*{content}" placeholder="content" class="form-control mb-4 col-4">
+        <input type="text" th:field="${post.id}" placeholder="content" class="form-control mb-4 col-4">
+        <input type="text" th:field="${post.content}" placeholder="content" class="form-control mb-4 col-4">
         <input type="hidden" th:value="${localDateTime}" th:field="*{createdAt}"  placeholder=" created at" class="form-control mb-4 col-4"/> Is private:
-        <input type="hidden" th:value="${user}"  th:field="${user}"  class="form-control mb-4 col-4">
-        <input  th:value="${user.id}"  th:field="${user.id}"  >
+        <input type="hidden" th:value="${post.cerebookUser.id}"  th:field="${post.cerebookUser.id}"  class="form-control mb-4 col-4">
         <input  type="checkbox"  name="postStatus" th:checked="${postStatus}" th:field="${post.privatePost}"   class="form-check-input" />
 
         <p><button type="submit" class="btn btn-info col-2"> Save Post</button></p>

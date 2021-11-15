@@ -77,7 +77,7 @@ public class PostController {
         String username = principal.getName();
         CerebookUser user = userRepository.getCerebookUserByUsername(username);
         model.addAttribute("post", cerebookPost);
-        cerebookPost.setCerebookUser(user);
+        //cerebookPost.setCerebookUser(user);
         model.addAttribute("user",user);
         cerebookPost.setCreatedAt(new Date());
         model.addAttribute("localDateTime",new Date());
@@ -89,17 +89,21 @@ public class PostController {
         return "post";
         }
     @PostMapping("/updatePost/{id}")
-    public String updatePost(@PathVariable("id") Long id, @Valid CerebookPost cerebookPost, BindingResult result, Model model,Principal principal,@Valid CerebookUser cerebookUser) {
+    public String updatePost(@PathVariable("id") Long id, Model model, @Valid CerebookPost cerebookPost, BindingResult result,Principal principal) {
         String username = principal.getName();
         CerebookUser user = userRepository.getCerebookUserByUsername(username);
-
+                Long userid=  user.getId();
         if (result.hasErrors()) {
-            cerebookPost.setId(id);
-            cerebookPost.setCerebookUser(user);
+
+           cerebookPost.setCerebookUser(user);
             return "post";
 
         }
+        System.out.println("ici le id =============="+userid+"=============================");
         repository.save(cerebookPost);
+
+        //model.addAttribute("post", repository.findAll());
+
         return "redirect:/myPosts";
     }
     @GetMapping("/deletePost/{id}")

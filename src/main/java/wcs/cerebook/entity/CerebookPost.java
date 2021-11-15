@@ -20,7 +20,7 @@ public class CerebookPost {
     private boolean privatePost;
     // manyToone for post one user can have many post
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "cerebook_user_id")
+
     private CerebookUser cerebookUser;
     // one post to  can have many comment
     @OneToMany(mappedBy = "cerebookPost", fetch = FetchType.LAZY,

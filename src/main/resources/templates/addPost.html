@@ -17,7 +17,7 @@
         <div class="form-group">
         <input type="hidden" th:value="${localDateTime}" th:field="*{createdAt}"  placeholder=" created at" class="form-control mb-4 col-4"/>
         </div>
-        <input type="hidden" th:value="${user}"  th:field="${user}"  class="form-control mb-4 col-4">
+        <input type="hidden" th:value="${user.id}"  th:field="${user.id}"  class="form-control mb-4 col-4">
         <div class="form-group">
             Is private: <input  type="checkbox"  name="postStatus" th:checked="${postStatus}" th:field="${post.privatePost}"   class="form-check-input" />
         </div>
