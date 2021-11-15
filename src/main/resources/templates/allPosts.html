@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8"/>
+    <title>List all posts</title>
+
+</head>
+<body>
+<div class="container">
+
+    <div th:switch="${listPosts}">
+        <h2 th:case="null">No post yet!</h2>
+        <div th:case="*">
+            <h2>All Posts</h2>
+            <table class="table table-striped table-hover">
+                <tr th:each="p: ${listPosts}">
+                    <td th:text="${p.id}"></td>
+                    <td th:text="${p.content}"></td>
+                    <td th:text="${p.createdAt}"></td>
+                    <td th:text="${p.cerebookUser.username}"></td>
+                    <td><a th:href="@{/addComment/{id}(id=${p.id})}">Comment</a></td>
+                </tr>
+            </table>
+        </div>
+    </div>
+</div>
+</body>
+</html>

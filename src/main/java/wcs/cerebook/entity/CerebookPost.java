@@ -14,13 +14,18 @@ public class CerebookPost {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @DateTimeFormat(pattern = "dd/MM/yyyy h:mm a")
+    @DateTimeFormat(pattern = "dd/MM/yyyy h:mm ")
     private Date createdAt;
     private String content;
     private boolean privatePost;
+    // manyToone for post one user can have many post
     @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "cerebook_user_id")
     private CerebookUser cerebookUser;
-
+    // one post to  can have many comment
+    @OneToMany(mappedBy = "cerebookPost", fetch = FetchType.LAZY,
+            cascade = CascadeType.ALL)
+    private List<CerebookComment> comments;
     public CerebookUser getCerebookUser() {
         return cerebookUser;
     }
@@ -64,4 +69,11 @@ public class CerebookPost {
     public CerebookPost() {
     }
 
+    public CerebookPost(Long id, Date createdAt, String content, boolean privatePost, CerebookUser cerebookUser) {
+        this.id = id;
+        this.createdAt = createdAt;
+        this.content = content;
+        this.privatePost = privatePost;
+        this.cerebookUser = cerebookUser;
+    }
 }

@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8" />
+    <title>List all posts</title>
+    <!--<th:block th:replace="/fragments/bootstrap.html :: bootstrap-head"></th:block>
+    <link href="/static/css/user.css" rel="stylesheet"/>-->
+</head>
+<body>
+<div class="container">
+    <a th:href="@{/postCreate}" class="btn btn-primary stretched-link">Add post</a>
+    <div th:switch="${listMyPosts}">
+        <h2 th:case="null">No post yet!</h2>
+        <div th:case="*">
+            <h2>My Posts</h2>
+    <table class="table table-striped table-hover">
+        <thead>
+        <tr>
+            <th>Id</th>
+            <th>Content</th>
+            <th>Created at</th>
+            <th>Is private post</th>
+            <th>user id (asuprimer)</th>
+            <th>Edit</th>
+            <th>Delete</th>
+        </tr>
+        </thead>
+        <tr th:each="p: ${listMyPosts}">
+                <td th:text="${p.id}"></td>
+                <td th:text="${p.content}"></td>
+                <td th:text="${p.createdAt}"></td>
+                <td th:text="${p.isPrivatePost}"></td>
+            <td th:text="${user.id}"></td>
+            <td><a class="btn btn-primary stretched-link" th:href="@{/editPost/{id}(id=${p.id})}">Edit</a></td>
+            <td><a class="btn btn-primary stretched-link" th:href="@{/deletePost/{id}(id=${p.id})}">Remove</a></td>
+
+        </tr>
+
+    </table>
+</div>
+</div>
+</div>
+
+<th:block th:replace="/fragments/bootstrap.html :: bootstrap-body"></th:block>
+</body>
+</html>

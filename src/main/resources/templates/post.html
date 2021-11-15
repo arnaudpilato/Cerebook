@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Add post</title>
+    <!--<th:block th:replace="/fragments/bootstrap.html :: bootstrap-head"></th:block>
+    <link href="/static/css/user.css" rel="stylesheet"/>-->
+</head>
+<body>
+<h3 th:text="${post.id} ? 'Edit post' : 'Create post'">Post</h3>
+<div class="container">
+
+    <form action="#" th:action="@{/updatePost/{id}(id=*{id})}" th:object="${post}" method="POST">
+        <input type="text" th:field="*{id}" placeholder="content" class="form-control mb-4 col-4">
+        <input type="text" th:field="*{content}" placeholder="content" class="form-control mb-4 col-4">
+        <input type="hidden" th:value="${localDateTime}" th:field="*{createdAt}"  placeholder=" created at" class="form-control mb-4 col-4"/> Is private:
+        <input type="hidden" th:value="${user}"  th:field="${user}"  class="form-control mb-4 col-4">
+        <input  th:value="${user.id}"  th:field="${user.id}"  >
+        <input  type="checkbox"  name="postStatus" th:checked="${postStatus}" th:field="${post.privatePost}"   class="form-check-input" />
+
+        <p><button type="submit" class="btn btn-info col-2"> Save Post</button></p>
+    </form>
+
+    <hr>
+
+    <a th:href="@{/}"> Back </a>
+</div>
+</table>
+<!--<th:block th:replace="/fragments/bootstrap.html :: bootstrap-body"></th:block>-->
+</body>
+</html>
