@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="fr" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Profil</title>
+    <th:block th:replace="/fragments/bootstrap.html :: bootstrap-head"></th:block>
+    <link href="/static/css/profil.css" rel="stylesheet" />
+</head>
+<body>
+<header th:replace="/fragments/header.html :: top"></header>
+    <div class="container-fluid" >
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Id</th>
+                    <th>Surnom</th>
+                    <th>Prénom</th>
+                    <th>Nom</th>
+                    <th>Adresse</th>
+                    <th>Ville</th>
+                    <th>Email</th>
+                    <th>Rôle</th>
+                    <th>Date de naissance</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td th:text="${users.id}"></td>
+                    <td th:text="${users.username}"></td>
+                    <td th:text="${users.firstName}"></td>
+                    <td th:text="${users.lastName}"></td>
+                    <td th:text="${users.address}"></td>
+                    <td th:text="${users.city}"></td>
+                    <td th:text="${users.email}"></td>
+                    <td th:text="${users.role}"></td>
+                    <td th:text="${users.birthday}"></td>
+                </tr>
+            </tbody>
+
+        </table>
+        <table class="table">
+            <thead>
+            <tr>private Long id;
+                private String activity;
+                private String avatar;
+                private boolean isInterestedInWoman;
+                private boolean isInterestedInMen;
+                private String hometown;
+                private String relashionship;
+                <th>Id</th>
+                <th>Activité</th>
+                <th>Avatar</th>
+                <th>Intéréssé par les femmes</th>
+                <th>Intéréssé par les hommes</th>
+                <th>Ville de naissance</th>
+                <th>En relation avec</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <td th:text="${users.id}"></td>
+                <td th:text="${users.username}"></td>
+                <td th:text="${users.firstName}"></td>
+                <td th:text="${users.lastName}"></td>
+                <td th:text="${users.address}"></td>
+                <td th:text="${users.city}"></td>
+                <td th:text="${users.email}"></td>
+            </tr>
+            </tbody>
+
+        </table>
+
+       <form method="post" th:action="@{/profil/update}">
+           <input  name="profilId" type="hidden">
+
+           <div class="mb-3">
+               <label class="form-label" for="activity" >Activité</label>
+               <input  class="form-control" id="activity" name="activity" placeholder="Danseuse" type="text">
+           </div>
+
+           <div class="mb-3">
+               <label class="form-label" for="avatar">Avatar</label>
+               <input  class="form-control" id="avatar" name="avatar" placeholder="Avatar" type="text">
+           </div>
+
+           <p>Intéréssé par les femmes</p>
+           <div class="form-check form-check-inline mb-3">
+               <input class="form-check-input" id="isInterestedInWomanChoice1" type="radio" name="isInterestedInWoman" value="true">
+               <label class="form-check-label" for="isInterestedInWomanChoice1">Oui</label>
+           </div>
+           <div class="form-check form-check-inline mb-3">
+               <input class="form-check-input" id="isInterestedInWomanChoice2" type="radio" name="isInterestedInWoman" value="false">
+               <label class="form-check-label" for="isInterestedInWomanChoice2">Non</label>
+           </div>
+
+           <p>Intéréssé par les hommes</p>
+           <div class="form-check form-check-inline mb-3">
+               <input class="form-check-input" id="isInterestedInMenChoice1" type="radio" name="isInterestedInMen" value="true">
+               <label class="form-check-label" for="isInterestedInMenChoice1">Oui</label>
+           </div>
+           <div class="form-check form-check-inline mb-3">
+               <input class="form-check-input" id="isInterestedInMenChoice2" type="radio" name="isInterestedInMen" value="false">
+               <label class="form-check-label" for="isInterestedInMenChoice2">Non</label>
+           </div>
+
+           <div class="mb-3">
+               <label class="form-label" for="hometown">Ville de naissance</label>
+               <input  class="form-control" id="hometown" name="hometown" placeholder="Pétaouchnock" type="text">
+           </div>
+
+           <div class="mb-3">
+               <label class="form-label" for="relashionship">En relation avec</label>
+               <input  class="form-control" id="relashionship" name="relashionship" placeholder="Cendrillon" type="text">
+           </div>
+
+           <button class="btn btn-primary" type="submit">Modifier</button>
+       </form>
+    </div>
+<th:block th:replace="/fragments/bootstrap.html :: bootstrap-body"></th:block>
+</body>
+</html>

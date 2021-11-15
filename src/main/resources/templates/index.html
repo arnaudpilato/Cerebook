@@ -1,11 +1,65 @@
 <!DOCTYPE html>
-<html lang="fr">
+<html lang="fr" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Index des gens</title>
+    <title>Cerebook index</title>
+    <th:block th:replace="/fragments/bootstrap.html :: bootstrap-head"></th:block>
+    <link href="/static/css/style.css" rel="stylesheet"/>
 </head>
 <body>
-    <h1>Les gens!</h1>
-    <a href="/heros">Liste des héros</a>
+<header th:replace="/fragments/header.html :: top"></header>
+<h1 th:inline="text" class="essai text-center">Bienvenue [[${#httpServletRequest.remoteUser}]]</h1>
+
+<div class="container-fluid imageAccueil">
+    <div class="container accueil">
+        <div class="row justify-content-center align-items-center">
+            <div class="col-12 text-center">
+                <div th:if="${#httpServletRequest.remoteUser == null}">
+                    <div class="card cardHome col-12 marginAccueil">
+                        <form name="f" th:action="@{/login}" method="post">
+                            <fieldset class="marginAccueil">
+                                <legend>Connexion</legend>
+                                <div th:if="${param.error}" class="alert alert-error">
+                                    Utilisateur ou mot de passe invalide.
+                                </div>
+                                <div th:if="${param.logout}" class="alert alert-success">
+                                    vous avez été deconnecté.
+                                </div>
+                                <label for="username">Username</label>
+                                <input type="text" id="username" name="username">
+                                <br>
+                                <label for="password">Password</label>
+                                <input type="password" id="password" name="password">
+                                <div class="form-actions form-group connexionButton">
+                                    <button type="submit" class="btn-primary">Se connecter</button>
+                                </div>
+                            </fieldset>
+                        </form>
+                        <div class="form-group mb-5 createButton">
+                            <button class="btn-primary"><a class="aButton" href="/user">Créer un compte</a></button>
+                        </div>
+                    </div>
+                </div>
+                <div>
+                    <div th:unless="${#httpServletRequest.remoteUser == null}">
+                        <div class="card cardHome col-12 marginAccueil">
+                            <div class="form-group mb-5 createButton mt-5">
+                                <button class="btn-primary"><a class="aButton" href="/profil">Voir son profil</a>
+                                </button>
+                            </div>
+                            <div class="form-group mb-5 createButton">
+                                <button class="btn-primary"><a class="aButton" value="Logout" href="/logout">Se
+                                    déconnecter</a>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<th:block th:replace="/fragments/bootstrap.html :: bootstrap-body"></th:block>
 </body>
 </html>
