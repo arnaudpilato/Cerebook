@@ -45,11 +45,13 @@ public class MessagingController {
 
         // user destinataire
         CerebookUser userDestinate = userRepository.getCerebookUserByUsername(username);
-        Optional<> messages = msgRepository.getCerebookMessageByCurrentUser_Id(currentUser.getId());
-        System.ou.println(messages.toString());
 
+        List<CerebookMessage> messages = msgRepository.getCerebookMessageByCurrentUser(currentUser);
 
-
+        for (CerebookMessage message: messages
+             ) {
+            System.out.println(message.getMessage());
+        }
         return "message/tchat";
     }
 

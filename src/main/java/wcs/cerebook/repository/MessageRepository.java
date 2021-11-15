@@ -7,9 +7,11 @@ import org.springframework.stereotype.Repository;
 import wcs.cerebook.entity.CerebookMessage;
 import wcs.cerebook.entity.CerebookUser;
 
+import java.util.List;
+
 @Repository
 public interface MessageRepository extends JpaRepository<CerebookMessage, Long> {
     @Query("SELECT m FROM CerebookMessage m WHERE m.currentUser = :currentUser")
-   public CerebookMessage getCerebookMessageByCurrentUser_Id(@Param("currentUser") Long currentUser);
+   public List<CerebookMessage> getCerebookMessageByCurrentUser(@Param("currentUser") CerebookUser currentUser);
 
 }
