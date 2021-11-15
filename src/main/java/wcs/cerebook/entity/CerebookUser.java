@@ -35,6 +35,7 @@ public class CerebookUser {
     )
 
     private List<CerebookPost> cerebookPosts = new ArrayList();
+
     @OneToMany(mappedBy = "currentUser")
     private List<CerebookMessage> messages;
 
