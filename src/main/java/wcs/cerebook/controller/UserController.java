@@ -6,7 +6,9 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.bind.annotation.GetMapping;
+import wcs.cerebook.entity.CerebookProfil;
 import wcs.cerebook.entity.CerebookUser;
+import wcs.cerebook.repository.ProfilRepository;
 import wcs.cerebook.repository.UserRepository;
 
 
@@ -31,6 +33,9 @@ public class UserController {
         String rawPassword = user.getPassword();
         String encodedPassword = encoder.encode(rawPassword);
         user.setPassword(encodedPassword);
+        user.setProfil(new CerebookProfil());
+        user.getProfil().setBanner("/static/css/img/banner.png");
+        user.getProfil().setAvatar("/static/css/img/avatar.jpeg");
         try {
             userRepository.save(user);
         } catch (Exception e) {

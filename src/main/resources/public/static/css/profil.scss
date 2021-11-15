@@ -1,8 +1,14 @@
+/***** Imports *****/
+
 @import "style.scss";
+
+/***** Body *****/
 
 body {
   background-color: #C4C4C4;
 }
+
+/***** Banner *****/
 
 .baniere {
   width: 100%;
@@ -99,4 +105,15 @@ body {
   background-color: white;
   height: 100px;
   position: relative;
+}
+
+/***** Modal *****/
+
+.modal-profile-logo {
+  height: 32px;
+  margin-right: 30px;
+}
+
+.modal-list {
+  list-style-type: none;
 }

@@ -47,7 +47,7 @@
   transition: width 0.4s linear;
 }
 
-/***** Acuueil *****/
+/***** Accueil *****/
 .accueil {
   display: flex;
   flex-direction: column;

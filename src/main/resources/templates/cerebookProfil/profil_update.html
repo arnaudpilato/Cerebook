@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="fr" xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <meta charset="UTF-8">
+        <title>Modification du profil</title>
+        <th:block th:replace="/fragments/bootstrap.html :: bootstrap-head"></th:block>
+        <link href="/static/css/profil.css" rel="stylesheet" />
+    </head>
+    <body>
+        <header th:replace="/fragments/header.html :: top"></header>
+        <div class="container-sm">
+            <h1 class="text-center">Modification du profil</h1>
+            <form method="post" th:action="@{/profil/update}">
+                <input th:value="${user.profil.id}"  name="id" type="hidden">
+
+                <div class="mb-3">
+                    <label class="form-label" for="activity" >Activité</label>
+                    <input th:value="${user.profil.activity}" class="form-control" id="activity" name="activity" type="text">
+                </div>
+
+                <div class="mb-3">
+                    <label class="form-label" for="banner" >Banière</label>
+                    <input th:value="${user.profil.banner}" class="form-control" id="banner" name="banner" type="text">
+                </div>
+
+                <div class="mb-3">
+                    <label class="form-label" for="avatar">Avatar</label>
+                    <input th:value="${user.profil.avatar}" class="form-control" id="avatar" name="avatar" placeholder="Avatar" type="text">
+                </div>
+
+                <p>Intéréssé par les femmes</p>
+                <div class="form-check form-check-inline mb-3">
+                    <input class="form-check-input" id="isInterestedInWomanChoice1" type="radio" name="interestedInWoman" th:value="true" th:checked="${user.profil.interestedInWoman} == true">
+                    <label class="form-check-label" for="isInterestedInWomanChoice1">Oui</label>
+                </div>
+                <div class="form-check form-check-inline mb-3">
+                    <input class="form-check-input" id="isInterestedInWomanChoice2" type="radio" name="interestedInWoman" th:value="false" th:checked="${user.profil.interestedInWoman} == false">
+                    <label class="form-check-label" for="isInterestedInWomanChoice2">Non</label>
+                </div>
+
+                <p>Intéréssé par les hommes</p>
+                <div class="form-check form-check-inline mb-3">
+                    <input class="form-check-input" id="isInterestedInMenChoice1" type="radio" name="interestedInMen" th:value="true" th:checked="${user.profil.interestedInMen} == true">
+                    <label class="form-check-label" for="isInterestedInMenChoice1">Oui</label>
+                </div>
+                <div class="form-check form-check-inline mb-3">
+                    <input class="form-check-input" id="isInterestedInMenChoice2" type="radio" name="interestedInMen" th:value="false" th:checked="${user.profil.interestedInMen} == false">
+                    <label class="form-check-label" for="isInterestedInMenChoice2">Non</label>
+                </div>
+
+                <div class="mb-3">
+                    <label class="form-label" for="hometown">Ville de naissance</label>
+                    <input th:value="${user.profil.hometown}" class="form-control" id="hometown" name="hometown" placeholder="Pétaouchnock" type="text">
+                </div>
+
+                <div class="mb-3">
+                    <label class="form-label" for="relashionship">En relation avec</label>
+                    <input th:value="${user.profil.relashionship}" class="form-control" id="relashionship" name="relashionship" placeholder="Cendrillon" type="text">
+                </div>
+
+                <button class="btn btn-primary" type="submit">Modifier</button>
+            </form>
+        </div>
+        <th:block th:replace="/fragments/bootstrap.html :: bootstrap-body"></th:block>
+    </body>
+</html>

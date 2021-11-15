@@ -11,8 +11,9 @@ public class CerebookProfil {
     private Long id;
     private String activity;
     private String avatar;
-    private boolean isInterestedInWoman;
-    private boolean isInterestedInMen;
+    private String banner;
+    private boolean interestedInWoman;
+    private boolean interestedInMen;
     private String hometown;
     private String relashionship;
 
@@ -43,20 +44,28 @@ public class CerebookProfil {
         this.avatar = avatar;
     }
 
+    public String getBanner() {
+        return banner;
+    }
+
+    public void setBanner(String banner) {
+        this.banner = banner;
+    }
+
     public boolean isInterestedInWoman() {
-        return isInterestedInWoman;
+        return interestedInWoman;
     }
 
     public void setInterestedInWoman(boolean interestedInWoman) {
-        isInterestedInWoman = interestedInWoman;
+        this.interestedInWoman = interestedInWoman;
     }
 
     public boolean isInterestedInMen() {
-        return isInterestedInMen;
+        return interestedInMen;
     }
 
     public void setInterestedInMen(boolean interestedInMen) {
-        isInterestedInMen = interestedInMen;
+        this.interestedInMen = interestedInMen;
     }
 
     public String getHometown() {
@@ -81,5 +90,20 @@ public class CerebookProfil {
 
     public void setUser(CerebookUser user) {
         this.user = user;
+    }
+
+    @Override
+    public String toString() {
+        return "CerebookProfil{" +
+                "id=" + id +
+                ", activity='" + activity + '\'' +
+                ", avatar='" + avatar + '\'' +
+                ", banner='" + banner + '\'' +
+                ", interestedInWoman=" + interestedInWoman +
+                ", isInterestedInMen=" + interestedInMen +
+                ", hometown='" + hometown + '\'' +
+                ", relashionship='" + relashionship + '\'' +
+                ", user=" + user +
+                '}';
     }
 }
