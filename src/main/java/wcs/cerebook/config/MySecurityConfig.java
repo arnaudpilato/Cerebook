@@ -12,6 +12,7 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.factory.PasswordEncoderFactories;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 import wcs.cerebook.services.CerebookUserDetailsService;
 
 @Configuration
@@ -54,6 +55,7 @@ public class MySecurityConfig extends WebSecurityConfigurerAdapter {
                 .defaultSuccessUrl("/profil", true)
                 .and()
                 .logout()
+                .logoutRequestMatcher(new AntPathRequestMatcher("/logout", "GET"))
                 .permitAll();
     }
 

@@ -46,9 +46,7 @@ public class CerebookUser {
     public CerebookUser() {
     }
 
-
-    public CerebookUser(Long id, String username, String firstName, String lastName, String city, String address,
-                        String email, String password, Date birthday, String role, boolean enable) {
+    public CerebookUser(Long id, String username, String firstName, String lastName, String city, String address, String email, String password, Date birthday, String role, boolean enable, List<CerebookPost> cerebookPosts, List<CerebookMessage> messages, CerebookProfil profil) {
         this.id = id;
         this.username = username;
         this.firstName = firstName;
@@ -60,6 +58,9 @@ public class CerebookUser {
         this.birthday = birthday;
         this.role = role;
         this.enable = enable;
+        this.cerebookPosts = cerebookPosts;
+        this.messages = messages;
+        this.profil = profil;
     }
 
     public Long getId() {
