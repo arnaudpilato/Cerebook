@@ -87,6 +87,21 @@
   padding-left: 10px;
 }
 
+.marginAccueil {
+  margin-left: 5vh;
+  margin-right: 5vh;
+  margin-top: 2vh;
+  margin-bottom: 2vh;
+}
+
+.createButton {
+  margin-bottom: 1vh;
+}
+
+.connexionButton {
+  margin-top: 2vh;
+}
+
 /***** Body *****/
 body {
   background-color: #C4C4C4;

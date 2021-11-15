@@ -2,6 +2,8 @@ package wcs.cerebook.entity;
 
 import javax.persistence.*;
 import java.sql.Date;
+import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -10,23 +12,20 @@ public class CerebookMessage {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String message;
-    private Date date;
+    private LocalDateTime date;
     @ManyToOne(optional = true)
     private CerebookUser currentUser;
     @ManyToMany()
-    private List<CerebookUser> UserDestination;
+    private final List<CerebookUser> UserDestination = new ArrayList<>();
 
 
     public CerebookMessage() {
     }
 
-    public CerebookMessage(Long id, String message, Date date, CerebookUser currentUser,
-                           List<CerebookUser> userDestination) {
-        this.id = id;
+    public CerebookMessage(String message, LocalDateTime date, CerebookUser currentUser) {
         this.message = message;
         this.date = date;
         this.currentUser = currentUser;
-        UserDestination = userDestination;
     }
 
     public Long getId() {
@@ -37,13 +36,6 @@ public class CerebookMessage {
         this.id = id;
     }
 
-    public List<CerebookUser> getUserDestination() {
-        return UserDestination;
-    }
-
-    public void setUserDestination(List<CerebookUser> userDestination) {
-        UserDestination = userDestination;
-    }
 
     public String getMessage() {
         return message;
@@ -61,11 +53,15 @@ public class CerebookMessage {
         this.currentUser = currentUser;
     }
 
-    public Date getDate() {
+    public LocalDateTime getDate() {
         return date;
     }
 
-    public void setDate(Date date) {
+    public void setDate(LocalDateTime date) {
         this.date = date;
+    }
+
+    public List<CerebookUser> getUserDestination() {
+        return UserDestination;
     }
 }
