@@ -13,27 +13,59 @@
                     <div class="col-lg-11">
                         <div class="row">
                             <div class="col-lg-12">
-                                <img class="baniere" src="/static/css/img/essai-banière.jpeg" alt="Banière">
+                                <img class="baniere" th:src="${user.profil.banner}" alt="Banière">
                             </div>
                         </div>
                         <div class="row">
                             <div class="col-lg-5 pr-0">
                                 <ul class="banner-logo-list banner-left pl-3">
-                                    <li><a href="/profil/show"><img class="banner-logo" src="/static/css/img/secured-profile.png" alt="Logo profil"></a></li>
-                                    <li><a href="#"><img class="banner-logo" src="/static/css/img/map.png" alt="Logo carte"></a></li>
+                                    <li><a type="button" data-bs-toggle="modal" data-bs-target="#profilModal"><img class="banner-logo" src="/static/css/img/secured-profile.png" alt="Logo profil"></a></li>
+                                    <li><a href="/profil/show"><img class="banner-logo" src="/static/css/img/map.png" alt="Logo carte"></a></li>
                                     <li><a href="#"><img class="banner-logo" src="/static/css/img/friends.png" alt="Logo amis"></a></li>
                                 </ul>
+                                <div class="modal fade" id="profilModal" tabindex="-1" aria-labelledby="profilModalLabel" aria-hidden="true">
+                                    <div class="modal-dialog modal-dialog-centered">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h5 class="modal-title" id="profilModalLabel" th:text="${user.username}"></h5>
+                                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                            </div>
+                                            <div class="modal-body">
+                                                <h4 class="text-center mb-3">Coordonnées</h4>
+                                                <ul class="modal-list">
+                                                    <li class="mb-2"><img class="modal-profile-logo" src="/static/css/img/profil.png" alt="Logo profil"><span th:text="${user.firstName} + ' ' + ${user.lastName}"></span></li>
+                                                    <li class="mb-2"><img class="modal-profile-logo" src="/static/css/img/home.png" alt="Logo adresse"><span th:text="${user.address}"></span></li>
+                                                    <li class="mb-2"><img class="modal-profile-logo" src="/static/css/img/city.png" alt="Logo adresse"><span th:text="${user.city}"></span></li>
+                                                    <li class="mb-2"><img class="modal-profile-logo" src="/static/css/img/birthday.png" alt="Logo adresse"><span th:text="${#dates.format(user.birthday,'dd MM yyyy')}"></span></li>
+                                                    <li class="mb-4"><img class="modal-profile-logo" src="/static/css/img/mail.png" alt="Logo email"><span th:text="${user.email}"></span></li>
+                                                </ul>
+
+                                                <h4 class="text-center mb-3">Profil</h4>
+                                                <ul class="modal-list">
+                                                    <li class="mb-2"><img class="modal-profile-logo" src="/static/css/img/shield.png" alt="Logo profil"><span th:text="${user.profil.activity}"></span></li>
+                                                    <li th:if="${user.profil.interestedInWoman}" class="mb-2"><img class="modal-profile-logo" src="/static/css/img/love.png" alt="Logo profil"><span>Intéréssé par les femmes</span></li>
+                                                    <li th:if="${user.profil.interestedInMen}" class="mb-2"><img class="modal-profile-logo" src="/static/css/img/love.png" alt="Logo profil"><span>Intéréssé par les hommes</span></li>
+                                                    <li class="mb-2"><img class="modal-profile-logo" src="/static/css/img/hometown.png" alt="Logo profil"><span th:text="'De ' + ${user.profil.hometown}"></span></li>
+                                                    <li><img class="modal-profile-logo" src="/static/css/img/relationship.png" alt="Logo profil"><span th:text="'En relation avec ' + ${ user.profil.relashionship}"></span></li>
+                                                </ul>
+                                            </div>
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                             <div class="col-lg-2 banner-list d-flex justify-content-center">
                                 <img class="ornament-logo" src="/static/css/img/ornament.png" alt="Logo circulaire">
-                                <img class="profile-logo" src="/static/css/img/Iron Man.png" alt="Logo de profil">
-                                <h1 class="profile-name" th:text="${user.username}">Iron Man</h1>
+                                <img class="profile-logo" th:src="${user.profil.avatar}" alt="Logo de profil">
+                                <h1 class="profile-name" th:text="${user.username}"></h1>
                             </div>
                             <div class="col-lg-5 pl-0">
                                 <ul class="banner-logo-list banner-right pl-0 pr-3">
                                     <li><a href="#"><img class="banner-logo" src="/static/css/img/gallery.png" alt="Logo photos"></a></li>
                                     <li><a href="#"><img class="banner-logo" src="/static/css/img/video.png" alt="Logo vidéos"></a></li>
-                                    <li><a href="#"><img class="banner-logo" src="/static/css/img/option.png" alt="Logo options"></a></li>
+                                    <li><a href="/profil/update"><img class="banner-logo" src="/static/css/img/option.png" alt="Logo options"></a></li>
                                 </ul>
                             </div>
                         </div>
