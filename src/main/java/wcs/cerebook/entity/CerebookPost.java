@@ -25,6 +25,7 @@ public class CerebookPost {
     // one post to  can have many comment
     @OneToMany(mappedBy = "cerebookPost", fetch = FetchType.LAZY,
             cascade = CascadeType.ALL)
+    //private CerebookPost cerebookPost;
     private List<CerebookComment> comments;
     public CerebookUser getCerebookUser() {
         return cerebookUser;
