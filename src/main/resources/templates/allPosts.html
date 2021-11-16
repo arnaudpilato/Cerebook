@@ -21,7 +21,9 @@
                     <td th:text="${p.createdAt}"></td>
                     <td th:text="${p.cerebookUser.username}"></td>
                     <td><a th:href="@{/addComment/{id}(id=${p.id})}">Comment</a></td>
+                        <td><a th:href="@{/listComment/{id}(id=${p.id})}">view comments</a></td>
                 </span>
+
                 </tr>
 
             </table>
