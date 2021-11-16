@@ -212,4 +212,35 @@ body {
   list-style-type: none;
 }
 
+/***** Profil Section *****/
+.title-section {
+  font-weight: bold;
+}
+
+.profile-section {
+  border-radius: 10px;
+  background-color: #E9C46A;
+}
+
+.profile-section ul {
+  list-style-type: none;
+}
+
+.essai {
+  padding-top: 20px;
+  padding-bottom: 20px;
+}
+
+.profile-section-logo {
+  width: 64px;
+  height: auto;
+  display: inline-block;
+  border-radius: 50%;
+}
+
+.profile-section-username {
+  font-weight: bold;
+  font-size: 1.5rem;
+}
+
 /*# sourceMappingURL=profil.css.map */

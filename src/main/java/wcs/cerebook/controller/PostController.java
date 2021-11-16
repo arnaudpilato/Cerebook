@@ -2,7 +2,9 @@ package wcs.cerebook.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+import wcs.cerebook.controller.exception.illegalArgumentException;
 import wcs.cerebook.entity.CerebookPost;
 import wcs.cerebook.entity.CerebookUser;
 import wcs.cerebook.repository.PostRepository;
@@ -10,9 +12,8 @@ import wcs.cerebook.repository.UserRepository;
 
 
 import javax.servlet.http.HttpServletRequest;
+import javax.validation.Valid;
 import java.security.Principal;
-import java.time.LocalDateTime;
-
 
 import java.util.Date;
 import java.util.List;
@@ -26,7 +27,7 @@ public class PostController {
     }
     @Autowired
     private UserRepository userRepository;
-    @GetMapping("/addPostForm")
+    @GetMapping("/postCreate")
     public String addPost(Principal principal,Model model) {
     String username = principal.getName();
     CerebookUser user = userRepository.getCerebookUserByUsername(username);
@@ -44,7 +45,8 @@ public class PostController {
 
         return "addPost";
     }
-    @RequestMapping("/savePost")
+    //save post
+    @RequestMapping("/save")
     public String savePost(Principal principal,CerebookPost cerebookPost) {
         // save post to database
         String username = principal.getName();
@@ -55,32 +57,88 @@ public class PostController {
     }
 
     @RequestMapping("/readPost")
-    public CerebookPost getPost(Long postId) {
-        return repository.findById(postId).get();
+    public String getPost(Model model,Long postId) {
+        model.addAttribute("post",repository.findById(postId).get());
+        return "posts";
     }
-
+// list all posts
     @RequestMapping("/posts")
     public String getAllPosts(Model model) {
         List<CerebookPost> cerebookPosts = repository.findAll();
 
         model.addAttribute("listPosts",cerebookPosts);
 
-        return "CerebookPost/posts";
+        return "posts";
     }
+    @RequestMapping("/editPost/{id}")
+    public String showPostForm(@PathVariable("id") long id, Model model,Principal principal) throws illegalArgumentException {
+        CerebookPost cerebookPost = this.repository.findById(id)
+                .orElseThrow(()-> new illegalArgumentException(" Invalid post id: "+id));
+        String username = principal.getName();
+        CerebookUser user = userRepository.getCerebookUserByUsername(username);
+        model.addAttribute("post", cerebookPost);
+        //cerebookPost.setCerebookUser(user);
+        model.addAttribute("user",user);
+        cerebookPost.setCreatedAt(new Date());
+        model.addAttribute("localDateTime",new Date());
+        boolean postStatu = cerebookPost.isPrivatePost();
 
-    @RequestMapping("/updatePost")
-    public CerebookPost updatePost(Long postId,Date createdAt,String content,Boolean isPrivatePost) {
-        CerebookPost postToUpdate = repository.findById(postId).get();
-        if (postId != null) {
-            postToUpdate.setContent(content);
-            //postToUpdate.setCreatedAt(createdAt);
-            postToUpdate.setPrivatePost(isPrivatePost);
+        model.addAttribute("postStatus", postStatu);
+
+        //model.addAttribute("posts",cerebookPost);
+        return "post";
+        }
+    @PostMapping("/updatePost/{id}")
+    public String updatePost(@PathVariable("id") Long id, Model model, @Valid CerebookPost cerebookPost, BindingResult result,Principal principal) {
+        String username = principal.getName();
+        CerebookUser user = userRepository.getCerebookUserByUsername(username);
+                Long userid=  user.getId();
+        if (result.hasErrors()) {
+
+           cerebookPost.setCerebookUser(user);
+            return "post";
 
         }
-        return repository.save(postToUpdate);
+        System.out.println("ici le id =============="+userid+"=============================");
+        repository.save(cerebookPost);
+
+        //model.addAttribute("post", repository.findAll());
+
+        return "redirect:/myPosts";
     }
-    @RequestMapping("/deletePost")
-    public void deletePost(Long postId) {
-        repository.deleteById(postId);
+    @GetMapping("/deletePost/{id}")
+    public String deletePost(@PathVariable("id") Long id, Model model) throws illegalArgumentException {
+        CerebookPost cerebookPost = this.repository.findById(id)
+                .orElseThrow(()-> new illegalArgumentException(" Invalid post id: "+id));
+        this.repository.delete(cerebookPost);
+        model.addAttribute("posts",this.repository.findAll());
+return  "posts";
     }
+    @GetMapping("/myPosts")
+    public String getMyPosts(Model model,Principal principal,@Valid CerebookUser cerebookUser) {
+        String username = principal.getName();
+        CerebookUser user = userRepository.getCerebookUserByUsername(username);
+        model.addAttribute("listMyPosts",repository.findAll());
+        model.addAttribute("user",user);
+        return "myPosts";
+    }
+    @GetMapping("/allPosts")
+    public String getAllPosts(Model model,Principal principal,@Valid CerebookUser cerebookUser,@Valid CerebookPost cerebookPost) {
+        String username = principal.getName();
+        List<CerebookUser> user = userRepository.findAll();
+
+
+        List<CerebookPost> cerebookPosts = repository.findAll();
+        model.addAttribute("listPosts", cerebookPosts);
+        //cerebookPost.setCerebookUser(user);
+
+        model.addAttribute("user",user);
+        cerebookPost.setCreatedAt(new Date());
+        model.addAttribute("localDateTime",new Date());
+        boolean postStatu = cerebookPost.isPrivatePost();
+
+        model.addAttribute("postStatus", postStatu);
+        return "allPosts";
+    }
+
 }

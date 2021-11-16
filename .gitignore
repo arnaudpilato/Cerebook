@@ -37,3 +37,4 @@ node_modules/
 target/*
 *.css
 *.map
+src/main/resources/public/static/css/data/*
