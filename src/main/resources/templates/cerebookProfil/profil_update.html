@@ -8,9 +8,9 @@
     </head>
     <body>
         <header th:replace="/fragments/header.html :: top"></header>
-        <div class="container-sm">
+        <div class="container mt-3">
             <h1 class="text-center">Modification du profil</h1>
-            <form method="post" th:action="@{/profil/update}">
+            <form method="post" th:action="@{/profil/update}" enctype="multipart/form-data">
                 <input th:value="${user.profil.id}"  name="id" type="hidden">
 
                 <div class="mb-3">
@@ -19,13 +19,13 @@
                 </div>
 
                 <div class="mb-3">
-                    <label class="form-label" for="banner" >Banière</label>
-                    <input th:value="${user.profil.banner}" class="form-control" id="banner" name="banner" type="text">
+                    <label class="form-label" for="file_banner" >Banière</label>
+                    <input class="form-control" id="file_banner" name="file_banner" type="file">
                 </div>
 
                 <div class="mb-3">
-                    <label class="form-label" for="avatar">Avatar</label>
-                    <input th:value="${user.profil.avatar}" class="form-control" id="avatar" name="avatar" placeholder="Avatar" type="text">
+                    <label class="form-label" for="file_avatar">Avatar</label>
+                    <input class="form-control" id="file_avatar" name="file_avatar" type="file">
                 </div>
 
                 <p>Intéréssé par les femmes</p>
@@ -57,8 +57,9 @@
                     <label class="form-label" for="relashionship">En relation avec</label>
                     <input th:value="${user.profil.relashionship}" class="form-control" id="relashionship" name="relashionship" placeholder="Cendrillon" type="text">
                 </div>
-
-                <button class="btn btn-primary" type="submit">Modifier</button>
+                <div class="d-flex justify-content-end">
+                    <button class="btn btn-primary" type="submit">Modifier</button>
+                </div>
             </form>
         </div>
         <th:block th:replace="/fragments/bootstrap.html :: bootstrap-body"></th:block>
