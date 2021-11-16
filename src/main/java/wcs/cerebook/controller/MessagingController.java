@@ -41,17 +41,18 @@ public class MessagingController {
         // récupération du user connecter
         String usernameCurrent = principal.getName();
         CerebookUser currentUser = userRepository.findByUsername(usernameCurrent);
-    ;
+        ;
 
         // user destinataire
         CerebookUser userDestinate = userRepository.getCerebookUserByUsername(username);
 
-        List<CerebookMessage> messages = msgRepository.getCerebookMessageByCurrentUser(currentUser);
+        // pour récupéré tous les messages envoyé par rapport au user connecter
+        List<CerebookMessage> messages = msgRepository.getCerebookMessageByCurrentUseraAndUserDestination(currentUser,
+                userDestinate);
+        // pour récupéré tous les messages envoyer par rapport a l'utilisateur voulu
+        List<CerebookMessage> messagesRecep = msgRepository.getCerebookMessageByCurrentUseraAndUserDestination(userDestinate,
+                currentUser);
 
-        for (CerebookMessage message: messages
-             ) {
-            System.out.println(message.getMessage());
-        }
         return "message/tchat";
     }
 

@@ -1,7 +1,6 @@
 package wcs.cerebook.entity;
 
 import javax.persistence.*;
-import java.sql.Date;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -16,7 +15,7 @@ public class CerebookMessage {
     @ManyToOne(optional = true)
     private CerebookUser currentUser;
     @ManyToMany()
-    private final List<CerebookUser> UserDestination = new ArrayList<>();
+    private final List<CerebookUser> userDestination = new ArrayList<>();
 
 
     public CerebookMessage() {
@@ -62,6 +61,6 @@ public class CerebookMessage {
     }
 
     public List<CerebookUser> getUserDestination() {
-        return UserDestination;
+        return userDestination;
     }
 }
