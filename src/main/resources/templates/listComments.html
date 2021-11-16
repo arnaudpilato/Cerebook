@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8"/>
+    <title>List comments</title>
+
+</head>
+<body>
+<div class="container">
+
+    <div th:switch="${listComment}">
+        <h2 th:case="null">No comment yet!</h2>
+        <div th:case="*">
+            <h2>All comments</h2>
+
+            <table class="table table-striped table-hover">
+                <tr th:each="c: ${listComment}">
+                       <td th:text="${c.comment}">comment: </td>
+                    <td th:text="${c.createdAt}"> created at: </td>
+                    <td th:text="${c.cerebookPost.id}"></td>
+                </tr>
+
+            </table>
+        </div>
+    </div>
+</div>
+</body>
+</html>
