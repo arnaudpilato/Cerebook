@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <title>Creation utilisateur</title>
-        <th:block th:replace="/fragments/bootstrap.html :: bootstrap-head"></th:block>
+    <th:block th:replace="/fragments/bootstrap.html :: bootstrap-head"></th:block>
     <link href="/static/css/user.css" rel="stylesheet"/>
 </head>
 <body>
@@ -18,14 +18,15 @@
                     <form method="post" th:action="@{/userCreate}" th:object="${user}">
                         <fieldset class="marginCreateUser">
                             <legend>Création de compte</legend>
-                            <div th:if="${error}" class="alert alert-danger" role="alert">
-                                Nom d'utilisateur déjà existant.
-                            </div>
+
                             <input name="id" th:field="*{id}" type="hidden">
                             <div class="form-group">
                                 <label for="user-username">Nom d'utilisateur : </label>
                                 <input id="user-username" name="username" placeholder="Wolverine" required
                                        th:field="*{username}" type="text">
+                            </div>
+                            <div th:if="${error}" class="alert alert-danger" role="alert">
+                                Nom d'utilisateur déjà existant.
                             </div>
                             <div class="form-group">
                                 <label for="user-firstName">Prénom : </label>
@@ -57,13 +58,40 @@
                                 <input id="user-birthday" name="birthday" required th:field="*{birthday}"
                                        type="date">
                             </div>
+                            <div class="form-check form-check-inline mt-2">
+                                <input class="form-check-input" id="superHero" type="radio"
+                                       name="role" th:value="HERO">
+                                <label class="form-check-label" for="superHero">Super Héro</label>
+                            </div>
+                            <div class="form-check form-check-inline ">
+                                <input class="form-check-input" id="humain" type="radio"
+                                       name="role" th:value="NEUTRE" checked>
+                                <label class="form-check-label" for="isInterestedInWomanChoice1">Neutre</label>
+                            </div>
+                            <div class="form-check form-check-inline ">
+                                <input class="form-check-input" id="isInterestedInWomanChoice1" type="radio"
+                                       name="role" th:value="MECHANT">
+                                <label class="form-check-label" for="isInterestedInWomanChoice1">Bad Guy</label>
+                            </div>
+
                             <div class="form-group">
                                 <label for="user-password">Mot de passe : </label>
                                 <input id="user-password" name="password" placeholder="password" required
                                        th:field="*{password}" type="password">
                             </div>
-                            <label hidden for="user-role">role</label>
-                            <input hidden id="user-role" name="role" value="USER">
+                            <div th:if="${errorPassword}" class="alert alert-danger" role="alert">
+                                Veuillez saisir le même mot de passe.
+                            </div>
+                            <div class="form-group">
+                                <label for="confirm">Confirmer le mot de passe : </label>
+                                <input id="confirm" name="confirm" placeholder="password" required
+                                       type="password">
+                            </div>
+                            <div th:if="${errorPassword}" class="alert alert-danger" role="alert">
+                                Veuillez saisir le même mot de passe.
+                            </div>
+                            <!--<label hidden for="user-role">role</label>
+                            <input hidden id="user-role" name="role" value="USER">-->
                             <label hidden for="user-enable">role</label>
                             <br>
                             <input hidden id="user-enable" name="enable" value=true>

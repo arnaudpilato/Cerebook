@@ -1,6 +1,7 @@
 package wcs.cerebook.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.repository.query.Param;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -10,6 +11,8 @@ import wcs.cerebook.entity.CerebookProfil;
 import wcs.cerebook.entity.CerebookUser;
 import wcs.cerebook.repository.ProfilRepository;
 import wcs.cerebook.repository.UserRepository;
+
+import javax.servlet.http.HttpServletRequest;
 
 
 @Controller
@@ -27,14 +30,30 @@ public class UserController {
         return "index";
     }
 
-    @PostMapping("/userCreate")
-    public String postUser(@ModelAttribute CerebookUser user, Model model) {
+    @RequestMapping("/userCreate")
+    public String postUser(@ModelAttribute CerebookUser user, Model model,
+                           @Param("confirm") String confirm
+    ) {
+        if (!confirm.equals(user.getPassword())) {
+            boolean error = true;
+            model.addAttribute("errorPassword", error);
+            model.addAttribute("user", user);
+            return "/cerebookUser/user";
+        }
+
         BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
         String rawPassword = user.getPassword();
         String encodedPassword = encoder.encode(rawPassword);
+
         user.setPassword(encodedPassword);
         user.setProfil(new CerebookProfil());
-        user.getProfil().setBanner("/static/css/img/banner.png");
+        if (user.getRole().equals("HERO")) {
+            user.getProfil().setBanner("/static/css/img/banner.png");
+        } else if (user.getRole().equals("MECHANT")) {
+            user.getProfil().setBanner("/static/css/img/magneto-banner.jpeg");
+        }else {
+            user.getProfil().setBanner("/static/css/img/New-York-Manhattan.jpeg");
+        }
         user.getProfil().setAvatar("/static/css/img/avatar.jpeg");
         try {
             userRepository.save(user);
