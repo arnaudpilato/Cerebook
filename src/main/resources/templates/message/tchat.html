@@ -15,7 +15,7 @@
     <div th:each="message: ${messages}">
         <div th:if="${message.getCurrentUser().getId() == user.getId()}" class="alert alert-primary col-3"
            th:text="${message.getMessage()}"></p></div>
-        <p th:unless="${message.getCurrentUser().getId() != user.getId()}" class="alert alert-danger col-3"
+        <p th:unless="${message.getCurrentUser().getId() == user.getId()}" class="alert alert-danger col-3"
            th:text="${message.getMessage()}"/>
     </div>
     </div>

@@ -60,6 +60,7 @@ public class MessagingController {
         ) {
             System.out.println(msg.getMessage());
         }
+
         Comparator<CerebookMessage> comparator = new Comparator<CerebookMessage>() {
             @Override
             public int compare(CerebookMessage o1, CerebookMessage o2) {
@@ -69,7 +70,7 @@ public class MessagingController {
 
 
 //        Collections.sort(finalList, comparator);
-        model.addAttribute("user", currentUser);
+        model.addAttribute("user", userDestinate);
 //        model.addAttribute("messagesRecep", messagesRecep);
 //        model.addAttribute("sendMessages", sendMessages);
         model.addAttribute("messages", finalList);
