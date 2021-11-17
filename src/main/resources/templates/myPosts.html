@@ -20,19 +20,21 @@
             <th>Content</th>
             <th>Created at</th>
             <th>Is private post</th>
-            <th>user id (asuprimer)</th>
+
             <th>Edit</th>
             <th>Delete</th>
         </tr>
         </thead>
         <tr th:each="p: ${listMyPosts}">
+             <span th:if="${p.cerebookUser.id==user.id}">
                 <td th:text="${p.id}"></td>
                 <td th:text="${p.content}"></td>
                 <td th:text="${p.createdAt}"></td>
                 <td th:text="${p.isPrivatePost}"></td>
-            <td th:text="${user.id}"></td>
-            <td><a class="btn btn-primary stretched-link" th:href="@{/editPost/{id}(id=${p.id})}">Edit</a></td>
+                 <td><a class="btn btn-primary stretched-link" th:href="@{/editPost/{id}(id=${p.id})}">Edit</a></td>
             <td><a class="btn btn-primary stretched-link" th:href="@{/deletePost/{id}(id=${p.id})}">Remove</a></td>
+             </span>
+
 
         </tr>
 
