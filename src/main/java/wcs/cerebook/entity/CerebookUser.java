@@ -40,6 +40,28 @@ public class CerebookUser {
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "profil_id", referencedColumnName = "id")
     private CerebookProfil profil;
+// relation oneToMany between user and comments
+    @OneToMany(
+        cascade = CascadeType.ALL,
+        orphanRemoval = true
+        )
+    private List<CerebookComment> comments = new ArrayList<>();
+
+    public List<CerebookPost> getCerebookPosts() {
+        return cerebookPosts;
+    }
+
+    public void setCerebookPosts(List<CerebookPost> cerebookPosts) {
+        this.cerebookPosts = cerebookPosts;
+    }
+
+    public List<CerebookComment> getComments() {
+        return comments;
+    }
+
+    public void setComments(List<CerebookComment> comments) {
+        this.comments = comments;
+    }
 
     public CerebookUser() {
     }
