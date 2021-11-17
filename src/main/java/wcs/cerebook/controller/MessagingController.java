@@ -16,8 +16,7 @@ import javax.servlet.http.HttpServletRequest;
 import java.security.Principal;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 @Controller
 public class MessagingController {
@@ -26,6 +25,7 @@ public class MessagingController {
     @Autowired
     private MessageRepository msgRepository;
 
+
     @GetMapping("/messages")
     public String index(Model model) {
         model.addAttribute("users", userRepository.findAll());
@@ -33,8 +33,44 @@ public class MessagingController {
     }
 
     @GetMapping("/message")
-    public String tchat(Model model, @RequestParam(required = false) String username) {
-        model.addAttribute("user", userRepository.findByUsername(username));
+    public String tchat(Model model, @RequestParam(required = false) String username,
+                        Principal principal) {
+        // récupération du user connecter
+        String usernameCurrent = principal.getName();
+        CerebookUser currentUser = userRepository.findByUsername(usernameCurrent);
+        // user destinataire
+        CerebookUser userDestinate = userRepository.getCerebookUserByUsername(username);
+        // pour récupéré tous les messages envoyé par rapport au user connecter
+        List<CerebookMessage> sendMessages = msgRepository.getCerebookMessageByCurrentUseraAndUserDestination(currentUser,
+                userDestinate);
+        // pour récupéré tous les messages envoyer par rapport a l'utilisateur voulu
+        List<CerebookMessage> messagesRecep = msgRepository.getCerebookMessageByCurrentUseraAndUserDestination(userDestinate,
+                currentUser);
+        //j'instancie une nouvelle list a la quelle j'ajoute tous les messages envoyé et recus
+        List<CerebookMessage> finalList = new ArrayList<>();
+
+        for (CerebookMessage msg : sendMessages
+        ) {
+            finalList.add(msg);
+        }
+        for (CerebookMessage msg : messagesRecep
+        ) {
+            finalList.add(msg);
+        }
+        // grace au comparator je trie les messages par date
+        Comparator<CerebookMessage> comparator = new Comparator<CerebookMessage>() {
+            @Override
+            public int compare(CerebookMessage o1, CerebookMessage o2) {
+                return o1.getDate().compareTo(o2.getDate());
+            }
+        };
+
+        // j'utilise le collections.sort() pour tiré la list
+        Collections.sort(finalList, comparator);
+        model.addAttribute("user", userDestinate);
+        // j'envoie la list des messages trié dans le front
+        model.addAttribute("messages", finalList);
+
 
         return "message/tchat";
     }
@@ -43,14 +79,15 @@ public class MessagingController {
     @RequestMapping("/createTchatmessage")
     public String tchatSave(Model model, Principal principal,
                             @Param("userfriend") Long userfriend,
-                            @Param("contentMessage") String contentMessage
+                            @Param("contentMessage") String contentMessage,
+                            RedirectAttributes redirectAttributes
     ) {
         // récupération du user connecter
         String usernameCurrent = principal.getName();
         CerebookUser currentUser = userRepository.findByUsername(usernameCurrent);
-        //Date a l'heure ou le message est envoy
+        //Date a l'heure ou le message est envoyé
         LocalDateTime now = LocalDateTime.now();
-        //récupération du user qui va etre le destinataire du messahe
+        //récupération du user qui va etre le destinataire du message
         CerebookUser userDestinate = userRepository.getById(userfriend);
         // sauvegarde du message en base de donnée
         CerebookMessage message = new CerebookMessage(contentMessage, now, currentUser);
@@ -60,6 +97,9 @@ public class MessagingController {
         message.getUserDestination().add(userDestinate);
         msgRepository.save(message);
 
-        return "redirect:/messages";
+        redirectAttributes.addAttribute("usernameDestinate", userDestinate.getUsername());
+
+
+        return "redirect:/message?username={usernameDestinate}";
     }
 }

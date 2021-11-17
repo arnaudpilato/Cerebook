@@ -32,7 +32,6 @@ public class CerebookUser {
             cascade = CascadeType.ALL,
             orphanRemoval = true
     )
-
     private List<CerebookPost> cerebookPosts ;
 
     @OneToMany(mappedBy = "currentUser")
@@ -186,6 +185,26 @@ public class CerebookUser {
 
     public void setProfil(CerebookProfil profil) {
         this.profil = profil;
+    }
+
+    @Override
+    public String toString() {
+        return "CerebookUser{" +
+                "id=" + id +
+                ", username='" + username + '\'' +
+                ", firstName='" + firstName + '\'' +
+                ", lastName='" + lastName + '\'' +
+                ", city='" + city + '\'' +
+                ", address='" + address + '\'' +
+                ", email='" + email + '\'' +
+                ", password='" + password + '\'' +
+                ", birthday=" + birthday +
+                ", role='" + role + '\'' +
+                ", enable=" + enable +
+                ", cerebookPosts=" + cerebookPosts +
+                ", messages=" + messages +
+                ", profil=" + profil +
+                '}';
     }
 }
     
