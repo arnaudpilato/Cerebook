@@ -11,7 +11,8 @@ import java.util.List;
 
 @Repository
 public interface MessageRepository extends JpaRepository<CerebookMessage, Long> {
-    @Query("SELECT m FROM CerebookMessage m JOIN CerebookUser c ON c IN (SELECT d FROM m.userDestination d) WHERE m.currentUser = :currentUser AND c = :currentDest")
+    @Query("SELECT m FROM CerebookMessage m JOIN CerebookUser c ON c IN (SELECT d FROM m.userDestination d) WHERE" +
+            " m.currentUser = :currentUser AND c = :currentDest")
     public List<CerebookMessage> getCerebookMessageByCurrentUseraAndUserDestination(
             @Param("currentUser") CerebookUser currentUser,
             @Param("currentDest") CerebookUser currentDest);

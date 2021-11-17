@@ -9,10 +9,15 @@
 </head>
 <body>
 <header th:replace="/fragments/header.html :: top"></header>
-<div class="container-fluid">
+<div class="container">
     <h1 class="text-center mt-4 mb-4">Conversation</h1>
     <div class="container">
-
+    <div th:each="message: ${messages}">
+        <div th:if="${message.getCurrentUser().getId() == user.getId()}" class="alert alert-primary col-3"
+           th:text="${message.getMessage()}"></p></div>
+        <p th:unless="${message.getCurrentUser().getId() != user.getId()}" class="alert alert-danger col-3"
+           th:text="${message.getMessage()}"/>
+    </div>
     </div>
 
     <div class="row justify-content-center">

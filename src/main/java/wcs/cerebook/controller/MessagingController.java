@@ -16,9 +16,7 @@ import javax.servlet.http.HttpServletRequest;
 import java.security.Principal;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 @Controller
 public class MessagingController {
@@ -26,6 +24,7 @@ public class MessagingController {
     private UserRepository userRepository;
     @Autowired
     private MessageRepository msgRepository;
+
 
     @GetMapping("/messages")
     public String index(Model model) {
@@ -36,22 +35,45 @@ public class MessagingController {
     @GetMapping("/message")
     public String tchat(Model model, @RequestParam(required = false) String username,
                         Principal principal) {
-        model.addAttribute("user", userRepository.findByUsername(username));
-
         // récupération du user connecter
         String usernameCurrent = principal.getName();
         CerebookUser currentUser = userRepository.findByUsername(usernameCurrent);
-        ;
-
         // user destinataire
         CerebookUser userDestinate = userRepository.getCerebookUserByUsername(username);
-
         // pour récupéré tous les messages envoyé par rapport au user connecter
-        List<CerebookMessage> messages = msgRepository.getCerebookMessageByCurrentUseraAndUserDestination(currentUser,
+        List<CerebookMessage> sendMessages = msgRepository.getCerebookMessageByCurrentUseraAndUserDestination(currentUser,
                 userDestinate);
         // pour récupéré tous les messages envoyer par rapport a l'utilisateur voulu
         List<CerebookMessage> messagesRecep = msgRepository.getCerebookMessageByCurrentUseraAndUserDestination(userDestinate,
                 currentUser);
+        List<CerebookMessage> finalList = new ArrayList<>();
+
+        for (CerebookMessage msg : sendMessages
+        ) {
+            finalList.add(msg);
+        }
+        for (CerebookMessage msg : messagesRecep
+        ) {
+            finalList.add(msg);
+        }
+        for (CerebookMessage msg: finalList
+        ) {
+            System.out.println(msg.getMessage());
+        }
+        Comparator<CerebookMessage> comparator = new Comparator<CerebookMessage>() {
+            @Override
+            public int compare(CerebookMessage o1, CerebookMessage o2) {
+                return o1.getDate().compareTo(o2.getDate());
+            }
+        };
+
+
+//        Collections.sort(finalList, comparator);
+        model.addAttribute("user", currentUser);
+//        model.addAttribute("messagesRecep", messagesRecep);
+//        model.addAttribute("sendMessages", sendMessages);
+        model.addAttribute("messages", finalList);
+
 
         return "message/tchat";
     }

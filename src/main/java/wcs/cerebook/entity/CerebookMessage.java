@@ -3,10 +3,11 @@ package wcs.cerebook.entity;
 import javax.persistence.*;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 
 @Entity
-public class CerebookMessage {
+public class CerebookMessage implements Comparable<CerebookMessage> {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -62,5 +63,11 @@ public class CerebookMessage {
 
     public List<CerebookUser> getUserDestination() {
         return userDestination;
+    }
+
+
+    @Override
+    public int compareTo(CerebookMessage cerebookMessage) {
+        return this.getDate().compareTo(cerebookMessage.getDate());
     }
 }

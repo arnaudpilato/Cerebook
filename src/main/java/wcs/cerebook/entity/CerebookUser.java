@@ -15,9 +15,8 @@ public class CerebookUser {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(nullable = false, unique = true)
+    @Column(nullable = true, unique = true)
     private String username;
-
     private String firstName;
     private String lastName;
     private String city;
@@ -33,8 +32,7 @@ public class CerebookUser {
             cascade = CascadeType.ALL,
             orphanRemoval = true
     )
-
-    private List<CerebookPost> cerebookPosts = new ArrayList();
+    private List<CerebookPost> cerebookPosts ;
 
     @OneToMany(mappedBy = "currentUser")
     private List<CerebookMessage> messages;
