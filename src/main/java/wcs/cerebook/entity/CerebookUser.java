@@ -32,7 +32,6 @@ public class CerebookUser {
             cascade = CascadeType.ALL,
             orphanRemoval = true
     )
-
     private List<CerebookPost> cerebookPosts ;
 
     @OneToMany(mappedBy = "currentUser")
