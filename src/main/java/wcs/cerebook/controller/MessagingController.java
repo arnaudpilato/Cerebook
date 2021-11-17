@@ -46,6 +46,7 @@ public class MessagingController {
         // pour récupéré tous les messages envoyer par rapport a l'utilisateur voulu
         List<CerebookMessage> messagesRecep = msgRepository.getCerebookMessageByCurrentUseraAndUserDestination(userDestinate,
                 currentUser);
+        //j'instancie une nouvelle list a la quelle j'ajoute tous les messages envoyé et recus
         List<CerebookMessage> finalList = new ArrayList<>();
 
         for (CerebookMessage msg : sendMessages
@@ -56,11 +57,7 @@ public class MessagingController {
         ) {
             finalList.add(msg);
         }
-        for (CerebookMessage msg: finalList
-        ) {
-            System.out.println(msg.getMessage());
-        }
-
+        // grace au comparator je trie les messages par date
         Comparator<CerebookMessage> comparator = new Comparator<CerebookMessage>() {
             @Override
             public int compare(CerebookMessage o1, CerebookMessage o2) {
@@ -68,11 +65,10 @@ public class MessagingController {
             }
         };
 
-
-//        Collections.sort(finalList, comparator);
+        // j'utilise le collections.sort() pour tiré la list
+        Collections.sort(finalList, comparator);
         model.addAttribute("user", userDestinate);
-//        model.addAttribute("messagesRecep", messagesRecep);
-//        model.addAttribute("sendMessages", sendMessages);
+        // j'envoie la list des messages trié dans le front
         model.addAttribute("messages", finalList);
 
 
