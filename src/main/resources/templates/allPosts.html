@@ -4,34 +4,33 @@
     <meta charset="utf-8"/>
     <title>List all posts</title>
     <th:block th:replace="/fragments/bootstrap.html :: bootstrap-head"></th:block>
-    <link href="/static/css/post.css" rel="stylesheet" />
-    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.4.1/css/all.css" integrity="sha384-5sAR7xN1Nv6T6+dT2mhtzEpVJvfS3NScPQTrOxhwjIuvcA67KV2R5Jz6kr4abQsz" crossorigin="anonymous">
+    <link href="/static/css/post.css" rel="stylesheet"/>
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.4.1/css/all.css"
+          integrity="sha384-5sAR7xN1Nv6T6+dT2mhtzEpVJvfS3NScPQTrOxhwjIuvcA67KV2R5Jz6kr4abQsz" crossorigin="anonymous">
 </head>
 <body>
 <header th:replace="/fragments/header.html :: top"></header>
 <div class="container-fluid">
-
     <div th:switch="${listPosts}">
         <h2 th:case="null">No post yet!</h2>
         <div th:case="*">
             <h2>All Posts</h2>
-
+            <a th:href="@{/postCreate}"><i class="fas fa-reply">add post</i></a>
             <div class="row">
                 <tr th:each="p: ${listPosts}">
                     <span th:if="${p.isPrivatePost == false}">
                         <div id="post-container">
                     <td th:text="${p.content}"></td>
-
+                    <div id="by-user">
                     <td th:text="${p.createdAt}"></td>
                     <td th:text="${'Posted by: '+p.cerebookUser.username}"></td>
                             </div>
+                            </div>
                         <div>
-                    <td><a  th:href="@{/addComment/{id}(id=${p.id})}"><i class="fas fa-reply"></i></a>add</td>
+                    <td><a th:href="@{/addComment/{id}(id=${p.id})}"><i class="far fa-comment"></i></a>add</td>
                         <td><a th:href="@{/listComment/{id}(id=${p.id})}"><i class="far fa-comments"></i></a>view comments</td>
                         </div>
                 </span>
-
-
                 </tr>
 
             </div>

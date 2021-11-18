@@ -5,27 +5,35 @@
 <head>
     <meta charset="UTF-8">
     <title>Add post</title>
-
+    <th:block th:replace="/fragments/bootstrap.html :: bootstrap-head"></th:block>
+    <link href="/static/css/post.css" rel="stylesheet"/>
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.4.1/css/all.css"
+          integrity="sha384-5sAR7xN1Nv6T6+dT2mhtzEpVJvfS3NScPQTrOxhwjIuvcA67KV2R5Jz6kr4abQsz" crossorigin="anonymous">
 </head>
 <body>
+<header th:replace="/fragments/header.html :: top"></header>
 <div class="container">
     <h2>Add post</h2>
     <form action="#" th:action="@{/save}" th:object="${post}" method="POST">
         <div class="form-group">
-            <label for="content">Content: </label><input type="text" th:field="*{content}" placeholder="content" class="form-control mb-4 col-4">
+            <label for="content">Content: </label><input type="text" th:field="*{content}" placeholder="content"
+                                                         class="form-control mb-4 col-4">
         </div>
         <div class="form-group">
-        <input type="hidden" th:value="${localDateTime}" th:field="*{createdAt}"  placeholder=" created at" class="form-control mb-4 col-4"/>
+            <input type="hidden" th:value="${localDateTime}" th:field="*{createdAt}" placeholder=" created at"
+                   class="form-control mb-4 col-4"/>
         </div>
         <div class="form-group">
-            Is private: <input  type="checkbox"  name="postStatus" th:checked="${postStatus}" th:field="${post.privatePost}"   class="form-check-input" />
+            Is private: <input type="checkbox" name="postStatus" th:checked="${postStatus}"
+                               th:field="${post.privatePost}" class="form-check-input"/>
         </div>
-        <button type="submit" class="btn btn-info col-2"> Save </button>
+        <button type="submit" class="btn btn-info col-2"> Save</button>
     </form>
 
     <hr>
 </div>
 </table>
 <a th:href="@{/}"> Back </a>
+<th:block th:replace="/fragments/bootstrap.html :: bootstrap-body"></th:block>
 </body>
 </html>
