@@ -54,11 +54,11 @@ public class CommentController {
         commentRepository.save(cerebookComment);
         return "redirect:/";
     }
-    @GetMapping("/listComment/{id}")
-    public String showComment(@PathVariable("id") Long id,Model model,Principal principal){
+    @GetMapping("/listComment/{postid}")
+    public String showComment(@PathVariable("postid") Long postid,Model model,Principal principal){
         String username = principal.getName();
         List<CerebookUser> user = userRepository.findAll();
-        List<CerebookComment> comments = postRepository.getById(id).getComments();
+        List<CerebookComment> comments = postRepository.getById(postid).getComments();
         List<CerebookPost> post = postRepository.findAll();
         model.addAttribute("listComment", comments);
         model.addAttribute("user",user);
