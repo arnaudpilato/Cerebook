@@ -1,10 +1,15 @@
 package wcs.cerebook.controller;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.reactive.function.client.WebClient;
+import reactor.core.publisher.Mono;
+import wcs.cerebook.entity.CerebookCartography;
 import wcs.cerebook.entity.CerebookProfil;
 import wcs.cerebook.repository.ProfilRepository;
 import wcs.cerebook.repository.UserRepository;
@@ -27,6 +32,28 @@ public class ProfilController {
     public String getProfil(Model model, Principal principal) {
         model.addAttribute("user", userRepository.findByUsername(principal.getName()));
 
+        String url = "https://api-adresse.data.gouv.fr/search";
+        WebClient webClient = WebClient.create(url);
+
+        Mono<String> call = webClient.get()
+                .uri(uriBuilder-> uriBuilder
+                        .queryParam("q", "paris")
+                        .build())
+                .retrieve()
+                .bodyToMono(String.class);
+
+        String response = call.block();
+
+        ObjectMapper objectMapper = new ObjectMapper();
+        CerebookCartography cartographyObject = null;
+        try {
+            cartographyObject = objectMapper.readValue(response, CerebookCartography.class);
+        } catch (JsonProcessingException e) {
+            e.printStackTrace();
+        }
+
+        model.addAttribute("essai", response);
+
         return "/cerebookProfil/profil";
     }
 
@@ -38,7 +65,7 @@ public class ProfilController {
     }
 
     @PostMapping("/profil/update")
-    public String postProfilUpdate(@ModelAttribute CerebookProfil cerebookProfil, @RequestParam(value = "file_banner") MultipartFile banner, @RequestParam("file_avatar") MultipartFile avatar, Principal principal) throws IOException {
+    public String postProfilUpdate(@ModelAttribute CerebookProfil cerebookProfil, @RequestParam(value = "file_banner") MultipartFile banner, @RequestParam("file_avatar") MultipartFile avatar, Principal principal, Model model) throws IOException {
         if (cerebookProfil.getId() != null) {
             if (!banner.isEmpty()) {
                 String bannerExtension = Optional.of(banner.getOriginalFilename()).filter(f -> f.contains(".")).map(f -> f.substring(banner.getOriginalFilename().lastIndexOf(".") + 1)).orElse("");

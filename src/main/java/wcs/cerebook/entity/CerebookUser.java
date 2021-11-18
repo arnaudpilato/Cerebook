@@ -42,6 +42,9 @@ public class CerebookUser {
     @JoinColumn(name = "profil_id", referencedColumnName = "id")
     private CerebookProfil profil;
 
+    @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL, optional = true)
+    private CerebookCartography cartography;
+
     public CerebookUser() {
     }
 
@@ -164,6 +167,34 @@ public class CerebookUser {
 
     public void setProfil(CerebookProfil profil) {
         this.profil = profil;
+    }
+
+    public CerebookCartography getCartography() {
+        return cartography;
+    }
+
+    public void setCartography(CerebookCartography cartography) {
+        this.cartography = cartography;
+    }
+
+    @Override
+    public String toString() {
+        return "CerebookUser{" +
+                "id=" + id +
+                ", username='" + username + '\'' +
+                ", firstName='" + firstName + '\'' +
+                ", lastName='" + lastName + '\'' +
+                ", city='" + city + '\'' +
+                ", address='" + address + '\'' +
+                ", email='" + email + '\'' +
+                ", password='" + password + '\'' +
+                ", birthday=" + birthday +
+                ", role='" + role + '\'' +
+                ", enable=" + enable +
+                ", cerebookPosts=" + cerebookPosts +
+                ", messages=" + messages +
+                ", profil=" + profil +
+                '}';
     }
 }
     

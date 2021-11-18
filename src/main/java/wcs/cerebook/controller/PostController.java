@@ -99,7 +99,6 @@ public class PostController {
             return "post";
 
         }
-        System.out.println("ici le id =============="+userid+"=============================");
         repository.save(cerebookPost);
 
         //model.addAttribute("post", repository.findAll());
