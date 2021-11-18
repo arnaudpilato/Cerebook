@@ -30,6 +30,13 @@ public class ProfilController {
         return "/cerebookProfil/profil";
     }
 
+    @GetMapping("/profil/{id}")
+    public String getOtherProfil(Model model, @PathVariable Long id) {
+        model.addAttribute("user", userRepository.getById(id));
+
+        return "/cerebookProfil/profil";
+    }
+
     @GetMapping("/profil/update")
     public String getProfilUpdate(Model model, Principal principal) {
         model.addAttribute("user", userRepository.findByUsername(principal.getName()));

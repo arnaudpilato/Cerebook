@@ -1,5 +1,10 @@
 @import "variables.scss";
 
+/***** Body *****/
+body {
+  background-color: #C4C4C4;
+}
+
 /***** Bootstrap *****/
 
 .bg-primary {
@@ -36,7 +41,7 @@
   border: 0;
   outline: 0;
   background: none;
-  width: 2px;
+  width: 80px;
   padding-left: 10px;
   caret-color: transparent;
   line-height: 10px;
