@@ -1,4 +1,5 @@
 package wcs.cerebook.controller;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -17,27 +18,31 @@ import java.security.Principal;
 
 import java.util.Date;
 import java.util.List;
+
 @Controller
 public class PostController {
     @Autowired
     private PostRepository repository;
+
     public String currentUserNameSimple(HttpServletRequest request) {
         Principal principal = request.getUserPrincipal();
         return principal.getName();
     }
+
     @Autowired
     private UserRepository userRepository;
+
     @GetMapping("/postCreate")
-    public String addPost(Principal principal,Model model) {
-    String username = principal.getName();
-    CerebookUser user = userRepository.getCerebookUserByUsername(username);
+    public String addPost(Principal principal, Model model) {
+        String username = principal.getName();
+        CerebookUser user = userRepository.getCerebookUserByUsername(username);
         CerebookPost cerebookPost = new CerebookPost();
         model.addAttribute("post", cerebookPost);
         cerebookPost.setCerebookUser(user);
 
-        model.addAttribute("user",user);
+        model.addAttribute("user", user);
         cerebookPost.setCreatedAt(new Date());
-        model.addAttribute("localDateTime",new Date());
+        model.addAttribute("localDateTime", new Date());
         //cerebookPost.setPrivatePost(cerebookPost.isPrivatePost());
         boolean postStatu = cerebookPost.isPrivatePost();
 
@@ -45,9 +50,10 @@ public class PostController {
 
         return "addPost";
     }
+
     //save post
     @RequestMapping("/save")
-    public String savePost(Principal principal,CerebookPost cerebookPost) {
+    public String savePost(Principal principal, CerebookPost cerebookPost) {
         // save post to database
         String username = principal.getName();
         CerebookUser user = userRepository.getCerebookUserByUsername(username);
@@ -56,46 +62,44 @@ public class PostController {
         return "redirect:/";
     }
 
-    @RequestMapping("/readPost")
-    public String getPost(Model model,Long postId) {
-        model.addAttribute("post",repository.findById(postId).get());
-        return "posts";
-    }
-// list all posts
+
+    // list all posts
     @RequestMapping("/posts")
     public String getAllPosts(Model model) {
         List<CerebookPost> cerebookPosts = repository.findAll();
 
-        model.addAttribute("listPosts",cerebookPosts);
+        model.addAttribute("listPosts", cerebookPosts);
 
         return "posts";
     }
+
     @RequestMapping("/editPost/{id}")
-    public String showPostForm(@PathVariable("id") long id, Model model,Principal principal) throws illegalArgumentException {
+    public String showPostForm(@PathVariable("id") long id, Model model, Principal principal) throws illegalArgumentException {
         CerebookPost cerebookPost = this.repository.findById(id)
-                .orElseThrow(()-> new illegalArgumentException(" Invalid post id: "+id));
+                .orElseThrow(() -> new illegalArgumentException(" Invalid post id: " + id));
         String username = principal.getName();
         CerebookUser user = userRepository.getCerebookUserByUsername(username);
         model.addAttribute("post", cerebookPost);
         //cerebookPost.setCerebookUser(user);
-        model.addAttribute("user",user);
+        model.addAttribute("user", user);
         cerebookPost.setCreatedAt(new Date());
-        model.addAttribute("localDateTime",new Date());
+        model.addAttribute("localDateTime", new Date());
         boolean postStatu = cerebookPost.isPrivatePost();
 
         model.addAttribute("postStatus", postStatu);
 
         //model.addAttribute("posts",cerebookPost);
         return "post";
-        }
+    }
+
     @PostMapping("/updatePost/{id}")
-    public String updatePost(@PathVariable("id") Long id, Model model, @Valid CerebookPost cerebookPost, BindingResult result,Principal principal) {
+    public String updatePost(@PathVariable("id") Long id, Model model, @Valid CerebookPost cerebookPost, BindingResult result, Principal principal) {
         String username = principal.getName();
         CerebookUser user = userRepository.getCerebookUserByUsername(username);
-                Long userid=  user.getId();
+        Long userid = user.getId();
         if (result.hasErrors()) {
 
-           cerebookPost.setCerebookUser(user);
+            cerebookPost.setCerebookUser(user);
             return "post";
 
         }
@@ -105,24 +109,27 @@ public class PostController {
 
         return "redirect:/myPosts";
     }
+
     @GetMapping("/deletePost/{id}")
     public String deletePost(@PathVariable("id") Long id, Model model) throws illegalArgumentException {
         CerebookPost cerebookPost = this.repository.findById(id)
-                .orElseThrow(()-> new illegalArgumentException(" Invalid post id: "+id));
+                .orElseThrow(() -> new illegalArgumentException(" Invalid post id: " + id));
         this.repository.delete(cerebookPost);
-        model.addAttribute("posts",this.repository.findAll());
-return  "posts";
+        model.addAttribute("posts", this.repository.findAll());
+        return "posts";
     }
+
     @GetMapping("/myPosts")
-    public String getMyPosts(Model model,Principal principal,@Valid CerebookUser cerebookUser) {
+    public String getMyPosts(Model model, Principal principal, @Valid CerebookUser cerebookUser) {
         String username = principal.getName();
         CerebookUser user = userRepository.getCerebookUserByUsername(username);
-        model.addAttribute("listMyPosts",repository.findAll());
-        model.addAttribute("user",user);
+        model.addAttribute("listMyPosts", repository.findAll());
+        model.addAttribute("user", user);
         return "myPosts";
     }
+
     @GetMapping("/allPosts")
-    public String getAllPosts(Model model,Principal principal,@Valid CerebookUser cerebookUser,@Valid CerebookPost cerebookPost) {
+    public String getAllPosts(Model model, Principal principal, @Valid CerebookUser cerebookUser, @Valid CerebookPost cerebookPost) {
         String username = principal.getName();
         List<CerebookUser> user = userRepository.findAll();
 
@@ -131,9 +138,9 @@ return  "posts";
         model.addAttribute("listPosts", cerebookPosts);
         //cerebookPost.setCerebookUser(user);
 
-        model.addAttribute("user",user);
+        model.addAttribute("user", user);
         cerebookPost.setCreatedAt(new Date());
-        model.addAttribute("localDateTime",new Date());
+        model.addAttribute("localDateTime", new Date());
         boolean postStatu = cerebookPost.isPrivatePost();
 
         model.addAttribute("postStatus", postStatu);

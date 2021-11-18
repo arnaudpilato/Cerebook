@@ -54,6 +54,7 @@ public class CommentController {
         commentRepository.save(cerebookComment);
         return "redirect:/";
     }
+
     @GetMapping("/listComment/{postid}")
     public String showComment(@PathVariable("postid") Long postid,Model model,Principal principal){
         String username = principal.getName();
