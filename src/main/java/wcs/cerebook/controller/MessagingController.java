@@ -33,7 +33,7 @@ public class MessagingController {
     }
 
     @GetMapping("/message")
-    public String tchat(Model model, @RequestParam(required = false) String username,
+    public String tchat(Model model, @RequestParam(required = true) String username,
                         Principal principal) {
         // récupération du user connecter
         String usernameCurrent = principal.getName();
@@ -90,12 +90,15 @@ public class MessagingController {
         //récupération du user qui va etre le destinataire du message
         CerebookUser userDestinate = userRepository.getById(userfriend);
         // sauvegarde du message en base de donnée
-        CerebookMessage message = new CerebookMessage(contentMessage, now, currentUser);
-        msgRepository.save(message);
-        // une fois le message sauvegarder j'ajoute le destinataire au message et je le sauvegarde une nouvelle fois
-        // en base de donnée.
-        message.getUserDestination().add(userDestinate);
-        msgRepository.save(message);
+        if (!contentMessage.isEmpty()){
+            CerebookMessage message = new CerebookMessage(contentMessage, now, currentUser);
+            msgRepository.save(message);
+            // une fois le message sauvegarder j'ajoute le destinataire au message et je le sauvegarde une nouvelle fois
+            // en base de donnée.
+            message.getUserDestination().add(userDestinate);
+            msgRepository.save(message);
+        }
+
 
         redirectAttributes.addAttribute("usernameDestinate", userDestinate.getUsername());
 
