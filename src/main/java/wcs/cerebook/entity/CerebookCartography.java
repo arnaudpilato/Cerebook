@@ -7,6 +7,7 @@ import java.util.List;
 public class CerebookCartography {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+
     private Long id;
     private Double x;
     private Double y;

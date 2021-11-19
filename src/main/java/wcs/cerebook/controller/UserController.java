@@ -1,6 +1,7 @@
 package wcs.cerebook.controller;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.repository.query.Param;
@@ -15,6 +16,7 @@ import wcs.cerebook.entity.CerebookCartography;
 import wcs.cerebook.entity.CerebookProfil;
 import wcs.cerebook.entity.CerebookUser;
 import wcs.cerebook.repository.UserRepository;
+import wcs.cerebook.services.GeocodeService;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -23,6 +25,9 @@ import javax.servlet.http.HttpServletRequest;
 public class UserController {
     @Autowired
     private UserRepository userRepository;
+
+    @Autowired
+    private GeocodeService geocodeService;
 
     @GetMapping("/")
     public String login() {
@@ -36,7 +41,7 @@ public class UserController {
 
     @RequestMapping("/userCreate")
     public String postUser(@ModelAttribute CerebookUser user, Model model,
-                           @Param("confirm") String confirm, @Param("gpsx") Double gpsx, @Param("gpsy") Double gpsy
+                           @Param("confirm") String confirm, @Param("city") String city
     ) {
         if (!confirm.equals(user.getPassword())) {
             boolean error = true;
@@ -59,6 +64,10 @@ public class UserController {
             user.getProfil().setBanner("/static/css/img/New-York-Manhattan.jpeg");
         }
         user.getProfil().setAvatar("/static/css/img/avatar.jpeg");
+
+        user.setCartography(new CerebookCartography());
+        user.getCartography().setX(geocodeService.getAdressAsJson(user.getCity() + " " + user.getAddress()).get("features").get(0).get("properties").get("x").asDouble());
+        user.getCartography().setY(geocodeService.getAdressAsJson(user.getCity() + " " + user.getAddress()).get("features").get(0).get("properties").get("y").asDouble());
 
         try {
             userRepository.save(user);
