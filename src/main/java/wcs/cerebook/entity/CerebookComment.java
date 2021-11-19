@@ -15,8 +15,19 @@ public class CerebookComment {
     private Date createdAt;
     //many (comment) to one for one post
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "cerebookPost")
+    //@JoinColumn(name = "cerebookPost")
     private CerebookPost cerebookPost;
+    //many (comment)  for one user
+    @ManyToOne(fetch = FetchType.LAZY)
+    private CerebookUser cerebookUser;
+
+    public CerebookUser getCerebookUser() {
+        return cerebookUser;
+    }
+
+    public void setCerebookUser(CerebookUser cerebookUser) {
+        this.cerebookUser = cerebookUser;
+    }
 
     public Long getId() {
         return id;
