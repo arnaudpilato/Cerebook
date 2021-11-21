@@ -8,7 +8,7 @@ import org.springframework.web.reactive.function.client.WebClient;
 
 @Service
 public class GeocodeService {
-    private static final String ADDRESS_API_URL = "https://api-adresse.data.gouv.fr/search";
+    private static final String ADDRESS_API_URL = "http://api.positionstack.com/v1/forward";
     private WebClient webClient;
 
     private WebClient getWebClient() {
@@ -30,7 +30,8 @@ public class GeocodeService {
     private String getAdressAsString(String value) {
         return getWebClient().get()
                 .uri(uriBuilder -> uriBuilder
-                        .queryParam("q", value)
+                        .queryParam("access_key", "e14e0129c7745b8a8e0e70b9316a5d8c")
+                        .queryParam("query", value)
                         .build())
                 .retrieve()
                 .bodyToMono(String.class)

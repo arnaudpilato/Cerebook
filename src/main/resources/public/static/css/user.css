@@ -101,6 +101,11 @@
   margin-top: 2vh;
 }
 
+/***** Leaflet *****/
+.image-icon {
+  border-radius: 50%;
+}
+
 .accueilCreateAccount {
   display: flex;
   flex-direction: column;

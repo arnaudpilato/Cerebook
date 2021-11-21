@@ -1,5 +1,7 @@
 package wcs.cerebook.entity;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -40,8 +42,10 @@ public class CerebookUser {
 
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "profil_id", referencedColumnName = "id")
+    @JsonManagedReference
     private CerebookProfil profil;
 
+    @JsonManagedReference
     @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL, optional = true)
     private CerebookCartography cartography;
 

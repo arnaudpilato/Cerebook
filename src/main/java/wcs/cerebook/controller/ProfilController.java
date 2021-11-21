@@ -1,5 +1,9 @@
 package wcs.cerebook.controller;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.ObjectWriter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -28,9 +32,11 @@ public class ProfilController {
     private CartographyRepository cartographyRepository;
 
     @GetMapping("/profil")
-    public String getProfil(Model model, Principal principal) {
+    public String getProfil(Model model, Principal principal) throws JsonProcessingException {
         model.addAttribute("user", userRepository.findByUsername(principal.getName()));
-        model.addAttribute("cartography", cartographyRepository.findAll());
+        model.addAttribute("allUsers", userRepository.findAll());
+        JsonNode json = new ObjectMapper().valueToTree(cartographyRepository.findAll());
+        model.addAttribute("cartography", json);
 
         return "/cerebookProfil/profil";
     }

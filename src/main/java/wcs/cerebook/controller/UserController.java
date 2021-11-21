@@ -66,8 +66,8 @@ public class UserController {
         user.getProfil().setAvatar("/static/css/img/avatar.jpeg");
 
         user.setCartography(new CerebookCartography());
-        user.getCartography().setX(geocodeService.getAdressAsJson(user.getCity() + " " + user.getAddress()).get("features").get(0).get("properties").get("x").asDouble());
-        user.getCartography().setY(geocodeService.getAdressAsJson(user.getCity() + " " + user.getAddress()).get("features").get(0).get("properties").get("y").asDouble());
+        user.getCartography().setX(geocodeService.getAdressAsJson(user.getCity() + " " + user.getAddress()).get("data").get(0).get("longitude").asDouble());
+        user.getCartography().setY(geocodeService.getAdressAsJson(user.getCity() + " " + user.getAddress()).get("data").get(0).get("latitude").asDouble());
 
         try {
             userRepository.save(user);
