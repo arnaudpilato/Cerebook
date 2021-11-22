@@ -3,7 +3,6 @@ package wcs.cerebook.controller;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.ObjectWriter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -37,6 +36,13 @@ public class ProfilController {
         model.addAttribute("allUsers", userRepository.findAll());
         JsonNode json = new ObjectMapper().valueToTree(cartographyRepository.findAll());
         model.addAttribute("cartography", json);
+
+        return "/cerebookProfil/profil";
+    }
+
+    @GetMapping("/profil/{id}")
+    public String getOtherProfil(Model model, @PathVariable Long id) {
+        model.addAttribute("user", userRepository.getById(id));
 
         return "/cerebookProfil/profil";
     }

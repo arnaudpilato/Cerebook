@@ -1,46 +1,49 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
-    <meta charset="utf-8" />
+    <meta charset="utf-8"/>
     <title>List all posts</title>
-    <!--<th:block th:replace="/fragments/bootstrap.html :: bootstrap-head"></th:block>
-    <link href="/static/css/user.css" rel="stylesheet"/>-->
+    <th:block th:replace="/fragments/bootstrap.html :: bootstrap-head"></th:block>
+    <link href="/static/css/post.css" rel="stylesheet"/>
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.4.1/css/all.css"
+          integrity="sha384-5sAR7xN1Nv6T6+dT2mhtzEpVJvfS3NScPQTrOxhwjIuvcA67KV2R5Jz6kr4abQsz" crossorigin="anonymous">
 </head>
 <body>
+<header th:replace="/fragments/header.html :: top"></header>
 <div class="container">
-    <a th:href="@{/postCreate}" class="btn btn-primary stretched-link">Add post</a>
+    <a th:href="@{/postCreate}"><i class="fas fa-comment"></i></a>
     <div th:switch="${listMyPosts}">
         <h2 th:case="null">No post yet!</h2>
         <div th:case="*">
             <h2>My Posts</h2>
-    <table class="table table-striped table-hover">
-        <thead>
-        <tr>
-            <th>Id</th>
-            <th>Content</th>
-            <th>Created at</th>
-            <th>Is private post</th>
+            <table class="table table-striped table-hover">
+                <thead>
+                <tr>
+                    <th>Id</th>
+                    <th>Content</th>
+                    <th>Created at</th>
+                    <th>Is private post</th>
 
-            <th>Edit</th>
-            <th>Delete</th>
-        </tr>
-        </thead>
-        <tr th:each="p: ${listMyPosts}">
+                    <th>Edit</th>
+                    <th>Delete</th>
+                </tr>
+                </thead>
+                <tr th:each="p: ${listMyPosts}">
              <span th:if="${p.cerebookUser.id==user.id}">
                 <td th:text="${p.id}"></td>
                 <td th:text="${p.content}"></td>
                 <td th:text="${p.createdAt}"></td>
                 <td th:text="${p.isPrivatePost}"></td>
-                 <td><a class="btn btn-primary stretched-link" th:href="@{/editPost/{id}(id=${p.id})}">Edit</a></td>
-            <td><a class="btn btn-primary stretched-link" th:href="@{/deletePost/{id}(id=${p.id})}">Remove</a></td>
+                 <td><a th:href="@{/editPost/{id}(id=${p.id})}"></a><i class="far fa-edit"></i></td>
+            <td><a th:href="@{/deletePost/{id}(id=${p.id})}"></a><i class="far fa-trash-alt"></i></td>
              </span>
 
 
-        </tr>
+                </tr>
 
-    </table>
-</div>
-</div>
+            </table>
+        </div>
+    </div>
 </div>
 
 <th:block th:replace="/fragments/bootstrap.html :: bootstrap-body"></th:block>

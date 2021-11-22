@@ -1,3 +1,8 @@
+/***** Body *****/
+body {
+  background-color: #C4C4C4;
+}
+
 /***** Bootstrap *****/
 .bg-primary {
   background-color: #264653 !important;
@@ -32,7 +37,7 @@
   border: 0;
   outline: 0;
   background: none;
-  width: 2px;
+  width: 80px;
   padding-left: 10px;
   caret-color: transparent;
   line-height: 10px;
@@ -133,6 +138,10 @@ label {
   margin-right: 5vh;
   margin-top: 2vh;
   margin-bottom: 2vh;
+}
+
+.userCards {
+  min-height: 39vh;
 }
 
 /*# sourceMappingURL=user.css.map */

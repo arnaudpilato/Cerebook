@@ -5,21 +5,29 @@
 <head>
     <meta charset="UTF-8">
     <title>Add post</title>
-    <!--<th:block th:replace="/fragments/bootstrap.html :: bootstrap-head"></th:block>
-    <link href="/static/css/user.css" rel="stylesheet"/>-->
+    <th:block th:replace="/fragments/bootstrap.html :: bootstrap-head"></th:block>
+    <link href="/static/css/post.css" rel="stylesheet"/>
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.4.1/css/all.css"
+          integrity="sha384-5sAR7xN1Nv6T6+dT2mhtzEpVJvfS3NScPQTrOxhwjIuvcA67KV2R5Jz6kr4abQsz" crossorigin="anonymous">
 </head>
 <body>
+<header th:replace="/fragments/header.html :: top"></header>
 <h3 th:text="${post.id} ? 'Edit post' : 'Create post'">Post</h3>
 <div class="container">
 
     <form action="#" th:action="@{/updatePost/{id}(id=*{id})}" th:object="${post}" method="POST">
         <input type="text" th:field="${post.id}" placeholder="content" class="form-control mb-4 col-4">
         <input type="text" th:field="${post.content}" placeholder="content" class="form-control mb-4 col-4">
-        <input type="hidden" th:value="${localDateTime}" th:field="*{createdAt}"  placeholder=" created at" class="form-control mb-4 col-4"/> Is private:
-        <input type="hidden" th:value="${post.cerebookUser.id}"  th:field="${post.cerebookUser.id}"  class="form-control mb-4 col-4">
-        <input  type="checkbox"  name="postStatus" th:checked="${postStatus}" th:field="${post.privatePost}"   class="form-check-input" />
+        <input type="hidden" th:value="${localDateTime}" th:field="*{createdAt}" placeholder=" created at"
+               class="form-control mb-4 col-4"/> Is private:
+        <input type="hidden" th:value="${post.cerebookUser.id}" th:field="${post.cerebookUser.id}"
+               class="form-control mb-4 col-4">
+        <input type="checkbox" name="postStatus" th:checked="${postStatus}" th:field="${post.privatePost}"
+               class="form-check-input"/>
 
-        <p><button type="submit" class="btn btn-info col-2"> Save Post</button></p>
+        <p>
+            <button type="submit" class="btn btn-info col-2"> Save Post</button>
+        </p>
     </form>
 
     <hr>
@@ -27,6 +35,6 @@
     <a th:href="@{/}"> Back </a>
 </div>
 </table>
-<!--<th:block th:replace="/fragments/bootstrap.html :: bootstrap-body"></th:block>-->
+<th:block th:replace="/fragments/bootstrap.html :: bootstrap-body"></th:block>
 </body>
 </html>

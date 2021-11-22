@@ -1,8 +1,5 @@
 package wcs.cerebook.controller;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.JsonNode;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.repository.query.Param;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -10,15 +7,14 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.reactive.function.client.WebClient;
-import reactor.core.publisher.Mono;
 import wcs.cerebook.entity.CerebookCartography;
 import wcs.cerebook.entity.CerebookProfil;
 import wcs.cerebook.entity.CerebookUser;
 import wcs.cerebook.repository.UserRepository;
 import wcs.cerebook.services.GeocodeService;
+import wcs.cerebook.services.CerebookUserService;
 
-import javax.servlet.http.HttpServletRequest;
+import java.util.List;
 
 
 @Controller
@@ -28,6 +24,8 @@ public class UserController {
 
     @Autowired
     private GeocodeService geocodeService;
+
+    private CerebookUserService service;
 
     @GetMapping("/")
     public String login() {
@@ -60,7 +58,7 @@ public class UserController {
             user.getProfil().setBanner("/static/css/img/banner.png");
         } else if (user.getRole().equals("MECHANT")) {
             user.getProfil().setBanner("/static/css/img/magneto-banner.jpeg");
-        }else {
+        } else {
             user.getProfil().setBanner("/static/css/img/New-York-Manhattan.jpeg");
         }
         user.getProfil().setAvatar("/static/css/img/avatar.jpeg");
@@ -81,13 +79,6 @@ public class UserController {
         return "redirect:/";
     }
 
-    @GetMapping("/users")
-    public String getAll(Model model) {
-        model.addAttribute("users", userRepository.findAll());
-
-        return "/cerebookUser/users";
-    }
-
     @GetMapping("/user")
     public String getUser(Model model,
                           @RequestParam(required = false) Long id) {
@@ -97,4 +88,14 @@ public class UserController {
 
         return "/cerebookUser/user";
     }
+
+    @RequestMapping("/users")
+    public String viewUser(Model model, @Param("keyword") String keyword) {
+        List<CerebookUser> listUsers = service.listAll(keyword);
+        model.addAttribute("users", listUsers);
+        model.addAttribute("keyword", keyword);
+
+        return "/cerebookUser/users";
+    }
+
 }

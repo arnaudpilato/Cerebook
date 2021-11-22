@@ -34,7 +34,6 @@ public class CerebookUser {
             cascade = CascadeType.ALL,
             orphanRemoval = true
     )
-
     private List<CerebookPost> cerebookPosts ;
 
     @OneToMany(mappedBy = "currentUser")
@@ -44,6 +43,28 @@ public class CerebookUser {
     @JoinColumn(name = "profil_id", referencedColumnName = "id")
     @JsonManagedReference
     private CerebookProfil profil;
+// relation oneToMany between user and comments
+    @OneToMany(
+        cascade = CascadeType.ALL,
+        orphanRemoval = true
+        )
+    private List<CerebookComment> comments = new ArrayList<>();
+
+    public List<CerebookPost> getCerebookPosts() {
+        return cerebookPosts;
+    }
+
+    public void setCerebookPosts(List<CerebookPost> cerebookPosts) {
+        this.cerebookPosts = cerebookPosts;
+    }
+
+    public List<CerebookComment> getComments() {
+        return comments;
+    }
+
+    public void setComments(List<CerebookComment> comments) {
+        this.comments = comments;
+    }
 
     @JsonManagedReference
     @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL, optional = true)
