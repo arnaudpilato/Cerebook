@@ -2,6 +2,11 @@
 
 @import "style.scss";
 
+/***** Leaflet *****/
+.image-icon {
+  border-radius: 50%;
+}
+
 /***** Body *****/
 
 body {
@@ -148,6 +153,21 @@ body {
   font-weight: bold;
   font-size: 1.5rem;
 }
+
+/***** Map Section *****/
+#map {
+  height: 400px;
+  border-radius: 10px;
+}
+
+.map-section {
+  border-radius: 10px;
+  padding: 2px;
+  background-color: #F4A261;
+}
+
+/*# sourceMappingURL=profil.css.map */
+
 #post-container {
   background: #f9f9f9;
   border: 1px solid #aaa;

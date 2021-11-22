@@ -1,11 +1,15 @@
 package wcs.cerebook.controller;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import wcs.cerebook.entity.CerebookProfil;
+import wcs.cerebook.repository.CartographyRepository;
 import wcs.cerebook.repository.ProfilRepository;
 import wcs.cerebook.repository.UserRepository;
 import java.io.IOException;
@@ -23,9 +27,15 @@ public class ProfilController {
     @Autowired
     private ProfilRepository profilRepository;
 
+    @Autowired
+    private CartographyRepository cartographyRepository;
+
     @GetMapping("/profil")
-    public String getProfil(Model model, Principal principal) {
+    public String getProfil(Model model, Principal principal) throws JsonProcessingException {
         model.addAttribute("user", userRepository.findByUsername(principal.getName()));
+        model.addAttribute("allUsers", userRepository.findAll());
+        JsonNode json = new ObjectMapper().valueToTree(cartographyRepository.findAll());
+        model.addAttribute("cartography", json);
 
         return "/cerebookProfil/profil";
     }
@@ -45,7 +55,7 @@ public class ProfilController {
     }
 
     @PostMapping("/profil/update")
-    public String postProfilUpdate(@ModelAttribute CerebookProfil cerebookProfil, @RequestParam(value = "file_banner") MultipartFile banner, @RequestParam("file_avatar") MultipartFile avatar, Principal principal) throws IOException {
+    public String postProfilUpdate(@ModelAttribute CerebookProfil cerebookProfil, @RequestParam(value = "file_banner") MultipartFile banner, @RequestParam("file_avatar") MultipartFile avatar, Principal principal, Model model) throws IOException {
         if (cerebookProfil.getId() != null) {
             if (!banner.isEmpty()) {
                 String bannerExtension = Optional.of(banner.getOriginalFilename()).filter(f -> f.contains(".")).map(f -> f.substring(banner.getOriginalFilename().lastIndexOf(".") + 1)).orElse("");

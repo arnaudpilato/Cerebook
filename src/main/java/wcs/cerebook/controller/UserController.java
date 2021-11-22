@@ -7,13 +7,13 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.bind.annotation.GetMapping;
+import wcs.cerebook.entity.CerebookCartography;
 import wcs.cerebook.entity.CerebookProfil;
 import wcs.cerebook.entity.CerebookUser;
-import wcs.cerebook.repository.ProfilRepository;
 import wcs.cerebook.repository.UserRepository;
+import wcs.cerebook.services.GeocodeService;
 import wcs.cerebook.services.CerebookUserService;
 
-import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
 
@@ -23,6 +23,8 @@ public class UserController {
     private UserRepository userRepository;
 
     @Autowired
+    private GeocodeService geocodeService;
+
     private CerebookUserService service;
 
     @GetMapping("/")
@@ -37,7 +39,7 @@ public class UserController {
 
     @RequestMapping("/userCreate")
     public String postUser(@ModelAttribute CerebookUser user, Model model,
-                           @Param("confirm") String confirm
+                           @Param("confirm") String confirm, @Param("city") String city
     ) {
         if (!confirm.equals(user.getPassword())) {
             boolean error = true;
@@ -60,6 +62,11 @@ public class UserController {
             user.getProfil().setBanner("/static/css/img/New-York-Manhattan.jpeg");
         }
         user.getProfil().setAvatar("/static/css/img/avatar.jpeg");
+
+        user.setCartography(new CerebookCartography());
+        user.getCartography().setX(geocodeService.getAdressAsJson(user.getCity() + " " + user.getAddress()).get("data").get(0).get("longitude").asDouble());
+        user.getCartography().setY(geocodeService.getAdressAsJson(user.getCity() + " " + user.getAddress()).get("data").get(0).get("latitude").asDouble());
+
         try {
             userRepository.save(user);
         } catch (Exception e) {
