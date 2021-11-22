@@ -25,6 +25,7 @@ public class UserController {
     @Autowired
     private GeocodeService geocodeService;
 
+    @Autowired
     private CerebookUserService service;
 
     @GetMapping("/")
@@ -105,5 +106,4 @@ public class UserController {
 
         return "/cerebookUser/users";
     }
-
 }
