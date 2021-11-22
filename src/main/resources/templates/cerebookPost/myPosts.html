@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="fr"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{fragments/_layout}">
+
+    <th:block layout:fragment="config">
+        <title>List all posts</title>
+        <link href="/static/css/post.css" rel="stylesheet"/>
+        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.4.1/css/all.css" integrity="sha384-5sAR7xN1Nv6T6+dT2mhtzEpVJvfS3NScPQTrOxhwjIuvcA67KV2R5Jz6kr4abQsz" crossorigin="anonymous">
+    </th:block>
+
+    <div layout:fragment="content">
+        <div class="container">
+            <a th:href="@{/postCreate}"><i class="fas fa-comment"></i></a>
+            <div th:switch="${listMyPosts}">
+                <h2 th:case="null">No post yet!</h2>
+                <div th:case="*">
+                    <h2>My Posts</h2>
+                    <table class="table table-striped table-hover">
+                        <thead>
+                            <tr>
+                                <th>Id</th>
+                                <th>Content</th>
+                                <th>Created at</th>
+                                <th>Is private post</th>
+                                <th>Edit</th>
+                                <th>Delete</th>
+                            </tr>
+                        </thead>
+                        <tr th:each="p: ${listMyPosts}">
+                            <span th:if="${p.cerebookUser.id==user.id}">
+                                <td th:text="${p.id}"></td>
+                                <td th:text="${p.content}"></td>
+                                <td th:text="${p.createdAt}"></td>
+                                <td th:text="${p.isPrivatePost}"></td>
+                                <td><a th:href="@{/editPost/{id}(id=${p.id})}"></a><i class="far fa-edit"></i></td>
+                                <td><a th:href="@{/deletePost/{id}(id=${p.id})}"></a><i class="far fa-trash-alt"></i></td>
+                            </span>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</html>
