@@ -28,6 +28,9 @@
                             <div th:if="${error}" class="alert alert-danger" role="alert">
                                 Nom d'utilisateur déjà existant.
                             </div>
+                            <div th:if="${error_cartography}" class="alert alert-danger" role="alert">
+                                Coordonnées invalides.
+                            </div>
                             <div class="form-group">
                                 <label for="user-firstName">Prénom : </label>
                                 <input id="user-firstName" name="firstName" placeholder="James" required

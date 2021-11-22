@@ -63,9 +63,17 @@ public class UserController {
         }
         user.getProfil().setAvatar("/static/css/img/avatar.jpeg");
 
-        user.setCartography(new CerebookCartography());
-        user.getCartography().setX(geocodeService.getAdressAsJson(user.getCity() + " " + user.getAddress()).get("data").get(0).get("longitude").asDouble());
-        user.getCartography().setY(geocodeService.getAdressAsJson(user.getCity() + " " + user.getAddress()).get("data").get(0).get("latitude").asDouble());
+
+        try {
+            user.setCartography(new CerebookCartography());
+            user.getCartography().setX(geocodeService.getAdressAsJson(user.getCity() + " " + user.getAddress()).get("data").get(0).get("longitude").asDouble());
+            user.getCartography().setY(geocodeService.getAdressAsJson(user.getCity() + " " + user.getAddress()).get("data").get(0).get("latitude").asDouble());
+        } catch (Exception e) {
+            boolean error_cartography = true;
+            model.addAttribute("error_cartography", error_cartography);
+            model.addAttribute("user", user);
+            return "/cerebookUser/user";
+        }
 
         try {
             userRepository.save(user);
