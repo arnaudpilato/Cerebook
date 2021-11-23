@@ -17,6 +17,8 @@ public class CerebookComment {
     @ManyToOne(fetch = FetchType.LAZY)
     //@JoinColumn(name = "cerebookPost")
     private CerebookPost cerebookPost;
+    @ManyToOne(fetch = FetchType.LAZY)
+    private CerebookEvent cerebookEvent;
     //many (comment)  for one user
     @ManyToOne(fetch = FetchType.LAZY)
     private CerebookUser cerebookUser;
@@ -62,6 +64,14 @@ public class CerebookComment {
     }
 
     public CerebookComment() {
+    }
+
+    public CerebookEvent getCerebookEvent() {
+        return cerebookEvent;
+    }
+
+    public void setCerebookEvent(CerebookEvent cerebookEvent) {
+        this.cerebookEvent = cerebookEvent;
     }
 
     public CerebookComment(Long id, String comment, Date createdAt, CerebookPost cerebookPost) {
