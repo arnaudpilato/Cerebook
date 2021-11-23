@@ -5,14 +5,21 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+import wcs.cerebook.entity.CerebookPost;
 import wcs.cerebook.entity.CerebookProfil;
+import wcs.cerebook.entity.CerebookUser;
+import wcs.cerebook.repository.PostRepository;
 import wcs.cerebook.repository.ProfilRepository;
 import wcs.cerebook.repository.UserRepository;
+
+import javax.validation.Valid;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
 import java.security.Principal;
+import java.util.Date;
+import java.util.List;
 import java.util.Optional;
 
 @Controller
@@ -22,11 +29,22 @@ public class ProfilController {
 
     @Autowired
     private ProfilRepository profilRepository;
+    @Autowired
+    private PostRepository postRepository;
 
     @GetMapping("/profil")
-    public String getProfil(Model model, Principal principal) {
+    public String getProfil(Model model, Principal principal,@Valid CerebookPost cerebookPost) {
         model.addAttribute("user", userRepository.findByUsername(principal.getName()));
-
+        String username = principal.getName();
+       CerebookUser user = userRepository.getCerebookUserByUsername(username);
+        //List<CerebookUser> user = userRepository.findAll();
+        List<CerebookPost> cerebookPosts = postRepository.findAll();
+        model.addAttribute("listPosts", cerebookPosts);
+        model.addAttribute("user", user);
+        cerebookPost.setCreatedAt(new Date());
+        model.addAttribute("localDateTime", new Date());
+        boolean postStatu = cerebookPost.isPrivatePost();
+        model.addAttribute("postStatus", postStatu);
         return "/cerebookProfil/profil";
     }
 
@@ -68,4 +86,5 @@ public class ProfilController {
 
         return "redirect:/profil";
     }
+
 }

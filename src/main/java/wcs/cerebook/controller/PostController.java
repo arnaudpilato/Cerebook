@@ -18,6 +18,7 @@ import java.security.Principal;
 
 import java.util.Date;
 import java.util.List;
+import java.util.Optional;
 
 @Controller
 public class PostController {
@@ -59,7 +60,7 @@ public class PostController {
         CerebookUser user = userRepository.getCerebookUserByUsername(username);
         cerebookPost.setCerebookUser(user);
         repository.save(cerebookPost);
-        return "redirect:/";
+        return "redirect:/allPosts";
     }
 
 
@@ -97,9 +98,12 @@ public class PostController {
         String username = principal.getName();
         CerebookUser user = userRepository.getCerebookUserByUsername(username);
         Long userid = user.getId();
+        boolean isLiked = cerebookPost.isLiked();
         if (result.hasErrors()) {
 
             cerebookPost.setCerebookUser(user);
+           cerebookPost.setLiked(isLiked);
+
             return "post";
 
         }
@@ -107,7 +111,7 @@ public class PostController {
 
         //model.addAttribute("post", repository.findAll());
 
-        return "redirect:/myPosts";
+        return "redirect:/allPosts";
     }
 
     @GetMapping("/deletePost/{id}")
@@ -129,22 +133,17 @@ public class PostController {
     }
 
     @GetMapping("/allPosts")
-    public String getAllPosts(Model model, Principal principal, @Valid CerebookUser cerebookUser, @Valid CerebookPost cerebookPost) {
-        String username = principal.getName();
+    public String getAllPosts(Model model, Principal principal,@Valid CerebookPost cerebookPost) {
         List<CerebookUser> user = userRepository.findAll();
-
-
         List<CerebookPost> cerebookPosts = repository.findAll();
         model.addAttribute("listPosts", cerebookPosts);
-        //cerebookPost.setCerebookUser(user);
-
         model.addAttribute("user", user);
         cerebookPost.setCreatedAt(new Date());
         model.addAttribute("localDateTime", new Date());
         boolean postStatu = cerebookPost.isPrivatePost();
-
         model.addAttribute("postStatus", postStatu);
         return "allPosts";
+
     }
 
 }
