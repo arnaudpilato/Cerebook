@@ -59,11 +59,11 @@
                                     <label for="event-image">Image : </label>
                                     <input id="event-image" name="image_file" type="file">
                                 </div>
-                                <div class="form-group">
+                                <div class="form-group descriptionEvent">
                                     <label for="event-description">Description : </label>
-                                    <input id="event-description" name="address"
+                                    <textarea id="event-description" name="address"
                                            placeholder="Description de l'évènement..."
-                                           th:field="*{description}" type="text">
+                                           th:field="*{description}" type="text"/>
                                 </div>
                                 <!--<label hidden for="user-role">role</label>
                                 <input hidden id="user-role" name="role" value="USER">-->

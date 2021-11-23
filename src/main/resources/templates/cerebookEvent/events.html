@@ -26,6 +26,9 @@
                                 <li><a th:href="@{/event/{id}(id=${event.id})}"><p class="profile-section-username"
                                                                                    th:text="${event.title}"></p></a>
                                 </li>
+                                <li class="" th:if="${event.cerebookUser.id} == ${user.id}"><a th:href="@{/deleteEvent/{id}(id=${event.id})}">
+                                    <img class="profile-section-logo" src="/static/css/img/poubelle.png" alt="delete"/></a>
+                                </li>
                             </ul>
                             <ul class="essai">
                                 <li class="mb-2"><img class="" src="/static/css/img/city.png" alt="City"><span

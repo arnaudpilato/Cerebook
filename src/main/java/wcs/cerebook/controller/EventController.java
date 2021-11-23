@@ -5,6 +5,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+import wcs.cerebook.controller.exception.illegalArgumentException;
 import wcs.cerebook.entity.CerebookEvent;
 import wcs.cerebook.entity.CerebookPost;
 import wcs.cerebook.entity.CerebookUser;
@@ -64,17 +65,31 @@ public class EventController {
     }
 
     @RequestMapping("/events")
-    public String getAllPosts(Model model) {
+    public String getAllPosts(Model model, Principal principal) {
         List<CerebookEvent> cerebookEvent = eventRepository.findAll();
+        CerebookUser cerebookUser = userRepository.getCerebookUserByUsername(principal.getName());
 
         model.addAttribute("events", cerebookEvent);
+        model.addAttribute("user", cerebookUser);
 
         return "/cerebookEvent/events";
     }
+
     @GetMapping("/event/{id}")
     public String getEventById(Model model, @PathVariable Long id) {
         model.addAttribute("event", eventRepository.getById(id));
 
         return "/cerebookEvent/event";
+    }
+
+    @RequestMapping("/deleteEvent/{id}")
+    public String deleteEvent(@PathVariable("id") Long id, Principal principal) throws illegalArgumentException {
+        CerebookUser cerebookUser = userRepository.getCerebookUserByUsername(principal.getName());
+        CerebookEvent cerebookEvent = eventRepository.findById(id)
+                .orElseThrow(() -> new illegalArgumentException(" Invalid event id: " + id));
+        if (cerebookEvent.getCerebookUser().getId().equals(cerebookUser.getId())) {
+            eventRepository.delete(cerebookEvent);
+        }
+        return "redirect:/events";
     }
 }
