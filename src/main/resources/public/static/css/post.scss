@@ -183,7 +183,6 @@ body {
   font-size:10px;
   color:blue;
 }
-<<<<<<< HEAD
 .content td:nth-child(2n+1) {
   background-color: #d48c8c;
 }
@@ -204,5 +203,28 @@ body {
   clear: both;
   display: table;
 }
-=======
->>>>>>> 53ce6525edeab593aaaca20504cfaefe415f5030
+//scroll barr pour posts
+@import "style.css";
+.divpost{
+  margin:4px;
+  padding:4px;
+  width: auto;
+  height: 600px;
+  overflow-y: auto;
+  overflow-x: hidden;
+  text-align:justify;
+
+  .profile-section-logo {
+    width: 64px;
+    height: auto;
+    display: inline-block;
+    border-radius: 50%;
+  }
+  .form{
+    resize : both;
+    min-width : 100px;
+    min-height : 100px;
+    max-width : 200px;
+    max-height : 200px
+  }
+}

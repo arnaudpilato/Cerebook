@@ -60,7 +60,7 @@ public class PostController {
         CerebookUser user = userRepository.getCerebookUserByUsername(username);
         cerebookPost.setCerebookUser(user);
         repository.save(cerebookPost);
-        return "redirect:/allPosts";
+        return "redirect:/profil";
     }
 
 
