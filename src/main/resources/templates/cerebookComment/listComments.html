@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="fr"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{fragments/_layout}">
+
+    <th:block layout:fragment="config">
+        <title>List comments</title>
+        <link href="/static/css/post.css" rel="stylesheet"/>
+        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.4.1/css/all.css" integrity="sha384-5sAR7xN1Nv6T6+dT2mhtzEpVJvfS3NScPQTrOxhwjIuvcA67KV2R5Jz6kr4abQsz" crossorigin="anonymous">
+    </th:block>
+
+    <div layout:fragment="content">
+        <div class="container">
+            <div th:switch="${listComment}">
+                <h2 th:case="null">No comment yet!</h2>
+                <div th:case="*">
+                    <h2>All comments</h2>
+                    <table class="table table-striped table-hover">
+                        <tr th:each="c: ${listComment}">
+                            <td th:text="${c.comment}"></td>
+                            <td th:text="${c.createdAt}"></td>
+                            <td th:text="${c.cerebookUser.username}"></td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</html>

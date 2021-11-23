@@ -42,7 +42,7 @@ public class CommentController {
         model.addAttribute("post" ,cerebookPost );
         cerebookComment.setCreatedAt(new Date());
         model.addAttribute("time",new Date());
-        return "addComment";
+        return "/cerebookComment/addComment";
     }
     //save  comment
     @RequestMapping("/savecomment")
@@ -66,6 +66,6 @@ public class CommentController {
 
     model.addAttribute("post",post);
 
-        return "listComments";
+        return "/cerebookComment/listComments";
     }
 }

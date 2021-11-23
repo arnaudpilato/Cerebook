@@ -1,148 +1,131 @@
 <!DOCTYPE html>
-<html lang="fr" xmlns:th="http://www.thymeleaf.org">
-<head>
-    <meta charset="UTF-8">
-    <title>Profil</title>
-    <th:block th:replace="/fragments/bootstrap.html :: bootstrap-head"></th:block>
-    <link href="/static/css/profil.css" rel="stylesheet" />
-    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css"
-          integrity="sha512-xodZBNTC5n17Xt2atTPuE1HxjVMSvLVW9ocqUKLsCC5CXdbqCmblAshOMAS6/keqq/sMZMZ19scR4PsZChSR7A=="
-          crossorigin=""/>
-</head>
-    <body>
-        <header th:replace="/fragments/header.html :: top"></header>
-            <div class="container-fluid">
-                <div class="row">
-                    <div class="col-lg-11">
-                        <div class="row">
-                            <div class="col-lg-12">
-                                <img class="baniere" th:src="${user.profil.banner}" alt="Banière">
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-lg-5 pr-0">
-                                <ul class="banner-logo-list banner-left pl-3">
-                                    <li><a type="button" data-bs-toggle="modal" data-bs-target="#profilModal"><img class="banner-logo" src="/static/css/img/secured-profile.png" alt="Logo profil"></a></li>
-                                    <li><a href="/profil/show"><img class="banner-logo" src="/static/css/img/map.png" alt="Logo carte"></a></li>
-                                    <li><a href="#"><img class="banner-logo" src="/static/css/img/friends.png" alt="Logo amis"></a></li>
-                                </ul>
-                                <div class="modal fade" id="profilModal" tabindex="-1" aria-labelledby="profilModalLabel" aria-hidden="true">
-                                    <div class="modal-dialog modal-dialog-centered">
-                                        <div class="modal-content">
-                                            <div class="modal-header">
-                                                <h5 class="modal-title" id="profilModalLabel" th:text="${user.username}"></h5>
-                                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                                            </div>
-                                            <div class="modal-body">
-                                                <h4 class="text-center mb-3">Coordonnées</h4>
-                                                <ul class="modal-list">
-                                                    <li class="mb-2"><img class="modal-profile-logo" src="/static/css/img/profil.png" alt="Logo profil"><span th:text="${user.firstName} + ' ' + ${user.lastName}"></span></li>
-                                                    <li class="mb-2"><img class="modal-profile-logo" src="/static/css/img/home.png" alt="Logo adresse"><span th:text="${user.address}"></span></li>
-                                                    <li class="mb-2"><img class="modal-profile-logo" src="/static/css/img/city.png" alt="Logo adresse"><span th:text="${user.city}"></span></li>
-                                                    <li class="mb-2"><img class="modal-profile-logo" src="/static/css/img/birthday.png" alt="Logo adresse"><span th:text="${#dates.format(user.birthday,'dd MM yyyy')}"></span></li>
-                                                    <li class="mb-4"><img class="modal-profile-logo" src="/static/css/img/mail.png" alt="Logo email"><span th:text="${user.email}"></span></li>
-                                                </ul>
+<html lang="fr"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{fragments/_layout}">
 
-                                                <h4 th:if="${user.profil}" class="text-center mb-3">Profil</h4>
-                                                <ul class="modal-list">
-                                                    <li th:if="${user.profil.activity}" class="mb-2"><img class="modal-profile-logo" src="/static/css/img/shield.png" alt="Logo profil"><span th:text="${user.profil.activity}"></span></li>
-                                                    <li th:if="${user.profil.interestedInWoman}" class="mb-2"><img class="modal-profile-logo" src="/static/css/img/love.png" alt="Logo profil"><span>Intéréssé par les femmes</span></li>
-                                                    <li th:if="${user.profil.interestedInMen}" class="mb-2"><img class="modal-profile-logo" src="/static/css/img/love.png" alt="Logo profil"><span>Intéréssé par les hommes</span></li>
-                                                    <li th:if="${user.profil.hometown}" class="mb-2"><img class="modal-profile-logo" src="/static/css/img/hometown.png" alt="Logo profil"><span th:text="'De ' + ${user.profil.hometown}"></span></li>
-                                                    <li th:if="${user.profil.relashionship}"><img class="modal-profile-logo" src="/static/css/img/relationship.png" alt="Logo profil"><span th:text="'En relation avec ' + ${ user.profil.relashionship}"></span></li>
-                                                </ul>
-                                            </div>
-                                            <div class="modal-footer">
-                                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                                            </div>
+    <th:block layout:fragment="config">
+        <title>Profil</title>
+        <link href="/static/css/profil.css" rel="stylesheet"/>
+    </th:block>
+
+    <div layout:fragment="content">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-lg-11">
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <img class="baniere" th:src="${user.profil.banner}" alt="Banière">
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-lg-5 pr-0">
+                            <ul class="banner-logo-list banner-left pl-3">
+                                <li><a type="button" data-bs-toggle="modal" data-bs-target="#profilModal"><img class="banner-logo" src="/static/css/img/secured-profile.png" alt="Logo profil"></a></li>
+                                <li><a href="/profil/show"><img class="banner-logo" src="/static/css/img/map.png" alt="Logo carte"></a></li>
+                                <li><a href="#"><img class="banner-logo" src="/static/css/img/friends.png" alt="Logo amis"></a></li>
+                            </ul>
+                            <div class="modal fade" id="profilModal" tabindex="-1" aria-labelledby="profilModalLabel" aria-hidden="true">
+                                <div class="modal-dialog modal-dialog-centered">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h5 class="modal-title" id="profilModalLabel" th:text="${user.username}"></h5>
+                                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                         </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-lg-2 banner-list d-flex justify-content-center">
-                                <img class="ornament-logo" src="/static/css/img/ornament.png" alt="Logo circulaire">
-                                <img class="profile-logo" th:src="${user.profil.avatar}" alt="Logo de profil">
-                                <h1 class="profile-name" th:text="${user.username}"></h1>
-                            </div>
-                            <div class="col-lg-5 pl-0">
-                                <ul class="banner-logo-list banner-right pl-0 pr-3">
-                                    <li><a href="#"><img class="banner-logo" src="/static/css/img/gallery.png" alt="Logo photos"></a></li>
-                                    <li><a href="#"><img class="banner-logo" src="/static/css/img/video.png" alt="Logo vidéos"></a></li>
-                                    <li><a href="/profil/update"><img class="banner-logo" src="/static/css/img/option.png" alt="Logo options"></a></li>
-                                </ul>
-                            </div>
-                        </div>
-
-                        <div class="row">
-                            <!-- PIL : Section profil -->
-                            <div class="col-lg-3 ">
-                                <div class="row">
-                                    <div class="col-lg-12">
-                                        <div class="profile-section">
-                                            <ul class="d-flex justify-content-between py-3 px-3 pb-0">
-                                                <li class="title-section"><p>Profil</p></li>
-                                                <li><a type="button" data-bs-toggle="modal" data-bs-target="#profilModal"><img class="banner-logo" src="/static/css/img/secured-profile.png" alt="Logo profil"></a></li>
-                                            </ul>
-                                            <ul class="d-flex justify-content-around px-3 align-items-center">
-                                                <li><img class="profile-section-logo" th:src="${user.profil.avatar}" alt="Logo de profil"></li>
-                                                <li><p class="profile-section-username" th:text="${user.username}"></p></li>
-                                            </ul>
-                                            <ul class="essai">
-                                                <li th:if="${user.profil.activity}" class="mb-2"><img class="modal-profile-logo" src="/static/css/img/shield.png" alt="Logo profil"><span th:text="${user.profil.activity}"></span></li>
+                                        <div class="modal-body">
+                                            <h4 class="text-center mb-3">Coordonnées</h4>
+                                            <ul class="modal-list">
+                                                <li class="mb-2"><img class="modal-profile-logo" src="/static/css/img/profil.png" alt="Logo profil"><span th:text="${user.firstName} + ' ' + ${user.lastName}"></span></li>
+                                                <li class="mb-2"><img class="modal-profile-logo" src="/static/css/img/home.png" alt="Logo adresse"><span th:text="${user.address}"></span></li>
                                                 <li class="mb-2"><img class="modal-profile-logo" src="/static/css/img/city.png" alt="Logo adresse"><span th:text="${user.city}"></span></li>
+                                                <li class="mb-2"><img class="modal-profile-logo" src="/static/css/img/birthday.png" alt="Logo adresse"><span th:text="${#dates.format(user.birthday,'dd MM yyyy')}"></span></li>
+                                                <li class="mb-4"><img class="modal-profile-logo" src="/static/css/img/mail.png" alt="Logo email"><span th:text="${user.email}"></span></li>
+                                            </ul>
+
+                                            <h4 th:if="${user.profil}" class="text-center mb-3">Profil</h4>
+                                            <ul class="modal-list">
+                                                <li th:if="${user.profil.activity}" class="mb-2"><img class="modal-profile-logo" src="/static/css/img/shield.png" alt="Logo profil"><span th:text="${user.profil.activity}"></span></li>
                                                 <li th:if="${user.profil.interestedInWoman}" class="mb-2"><img class="modal-profile-logo" src="/static/css/img/love.png" alt="Logo profil"><span>Intéréssé par les femmes</span></li>
                                                 <li th:if="${user.profil.interestedInMen}" class="mb-2"><img class="modal-profile-logo" src="/static/css/img/love.png" alt="Logo profil"><span>Intéréssé par les hommes</span></li>
                                                 <li th:if="${user.profil.hometown}" class="mb-2"><img class="modal-profile-logo" src="/static/css/img/hometown.png" alt="Logo profil"><span th:text="'De ' + ${user.profil.hometown}"></span></li>
-                                                <li th:if="${user.profil.relashionship}" class="mb-3"><img class="modal-profile-logo" src="/static/css/img/relationship.png" alt="Logo profil"><span th:text="'En relation avec ' + ${ user.profil.relashionship}"></span></li>
+                                                <li th:if="${user.profil.relashionship}"><img class="modal-profile-logo" src="/static/css/img/relationship.png" alt="Logo profil"><span th:text="'En relation avec ' + ${ user.profil.relashionship}"></span></li>
                                             </ul>
                                         </div>
-                                    </div>
-                                </div>
-                            </div>
-
-
-
-
-
-                            <div class="col-lg-6 ">
-                                <div class="row">
-                                    <div class="col-lg-12 ">
-                                        <div class="map-section">
-                                            <div id="map"></div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
                                         </div>
                                     </div>
                                 </div>
                             </div>
-
-                            <div class="col-lg-3 ">
-                                <div class="row">
-                                    <div class="col-lg-12">
-                                        <p class="map-section" >images</p>
-                                        <div th:text="${user.cartography.x}"></div>
-
+                        </div>
+                        <div class="col-lg-2 banner-list d-flex justify-content-center">
+                            <img class="ornament-logo" src="/static/css/img/ornament.png" alt="Logo circulaire">
+                            <img class="profile-logo" th:src="${user.profil.avatar}" alt="Logo de profil">
+                            <h1 class="profile-name" th:text="${user.username}"></h1>
+                        </div>
+                        <div class="col-lg-5 pl-0">
+                            <ul class="banner-logo-list banner-right pl-0 pr-3">
+                                <li><a href="#"><img class="banner-logo" src="/static/css/img/gallery.png" alt="Logo photos"></a></li>
+                                <li><a href="#"><img class="banner-logo" src="/static/css/img/video.png" alt="Logo vidéos"></a></li>
+                                <li><a href="/profil/update"><img class="banner-logo" src="/static/css/img/option.png" alt="Logo options"></a></li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <!-- PIL : Section profil -->
+                        <div class="col-lg-3 ">
+                            <div class="row">
+                                <div class="col-lg-12">
+                                    <div class="profile-section">
+                                        <ul class="d-flex justify-content-between py-3 px-3 pb-0">
+                                            <li class="title-section"><p>Profil</p></li>
+                                            <li><a type="button" data-bs-toggle="modal" data-bs-target="#profilModal"><img class="banner-logo" src="/static/css/img/secured-profile.png" alt="Logo profil"></a></li>
+                                        </ul>
+                                        <ul class="d-flex justify-content-around px-3 align-items-center">
+                                            <li><img class="profile-section-logo" th:src="${user.profil.avatar}" alt="Logo de profil"></li>
+                                            <li><p class="profile-section-username" th:text="${user.username}"></p></li>
+                                        </ul>
+                                        <ul class="essai">
+                                            <li th:if="${user.profil.activity}" class="mb-2"><img class="modal-profile-logo" src="/static/css/img/shield.png" alt="Logo profil"><span th:text="${user.profil.activity}"></span></li>
+                                            <li class="mb-2"><img class="modal-profile-logo" src="/static/css/img/city.png" alt="Logo adresse"><span th:text="${user.city}"></span></li>
+                                            <li th:if="${user.profil.interestedInWoman}" class="mb-2"><img class="modal-profile-logo" src="/static/css/img/love.png" alt="Logo profil"><span>Intéréssé par les femmes</span></li>
+                                            <li th:if="${user.profil.interestedInMen}" class="mb-2"><img class="modal-profile-logo" src="/static/css/img/love.png" alt="Logo profil"><span>Intéréssé par les hommes</span></li>
+                                            <li th:if="${user.profil.hometown}" class="mb-2"><img class="modal-profile-logo" src="/static/css/img/hometown.png" alt="Logo profil"><span th:text="'De ' + ${user.profil.hometown}"></span></li>
+                                            <li th:if="${user.profil.relashionship}" class="mb-3"><img class="modal-profile-logo" src="/static/css/img/relationship.png" alt="Logo profil"><span th:text="'En relation avec ' + ${ user.profil.relashionship}"></span></li>
+                                        </ul>
                                     </div>
-
                                 </div>
-
                             </div>
                         </div>
-
-
-
-
-                    </div>
-                    <div class="col-lg-1 friend-connected">
-                        <ul>
-                            <li><img class="baniere-logo" src="/static/css/img/secured-profile.png"></li>
-                            <li><img class="baniere-logo" src="/static/css/img/secured-profile.png"></li>
-                            <li><img class="baniere-logo" src="/static/css/img/secured-profile.png"></li>
-                            <li><img class="baniere-logo" src="/static/css/img/secured-profile.png"></li>
-                            <li><img class="baniere-logo" src="/static/css/img/secured-profile.png"></li>
-                        </ul>
+                        <div class="col-lg-6 ">
+                            <div class="row">
+                                <div class="col-lg-12 ">
+                                    <div class="map-section">
+                                        <div id="map"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-3 ">
+                            <div class="row">
+                                <div class="col-lg-12">
+                                    <p class="map-section" >images</p>
+                                    <div th:text="${user.cartography.x}"></div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
+                <div class="col-lg-1 friend-connected">
+                    <ul>
+                        <li><img class="baniere-logo" src="/static/css/img/secured-profile.png"></li>
+                        <li><img class="baniere-logo" src="/static/css/img/secured-profile.png"></li>
+                        <li><img class="baniere-logo" src="/static/css/img/secured-profile.png"></li>
+                        <li><img class="baniere-logo" src="/static/css/img/secured-profile.png"></li>
+                        <li><img class="baniere-logo" src="/static/css/img/secured-profile.png"></li>
+                    </ul>
+                </div>
             </div>
-        <th:block th:replace="/fragments/bootstrap.html :: bootstrap-body"></th:block>
+        </div>
         <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js" integrity="sha512-XQoYMqMTK8LvdxXYG3nZ448hOEQiglfqkJs1NOQV44cWnUrBc8PkAOcXy20w0vlaXaVUearIOBhiXZ5V3ynxwA==" crossorigin=""></script>
         <script th:inline="javascript">
             let cities = L.layerGroup();
@@ -151,7 +134,7 @@
             let allUsers = [[${allUsers}]];
 
             for (let i = 0; i < allUsers.length; i++) {
-               // L.marker([allUsers[i].cartography.y, allUsers[i].cartography.x]).bindPopup('This is Golden, CO.').addTo(cities);
+                // L.marker([allUsers[i].cartography.y, allUsers[i].cartography.x]).bindPopup('This is Golden, CO.').addTo(cities);
 
                 L.marker([allUsers[i].cartography.y, allUsers[i].cartography.x], {icon: L.icon({
                         className: 'image-icon',
@@ -169,24 +152,24 @@
             console.log(allUsers[0].cartography.x);
 
             var Jawg_Terrain = L.tileLayer('https://{s}.tile.jawg.io/jawg-terrain/{z}/{x}/{y}{r}.png?access-token={accessToken}', {
-                attribution: '<a href="http://jawg.io" title="Tiles Courtesy of Jawg Maps" target="_blank">&copy; <b>Jawg</b>Maps</a> &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors', minZoom: 0,
-                maxZoom: 22,
-                subdomains: 'abcd',
-                accessToken: 'LsV1RNeAnn9smXe7sluDMmWb5hnPQAuljgSvaK07bHR2R4oLt3YPUS3E1xYYZaQr'
-            }),
+                    attribution: '<a href="http://jawg.io" title="Tiles Courtesy of Jawg Maps" target="_blank">&copy; <b>Jawg</b>Maps</a> &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors', minZoom: 0,
+                    maxZoom: 22,
+                    subdomains: 'abcd',
+                    accessToken: 'LsV1RNeAnn9smXe7sluDMmWb5hnPQAuljgSvaK07bHR2R4oLt3YPUS3E1xYYZaQr'
+                }),
 
-            Jawg_Matrix = L.tileLayer('https://{s}.tile.jawg.io/jawg-matrix/{z}/{x}/{y}{r}.png?access-token={accessToken}', {
-                attribution: '<a href="http://jawg.io" title="Tiles Courtesy of Jawg Maps" target="_blank">&copy; <b>Jawg</b>Maps</a> &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
-                minZoom: 0,
-                maxZoom: 22,
-                subdomains: 'abcd',
-                accessToken: 'LsV1RNeAnn9smXe7sluDMmWb5hnPQAuljgSvaK07bHR2R4oLt3YPUS3E1xYYZaQr'
-            }),
+                Jawg_Matrix = L.tileLayer('https://{s}.tile.jawg.io/jawg-matrix/{z}/{x}/{y}{r}.png?access-token={accessToken}', {
+                    attribution: '<a href="http://jawg.io" title="Tiles Courtesy of Jawg Maps" target="_blank">&copy; <b>Jawg</b>Maps</a> &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
+                    minZoom: 0,
+                    maxZoom: 22,
+                    subdomains: 'abcd',
+                    accessToken: 'LsV1RNeAnn9smXe7sluDMmWb5hnPQAuljgSvaK07bHR2R4oLt3YPUS3E1xYYZaQr'
+                }),
 
-            USGS_USImageryTopo = L.tileLayer('https://basemap.nationalmap.gov/arcgis/rest/services/USGSImageryTopo/MapServer/tile/{z}/{y}/{x}', {
-                maxZoom: 20,
-                attribution: 'Tiles courtesy of the <a href="https://usgs.gov/">U.S. Geological Survey</a>'
-            });
+                USGS_USImageryTopo = L.tileLayer('https://basemap.nationalmap.gov/arcgis/rest/services/USGSImageryTopo/MapServer/tile/{z}/{y}/{x}', {
+                    maxZoom: 20,
+                    attribution: 'Tiles courtesy of the <a href="https://usgs.gov/">U.S. Geological Survey</a>'
+                });
 
             let map = L.map('map', {
                 center: [20, 0],
@@ -206,5 +189,5 @@
 
             L.control.layers(baseLayers, overlays).addTo(map);
         </script>
-    </body>
+    </div>
 </html>

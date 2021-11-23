@@ -3,11 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <title>Cerebook index</title>
-    <th:block th:replace="/fragments/bootstrap.html :: bootstrap-head"></th:block>
+    <th:block th:replace="/fragments/_bootstrap.html :: bootstrapHeadFragment"></th:block>
     <link href="/static/css/style.css" rel="stylesheet"/>
 </head>
 <body>
-<header th:replace="/fragments/header.html :: top"></header>
+<header th:replace="/fragments/_header.html :: headerFragment"></header>
 <h1 th:inline="text" class="essai text-center">Bienvenue [[${#httpServletRequest.remoteUser}]]</h1>
 
 <div class="container-fluid imageAccueil">
@@ -60,6 +60,6 @@
     </div>
 </div>
 
-<th:block th:replace="/fragments/bootstrap.html :: bootstrap-body"></th:block>
+<th:block th:replace="/fragments/_bootstrap.html :: bootstrapBodyFragment"></th:block>
 </body>
 </html>
