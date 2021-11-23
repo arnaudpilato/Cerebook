@@ -14,9 +14,7 @@
                                    required/>
                     <input type="submit" value="Rechercher"/>
                 </form>-->
-                <li class="nav-item">
-                    <a class="nav-link" href="/eventCreate">Evènement</a>
-                </li>
+
                 <form th:action="@{/users}">
                     <div class="searchbar">
                         <input class="search_input" type="text" name="keyword" id="keyword" placeholder="Search..."
@@ -26,6 +24,9 @@
                     </div>
                 </form>
                 <ul class="navbar-nav">
+                    <li class="nav-item">
+                        <a class="nav-link" href="/events"><img class="logo" src="/static/css/img/events.png"></a>
+                    </li>
                     <li class="nav-item">
                         <a class="nav-link" href="/messages"><img class="logo" src="/static/css/img/message.png"></a>
                     </li>

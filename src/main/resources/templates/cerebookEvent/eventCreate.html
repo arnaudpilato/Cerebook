@@ -18,7 +18,7 @@
                     <div class="card cardHome col-12">
                         <form method="post" th:action="@{/eventSave}" th:object="${event}" enctype="multipart/form-data">
                             <fieldset class="marginCreateUser">
-                                <legend>Création de compte</legend>
+                                <legend>Ajouter un évènement</legend>
 
                                 <input name="id" th:field="${event.id}" type="hidden">
                                 <div class="form-group">
@@ -68,7 +68,7 @@
                                 <!--<label hidden for="user-role">role</label>
                                 <input hidden id="user-role" name="role" value="USER">-->
                                 <div class="form-actions form-group">
-                                    <button type="submit" class="btn btn-primary">Créer l'évènement'</button>
+                                    <button type="submit" class="d-flex btn btn-primary justify-content-center">Créer l'évènement</button>
                                 </div>
                             </fieldset>
                         </form>
