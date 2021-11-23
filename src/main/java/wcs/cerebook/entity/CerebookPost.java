@@ -18,6 +18,15 @@ public class CerebookPost {
     private Date createdAt;
     private String content;
     private boolean privatePost;
+    // propriete systeme de like
+    //there I saved users, who has posed "like"
+    //private CerebookUser likes ;
+    @Column(nullable = true)
+    private Long countLike;
+    //there I want to save status - liked/disliked;
+    @Column(columnDefinition = "boolean default false")
+    private boolean liked;
+    //fin propriete systeme de like
     // manyToone for post one user can have many post
     @ManyToOne(fetch = FetchType.LAZY)
 
@@ -32,6 +41,23 @@ public class CerebookPost {
             cascade = CascadeType.ALL)
     //private CerebookPost cerebookPost;
     private final List<CerebookComment> comments = new ArrayList<CerebookComment>();
+
+    public Long getCountLike() {
+        return countLike;
+    }
+
+    public void setCountLike(Long countLike) {
+        this.countLike = countLike;
+    }
+
+    public boolean isLiked() {
+        return liked;
+    }
+
+    public void setLiked(boolean liked) {
+        liked = liked;
+    }
+
     public CerebookUser getCerebookUser() {
         return cerebookUser;
     }
@@ -75,11 +101,14 @@ public class CerebookPost {
     public CerebookPost() {
     }
 
-    public CerebookPost(Long id, Date createdAt, String content, boolean privatePost, CerebookUser cerebookUser) {
+    public CerebookPost(Long id, Date createdAt, String content, boolean privatePost, Long countLike, boolean liked, CerebookUser cerebookUser) {
         this.id = id;
         this.createdAt = createdAt;
         this.content = content;
         this.privatePost = privatePost;
+        this.countLike = countLike;
+        liked = liked;
         this.cerebookUser = cerebookUser;
     }
+
 }
