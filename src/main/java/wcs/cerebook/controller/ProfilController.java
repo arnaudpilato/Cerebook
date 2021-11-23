@@ -1,5 +1,8 @@
 package wcs.cerebook.controller;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -9,6 +12,7 @@ import wcs.cerebook.entity.CerebookPost;
 import wcs.cerebook.entity.CerebookProfil;
 import wcs.cerebook.entity.CerebookUser;
 import wcs.cerebook.repository.PostRepository;
+import wcs.cerebook.repository.CartographyRepository;
 import wcs.cerebook.repository.ProfilRepository;
 import wcs.cerebook.repository.UserRepository;
 
@@ -31,6 +35,9 @@ public class ProfilController {
     private ProfilRepository profilRepository;
     @Autowired
     private PostRepository postRepository;
+
+    @Autowired
+    private CartographyRepository cartographyRepository;
 
     @GetMapping("/profil")
     public String getProfil(Model model, Principal principal,@Valid CerebookPost cerebookPost) {
@@ -63,7 +70,7 @@ public class ProfilController {
     }
 
     @PostMapping("/profil/update")
-    public String postProfilUpdate(@ModelAttribute CerebookProfil cerebookProfil, @RequestParam(value = "file_banner") MultipartFile banner, @RequestParam("file_avatar") MultipartFile avatar, Principal principal) throws IOException {
+    public String postProfilUpdate(@ModelAttribute CerebookProfil cerebookProfil, @RequestParam(value = "file_banner") MultipartFile banner, @RequestParam("file_avatar") MultipartFile avatar, Principal principal, Model model) throws IOException {
         if (cerebookProfil.getId() != null) {
             if (!banner.isEmpty()) {
                 String bannerExtension = Optional.of(banner.getOriginalFilename()).filter(f -> f.contains(".")).map(f -> f.substring(banner.getOriginalFilename().lastIndexOf(".") + 1)).orElse("");

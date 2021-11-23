@@ -1,22 +1,18 @@
-@import "variables.scss";
-
 /***** Body *****/
 body {
   background-color: #C4C4C4;
 }
 
 /***** Bootstrap *****/
-
 .bg-primary {
-  background-color: $primary;
+  background-color: #264653 !important;
 }
 
 .navbar-light, .navbar-brand {
-  color: $secondary;
+  color: #F4A261 !important;
 }
 
 /***** Navbar *****/
-
 .navbar-nav {
   align-items: center;
 }
@@ -37,7 +33,7 @@ body {
 }
 
 .search_input {
-  color: $primary;
+  color: #264653 !important;
   border: 0;
   outline: 0;
   background: none;
@@ -57,7 +53,6 @@ body {
 }
 
 /***** Accueil *****/
-
 .accueil {
   display: flex;
   flex-direction: column;
@@ -102,16 +97,51 @@ body {
   margin-top: 2vh;
   margin-bottom: 2vh;
 }
+
 .createButton {
-margin-bottom: 1vh;
+  margin-bottom: 1vh;
 }
 
 .connexionButton {
-margin-top: 2vh;
+  margin-top: 2vh;
 }
 
 /***** Leaflet *****/
-
 .image-icon {
   border-radius: 50%;
 }
+
+.accueilCreateAccount {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  min-height: 85vh;
+  max-width: 39vh;
+}
+
+label {
+  display: block;
+  width: 150px;
+  float: left;
+}
+
+.birstdayBr {
+  float: none;
+}
+
+.form-group {
+  max-width: 15vh;
+}
+
+.marginCreateUser {
+  margin-left: 5vh;
+  margin-right: 5vh;
+  margin-top: 2vh;
+  margin-bottom: 2vh;
+}
+
+.userCards {
+  min-height: 39vh;
+}
+
+/*# sourceMappingURL=user.css.map */

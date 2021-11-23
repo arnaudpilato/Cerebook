@@ -29,7 +29,7 @@ public class MessagingController {
     @GetMapping("/messages")
     public String index(Model model) {
         model.addAttribute("users", userRepository.findAll());
-        return "/message/messaging";
+        return "/cerebookMessage/messaging";
     }
 
     @GetMapping("/message")
@@ -72,7 +72,7 @@ public class MessagingController {
         model.addAttribute("messages", finalList);
 
 
-        return "message/tchat";
+        return "cerebookMessage/tchat";
     }
 
 

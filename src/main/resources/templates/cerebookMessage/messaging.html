@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="fr"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{fragments/_layout}">
+
+    <th:block layout:fragment="config">
+        <title>Messagerie</title>
+    </th:block>
+
+    <div layout:fragment="content">
+        <h1> Messagerie </h1>
+        <div th:each="user : ${users}">
+            <p th:text="${user.username}">name</p>
+            <a th:href="@{/message(username=${user.username})}">ajouter</a>
+        </div>
+    </div>
+</html>

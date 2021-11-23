@@ -1,13 +1,14 @@
 <!DOCTYPE html>
-<html lang="fr" xmlns:th="http://www.thymeleaf.org">
-    <head>
-        <meta charset="UTF-8">
+<html lang="fr"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{fragments/_layout}">
+
+    <th:block layout:fragment="config">
         <title>Modification du profil</title>
-        <th:block th:replace="/fragments/bootstrap.html :: bootstrap-head"></th:block>
-        <link href="/static/css/profil.css" rel="stylesheet" />
-    </head>
-    <body>
-        <header th:replace="/fragments/header.html :: top"></header>
+        <link href="/static/css/profil.css" rel="stylesheet"/>
+    </th:block>
+
+    <div layout:fragment="content">
         <div class="container mt-3">
             <h1 class="text-center">Modification du profil</h1>
             <form method="post" th:action="@{/profil/update}" enctype="multipart/form-data">
@@ -62,6 +63,5 @@
                 </div>
             </form>
         </div>
-        <th:block th:replace="/fragments/bootstrap.html :: bootstrap-body"></th:block>
-    </body>
+    </div>
 </html>
