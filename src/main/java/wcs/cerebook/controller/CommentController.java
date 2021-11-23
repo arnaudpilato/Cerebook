@@ -52,7 +52,7 @@ public class CommentController {
         cerebookComment.setCerebookPost(cerebookPost);
         cerebookComment.setCerebookUser(user);
         commentRepository.save(cerebookComment);
-        return "redirect:/";
+        return "redirect:/allPosts";
     }
 
     @GetMapping("/listComment/{postid}")
