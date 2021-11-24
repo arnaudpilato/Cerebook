@@ -1,0 +1,13 @@
+/***** Imports *****/
+
+@import "style.scss";
+
+/***** Pictures *****/
+.gallery ul {
+  list-style: none;
+}
+
+.picture {
+  width: 100%;
+  object-fit: cover;
+}

@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="fr"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{fragments/_layout}">
+
+    <th:block layout:fragment="config">
+        <title>Image</title>
+        <link href="/static/css/picture.css" rel="stylesheet"/>
+    </th:block>
+
+    <div layout:fragment="content">
+        <div class="container">
+            <h1>Picture</h1>
+            <div class="row gallery justify-content-around">
+                <ul class="col-lg-3" th:each="picture : ${user.pictures}">
+                    <li><img class="picture" th:src="${picture.getPicturePath()}"></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</html>
