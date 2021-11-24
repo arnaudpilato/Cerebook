@@ -52,6 +52,9 @@ public class ProfilController {
         model.addAttribute("localDateTime", new Date());
         boolean postStatu = cerebookPost.isPrivatePost();
         model.addAttribute("postStatus", postStatu);
+        model.addAttribute("allUsers", userRepository.findAll());
+        JsonNode json = new ObjectMapper().valueToTree(cartographyRepository.findAll());
+        model.addAttribute("cartography", json);
         return "/cerebookProfil/profil";
     }
 
