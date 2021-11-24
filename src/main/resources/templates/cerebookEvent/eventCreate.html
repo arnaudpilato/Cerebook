@@ -16,7 +16,8 @@
             <div class="row">
                 <div class="col-12 ">
                     <div class="card cardHome col-12">
-                        <form method="post" th:action="@{/eventSave}" th:object="${event}" enctype="multipart/form-data">
+                        <form method="post" th:action="@{/eventSave}" th:object="${event}"
+                              enctype="multipart/form-data">
                             <fieldset class="marginCreateUser">
                                 <legend>Ajouter un évènement</legend>
 
@@ -53,7 +54,7 @@
                                 </div>
                                 <div class="form-group">
                                     <label for="event-phone">Télephone : </label>
-                                    <input id="event-phone" name="phone" th:field="*{phone}" type="number">
+                                    <input id="event-phone" name="phone" th:field="*{phone}" type="tel">
                                 </div>
                                 <div class="form-group">
                                     <label for="event-image">Image : </label>
@@ -62,13 +63,15 @@
                                 <div class="form-group descriptionEvent">
                                     <label for="event-description">Description : </label>
                                     <textarea id="event-description" name="address"
-                                           placeholder="Description de l'évènement..."
-                                           th:field="*{description}" type="text"/>
+                                              placeholder="Description de l'évènement..."
+                                              th:field="*{description}" type="text"/>
                                 </div>
                                 <!--<label hidden for="user-role">role</label>
                                 <input hidden id="user-role" name="role" value="USER">-->
                                 <div class="form-actions form-group">
-                                    <button type="submit" class="d-flex btn btn-primary justify-content-center">Créer l'évènement</button>
+                                    <button type="submit" class="d-flex btn btn-primary justify-content-center">Créer
+                                        l'évènement
+                                    </button>
                                 </div>
                             </fieldset>
                         </form>

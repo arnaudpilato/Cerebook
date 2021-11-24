@@ -58,7 +58,9 @@ public class EventController {
         cerebookEvent.setCerebookUser(user);
         eventRepository.save(cerebookEvent);
 
-        return "redirect:/profil";
+        Long eventId = cerebookEvent.getId();
+
+        return "redirect:/event/"+eventId;
     }
 
     private void saveImage(@ModelAttribute CerebookEvent cerebookEvent, Principal principal, @RequestParam("image_file") MultipartFile image) throws IOException {

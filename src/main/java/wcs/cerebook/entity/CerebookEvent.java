@@ -26,11 +26,13 @@ public class CerebookEvent {
     @OneToMany(mappedBy = "cerebookEvent", fetch = FetchType.LAZY,
             cascade = CascadeType.ALL)
     private final List<CerebookComment> comments = new ArrayList<CerebookComment>();
+    private Double x;
+    private Double y;
 
     public CerebookEvent() {
     }
 
-    public CerebookEvent(Long id, String title, Date startEvent, Date endEvent, String address, String city, int phone, String email, String image, String description, CerebookUser cerebookUser) {
+    public CerebookEvent(Long id, String title, Date startEvent, Date endEvent, String address, String city, int phone, String email, String image, String description, CerebookUser cerebookUser, Double x, Double y) {
         this.id = id;
         this.title = title;
         this.startEvent = startEvent;
@@ -42,6 +44,8 @@ public class CerebookEvent {
         this.image = image;
         this.description = description;
         this.cerebookUser = cerebookUser;
+        this.x = x;
+        this.y = y;
     }
 
     public Long getId() {
@@ -134,5 +138,21 @@ public class CerebookEvent {
 
     public List<CerebookComment> getComments() {
         return comments;
+    }
+
+    public Double getX() {
+        return x;
+    }
+
+    public void setX(Double x) {
+        this.x = x;
+    }
+
+    public Double getY() {
+        return y;
+    }
+
+    public void setY(Double y) {
+        this.y = y;
     }
 }
