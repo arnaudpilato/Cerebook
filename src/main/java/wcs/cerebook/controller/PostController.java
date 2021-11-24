@@ -49,7 +49,7 @@ public class PostController {
 
         model.addAttribute("postStatus", postStatu);
 
-        return "/cerebookPost/addPost";
+        return "cerebookPost/addPost";
     }
 
     //save post
@@ -71,7 +71,7 @@ public class PostController {
 
         model.addAttribute("listPosts", cerebookPosts);
 
-        return "/cerebookPost/posts";
+        return "cerebookPost/posts";
     }
 
     @RequestMapping("/editPost/{id}")
@@ -90,7 +90,7 @@ public class PostController {
         model.addAttribute("postStatus", postStatu);
 
         //model.addAttribute("posts",cerebookPost);
-        return "/cerebookPost/post";
+        return "cerebookPost/post";
     }
 
     @PostMapping("/updatePost/{id}")
@@ -104,7 +104,7 @@ public class PostController {
             cerebookPost.setCerebookUser(user);
            cerebookPost.setLiked(isLiked);
 
-            return "/cerebookPost/post";
+            return "cerebookPost/post";
 
 
         }
@@ -121,7 +121,7 @@ public class PostController {
                 .orElseThrow(() -> new illegalArgumentException(" Invalid post id: " + id));
         this.repository.delete(cerebookPost);
         model.addAttribute("posts", this.repository.findAll());
-        return "/cerebookPost/posts";
+        return "cerebookPost/posts";
     }
 
     @GetMapping("/myPosts")
@@ -130,7 +130,7 @@ public class PostController {
         CerebookUser user = userRepository.getCerebookUserByUsername(username);
         model.addAttribute("listMyPosts", repository.findAll());
         model.addAttribute("user", user);
-        return "/cerebookPost/myPosts";
+        return "cerebookPost/myPosts";
     }
 
     @GetMapping("/allPosts")
@@ -144,7 +144,7 @@ public class PostController {
         boolean postStatu = cerebookPost.isPrivatePost();
         model.addAttribute("postStatus", postStatu);
 
-        return "/cerebookPost/allPosts";
+        return "cerebookPost/allPosts";
 
     }
 

@@ -46,7 +46,7 @@ public class UserController {
             boolean error = true;
             model.addAttribute("errorPassword", error);
             model.addAttribute("user", user);
-            return "/cerebookUser/user";
+            return "cerebookUser/user";
         }
 
         BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
@@ -73,7 +73,7 @@ public class UserController {
             boolean error_cartography = true;
             model.addAttribute("error_cartography", error_cartography);
             model.addAttribute("user", user);
-            return "/cerebookUser/user";
+            return "cerebookUser/user";
         }
 
         try {
@@ -95,7 +95,7 @@ public class UserController {
         CerebookUser user = new CerebookUser();
         model.addAttribute("user", user);
 
-        return "/cerebookUser/user";
+        return "cerebookUser/user";
     }
 
     @RequestMapping("/users")
@@ -104,6 +104,6 @@ public class UserController {
         model.addAttribute("users", listUsers);
         model.addAttribute("keyword", keyword);
 
-        return "/cerebookUser/users";
+        return "cerebookUser/users";
     }
 }
