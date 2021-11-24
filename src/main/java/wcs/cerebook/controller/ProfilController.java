@@ -55,21 +55,21 @@ public class ProfilController {
         model.addAttribute("allUsers", userRepository.findAll());
         JsonNode json = new ObjectMapper().valueToTree(cartographyRepository.findAll());
         model.addAttribute("cartography", json);
-        return "/cerebookProfil/profil";
+        return "cerebookProfil/profil";
     }
 
     @GetMapping("/profil/{id}")
     public String getOtherProfil(Model model, @PathVariable Long id) {
         model.addAttribute("user", userRepository.getById(id));
 
-        return "/cerebookProfil/profil";
+        return "cerebookProfil/profil";
     }
 
     @GetMapping("/profil/update")
     public String getProfilUpdate(Model model, Principal principal) {
         model.addAttribute("user", userRepository.findByUsername(principal.getName()));
 
-        return "/cerebookProfil/profil_update";
+        return "cerebookProfil/profil_update";
     }
 
     @PostMapping("/profil/update")
