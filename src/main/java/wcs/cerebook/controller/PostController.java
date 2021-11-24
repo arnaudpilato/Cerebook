@@ -130,7 +130,7 @@ public class PostController {
         CerebookUser user = userRepository.getCerebookUserByUsername(username);
         model.addAttribute("listMyPosts", repository.findAll());
         model.addAttribute("user", user);
-        return "/cerebookPost/myPosts";
+        return "cerebookPost/myPosts";
     }
 
     @GetMapping("/allPosts")
@@ -144,7 +144,7 @@ public class PostController {
         boolean postStatu = cerebookPost.isPrivatePost();
         model.addAttribute("postStatus", postStatu);
 
-        return "/cerebookPost/allPosts";
+        return "cerebookPost/allPosts";
 
     }
 
