@@ -44,14 +44,16 @@ public class EventController {
     @RequestMapping("/eventSave")
     public String savePost(@ModelAttribute CerebookEvent cerebookEvent, Principal principal, @RequestParam(value = "image_file") MultipartFile image) throws IOException {
         CerebookUser user = userRepository.getCerebookUserByUsername(principal.getName());
-        if (cerebookEvent.getId() != null) {
-            if (!image.isEmpty()) {
-                saveImage(cerebookEvent, principal, image);
+        if (!image.isEmpty()) {
+            if (cerebookEvent.getId() != null) {
+                if (!image.isEmpty()) {
+                    saveImage(cerebookEvent, principal, image);
+                } else {
+                    cerebookEvent.setImage(eventRepository.getById(cerebookEvent.getId()).getImage());
+                }
             } else {
-                cerebookEvent.setImage(eventRepository.getById(cerebookEvent.getId()).getImage());
+                saveImage(cerebookEvent, principal, image);
             }
-        } else {
-            saveImage(cerebookEvent, principal, image);
         }
         cerebookEvent.setCerebookUser(user);
         eventRepository.save(cerebookEvent);
