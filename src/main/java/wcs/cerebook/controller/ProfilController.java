@@ -8,8 +8,11 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+import wcs.cerebook.entity.CerebookMessage;
 import wcs.cerebook.entity.CerebookProfil;
+import wcs.cerebook.entity.CerebookUser;
 import wcs.cerebook.repository.CartographyRepository;
+import wcs.cerebook.repository.PictureRepository;
 import wcs.cerebook.repository.ProfilRepository;
 import wcs.cerebook.repository.UserRepository;
 import java.io.IOException;
@@ -17,6 +20,8 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
 import java.security.Principal;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 @Controller
@@ -30,11 +35,20 @@ public class ProfilController {
     @Autowired
     private CartographyRepository cartographyRepository;
 
+    @Autowired
+    private PictureRepository pictureRepository;
+
     @GetMapping("/profil")
     public String getProfil(Model model, Principal principal) throws JsonProcessingException {
         model.addAttribute("user", userRepository.findByUsername(principal.getName()));
         model.addAttribute("allUsers", userRepository.findAll());
         JsonNode json = new ObjectMapper().valueToTree(cartographyRepository.findAll());
+
+
+        String userName = principal.getName();
+        CerebookUser userId = userRepository.findByUsername(userName);
+
+        //model.addAttribute("pictures", pictureRepository.lastPicture(userId.getId()));
         model.addAttribute("cartography", json);
 
         return "/cerebookProfil/profil";
@@ -75,6 +89,13 @@ public class ProfilController {
 
             profilRepository.save(cerebookProfil);
         }
+
+        return "redirect:/profil";
+    }
+
+    @GetMapping("/profil/picture/delete")
+    public String deletePicture(@RequestParam Long id) {
+        pictureRepository.deleteById(id);
 
         return "redirect:/profil";
     }

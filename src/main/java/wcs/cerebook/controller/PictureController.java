@@ -4,10 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import wcs.cerebook.entity.CerebookPicture;
 import wcs.cerebook.repository.PictureRepository;
@@ -18,7 +15,6 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
 import java.security.Principal;
-import java.util.Optional;
 
 @Controller
 public class PictureController {
@@ -33,6 +29,13 @@ public class PictureController {
         model.addAttribute("user", userRepository.findByUsername(principal.getName()));
 
         return "/cerebookPicture/picture";
+    }
+
+    @GetMapping("/picture/show")
+    public String showPicture(Model model, @RequestParam Long id) {
+        model.addAttribute("picture", pictureRepository.findById(id));
+
+        return "/cerebookPicture/picture_show";
     }
 
     @GetMapping("/picture/update")
@@ -51,6 +54,13 @@ public class PictureController {
                     cerebookPicture.setUser(userRepository.findByUsername(principal.getName()));
                 }
         pictureRepository.save(cerebookPicture);
+        return "redirect:/picture";
+    }
+
+    @GetMapping("/picture/delete")
+    public String deletePicture(@RequestParam Long id) {
+        pictureRepository.deleteById(id);
+
         return "redirect:/picture";
     }
 }
