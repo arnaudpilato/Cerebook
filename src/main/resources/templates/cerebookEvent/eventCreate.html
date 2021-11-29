@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="fr"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{fragments/_layout}">
+
+<th:block layout:fragment="config">
+    <title>Ajouter un évènement</title>
+    <link href="/static/css/event.css" rel="stylesheet"/>
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.4.1/css/all.css"
+          integrity="sha384-5sAR7xN1Nv6T6+dT2mhtzEpVJvfS3NScPQTrOxhwjIuvcA67KV2R5Jz6kr4abQsz" crossorigin="anonymous">
+</th:block>
+
+<div layout:fragment="content">
+    <div class="container-fluid imageAccueil">
+        <div class="container accueilCreateAccount">
+            <div class="row">
+                <div class="col-12 ">
+                    <div class="card cardHome col-12">
+                        <form method="post" th:action="@{/eventSave}" th:object="${event}"
+                              enctype="multipart/form-data">
+                            <fieldset class="marginCreateUser">
+                                <legend>Ajouter un évènement</legend>
+
+                                <input name="id" th:field="${event.id}" type="hidden">
+                                <div class="form-group">
+                                    <label for="event-title">Titre : </label>
+                                    <input id="event-title" name="title" placeholder="Titre de l'évènement" required
+                                           th:field="*{title}" type="text">
+                                </div>
+                                <div class="form-group">
+                                    <label for="event-startEvent">Date de début : </label>
+                                    <input id="event-startEvent" name="startEvent" required th:field="*{startEvent}"
+                                           type="date">
+                                </div>
+                                <div class="form-group">
+                                    <label for="event-endEvent">Date de fin : </label>
+                                    <input id="event-endEvent" name="endEvent" required th:field="*{endEvent}"
+                                           type="date">
+                                </div>
+                                <div class="form-group">
+                                    <label for="event-city">Ville de l'évènement: </label>
+                                    <input id="event-city" name="city" placeholder="New York..." required
+                                           th:field="*{city}" type="text">
+                                </div>
+                                <div class="form-group">
+                                    <label for="event-address">Addresse : </label>
+                                    <input id="event-address" name="address" placeholder="1 Av. du champs de mars"
+                                           th:field="*{address}" type="text">
+                                </div>
+                                <div class="form-group">
+                                    <label for="event-email">Adresse e-mail : </label>
+                                    <input id="event-email" name="email" placeholder="Wolverine@x-men.com"
+                                           th:field="*{email}" type="email">
+                                </div>
+                                <div class="form-group">
+                                    <label for="event-phone">Télephone : </label>
+                                    <input id="event-phone" name="phone" th:field="*{phone}" type="tel">
+                                </div>
+                                <div class="form-group">
+                                    <label for="event-image">Image : </label>
+                                    <input id="event-image" name="image_file" type="file">
+                                </div>
+                                <div class="form-group descriptionEvent">
+                                    <label for="event-description">Description : </label>
+                                    <textarea id="event-description" name="address"
+                                              placeholder="Description de l'évènement..."
+                                              th:field="*{description}" type="text"/>
+                                </div>
+                                <!--<label hidden for="user-role">role</label>
+                                <input hidden id="user-role" name="role" value="USER">-->
+                                <div class="form-actions form-group">
+                                    <button type="submit" class="d-flex btn btn-primary justify-content-center">Créer
+                                        l'évènement
+                                    </button>
+                                </div>
+                            </fieldset>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <a th:href="@{/}"> Back </a>
+</div>
+</html>

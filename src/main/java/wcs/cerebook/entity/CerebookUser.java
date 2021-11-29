@@ -50,6 +50,12 @@ public class CerebookUser {
         )
     private List<CerebookComment> comments = new ArrayList<>();
 
+
+    @JsonManagedReference
+    @OneToMany(mappedBy = "user")
+    private List<CerebookPicture> pictures;
+
+
     @JsonManagedReference
     @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL, optional = true)
     private CerebookCartography cartography;
@@ -213,6 +219,14 @@ public class CerebookUser {
 
     public void setComments(List<CerebookComment> comments) {
         this.comments = comments;
+    }
+
+    public List<CerebookPicture> getPictures() {
+        return pictures;
+    }
+
+    public void setPictures(List<CerebookPicture> pictures) {
+        this.pictures = pictures;
     }
 
     @Override
