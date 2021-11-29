@@ -12,10 +12,10 @@
 <div layout:fragment="content">
     <h2 class="d-flex justify-content-center">Evènements</h2>
     <div class="d-flex justify-content-center mb-2"><a th:href="@{/eventCreate}">Créer un évènement</a></div>
-    <div class="container">
+    <div class="container-fluid">
         <div class="row">
             <!-- PIL : Section profil -->
-            <div th:each="event : ${events}" class="col-lg-4">
+            <div th:each="event : ${events}" class="col-4">
                 <div class="row">
                     <div class="col-lg-12">
                         <div class="profile-section userCards mb-3">
@@ -26,18 +26,27 @@
                                 <li><a th:href="@{/event/{id}(id=${event.id})}"><p class="profile-section-username"
                                                                                    th:text="${event.title}"></p></a>
                                 </li>
-                                <li class="" th:if="${event.cerebookUser.id} == ${user.id}"><a th:href="@{/deleteEvent/{id}(id=${event.id})}">
+                                <li class="" th:if="${event.cerebookUser.id} == ${user.id}"><a
+                                        th:href="@{/deleteEvent/{id}(id=${event.id})}">
                                     <img class="profile-section-logo" src="/static/css/img/poubelle.png" alt="delete"/></a>
                                 </li>
                             </ul>
                             <ul class="essai">
                                 <li class="mb-2"><img class="" src="/static/css/img/city.png" alt="City"><span
-                                        th:text="${event.city}"></span></li>
+                                        th:text="${event.city}"></span>
+                                </li>
                                 <li><a th:href="@{/profil/{id}(id=${event.cerebookUser.id})}"><p
-                                        th:text="'Contact :  ' + ${event.cerebookUser.username}"></p></a>
-                                    <a th:href="@{/message(username=${event.cerebookUser.username})}">
-                                        Message à l'organisateur  -->
-                                        <img class="logo ml-3" src="/static/css/img/message.png"></a>
+                                        th:text="'profil organisateur :  &nbsp' + ${event.cerebookUser.username}"></p></a>
+                                    <div class="d-flex">
+                                        <div>
+                                            <a th:href="@{/message(username=${event.cerebookUser.username})}">
+                                                Message à l'organisateur : &nbsp
+                                            </a>
+                                        </div>
+                                        <div>
+                                            <img class="logo d-block ml-5" src="/static/css/img/message.png">
+                                        </div>
+                                    </div>
                                 </li>
 
                             </ul>
