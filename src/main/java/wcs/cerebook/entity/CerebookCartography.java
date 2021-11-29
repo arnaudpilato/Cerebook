@@ -1,9 +1,7 @@
 package wcs.cerebook.entity;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
-
 import javax.persistence.*;
 import java.util.List;
 
@@ -19,7 +17,6 @@ public class CerebookCartography {
     private Double x;
     private Double y;
 
-    @JsonBackReference
     @OneToMany(mappedBy = "cartography")
     private List<CerebookUser> users;
 
