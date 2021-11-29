@@ -50,30 +50,19 @@ public class CerebookUser {
         )
     private List<CerebookComment> comments = new ArrayList<>();
 
-    public List<CerebookPost> getCerebookPosts() {
-        return cerebookPosts;
-    }
-
-    public void setCerebookPosts(List<CerebookPost> cerebookPosts) {
-        this.cerebookPosts = cerebookPosts;
-    }
-
-    public List<CerebookComment> getComments() {
-        return comments;
-    }
-
-    public void setComments(List<CerebookComment> comments) {
-        this.comments = comments;
-    }
-
     @JsonManagedReference
     @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL, optional = true)
     private CerebookCartography cartography;
 
+    @ManyToOne
+    private CerebookFriend friends;
+
     public CerebookUser() {
     }
 
-    public CerebookUser(Long id, String username, String firstName, String lastName, String city, String address, String email, String password, Date birthday, String role, boolean enable, List<CerebookPost> cerebookPosts, List<CerebookMessage> messages, CerebookProfil profil) {
+    public CerebookUser(Long id, String username, String firstName, String lastName, String city, String address,
+                        String email, String password, Date birthday, String role, boolean enable, List<CerebookPost>
+                                cerebookPosts, List<CerebookMessage> messages, CerebookProfil profil) {
         this.id = id;
         this.username = username;
         this.firstName = firstName;
@@ -88,6 +77,14 @@ public class CerebookUser {
         this.cerebookPosts = cerebookPosts;
         this.messages = messages;
         this.profil = profil;
+    }
+
+    public CerebookFriend getFriends() {
+        return friends;
+    }
+
+    public void setFriends(CerebookFriend friends) {
+        this.friends = friends;
     }
 
     public Long getId() {
@@ -202,6 +199,22 @@ public class CerebookUser {
         this.cartography = cartography;
     }
 
+    public List<CerebookPost> getCerebookPosts() {
+        return cerebookPosts;
+    }
+
+    public void setCerebookPosts(List<CerebookPost> cerebookPosts) {
+        this.cerebookPosts = cerebookPosts;
+    }
+
+    public List<CerebookComment> getComments() {
+        return comments;
+    }
+
+    public void setComments(List<CerebookComment> comments) {
+        this.comments = comments;
+    }
+
     @Override
     public String toString() {
         return "CerebookUser{" +
@@ -219,6 +232,8 @@ public class CerebookUser {
                 ", cerebookPosts=" + cerebookPosts +
                 ", messages=" + messages +
                 ", profil=" + profil +
+                ", comments=" + comments +
+                ", cartography=" + cartography +
                 '}';
     }
 }
