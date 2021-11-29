@@ -25,6 +25,14 @@
                                         <td th:text="${p.createdAt}"></td>
                                         <td th:text="${'Posted by: '+p.cerebookUser.username}"></td>
                                     </div>
+                                     <form action="#" th:action="@{/updateLike/{id}(id=${p.id})}"
+                                           method="POST">
+                                         <td th:text="${'j''aime: '+p.countLike}"></td>
+                                            <button type="submit"  name="like"><i
+                                                    class="far fa-thumbs-up"></i> </button>
+                                            <button type="submit" value="-1" name="like"><i
+                                                    class="far fa-thumbs-down"></i> </button>
+                                     </form>
                                 </div>
                                 <div>
                                     <td><a th:href="@{/addComment/{id}(id=${p.id})}"><i class="far fa-comment"></i></a>add</td>

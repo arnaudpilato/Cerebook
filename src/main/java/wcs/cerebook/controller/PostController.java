@@ -20,8 +20,7 @@ import java.security.Principal;
 
 import java.util.Date;
 import java.util.List;
-import java.util.Optional;
-import java.util.stream.Collectors;
+
 
 @Controller
 public class PostController {
@@ -121,7 +120,7 @@ public class PostController {
         CerebookUser user = userRepository.getCerebookUserByUsername(username);
         model.addAttribute("listMyPosts", repository.findAll());
         model.addAttribute("user", user);
-        return "/cerebookPost/myPosts";
+        return "cerebookPost/myPosts";
     }
 
     @GetMapping("/allPosts")
@@ -136,6 +135,7 @@ public class PostController {
         model.addAttribute("localDateTime", new Date());
         boolean postStatu = cerebookPost.isPrivatePost();
         model.addAttribute("postStatus", postStatu);
+
 
         //twitter
         /*try {
@@ -155,7 +155,9 @@ public class PostController {
         Twitter twitter = TwitterFactory.getSingleton();
         List<Status> tweets = twitter.getHomeTimeline();
         model.addAttribute("tweet", tweets );*/
+
         return "/allPosts";
+
 
     }
 

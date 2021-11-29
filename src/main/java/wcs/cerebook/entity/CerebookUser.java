@@ -50,6 +50,10 @@ public class CerebookUser {
         )
     private List<CerebookComment> comments = new ArrayList<>();
 
+    @JsonManagedReference
+    @OneToMany(mappedBy = "user")
+    private List<CerebookPicture> pictures;
+
     public List<CerebookPost> getCerebookPosts() {
         return cerebookPosts;
     }
@@ -200,6 +204,14 @@ public class CerebookUser {
 
     public void setCartography(CerebookCartography cartography) {
         this.cartography = cartography;
+    }
+
+    public List<CerebookPicture> getPictures() {
+        return pictures;
+    }
+
+    public void setPictures(List<CerebookPicture> pictures) {
+        this.pictures = pictures;
     }
 
     @Override
