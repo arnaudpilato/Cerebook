@@ -34,7 +34,8 @@ public class EventController {
         CerebookEvent cerebookEvent = new CerebookEvent();
 
         if (id != null) {
-             cerebookEvent = eventRepository.getById(id);
+            cerebookEvent = eventRepository.getById(id);
+
         }
 
         model.addAttribute("event", cerebookEvent);
@@ -47,7 +48,7 @@ public class EventController {
 
 
     @RequestMapping("/eventSave")
-    public String saveEvent(@ModelAttribute CerebookEvent cerebookEvent, Principal principal, @RequestParam(value = "image_file") MultipartFile image) throws IOException {
+    public String saveEvent(Model model, @ModelAttribute CerebookEvent cerebookEvent, Principal principal, @RequestParam(value = "image_file") MultipartFile image) throws IOException {
         CerebookUser user = userRepository.getCerebookUserByUsername(principal.getName());
         if (!image.isEmpty()) {
             if (cerebookEvent.getId() != null) {
@@ -100,27 +101,6 @@ public class EventController {
             eventRepository.delete(cerebookEvent);
         }
         return "redirect:/events";
-    }
 
-    @RequestMapping("/eventUpdate")
-    public String updateEvent(@ModelAttribute CerebookEvent cerebookEvent, Principal principal, @RequestParam(value = "image_file") MultipartFile image) throws IOException {
-        CerebookUser user = userRepository.getCerebookUserByUsername(principal.getName());
-        if (!image.isEmpty()) {
-            if (cerebookEvent.getId() != null) {
-                if (!image.isEmpty()) {
-                    saveImage(cerebookEvent, principal, image);
-                } else {
-                    cerebookEvent.setImage(eventRepository.getById(cerebookEvent.getId()).getImage());
-                }
-            } else {
-                saveImage(cerebookEvent, principal, image);
-            }
-        }
-        cerebookEvent.setCerebookUser(user);
-        eventRepository.save(cerebookEvent);
-
-        Long eventId = cerebookEvent.getId();
-
-        return "redirect:/event/" + eventId;
     }
 }
