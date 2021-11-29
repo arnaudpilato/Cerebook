@@ -20,6 +20,7 @@ public class CerebookEvent {
     private int phone;
     private String email;
     private String image;
+    @Column(length = 65535, columnDefinition = "TEXT")
     private String description;
     @ManyToOne(fetch = FetchType.LAZY)
     private CerebookUser cerebookUser;
