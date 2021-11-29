@@ -8,6 +8,10 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+import twitter4j.Status;
+import twitter4j.Twitter;
+import twitter4j.TwitterException;
+import twitter4j.TwitterFactory;
 import wcs.cerebook.entity.CerebookPost;
 import wcs.cerebook.entity.CerebookProfil;
 import wcs.cerebook.entity.CerebookUser;
@@ -40,7 +44,7 @@ public class ProfilController {
     private CartographyRepository cartographyRepository;
 
     @GetMapping("/profil")
-    public String getProfil(Model model, Principal principal,@Valid CerebookPost cerebookPost) {
+    public String getProfil(Model model, Principal principal,@Valid CerebookPost cerebookPost){
         model.addAttribute("user", userRepository.findByUsername(principal.getName()));
         String username = principal.getName();
        CerebookUser user = userRepository.getCerebookUserByUsername(username);
@@ -52,6 +56,10 @@ public class ProfilController {
         model.addAttribute("localDateTime", new Date());
         boolean postStatu = cerebookPost.isPrivatePost();
         model.addAttribute("postStatus", postStatu);
+        model.addAttribute("allUsers", userRepository.findAll());
+        JsonNode json = new ObjectMapper().valueToTree(cartographyRepository.findAll());
+        model.addAttribute("cartography", json);
+
         return "/cerebookProfil/profil";
     }
 

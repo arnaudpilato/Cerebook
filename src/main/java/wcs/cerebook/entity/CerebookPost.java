@@ -1,6 +1,8 @@
 package wcs.cerebook.entity;
 
+
 import org.springframework.format.annotation.DateTimeFormat;
+
 
 import javax.persistence.*;
 
@@ -20,9 +22,8 @@ public class CerebookPost {
     private boolean privatePost;
     // propriete systeme de like
     //there I saved users, who has posed "like"
-    //private CerebookUser likes ;
-    @Column(nullable = true)
-    private Long countLike;
+    //private CerebookUser likes ;l
+    private long countLike=0;
     //there I want to save status - liked/disliked;
     @Column(columnDefinition = "boolean default false")
     private boolean liked;
@@ -42,11 +43,11 @@ public class CerebookPost {
     //private CerebookPost cerebookPost;
     private final List<CerebookComment> comments = new ArrayList<CerebookComment>();
 
-    public Long getCountLike() {
+    public long getCountLike() {
         return countLike;
     }
 
-    public void setCountLike(Long countLike) {
+    public void setCountLike(long countLike) {
         this.countLike = countLike;
     }
 
@@ -101,14 +102,13 @@ public class CerebookPost {
     public CerebookPost() {
     }
 
-    public CerebookPost(Long id, Date createdAt, String content, boolean privatePost, Long countLike, boolean liked, CerebookUser cerebookUser) {
+    public CerebookPost(Long id, Date createdAt, String content, boolean privatePost, long countLike, boolean liked, CerebookUser cerebookUser) {
         this.id = id;
         this.createdAt = createdAt;
         this.content = content;
         this.privatePost = privatePost;
         this.countLike = countLike;
-        liked = liked;
+        this.liked = liked;
         this.cerebookUser = cerebookUser;
     }
-
 }

@@ -17,7 +17,7 @@ public class CerebookUser {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(nullable = true, unique = true)
+    @Column(nullable = false, unique = true)
     private String username;
     private String firstName;
     private String lastName;
