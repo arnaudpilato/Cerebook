@@ -27,6 +27,10 @@
                                                                                    th:text="${event.title}"></p></a>
                                 </li>
                                 <li class="" th:if="${event.cerebookUser.id} == ${user.id}"><a
+                                        th:href="@{/eventCreate(id=${event.id})}">
+                                    <img class="profile-section-logo" src="/static/css/img/setting.png" alt="delete"/></a>
+                                </li>
+                                <li class="" th:if="${event.cerebookUser.id} == ${user.id}"><a
                                         th:href="@{/deleteEvent/{id}(id=${event.id})}">
                                     <img class="profile-section-logo" src="/static/css/img/poubelle.png" alt="delete"/></a>
                                 </li>

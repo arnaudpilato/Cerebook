@@ -29,9 +29,14 @@ public class EventController {
     private UserRepository userRepository;
 
     @GetMapping("/eventCreate")
-    public String addPost(Principal principal, Model model) {
+    public String addPost(Principal principal, Model model, @RequestParam(required = false, value = "id") Long id) {
         CerebookUser user = userRepository.getCerebookUserByUsername(principal.getName());
         CerebookEvent cerebookEvent = new CerebookEvent();
+
+        if (id != null) {
+             cerebookEvent = eventRepository.getById(id);
+        }
+
         model.addAttribute("event", cerebookEvent);
         cerebookEvent.setCerebookUser(user);
 
@@ -42,7 +47,7 @@ public class EventController {
 
 
     @RequestMapping("/eventSave")
-    public String savePost(@ModelAttribute CerebookEvent cerebookEvent, Principal principal, @RequestParam(value = "image_file") MultipartFile image) throws IOException {
+    public String saveEvent(@ModelAttribute CerebookEvent cerebookEvent, Principal principal, @RequestParam(value = "image_file") MultipartFile image) throws IOException {
         CerebookUser user = userRepository.getCerebookUserByUsername(principal.getName());
         if (!image.isEmpty()) {
             if (cerebookEvent.getId() != null) {
@@ -60,7 +65,7 @@ public class EventController {
 
         Long eventId = cerebookEvent.getId();
 
-        return "redirect:/event/"+eventId;
+        return "redirect:/event/" + eventId;
     }
 
     private void saveImage(@ModelAttribute CerebookEvent cerebookEvent, Principal principal, @RequestParam("image_file") MultipartFile image) throws IOException {
@@ -69,7 +74,7 @@ public class EventController {
     }
 
     @RequestMapping("/events")
-    public String getAllPosts(Model model, Principal principal) {
+    public String getAllEvents(Model model, Principal principal) {
         List<CerebookEvent> cerebookEvent = eventRepository.findAll();
         CerebookUser cerebookUser = userRepository.getCerebookUserByUsername(principal.getName());
 
@@ -95,5 +100,27 @@ public class EventController {
             eventRepository.delete(cerebookEvent);
         }
         return "redirect:/events";
+    }
+
+    @RequestMapping("/eventUpdate")
+    public String updateEvent(@ModelAttribute CerebookEvent cerebookEvent, Principal principal, @RequestParam(value = "image_file") MultipartFile image) throws IOException {
+        CerebookUser user = userRepository.getCerebookUserByUsername(principal.getName());
+        if (!image.isEmpty()) {
+            if (cerebookEvent.getId() != null) {
+                if (!image.isEmpty()) {
+                    saveImage(cerebookEvent, principal, image);
+                } else {
+                    cerebookEvent.setImage(eventRepository.getById(cerebookEvent.getId()).getImage());
+                }
+            } else {
+                saveImage(cerebookEvent, principal, image);
+            }
+        }
+        cerebookEvent.setCerebookUser(user);
+        eventRepository.save(cerebookEvent);
+
+        Long eventId = cerebookEvent.getId();
+
+        return "redirect:/event/" + eventId;
     }
 }
