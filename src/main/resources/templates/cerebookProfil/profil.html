@@ -185,7 +185,7 @@
                                         <li><a href="picture/"><img class="banner-logo" src="/static/css/img/secured-profile.png" alt="Logo Gallery"></a></li>
                                     </ul>
                                     <div class="row pb-3 px-3 justify-content-center">
-                                        <div class="trapdoor col-lg-3 my-2 mx-2" th:each="picture : ${user.pictures}">
+                                        <div class="trapdoor col-lg-3 my-2 mx-2" th:each="picture : ${pictures}">
                                             <div class="top door pd-2">
                                                 <img class="picture-section-img" th:src="${picture.getPicturePath()}">
                                             </div>

@@ -1,6 +1,7 @@
 package wcs.cerebook.entity;
 
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -15,6 +16,7 @@ import java.util.ArrayList;
 @JsonIdentityInfo(
     generator = ObjectIdGenerators.PropertyGenerator.class,
     property = "id")
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public class CerebookUser {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -239,9 +241,8 @@ public class CerebookUser {
                 ", birthday=" + birthday +
                 ", role='" + role + '\'' +
                 ", enable=" + enable +
-                ", cerebookPosts=" + cerebookPosts +
                 ", messages=" + messages +
-                ", profil=" + profil +
+                ", profil=" + (profil == null ? "null" : profil.getId()) +
                 '}';
     }
 }

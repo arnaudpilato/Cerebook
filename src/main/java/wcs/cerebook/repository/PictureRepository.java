@@ -10,6 +10,6 @@ import java.util.List;
 
 @Repository
 public interface PictureRepository extends JpaRepository<CerebookPicture, Long> {
-    //@Query(nativeQuery = true, value = "SELECT id FROM CerebookPicture p WHERE p.user_id = :userId ORDER BY id DESC LIMIT 6")
-    //List<CerebookPicture> lastPicture(@Param("userId") Long userId);
+    @Query(nativeQuery = true, value = "SELECT * FROM cerebook_picture p WHERE p.user_id = :userId ORDER BY id DESC LIMIT 6")
+    List<CerebookPicture> lastPicture(@Param("userId") Long userId);
 }
