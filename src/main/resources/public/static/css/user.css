@@ -73,18 +73,6 @@ body {
   border-radius: 50%;
 }
 
-.accueilCreateAccount {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  min-height: 85vh;
-  max-width: 39vh;
-}
-
-.birstdayBr {
-  float: none;
-}
-
 .imageAccueil {
   background-image: url("/static/css/img/xmenaccueil.jpg");
   background-size: cover;
@@ -95,11 +83,6 @@ body {
   margin-top: 10vh;
   color: white;
   border-radius: 5px;
-}
-
-.submit-button {
-  background: none;
-  border: none;
 }
 
 .accueilButton {
