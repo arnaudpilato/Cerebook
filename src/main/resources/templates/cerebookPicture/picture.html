@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="fr"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{fragments/_layout}">
+
+    <th:block layout:fragment="config">
+        <title>Image</title>
+        <link href="/static/css/picture.css" rel="stylesheet"/>
+    </th:block>
+
+    <div layout:fragment="content">
+        <div class="container">
+            <h1 class="text-center my-3" th:text="'Photos de ' + ${user.username}"></h1>
+            <div class="row justify-content-around">
+                <div class="col-lg-3 essai1" th:each="picture : ${user.pictures}">
+                    <div class="row mt-4 essai4">
+                        <div class="col-lg-12"><img class="picture" th:src="${picture.getPicturePath()}"></div>
+                    </div>
+                    <div class="row">
+                        <div class="col-lg-12 d-flex justify-content-between mt-3 essai2">
+                            <a th:href="@{/picture/show(id=${picture.id})}" class="picture-btn d-block col-lg-5 btn btn-primary">Visualiser</a>
+                            <a th:href="@{/picture/delete(id=${picture.id})}" class="picture-btn d-block col-lg-5 btn btn-primary">Supprimer</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-3">
+                    <form method="post" th:action="@{/picture/update}" enctype="multipart/form-data">
+                        <div>
+                            <label class="form-label" for="file_picture" >Ajouter une image</label>
+                            <input class="form-control" id="file_picture" name="file_picture" type="file">
+                        </div>
+                        <button type="submit">Modifier</button>
+                    </form>
+                </div>
+            </div>
+
+
+
+        </div>
+    </div>
+</html>
