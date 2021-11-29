@@ -1,8 +1,6 @@
 package wcs.cerebook.entity;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
-import org.apache.tomcat.jni.User;
-
 import javax.persistence.*;
 
 @Entity
@@ -18,7 +16,6 @@ public class CerebookProfil {
     private String hometown;
     private String relashionship;
 
-    @JsonBackReference
     @OneToOne(mappedBy = "profil")
     private CerebookUser user;
 

@@ -192,15 +192,6 @@
   &:hover {
     background: #fff;
 
-    .door {
-      //box-shadow: 0px 0px 10px -2px rgba(0,0,0,0.4);
-      //-webkit-transform: scale(1.08);
-      //-moz-transform: scale(1.08);
-      //-ms-transform: scale(1.08);
-      //-o-transform: scale(1.08);
-      //transform: scale(1.08);
-    }
-
     .top {
       top: -50%;
     }
@@ -208,19 +199,6 @@
     .bottom {
       top: 100%;
     }
-  }
-
-  .picture-button {
-    //margin-left: -77px;
-    //position: absolute !important;
-    //left: 0;
-    //right: 0;
-    //margin-top: 40%;
-    //margin-bottom: 40%;
-    //margin-left: auto;
-    //margin-right: auto;
-
-
   }
 }
 
@@ -293,4 +271,15 @@
   width: 100%;
   height: auto;
   display: block;
+}
+
+/***** Video Section *****/
+
+.video-section {
+  background-color: #E76F51;
+  border-radius: 10px;
+}
+
+.video-section ul {
+  list-style-type: none;
 }

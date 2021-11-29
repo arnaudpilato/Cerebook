@@ -1,7 +1,5 @@
 package wcs.cerebook.entity;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
-
 import javax.persistence.*;
 
 @Entity
@@ -15,7 +13,6 @@ public class CerebookPicture {
 
     }
 
-    @JsonBackReference
     @ManyToOne
     @JoinColumn(name = "user_id")
     private CerebookUser user;

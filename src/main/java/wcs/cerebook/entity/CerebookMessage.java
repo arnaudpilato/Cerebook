@@ -3,7 +3,6 @@ package wcs.cerebook.entity;
 import javax.persistence.*;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
-import java.util.Comparator;
 import java.util.List;
 
 @Entity
@@ -17,7 +16,6 @@ public class CerebookMessage implements Comparable<CerebookMessage> {
     private CerebookUser currentUser;
     @ManyToMany()
     private final List<CerebookUser> userDestination = new ArrayList<>();
-
 
     public CerebookMessage() {
     }

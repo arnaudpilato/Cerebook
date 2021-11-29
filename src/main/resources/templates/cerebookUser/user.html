@@ -14,7 +14,7 @@
                 <div class="col-10 col-lg-5 bg-primary panel text-center">
                     <form id="newUserForm" class="row justify-content-center" method="post" th:action="@{/userCreate}" th:object="${user}">
                         <input name="id" th:field="*{id}" type="hidden">
-                        <input id="submitButton" type="submit">
+                        <input id="submitButton" type="submit" hidden>
                         <h1 class="text-center my-4">Création d'un compte</h1>
                         <div th:if="${error}" class="alert alert-danger col-11 pl-1 pr-1 mb-4" role="alert">
                             Nom d'utilisateur déjà existant.
