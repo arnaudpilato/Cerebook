@@ -106,7 +106,7 @@ public class CerebookProfil {
                 ", isInterestedInMen=" + interestedInMen +
                 ", hometown='" + hometown + '\'' +
                 ", relashionship='" + relashionship + '\'' +
-                ", user=" + user +
+                ", user=" + (user == null ? "null" : user.getId()) +
                 '}';
     }
 }

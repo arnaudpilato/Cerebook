@@ -7,6 +7,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+import wcs.cerebook.entity.CerebookCartography;
 import wcs.cerebook.entity.CerebookPost;
 import wcs.cerebook.entity.CerebookProfil;
 import wcs.cerebook.entity.CerebookUser;
@@ -55,7 +56,13 @@ public class ProfilController {
         boolean postStatu = cerebookPost.isPrivatePost();
         model.addAttribute("postStatus", postStatu);
         model.addAttribute("allUsers", userRepository.findAll());
-        JsonNode json = new ObjectMapper().valueToTree(cartographyRepository.findAll());
+        model.addAttribute("pictures", pictureRepository.lastPicture(user.getId()));
+        List<CerebookCartography> cartographies = cartographyRepository.findAll();
+        System.out.println("****************");
+        System.out.println(cartographies.get(0).getUsers().size());
+        System.out.println(cartographies.get(0).getUsers().get(0));
+        System.out.println("****************");
+        JsonNode json = new ObjectMapper().valueToTree(cartographies);
 
 
         String userName = principal.getName();

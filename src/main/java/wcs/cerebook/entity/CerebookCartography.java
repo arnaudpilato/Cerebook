@@ -1,8 +1,10 @@
 package wcs.cerebook.entity;
 
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -18,7 +20,7 @@ public class CerebookCartography {
     private Double y;
 
     @OneToMany(mappedBy = "cartography")
-    private List<CerebookUser> users;
+    private List<CerebookUser> users = new ArrayList<>();
 
     public CerebookCartography() {
     }
