@@ -60,6 +60,16 @@
                                     <label for="event-image">Image : </label>
                                     <input id="event-image" name="image_file" type="file">
                                 </div>
+                                <div class="form-check form-check-inline mt-2">
+                                    <input class="form-check-input" id="event-role" type="radio" name="byRoles"
+                                           th:value="false" checked>
+                                    <label class="form-check-label" for="event-role">Public</label>
+                                </div>
+                                <div class="form-check form-check-inline">
+                                    <input class="form-check-input" id="event-roles" type="radio" name="byRoles"
+                                           th:value="true">
+                                    <label class="form-check-label" for="event-roles">Privé</label>
+                                </div>
                                 <div class="form-group descriptionEvent">
                                     <label for="event-description">Description : </label>
                                     <textarea id="event-description" name="address"
