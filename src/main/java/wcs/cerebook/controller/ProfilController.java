@@ -1,6 +1,5 @@
 package wcs.cerebook.controller;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,9 +12,9 @@ import wcs.cerebook.entity.CerebookProfil;
 import wcs.cerebook.entity.CerebookUser;
 import wcs.cerebook.repository.PostRepository;
 import wcs.cerebook.repository.CartographyRepository;
+import wcs.cerebook.repository.PictureRepository;
 import wcs.cerebook.repository.ProfilRepository;
 import wcs.cerebook.repository.UserRepository;
-
 import javax.validation.Valid;
 import java.io.IOException;
 import java.nio.file.Files;
@@ -39,6 +38,9 @@ public class ProfilController {
     @Autowired
     private CartographyRepository cartographyRepository;
 
+    @Autowired
+    private PictureRepository pictureRepository;
+
     @GetMapping("/profil")
     public String getProfil(Model model, Principal principal,@Valid CerebookPost cerebookPost) {
         model.addAttribute("user", userRepository.findByUsername(principal.getName()));
@@ -54,6 +56,12 @@ public class ProfilController {
         model.addAttribute("postStatus", postStatu);
         model.addAttribute("allUsers", userRepository.findAll());
         JsonNode json = new ObjectMapper().valueToTree(cartographyRepository.findAll());
+
+
+        String userName = principal.getName();
+        CerebookUser userId = userRepository.findByUsername(userName);
+
+        //model.addAttribute("pictures", pictureRepository.lastPicture(userId.getId()));
         model.addAttribute("cartography", json);
         return "cerebookProfil/profil";
     }
@@ -97,4 +105,10 @@ public class ProfilController {
         return "redirect:/profil";
     }
 
+    @GetMapping("/profil/picture/delete")
+    public String deletePicture(@RequestParam Long id) {
+        pictureRepository.deleteById(id);
+
+        return "redirect:/profil";
+    }
 }
