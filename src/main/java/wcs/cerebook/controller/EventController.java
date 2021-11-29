@@ -7,7 +7,6 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import wcs.cerebook.controller.exception.illegalArgumentException;
 import wcs.cerebook.entity.CerebookEvent;
-import wcs.cerebook.entity.CerebookPost;
 import wcs.cerebook.entity.CerebookUser;
 import wcs.cerebook.repository.EventRepository;
 import wcs.cerebook.repository.UserRepository;
@@ -18,7 +17,6 @@ import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
 import java.security.Principal;
 import java.util.List;
-import java.util.Optional;
 
 @Controller
 public class EventController {
@@ -48,7 +46,7 @@ public class EventController {
 
 
     @RequestMapping("/eventSave")
-    public String saveEvent(Model model, @ModelAttribute CerebookEvent cerebookEvent, Principal principal, @RequestParam(value = "image_file") MultipartFile image) throws IOException {
+    public String saveEvent(@ModelAttribute CerebookEvent cerebookEvent, Principal principal, @RequestParam(value = "image_file") MultipartFile image) throws IOException {
         CerebookUser user = userRepository.getCerebookUserByUsername(principal.getName());
         if (!image.isEmpty()) {
             if (cerebookEvent.getId() != null) {
