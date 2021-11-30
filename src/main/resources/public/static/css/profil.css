@@ -19,7 +19,7 @@ body {
 }
 
 .logo {
-  display: inline;
+  display: block;
   height: 25px;
   width: 25px;
 }
@@ -53,58 +53,20 @@ body {
   transition: width 0.4s linear;
 }
 
-/***** Accueil *****/
-.accueil {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  text-align: center;
-  min-height: 40vh;
-}
-
-.imageAccueil {
-  background-image: url("/static/css/img/xmenaccueil.jpg");
-  background-size: cover;
-  min-height: 100vh;
-}
-
-.aButton {
-  color: white;
-}
-
-.cardHome {
-  background-color: #264653;
-  color: white;
-}
-
 .search_icon {
-  height: 20px;
-  width: 20px;
+  height: 22px;
+  width: 22px;
   float: left;
   display: flex;
   justify-content: center;
   align-items: center;
   border-radius: 50%;
+  background: none;
+  border: none;
   color: white;
   text-decoration: none;
   padding-top: 5px;
   padding-left: 10px;
-}
-
-.marginAccueil {
-  margin-left: 5vh;
-  margin-right: 5vh;
-  margin-top: 2vh;
-  margin-bottom: 2vh;
-}
-
-.createButton {
-  margin-bottom: 1vh;
-}
-
-.connexionButton {
-  margin-top: 2vh;
 }
 
 /***** Leaflet *****/
@@ -231,13 +193,8 @@ body {
   list-style-type: none;
 }
 
-.essai {
-  padding-top: 20px;
-  padding-bottom: 20px;
-}
-
 .profile-section-logo {
-  width: 64px;
+  width: 12vh;
   height: auto;
   display: inline-block;
   border-radius: 50%;
@@ -258,6 +215,144 @@ body {
   border-radius: 10px;
   padding: 2px;
   background-color: #F4A261;
+}
+
+/***** Picture Section *****/
+.picture-section {
+  background-color: #F4A261;
+  border-radius: 10px;
+}
+
+.picture-section ul, .video-section ul {
+  list-style-type: none;
+}
+
+.picture-section-img, .video-section-img {
+  width: 100%;
+  height: 100px;
+  object-fit: cover;
+  border-radius: 10px;
+}
+
+.picture-section-username, .video-section-username {
+  font-weight: bold;
+  font-size: 1.5rem;
+}
+
+.trapdoor {
+  -webkit-transform: translateZ(0px);
+  -webkit-font-smoothing: antialiased;
+  box-shadow: inset -7px 0px 12px -8px rgba(0, 0, 0, 0.3), inset 7px 0px 12px -8px rgba(0, 0, 0, 0.3);
+  -webkit-transition: background 400ms ease-in-out;
+  -moz-transition: background 400ms ease-in-out;
+  -ms-transition: background 400ms ease-in-out;
+  -o-transition: background 400ms ease-in-out;
+  transition: background 400ms ease-in-out;
+  margin-bottom: 15px;
+  border-radius: 10px;
+  height: 100px;
+}
+.trapdoor:hover {
+  background: #fff;
+}
+.trapdoor:hover .top {
+  top: -50%;
+}
+.trapdoor:hover .bottom {
+  top: 100%;
+}
+
+.top {
+  top: 0%;
+  left: 0px;
+  right: 0px;
+  background-color: #F4A261;
+  border-radius: 10px 10px 0 0;
+}
+.top:before {
+  top: 5px;
+}
+
+.bottom {
+  top: 50%;
+  left: 0px;
+  right: 0px;
+  background-color: #F4A261;
+  border-radius: 0 0 10px 10px;
+}
+.bottom:before {
+  top: -20px;
+}
+
+.door {
+  -webkit-transition: top 400ms, box-shadow 200ms, -webkit-transform 300ms;
+  -moz-transition: top 400ms, box-shadow 200ms, -moz-transform 300ms;
+  -ms-transition: top 400ms, box-shadow 200ms, -ms-transform 300ms;
+  -o-transition: top 400ms, box-shadow 200ms, -o-transform 300ms;
+  transition: top 400ms, box-shadow 200ms, transform 300ms;
+  -webkit-transition-timing-function: ease-in-out;
+  -moz-transition-timing-function: ease-in-out;
+  -ms-transition-timing-function: ease-in-out;
+  -o-transition-timing-function: ease-in-out;
+  transition-timing-function: ease-in-out;
+  position: absolute;
+  overflow: hidden;
+  width: 100%;
+  z-index: 2;
+  height: 50%;
+}
+
+.bottom img, .bottom video {
+  height: 100px;
+  width: 100%;
+  object-fit: cover;
+  border-radius: 10px;
+  margin-top: -50px;
+}
+
+.row-picture-logo img {
+  width: 30px;
+  margin: 10px auto;
+  transition: 0.3s;
+}
+
+.row-picture-logo img:hover, .video-logo:hover {
+  box-shadow: 0 0 0 5px rgba(244, 162, 97, 0.1), 0 0 0 3px #F4A261;
+  border-radius: 50%;
+  transition: 0.3s;
+}
+
+.picture-logo, .video-logo {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+/***** Video Section *****/
+.video-section {
+  background-color: #E76F51;
+  border-radius: 10px;
+}
+
+.video-button {
+  width: 100%;
+  position: relative;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.video-logo {
+  width: 30px;
+  height: auto;
+  display: block;
+  margin: 10px auto;
+}
+
+.row-video-logo {
+  width: 100%;
+  transition: 0.3s;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 /*# sourceMappingURL=profil.css.map */
