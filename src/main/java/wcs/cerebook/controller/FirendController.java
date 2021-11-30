@@ -55,13 +55,14 @@ public class FirendController {
         String currentUsername = principal.getName();
         CerebookUser currentUser = userRepository.getCerebookUserByUsername(currentUsername);
 
+        // je crée l'objet Friend au quel je passe en parmétres le user current et son futur amis
         CerebookFriend requestFriends = new CerebookFriend(currentUser, userFriend);
-
+        // je crée par la même occasion l'objet de confirmation de la demande d'amis
         CerebookConfirmationFriend confirmate = new CerebookConfirmationFriend(false, userFriend);
         confirmRepository.save(confirmate);
+        // et je fait la relation entre les 2 objets en ajoutant la clef primaire que je sauvegarde dans la table friend
         requestFriends.setConfirmationFriend(confirmate);
         friendRepository.save(requestFriends);
-
 
 
         return "redirect:/addFriends";
@@ -72,7 +73,10 @@ public class FirendController {
     ) {
 
         // je récupére le user que je veux ajouté a ma list d'amis
-        CerebookUser userFriend = userRepository.getById(id);
+        String userCurrentName = principal.getName();
+        CerebookUser currentUser = userRepository.getCerebookUserByUsername(userCurrentName);
+
+        List<CerebookConfirmationFriend> confirmationFriend = confirmRepository.getByUserFriendId(currentUser);
 
 
         return "redirect:/addFriends";
