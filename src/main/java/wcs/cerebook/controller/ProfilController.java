@@ -11,11 +11,8 @@ import wcs.cerebook.entity.CerebookCartography;
 import wcs.cerebook.entity.CerebookPost;
 import wcs.cerebook.entity.CerebookProfil;
 import wcs.cerebook.entity.CerebookUser;
-import wcs.cerebook.repository.PostRepository;
-import wcs.cerebook.repository.CartographyRepository;
-import wcs.cerebook.repository.PictureRepository;
-import wcs.cerebook.repository.ProfilRepository;
-import wcs.cerebook.repository.UserRepository;
+import wcs.cerebook.repository.*;
+
 import javax.validation.Valid;
 import java.io.IOException;
 import java.nio.file.Files;
@@ -33,6 +30,7 @@ public class ProfilController {
 
     @Autowired
     private ProfilRepository profilRepository;
+
     @Autowired
     private PostRepository postRepository;
 
@@ -41,6 +39,9 @@ public class ProfilController {
 
     @Autowired
     private PictureRepository pictureRepository;
+
+    @Autowired
+    private VideoRepository videoRepository;
 
     @GetMapping("/profil")
     public String getProfil(Model model, Principal principal,@Valid CerebookPost cerebookPost) {
@@ -58,10 +59,6 @@ public class ProfilController {
         model.addAttribute("allUsers", userRepository.findAll());
         model.addAttribute("pictures", pictureRepository.lastPicture(user.getId()));
         List<CerebookCartography> cartographies = cartographyRepository.findAll();
-        System.out.println("****************");
-        System.out.println(cartographies.get(0).getUsers().size());
-        System.out.println(cartographies.get(0).getUsers().get(0));
-        System.out.println("****************");
         JsonNode json = new ObjectMapper().valueToTree(cartographies);
 
 
@@ -115,6 +112,13 @@ public class ProfilController {
     @GetMapping("/profil/picture/delete")
     public String deletePicture(@RequestParam Long id) {
         pictureRepository.deleteById(id);
+
+        return "redirect:/profil";
+    }
+
+    @GetMapping("/profil/video/delete")
+    public String deleteVideo(@RequestParam Long id) {
+        videoRepository.deleteById(id);
 
         return "redirect:/profil";
     }

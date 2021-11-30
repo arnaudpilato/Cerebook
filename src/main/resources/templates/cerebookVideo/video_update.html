@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="fr"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{fragments/_layout}">
+
+    <th:block layout:fragment="config">
+        <title>Video</title>
+    </th:block>
+
+    <div layout:fragment="content">
+        <form method="post" th:action="@{/video/update}" enctype="multipart/form-data">
+            <div>
+                <label class="form-label" for="file_video" >Image</label>
+                <input class="form-control" id="file_video" name="file_video" type="file">
+            </div>
+            <button type="submit">Modifier</button>
+        </form>
+    </div>
+</html>
