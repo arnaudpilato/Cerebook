@@ -1,15 +1,17 @@
 package wcs.cerebook.entity;
 
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import org.springframework.format.annotation.DateTimeFormat;
-
 import javax.persistence.*;
-
 import java.util.ArrayList;
-
 import java.util.Date;
 import java.util.List;
 
 @Entity
+@JsonIdentityInfo(
+    generator = ObjectIdGenerators.PropertyGenerator.class,
+    property = "id")
 public class CerebookPost {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

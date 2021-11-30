@@ -1,28 +1,31 @@
 package wcs.cerebook.entity;
 
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import javax.persistence.*;
-import java.time.LocalDateTime;
+import java.util.Date;
 import java.util.ArrayList;
-import java.util.Comparator;
 import java.util.List;
 
 @Entity
+@JsonIdentityInfo(
+    generator = ObjectIdGenerators.PropertyGenerator.class,
+    property = "id")
 public class CerebookMessage implements Comparable<CerebookMessage> {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String message;
-    private LocalDateTime date;
+    private Date date;
     @ManyToOne(optional = true)
     private CerebookUser currentUser;
     @ManyToMany()
     private final List<CerebookUser> userDestination = new ArrayList<>();
 
-
     public CerebookMessage() {
     }
 
-    public CerebookMessage(String message, LocalDateTime date, CerebookUser currentUser) {
+    public CerebookMessage(String message, Date date, CerebookUser currentUser) {
         this.message = message;
         this.date = date;
         this.currentUser = currentUser;
@@ -53,11 +56,11 @@ public class CerebookMessage implements Comparable<CerebookMessage> {
         this.currentUser = currentUser;
     }
 
-    public LocalDateTime getDate() {
+    public Date getDate() {
         return date;
     }
 
-    public void setDate(LocalDateTime date) {
+    public void setDate(Date date) {
         this.date = date;
     }
 

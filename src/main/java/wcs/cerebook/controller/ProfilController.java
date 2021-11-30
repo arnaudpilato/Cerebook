@@ -1,6 +1,5 @@
 package wcs.cerebook.controller;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,13 +7,11 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+import wcs.cerebook.entity.CerebookCartography;
 import wcs.cerebook.entity.CerebookPost;
 import wcs.cerebook.entity.CerebookProfil;
 import wcs.cerebook.entity.CerebookUser;
-import wcs.cerebook.repository.PostRepository;
-import wcs.cerebook.repository.CartographyRepository;
-import wcs.cerebook.repository.ProfilRepository;
-import wcs.cerebook.repository.UserRepository;
+import wcs.cerebook.repository.*;
 
 import javax.validation.Valid;
 import java.io.IOException;
@@ -33,11 +30,18 @@ public class ProfilController {
 
     @Autowired
     private ProfilRepository profilRepository;
+
     @Autowired
     private PostRepository postRepository;
 
     @Autowired
     private CartographyRepository cartographyRepository;
+
+    @Autowired
+    private PictureRepository pictureRepository;
+
+    @Autowired
+    private VideoRepository videoRepository;
 
     @GetMapping("/profil")
     public String getProfil(Model model, Principal principal,@Valid CerebookPost cerebookPost) {
@@ -53,7 +57,15 @@ public class ProfilController {
         boolean postStatu = cerebookPost.isPrivatePost();
         model.addAttribute("postStatus", postStatu);
         model.addAttribute("allUsers", userRepository.findAll());
-        JsonNode json = new ObjectMapper().valueToTree(cartographyRepository.findAll());
+        model.addAttribute("pictures", pictureRepository.lastPicture(user.getId()));
+        List<CerebookCartography> cartographies = cartographyRepository.findAll();
+        JsonNode json = new ObjectMapper().valueToTree(cartographies);
+
+
+        String userName = principal.getName();
+        CerebookUser userId = userRepository.findByUsername(userName);
+
+        //model.addAttribute("pictures", pictureRepository.lastPicture(userId.getId()));
         model.addAttribute("cartography", json);
         return "cerebookProfil/profil";
     }
@@ -97,4 +109,17 @@ public class ProfilController {
         return "redirect:/profil";
     }
 
+    @GetMapping("/profil/picture/delete")
+    public String deletePicture(@RequestParam Long id) {
+        pictureRepository.deleteById(id);
+
+        return "redirect:/profil";
+    }
+
+    @GetMapping("/profil/video/delete")
+    public String deleteVideo(@RequestParam Long id) {
+        videoRepository.deleteById(id);
+
+        return "redirect:/profil";
+    }
 }

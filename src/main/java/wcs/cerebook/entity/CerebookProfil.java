@@ -1,11 +1,13 @@
 package wcs.cerebook.entity;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
-import org.apache.tomcat.jni.User;
-
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import javax.persistence.*;
 
 @Entity
+@JsonIdentityInfo(
+    generator = ObjectIdGenerators.PropertyGenerator.class,
+    property = "id")
 public class CerebookProfil {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -18,7 +20,6 @@ public class CerebookProfil {
     private String hometown;
     private String relashionship;
 
-    @JsonBackReference
     @OneToOne(mappedBy = "profil")
     private CerebookUser user;
 
@@ -105,7 +106,7 @@ public class CerebookProfil {
                 ", isInterestedInMen=" + interestedInMen +
                 ", hometown='" + hometown + '\'' +
                 ", relashionship='" + relashionship + '\'' +
-                ", user=" + user +
+                ", user=" + (user == null ? "null" : user.getId()) +
                 '}';
     }
 }

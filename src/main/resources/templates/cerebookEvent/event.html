@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="fr"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{fragments/_layout}">
+
+<th:block layout:fragment="config">
+    <title>Event</title>
+    <link href="/static/css/event.css" rel="stylesheet"/>
+    <link href="/static/css/profil.css" rel="stylesheet"/>
+</th:block>
+
+<div layout:fragment="content">
+    <h1 class="d-flex justify-content-center text-center fs-3">Evènement</h1>
+    <h2 class="d-flex justify-content-center text-center fs-1 fw-bold text-decoration-underline"
+        th:text="${event.title}">Evènement</h2>
+    <div class="container">
+        <div class="row ">
+            <div class="col-lg-8" th:text="${event.description}">Description</div>
+            <img class="col-lg-4" th:src="${event.image}"></img>
+        </div>
+    </div>
+    <div id="map"></div>
+    <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js" integrity="sha512-XQoYMqMTK8LvdxXYG3nZ448hOEQiglfqkJs1NOQV44cWnUrBc8PkAOcXy20w0vlaXaVUearIOBhiXZ5V3ynxwA==" crossorigin=""></script>
+<script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js" integrity="sha512-XQoYMqMTK8LvdxXYG3nZ448hOEQiglfqkJs1NOQV44cWnUrBc8PkAOcXy20w0vlaXaVUearIOBhiXZ5V3ynxwA==" crossorigin=""></script>
+    <script th:inline="javascript">
+        console.log("toto");
+        let cities = L.layerGroup();
+        let user = [[${user}]];
+        let event = [[${event}]];
+
+            // L.marker([allUsers[i].cartography.y, allUsers[i].cartography.x]).bindPopup('This is Golden, CO.').addTo(cities);
+
+            L.marker([event.y, event.x], {icon: L.icon({
+                    className: 'image-icon',
+                    iconUrl: user.profil.avatar,
+                    shadowUrl: '/static/css/img/marker.png',
+                    iconSize:     [42, 42], // size of the icon
+                    shadowSize:   [42, 60], // size of the shadow
+                    iconAnchor:   [15, 44], // point of the icon which will correspond to marker's location
+                    shadowAnchor: [15, 44],  // the same for the shadow
+                    popupAnchor:  [-3, -76] // point from which the popup should open relative to the iconAnchor
+                })}).bindPopup("I am a green leaf.").addTo(cities);
+
+
+
+
+        var Jawg_Terrain = L.tileLayer('https://{s}.tile.jawg.io/jawg-terrain/{z}/{x}/{y}{r}.png?access-token={accessToken}', {
+                attribution: '<a href="http://jawg.io" title="Tiles Courtesy of Jawg Maps" target="_blank">&copy; <b>Jawg</b>Maps</a> &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors', minZoom: 0,
+                maxZoom: 22,
+                subdomains: 'abcd',
+                accessToken: 'LsV1RNeAnn9smXe7sluDMmWb5hnPQAuljgSvaK07bHR2R4oLt3YPUS3E1xYYZaQr'
+            }),
+
+            Jawg_Matrix = L.tileLayer('https://{s}.tile.jawg.io/jawg-matrix/{z}/{x}/{y}{r}.png?access-token={accessToken}', {
+                attribution: '<a href="http://jawg.io" title="Tiles Courtesy of Jawg Maps" target="_blank">&copy; <b>Jawg</b>Maps</a> &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
+                minZoom: 0,
+                maxZoom: 22,
+                subdomains: 'abcd',
+                accessToken: 'LsV1RNeAnn9smXe7sluDMmWb5hnPQAuljgSvaK07bHR2R4oLt3YPUS3E1xYYZaQr'
+            }),
+
+            USGS_USImageryTopo = L.tileLayer('https://basemap.nationalmap.gov/arcgis/rest/services/USGSImageryTopo/MapServer/tile/{z}/{y}/{x}', {
+                maxZoom: 20,
+                attribution: 'Tiles courtesy of the <a href="https://usgs.gov/">U.S. Geological Survey</a>'
+            });
+
+        let map = L.map('map', {
+            center: [20, 0],
+            zoom: 2,
+            layers: [Jawg_Terrain, cities]
+        });
+
+        var baseLayers = {
+            "Street": Jawg_Terrain,
+            "Dark" : Jawg_Matrix,
+            "Satelitte" : USGS_USImageryTopo,
+        };
+
+        var overlays = {
+            "Cities": cities
+        };
+
+        L.control.layers(baseLayers, overlays).addTo(map);
+    </script>
+</div>
+</html>

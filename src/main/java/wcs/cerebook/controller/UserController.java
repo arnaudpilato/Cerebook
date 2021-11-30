@@ -82,7 +82,7 @@ public class UserController {
             boolean error = true;
             model.addAttribute("error", error);
             model.addAttribute("user", user);
-            return "/cerebookUser/user";
+            return "cerebookUser/user";
         }
 
         return "redirect:/";
