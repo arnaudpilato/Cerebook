@@ -12,4 +12,5 @@ import java.util.List;
 
 @Repository
 public interface CommentRepository extends JpaRepository<CerebookComment, Long> {
+
 }

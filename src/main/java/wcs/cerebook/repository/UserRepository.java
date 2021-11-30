@@ -17,4 +17,8 @@ public interface UserRepository extends JpaRepository<CerebookUser, Long> {
 
     @Query("SELECT u FROM CerebookUser u WHERE u.username LIKE %?1%")
     public List<CerebookUser> search(String keyword);
+
+    @Query("SELECT u FROM CerebookUser u WHERE u.role = :role")
+    public List<CerebookUser> getCerebookUserByRole(@Param("role") String role);
+
 }
