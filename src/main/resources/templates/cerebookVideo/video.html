@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="fr"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{fragments/_layout}">
+
+    <th:block layout:fragment="config">
+        <title>Video</title>
+        <link href="/static/css/video.css" rel="stylesheet"/>
+    </th:block>
+
+    <div layout:fragment="content">
+        <div class="container">
+            <h1 class="text-center my-3" th:text="'Videos de ' + ${user.username}"></h1>
+            <div class="row justify-content-around">
+                <div class="col-lg-3" th:each="video : ${user.videos}">
+                    <div class="row mt-4">
+                        <video class="video">
+                            <source th:src="${video.getVideoPath()}" type="video/webm">
+                            <source th:src="${video.getVideoPath()}" type="video/mp4" preload="metadata"#t="0.5">
+                            Désolé mais votre navigateur ne supporte pas ce format de vidéo
+                        </video>
+                    </div>
+                    <div class="row">
+                        <div class="col-lg-12 d-flex justify-content-between mt-3 essai2">
+                            <a th:href="@{/video/show(id=${video.id})}" class="video-btn d-block col-lg-5 btn btn-primary">Visualiser</a>
+                            <a th:href="@{/video/delete(id=${video.id})}" class="video-btn d-block col-lg-5 btn btn-primary">Supprimer</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-3">
+                    <form method="post" th:action="@{/video/update}" enctype="multipart/form-data">
+                        <div>
+                            <label class="form-label" for="file_video" >Ajouter une vidéo</label>
+                            <input class="form-control" id="file_video" name="file_video" type="file">
+                        </div>
+                        <button type="submit">Modifier</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</html>

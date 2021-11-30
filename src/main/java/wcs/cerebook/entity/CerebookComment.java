@@ -1,11 +1,15 @@
 package wcs.cerebook.entity;
 
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import org.springframework.format.annotation.DateTimeFormat;
-
 import javax.persistence.*;
 import java.util.Date;
 
 @Entity
+@JsonIdentityInfo(
+    generator = ObjectIdGenerators.PropertyGenerator.class,
+    property = "id")
 public class CerebookComment {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -17,6 +21,8 @@ public class CerebookComment {
     @ManyToOne(fetch = FetchType.LAZY)
     //@JoinColumn(name = "cerebookPost")
     private CerebookPost cerebookPost;
+    @ManyToOne(fetch = FetchType.LAZY)
+    private CerebookEvent cerebookEvent;
     //many (comment)  for one user
     @ManyToOne(fetch = FetchType.LAZY)
     private CerebookUser cerebookUser;
@@ -62,6 +68,14 @@ public class CerebookComment {
     }
 
     public CerebookComment() {
+    }
+
+    public CerebookEvent getCerebookEvent() {
+        return cerebookEvent;
+    }
+
+    public void setCerebookEvent(CerebookEvent cerebookEvent) {
+        this.cerebookEvent = cerebookEvent;
     }
 
     public CerebookComment(Long id, String comment, Date createdAt, CerebookPost cerebookPost) {
