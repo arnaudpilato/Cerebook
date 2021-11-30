@@ -6,7 +6,6 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import wcs.cerebook.controller.exception.illegalArgumentException;
-import wcs.cerebook.entity.CerebookCartography;
 import wcs.cerebook.entity.CerebookEvent;
 import wcs.cerebook.entity.CerebookUser;
 import wcs.cerebook.repository.EventRepository;
@@ -24,7 +23,6 @@ import java.util.List;
 public class EventController {
     @Autowired
     private EventRepository eventRepository;
-
     @Autowired
     private UserRepository userRepository;
     @Autowired
