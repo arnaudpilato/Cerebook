@@ -14,7 +14,7 @@
 
 <div th:each="user : ${users}">
     <p th:text="${user.username}">name</p>
-    <a th:href="@{/addFriends(id=${user.id})}">ajouter</a>
+    <a th:href="@{/add/friend/{id}(id=${user.id})}">ajouter</a>
 </div>
 </div>
 

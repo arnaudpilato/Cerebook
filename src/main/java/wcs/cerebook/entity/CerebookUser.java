@@ -60,9 +60,6 @@ public class CerebookUser {
     @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL, optional = true)
     private CerebookCartography cartography;
 
-    @ManyToOne
-    private CerebookFriend friends;
-
     public CerebookUser() {
     }
 
@@ -83,14 +80,6 @@ public class CerebookUser {
         this.cerebookPosts = cerebookPosts;
         this.messages = messages;
         this.profil = profil;
-    }
-
-    public CerebookFriend getFriends() {
-        return friends;
-    }
-
-    public void setFriends(CerebookFriend friends) {
-        this.friends = friends;
     }
 
     public Long getId() {

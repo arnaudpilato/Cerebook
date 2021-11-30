@@ -1,6 +1,7 @@
 package wcs.cerebook.entity;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -11,14 +12,13 @@ public class CerebookFriend {
     private boolean isFriend;
     @ManyToOne
     private CerebookUser currentUser;
-
-    @OneToMany(mappedBy = "friends", cascade = CascadeType.ALL)
-    private List<CerebookUser> currentFriends;
+    @ManyToOne
+    private CerebookUser currentFriends;
 
     public CerebookFriend() {
     }
 
-    public CerebookFriend( boolean isFriend, CerebookUser currentUser, List<CerebookUser> currentFriends) {
+    public CerebookFriend(boolean isFriend, CerebookUser currentUser, CerebookUser currentFriends) {
         this.isFriend = isFriend;
         this.currentUser = currentUser;
         this.currentFriends = currentFriends;
@@ -48,11 +48,11 @@ public class CerebookFriend {
         this.currentUser = currentUser;
     }
 
-    public List<CerebookUser> getCurrentFriends() {
+    public CerebookUser getCurrentFriends() {
         return currentFriends;
     }
 
-    public void setCurrentFriends(List<CerebookUser> currentFriends) {
+    public void setCurrentFriends(CerebookUser currentFriends) {
         this.currentFriends = currentFriends;
     }
 }
