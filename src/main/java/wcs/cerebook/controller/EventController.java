@@ -41,7 +41,7 @@ public class EventController {
         model.addAttribute("event", cerebookEvent);
         model.addAttribute("user", user);
 
-        return "/cerebookEvent/eventCreate";
+        return "cerebookEvent/eventCreate";
     }
 
 
@@ -56,7 +56,7 @@ public class EventController {
             model.addAttribute("event", cerebookEvent);
             model.addAttribute("user", user);
             model.addAttribute("error_cartography", error_cartography);
-            return "/cerebookEvent/eventCreate";
+            return "cerebookEvent/eventCreate";
         }
         if (!image.isEmpty()) {
             if (cerebookEvent.getId() != null) {
@@ -90,14 +90,14 @@ public class EventController {
         model.addAttribute("events", cerebookEvent);
         model.addAttribute("user", cerebookUser);
 
-        return "/cerebookEvent/events";
+        return "cerebookEvent/events";
     }
 
     @GetMapping("/event/{id}")
     public String getEventById(Model model, @PathVariable Long id, Principal principal) {
         model.addAttribute("event", eventRepository.getById(id));
         model.addAttribute("user", userRepository.getCerebookUserByUsername(principal.getName()));
-        return "/cerebookEvent/event";
+        return "cerebookEvent/event";
     }
 
     @RequestMapping("/deleteEvent/{id}")

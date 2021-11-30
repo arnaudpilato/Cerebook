@@ -26,21 +26,21 @@ public class PictureController {
     public String getAllPicture(Model model, Principal principal) {
         model.addAttribute("user", userRepository.findByUsername(principal.getName()));
 
-        return "/cerebookPicture/picture";
+        return "cerebookPicture/picture";
     }
 
     @GetMapping("/picture/show")
     public String showPicture(Model model, @RequestParam Long id) {
         model.addAttribute("picture", pictureRepository.findById(id));
 
-        return "/cerebookPicture/picture_show";
+        return "cerebookPicture/picture_show";
     }
 
     @GetMapping("/picture/update")
     public String updatePicture(Model model, Principal principal) {
         model.addAttribute("user", userRepository.findByUsername(principal.getName()));
 
-        return "/cerebookPicture/picture_update";
+        return "cerebookPicture/picture_update";
     }
 
     @PostMapping("/picture/update")
