@@ -6,10 +6,12 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import wcs.cerebook.controller.exception.illegalArgumentException;
+import wcs.cerebook.entity.CerebookCartography;
 import wcs.cerebook.entity.CerebookEvent;
 import wcs.cerebook.entity.CerebookUser;
 import wcs.cerebook.repository.EventRepository;
 import wcs.cerebook.repository.UserRepository;
+import wcs.cerebook.services.GeocodeService;
 
 import java.io.IOException;
 import java.nio.file.Files;
@@ -25,6 +27,8 @@ public class EventController {
 
     @Autowired
     private UserRepository userRepository;
+    @Autowired
+    private GeocodeService geocodeService;
 
     @GetMapping("/eventCreate")
     public String addPost(Principal principal, Model model, @RequestParam(required = false, value = "id") Long id) {
@@ -37,8 +41,6 @@ public class EventController {
         }
 
         model.addAttribute("event", cerebookEvent);
-        cerebookEvent.setCerebookUser(user);
-
         model.addAttribute("user", user);
 
         return "/cerebookEvent/eventCreate";
@@ -46,8 +48,18 @@ public class EventController {
 
 
     @RequestMapping("/eventSave")
-    public String saveEvent(@ModelAttribute CerebookEvent cerebookEvent, Principal principal, @RequestParam(value = "image_file") MultipartFile image) throws IOException {
+    public String saveEvent(Model model, @ModelAttribute CerebookEvent cerebookEvent, Principal principal, @RequestParam(value = "image_file") MultipartFile image) throws IOException {
         CerebookUser user = userRepository.getCerebookUserByUsername(principal.getName());
+        try {
+            cerebookEvent.setX(geocodeService.getAdressAsJson(cerebookEvent.getCity() + " " + cerebookEvent.getAddress()).get("data").get(0).get("longitude").asDouble());
+            cerebookEvent.setY(geocodeService.getAdressAsJson(cerebookEvent.getCity() + " " + cerebookEvent.getAddress()).get("data").get(0).get("latitude").asDouble());
+        } catch (Exception e) {
+            boolean error_cartography = true;
+            model.addAttribute("event", cerebookEvent);
+            model.addAttribute("user", user);
+            model.addAttribute("error_cartography", error_cartography);
+            return "/cerebookEvent/eventCreate";
+        }
         if (!image.isEmpty()) {
             if (cerebookEvent.getId() != null) {
                 if (!image.isEmpty()) {
@@ -84,9 +96,9 @@ public class EventController {
     }
 
     @GetMapping("/event/{id}")
-    public String getEventById(Model model, @PathVariable Long id) {
+    public String getEventById(Model model, @PathVariable Long id, Principal principal) {
         model.addAttribute("event", eventRepository.getById(id));
-
+        model.addAttribute("user", userRepository.getCerebookUserByUsername(principal.getName()));
         return "/cerebookEvent/event";
     }
 
