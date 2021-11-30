@@ -37,8 +37,6 @@
   width: 110px;
   height: auto;
   justify-content: center;
-  //top: -55px;
-  //left: 50px;
   background-color: white;
   border-radius: 50%;
   z-index: 10;
@@ -158,18 +156,18 @@
   border-radius: 10px;
 }
 
-.picture-section ul {
+.picture-section ul, .video-section ul {
   list-style-type: none;
 }
 
-.picture-section-img {
+.picture-section-img, .video-section-img {
   width: 100%;
   height: 100px;
   object-fit: cover;
   border-radius: 10px;
 }
 
-.picture-section-username {
+.picture-section-username, .video-section-username {
   font-weight: bold;
   font-size: 1.5rem;
 }
@@ -244,7 +242,7 @@
   height: 50%;
 }
 
-.bottom img {
+.bottom img, .bottom video {
   height: 100px;
   width: 100%;
   object-fit: cover;
@@ -252,22 +250,19 @@
   margin-top: -50px;
 }
 
-.row-picture-logo img{
+.row-picture-logo img {
   width: 30px;
-  margin-left: auto;
-  margin-right: auto;
-  margin-top: 10px;
-  margin-bottom: 10px;
+  margin: 10px auto;
   transition: 0.3s;
 }
 
-.row-picture-logo img:hover {
+.row-picture-logo img:hover, .video-logo:hover {
   box-shadow: 0 0 0 5px rgba(#F4A261,.1) , 0 0 0 3px  #F4A261;
   border-radius: 50%;
   transition: 0.3s;
 }
 
-.picture-logo {
+.picture-logo, .video-logo {
   width: 100%;
   height: auto;
   display: block;
@@ -280,6 +275,23 @@
   border-radius: 10px;
 }
 
-.video-section ul {
-  list-style-type: none;
+.video-button {
+  width: 100%;
+  position: relative;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.video-logo {
+  width: 30px;
+  height: auto;
+  display: block;
+  margin: 10px auto;
+}
+
+.row-video-logo {
+  width: 100%;
+  transition: 0.3s;
+  margin-left: auto;
+  margin-right: auto;
 }
