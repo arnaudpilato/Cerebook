@@ -5,8 +5,10 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+import wcs.cerebook.entity.CerebookConfirmationFriend;
 import wcs.cerebook.entity.CerebookFriend;
 import wcs.cerebook.entity.CerebookUser;
+import wcs.cerebook.repository.ConfirmRepository;
 import wcs.cerebook.repository.FriendRepository;
 import wcs.cerebook.repository.UserRepository;
 
@@ -21,6 +23,11 @@ public class FirendController {
 
     @Autowired
     private FriendRepository friendRepository;
+
+    @Autowired
+    private ConfirmRepository confirmRepository;
+
+
 
     @GetMapping("/addFriends")
     public String index(Model model, Principal principal) {
@@ -37,7 +44,7 @@ public class FirendController {
     }
 
     @RequestMapping("/add/friend/{id}")
-    public String addFriend(Principal principal, @PathVariable("id") Long id,
+    public String requestAddFriend(Principal principal, @PathVariable("id") Long id,
                             RedirectAttributes redirectAttributes
     ) {
 
@@ -48,14 +55,26 @@ public class FirendController {
         String currentUsername = principal.getName();
         CerebookUser currentUser = userRepository.getCerebookUserByUsername(currentUsername);
 
-        CerebookFriend addFriends = new CerebookFriend(false, currentUser, userFriend);
-        addFriends.setFriend(true);
-        if (addFriends.isFriend()){
-            friendRepository.save(addFriends);
-            }
+        CerebookFriend requestFriends = new CerebookFriend(currentUser, userFriend);
+
+        CerebookConfirmationFriend confirmate = new CerebookConfirmationFriend(false, userFriend);
+        confirmRepository.save(confirmate);
+        requestFriends.setConfirmationFriend(confirmate);
+        friendRepository.save(requestFriends);
+
 
 
         return "redirect:/addFriends";
     }
+    @RequestMapping("/confirm/friend/{id}")
+    public String requestComfirmFriend(Principal principal, @PathVariable("id") Long id,
+                                   RedirectAttributes redirectAttributes
+    ) {
 
+        // je récupére le user que je veux ajouté a ma list d'amis
+        CerebookUser userFriend = userRepository.getById(id);
+
+
+        return "redirect:/addFriends";
+    }
 }

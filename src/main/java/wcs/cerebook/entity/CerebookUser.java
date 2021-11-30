@@ -1,7 +1,8 @@
 package wcs.cerebook.entity;
 
-import com.fasterxml.jackson.annotation.JsonManagedReference;
-
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -12,6 +13,10 @@ import java.util.List;
 import java.util.ArrayList;
 
 @Entity
+@JsonIdentityInfo(
+        generator = ObjectIdGenerators.PropertyGenerator.class,
+        property = "id")
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public class CerebookUser {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -41,31 +46,30 @@ public class CerebookUser {
 
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "profil_id", referencedColumnName = "id")
-    @JsonManagedReference
     private CerebookProfil profil;
-// relation oneToMany between user and comments
+    // relation oneToMany between user and comments
     @OneToMany(
-        cascade = CascadeType.ALL,
-        orphanRemoval = true
-        )
+            cascade = CascadeType.ALL,
+            orphanRemoval = true
+    )
     private List<CerebookComment> comments = new ArrayList<>();
 
-
-    @JsonManagedReference
     @OneToMany(mappedBy = "user")
     private List<CerebookPicture> pictures;
 
+    @OneToMany(mappedBy = "user")
+    private List<CerebookVideo> videos;
 
-    @JsonManagedReference
+
+
+
     @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL, optional = true)
     private CerebookCartography cartography;
 
     public CerebookUser() {
     }
 
-    public CerebookUser(Long id, String username, String firstName, String lastName, String city, String address,
-                        String email, String password, Date birthday, String role, boolean enable, List<CerebookPost>
-                                cerebookPosts, List<CerebookMessage> messages, CerebookProfil profil) {
+    public CerebookUser(Long id, String username, String firstName, String lastName, String city, String address, String email, String password, Date birthday, String role, boolean enable, List<CerebookPost> cerebookPosts, List<CerebookMessage> messages, CerebookProfil profil) {
         this.id = id;
         this.username = username;
         this.firstName = firstName;
@@ -104,6 +108,22 @@ public class CerebookUser {
 
     public void setFirstName(String firstName) {
         this.firstName = firstName;
+    }
+
+    public List<CerebookPost> getCerebookPosts() {
+        return cerebookPosts;
+    }
+
+    public void setCerebookPosts(List<CerebookPost> cerebookPosts) {
+        this.cerebookPosts = cerebookPosts;
+    }
+
+    public List<CerebookComment> getComments() {
+        return comments;
+    }
+
+    public void setComments(List<CerebookComment> comments) {
+        this.comments = comments;
     }
 
     public String getLastName() {
@@ -194,28 +214,20 @@ public class CerebookUser {
         this.cartography = cartography;
     }
 
-    public List<CerebookPost> getCerebookPosts() {
-        return cerebookPosts;
-    }
-
-    public void setCerebookPosts(List<CerebookPost> cerebookPosts) {
-        this.cerebookPosts = cerebookPosts;
-    }
-
-    public List<CerebookComment> getComments() {
-        return comments;
-    }
-
-    public void setComments(List<CerebookComment> comments) {
-        this.comments = comments;
-    }
-
     public List<CerebookPicture> getPictures() {
         return pictures;
     }
 
     public void setPictures(List<CerebookPicture> pictures) {
         this.pictures = pictures;
+    }
+
+    public List<CerebookVideo> getVideos() {
+        return videos;
+    }
+
+    public void setVideos(List<CerebookVideo> videos) {
+        this.videos = videos;
     }
 
     @Override
@@ -232,12 +244,8 @@ public class CerebookUser {
                 ", birthday=" + birthday +
                 ", role='" + role + '\'' +
                 ", enable=" + enable +
-                ", cerebookPosts=" + cerebookPosts +
                 ", messages=" + messages +
-                ", profil=" + profil +
-                ", comments=" + comments +
-                ", cartography=" + cartography +
+                ", profil=" + (profil == null ? "null" : profil.getId()) +
                 '}';
     }
 }
-    

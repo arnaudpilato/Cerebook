@@ -7,7 +7,6 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import wcs.cerebook.controller.exception.illegalArgumentException;
 import wcs.cerebook.entity.CerebookEvent;
-import wcs.cerebook.entity.CerebookPost;
 import wcs.cerebook.entity.CerebookUser;
 import wcs.cerebook.repository.EventRepository;
 import wcs.cerebook.repository.UserRepository;
@@ -18,7 +17,6 @@ import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
 import java.security.Principal;
 import java.util.List;
-import java.util.Optional;
 
 @Controller
 public class EventController {
@@ -34,7 +32,8 @@ public class EventController {
         CerebookEvent cerebookEvent = new CerebookEvent();
 
         if (id != null) {
-             cerebookEvent = eventRepository.getById(id);
+            cerebookEvent = eventRepository.getById(id);
+
         }
 
         model.addAttribute("event", cerebookEvent);
@@ -100,27 +99,6 @@ public class EventController {
             eventRepository.delete(cerebookEvent);
         }
         return "redirect:/events";
-    }
 
-    @RequestMapping("/eventUpdate")
-    public String updateEvent(@ModelAttribute CerebookEvent cerebookEvent, Principal principal, @RequestParam(value = "image_file") MultipartFile image) throws IOException {
-        CerebookUser user = userRepository.getCerebookUserByUsername(principal.getName());
-        if (!image.isEmpty()) {
-            if (cerebookEvent.getId() != null) {
-                if (!image.isEmpty()) {
-                    saveImage(cerebookEvent, principal, image);
-                } else {
-                    cerebookEvent.setImage(eventRepository.getById(cerebookEvent.getId()).getImage());
-                }
-            } else {
-                saveImage(cerebookEvent, principal, image);
-            }
-        }
-        cerebookEvent.setCerebookUser(user);
-        eventRepository.save(cerebookEvent);
-
-        Long eventId = cerebookEvent.getId();
-
-        return "redirect:/event/" + eventId;
     }
 }

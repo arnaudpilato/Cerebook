@@ -1,10 +1,13 @@
 package wcs.cerebook.entity;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
-
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import javax.persistence.*;
 
 @Entity
+@JsonIdentityInfo(
+    generator = ObjectIdGenerators.PropertyGenerator.class,
+    property = "id")
 public class CerebookPicture {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -15,7 +18,6 @@ public class CerebookPicture {
 
     }
 
-    @JsonBackReference
     @ManyToOne
     @JoinColumn(name = "user_id")
     private CerebookUser user;

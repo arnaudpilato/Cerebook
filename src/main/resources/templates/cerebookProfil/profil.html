@@ -185,7 +185,7 @@
                                         <li><a href="picture/"><img class="banner-logo" src="/static/css/img/secured-profile.png" alt="Logo Gallery"></a></li>
                                     </ul>
                                     <div class="row pb-3 px-3 justify-content-center">
-                                        <div class="trapdoor col-lg-3 my-2 mx-2" th:each="picture : ${user.pictures}">
+                                        <div class="trapdoor col-lg-3 my-2 mx-2" th:each="picture : ${pictures}">
                                             <div class="top door pd-2">
                                                 <img class="picture-section-img" th:src="${picture.getPicturePath()}">
                                             </div>
@@ -199,6 +199,37 @@
                                                     </div>
                                                     <div>
                                                         <a th:href="@{/profil/picture/delete(id=${picture.id})}" data-show-count="false" data-size="large" data-dnt="false"><img class="picture-logo col-lg-6" src="/static/css/img/delete.png" alt="Logo profil"></a>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Pil : Section Vidéos -->
+                        <div class="row mt-3">
+                            <div class="col-lg-12">
+                                <div class="video-section">
+                                    <ul class="d-flex justify-content-between py-3 px-3 pb-0">
+                                        <li class="title-section"><p>Vidéos</p></li>
+                                        <li><a href="picture/"><img class="banner-logo" src="/static/css/img/video.png" alt="Logo Gallery"></a></li>
+                                    </ul>
+                                    <div class="row pb-3 px-3 justify-content-center">
+                                        <div class="trapdoor col-lg-3 my-2 mx-2" th:each="video : ${user.videos}">
+                                            <div class="top door pd-2">
+                                                <img class="picture-section-img" th:src="${video.getVideoPath()}">
+                                            </div>
+                                            <div class="bottom door">
+                                                <img class="picture-section-img-bottom" th:src="${video.getVideoPath()}">
+                                            </div>
+                                            <div class="picture-button">
+                                                <div class="row row-picture-logo">
+                                                    <div>
+                                                        <a th:href="@{/picture/show(id=${video.id})}" data-show-count="false" data-size="large" data-dnt="false"><img class="picture-logo d-block col-lg-6 justify-content-between" src="/static/css/img/show.png" alt="Logo profil"></a>
+                                                    </div>
+                                                    <div>
+                                                        <a th:href="@{/profil/picture/delete(id=${video.id})}" data-show-count="false" data-size="large" data-dnt="false"><img class="picture-logo col-lg-6" src="/static/css/img/delete.png" alt="Logo profil"></a>
                                                     </div>
                                                 </div>
                                             </div>

@@ -1,13 +1,16 @@
 package wcs.cerebook.entity;
 
-import org.springframework.format.annotation.DateTimeFormat;
-
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.sql.Date;
 import java.util.List;
 
 @Entity
+@JsonIdentityInfo(
+    generator = ObjectIdGenerators.PropertyGenerator.class,
+    property = "id")
 public class CerebookEvent {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -27,11 +30,12 @@ public class CerebookEvent {
     @OneToMany(mappedBy = "cerebookEvent", fetch = FetchType.LAZY,
             cascade = CascadeType.ALL)
     private final List<CerebookComment> comments = new ArrayList<CerebookComment>();
+    private boolean roles;
 
     public CerebookEvent() {
     }
 
-    public CerebookEvent(Long id, String title, Date startEvent, Date endEvent, String address, String city, int phone, String email, String image, String description, CerebookUser cerebookUser) {
+    public CerebookEvent(Long id, String title, Date startEvent, Date endEvent, String address, String city, int phone, String email, String image, String description, CerebookUser cerebookUser, boolean roles) {
         this.id = id;
         this.title = title;
         this.startEvent = startEvent;
@@ -43,6 +47,7 @@ public class CerebookEvent {
         this.image = image;
         this.description = description;
         this.cerebookUser = cerebookUser;
+        this.roles = roles;
     }
 
     public Long getId() {
@@ -137,4 +142,11 @@ public class CerebookEvent {
         return comments;
     }
 
+    public boolean isRoles() {
+        return roles;
+    }
+
+    public void setRoles(boolean roles) {
+        this.roles = roles;
+    }
 }

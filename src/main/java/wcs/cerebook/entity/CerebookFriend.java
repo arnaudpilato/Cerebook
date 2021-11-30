@@ -1,25 +1,33 @@
 package wcs.cerebook.entity;
 
 import javax.persistence.*;
-import java.util.ArrayList;
-import java.util.List;
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
 
 @Entity
+@JsonIdentityInfo(
+    generator = ObjectIdGenerators.PropertyGenerator.class,
+    property = "id")
 public class CerebookFriend {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private boolean isFriend;
     @ManyToOne
     private CerebookUser currentUser;
     @ManyToOne
     private CerebookUser currentFriends;
 
+    @OneToOne()
+    private CerebookConfirmationFriend confirmationFriend;
+
     public CerebookFriend() {
     }
 
-    public CerebookFriend(boolean isFriend, CerebookUser currentUser, CerebookUser currentFriends) {
-        this.isFriend = isFriend;
+    public CerebookFriend(CerebookUser currentUser, CerebookUser currentFriends) {
         this.currentUser = currentUser;
         this.currentFriends = currentFriends;
     }
@@ -30,14 +38,6 @@ public class CerebookFriend {
 
     public void setId(Long id) {
         this.id = id;
-    }
-
-    public boolean isFriend() {
-        return isFriend;
-    }
-
-    public void setFriend(boolean friend) {
-        isFriend = friend;
     }
 
     public CerebookUser getCurrentUser() {
@@ -54,5 +54,13 @@ public class CerebookFriend {
 
     public void setCurrentFriends(CerebookUser currentFriends) {
         this.currentFriends = currentFriends;
+    }
+
+    public CerebookConfirmationFriend getConfirmationFriend() {
+        return confirmationFriend;
+    }
+
+    public void setConfirmationFriend(CerebookConfirmationFriend confirmationFriend) {
+        this.confirmationFriend = confirmationFriend;
     }
 }

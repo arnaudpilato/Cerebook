@@ -15,6 +15,7 @@
         th:text="${event.title}">Evènement</h2>
     <div class="container">
         <div class="row ">
+            <div th:if="${permission}">toto</div>
             <div class="col-lg-8" th:text="${event.description}">Description</div>
             <img class="col-lg-4" th:src="${event.image}"></img>
         </div>
