@@ -29,16 +29,18 @@
                                                         <div id="by-user">
                                                             <td th:text="${'Le: '+p.createdAt}"></td>
                                                             <td th:text="${'Posté par: '+p.cerebookUser.username}"></td>
-                                                             <form action="#" th:action="@{/updateLike/{id}(id=${p.id})}"
+                                                             <form action="#" th:action="@{/addLike/{id}(id=${p.id})}"
                                                                    method="POST">
-                                                                 <td th:text="${'j''aime: '+p.countLike}"></td>
+                                                                 <td th:text="${'j''aime: '+like.countLike}"></td>
                                                                         <button type="submit"  name="like"><i
                                                                                 class="far fa-thumbs-up"></i> </button>
-                                                                        <button type="submit" value="-1" name="like"><i
-                                                                                class="far fa-thumbs-down"></i> </button>
-                                                                </form>
+                                                             </form>
+                                                            <form action="#" th:action="@{/adddisLike/{id}(id=${p.id})}" method="POST">
+                                                                <td th:text="${'j''aime pas: '+like.countdisLike}"></td>
+                                                                        <button type="submit"  name="like"><i
+                                                                                class="far fa-thumbs-up"></i> </button>
+                                                            </form>
                                                         </div>
-
                                                                   <td><a th:href="@{/addComment/{id}(id=${p.id})}"><i
                                                                           class="far fa-comment"></i>commenter</a></td>
                                                                     <td><a th:href="@{/listComment/{id}(id=${p.id})}"><i

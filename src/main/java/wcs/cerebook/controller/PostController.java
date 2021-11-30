@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.*;
 import twitter4j.*;
 import wcs.cerebook.controller.exception.illegalArgumentException;
 import wcs.cerebook.entity.CerebookPost;
+import wcs.cerebook.entity.CerebookPostLike;
 import wcs.cerebook.entity.CerebookUser;
 import wcs.cerebook.repository.PostRepository;
 import wcs.cerebook.repository.UserRepository;
@@ -42,7 +43,6 @@ public class PostController {
         CerebookPost cerebookPost = new CerebookPost();
         model.addAttribute("post", cerebookPost);
         cerebookPost.setCerebookUser(user);
-
         model.addAttribute("user", user);
         cerebookPost.setCreatedAt(new Date());
         model.addAttribute("localDateTime", new Date());
@@ -61,7 +61,10 @@ public class PostController {
         String username = principal.getName();
         CerebookUser user = userRepository.getCerebookUserByUsername(username);
         cerebookPost.setCerebookUser(user);
+        CerebookPostLike cerebookPostLike =new CerebookPostLike();
+        //cerebookPost.setCerebookPostLikes(cerebookPostLike);
         repository.save(cerebookPost);
+
         return "redirect:/profil";
     }
 
@@ -97,11 +100,7 @@ public class PostController {
 
     @PostMapping("/updatePost/{id}")
     public String updatePost(@PathVariable("id") Long id, @Valid CerebookPost cerebookPost) {
-        if(cerebookPost.isLiked()==false){
-            cerebookPost.setLiked(cerebookPost.isLiked()==true);
-            cerebookPost.setCountLike(cerebookPost.getCountLike()+1);
-            repository.save(cerebookPost);
-        }
+
         return"/allPosts";
     }
 
@@ -124,13 +123,14 @@ public class PostController {
     }
 
     @GetMapping("/allPosts")
-    public String getAllPosts(Model model, Principal principal,@Valid CerebookPost cerebookPost,CerebookUser cerebookUser) {
+    public String getAllPosts(Model model, Principal principal, @Valid CerebookPost cerebookPost, CerebookUser cerebookUser, CerebookPostLike cerebookPostLike) {
         model.addAttribute("user", userRepository.findByUsername(principal.getName()));
         String username = principal.getName();
         CerebookUser user = userRepository.getCerebookUserByUsername(username);
         List<CerebookPost> cerebookPosts = repository.findAll();
         model.addAttribute("listPosts", cerebookPosts);
         model.addAttribute("user", user);
+        model.addAttribute("like",cerebookPostLike);
         cerebookPost.setCreatedAt(new Date());
         model.addAttribute("localDateTime", new Date());
         boolean postStatu = cerebookPost.isPrivatePost();
@@ -161,16 +161,6 @@ public class PostController {
 
     }
 
-    @PostMapping("/updateLike/{id}")
-    public String Like(@PathVariable("id") Long id,Long countLike,boolean liked,@Valid CerebookPost cerebookPost) {
 
-        /*if(cerebookPost.isLiked()==false){*/
-            cerebookPost.setLiked(cerebookPost.isLiked()==true);
-            cerebookPost.setCountLike(cerebookPost.getCountLike());
-            repository.updateLike(id,countLike,liked);
-       /* }*/
-
-        return "redirect:/allPosts";
-    }
 
 }
