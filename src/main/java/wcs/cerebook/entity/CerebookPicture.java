@@ -15,7 +15,6 @@ public class CerebookPicture {
     private String picturePath;
 
     public CerebookPicture() {
-
     }
 
     @ManyToOne
