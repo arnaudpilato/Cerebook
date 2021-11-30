@@ -2,7 +2,6 @@ package wcs.cerebook.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.repository.query.Param;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -12,10 +11,7 @@ import wcs.cerebook.entity.CerebookUser;
 import wcs.cerebook.repository.MessageRepository;
 import wcs.cerebook.repository.UserRepository;
 
-import javax.servlet.http.HttpServletRequest;
 import java.security.Principal;
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.*;
 
 @Controller
@@ -86,12 +82,14 @@ public class MessagingController {
         String usernameCurrent = principal.getName();
         CerebookUser currentUser = userRepository.findByUsername(usernameCurrent);
         //Date a l'heure ou le message est envoyé
-        LocalDateTime now = LocalDateTime.now();
+/*
+        Date now = new Date(Calendar.getInstance().getTime().getTime());
+*/
         //récupération du user qui va etre le destinataire du message
         CerebookUser userDestinate = userRepository.getById(userfriend);
         // sauvegarde du message en base de donnée
         if (!contentMessage.isEmpty()){
-            CerebookMessage message = new CerebookMessage(contentMessage, now, currentUser);
+            CerebookMessage message = new CerebookMessage(contentMessage, new Date(), currentUser);
             msgRepository.save(message);
             // une fois le message sauvegarder j'ajoute le destinataire au message et je le sauvegarde une nouvelle fois
             // en base de donnée.
