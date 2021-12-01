@@ -121,16 +121,16 @@ public class PostController {
     }
 
     @GetMapping("/allPosts")
-    public String getAllPosts(Model model, Principal principal, @Valid CerebookPost cerebookPost, CerebookUser cerebookUser,CerebookPostLike cerebookPostLike) {
+    public String getAllPosts(Model model, Principal principal, @Valid CerebookPost cerebookPost, CerebookUser cerebookUser) {
         model.addAttribute("user", userRepository.findByUsername(principal.getName()));
         String username = principal.getName();
         CerebookUser user = userRepository.getCerebookUserByUsername(username);
+        List<CerebookPostLike> cerebookPostLike = likeRepository.findAll();
         List<CerebookPost> cerebookPosts = repository.findAll();
 
         model.addAttribute("listPosts", cerebookPosts);
         model.addAttribute("user", user);
-        model.addAttribute("like",cerebookPostLike.getCountLike());
-        model.addAttribute("dislike",cerebookPostLike.getCountdisLike());
+        model.addAttribute("like",cerebookPostLike);
         cerebookPost.setCreatedAt(new Date());
         model.addAttribute("localDateTime", new Date());
         boolean postStatu = cerebookPost.isPrivatePost();

@@ -75,4 +75,14 @@ public class CerebookPostLike {
     public void setCerebookPost(CerebookPost cerebookPost) {
         this.cerebookPost = cerebookPost;
     }
+
+    @Override
+    public String toString() {
+        return "CerebookPostLike{" +
+                "id=" + id +
+                ", liked=" + liked +
+                ", countdisLike=" + countdisLike +
+                ", countLike=" + countLike +
+                '}';
+    }
 }
