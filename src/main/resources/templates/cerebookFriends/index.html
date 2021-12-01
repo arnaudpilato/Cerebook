@@ -1,13 +1,9 @@
 <!DOCTYPE html>
 <html lang="fr" xmlns:th="http://www.thymeleaf.org"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{fragments/_layout}">
-<head>
-    <meta charset="UTF-8">
-    <title>ajout d'amis</title>
-</head>
-<body>
+
 <th:block layout:fragment="config">
-<h1>liste des utilisateur</h1>
+    <link href="/static/css/style.css" rel="stylesheet"/>
 </th:block>
 
 <div layout:fragment="content">
@@ -17,6 +13,4 @@
     <a th:href="@{/add/friend/{id}(id=${user.id})}">ajouter</a>
 </div>
 </div>
-
-</body>
 </html>

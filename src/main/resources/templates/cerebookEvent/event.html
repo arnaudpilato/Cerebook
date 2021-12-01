@@ -18,34 +18,44 @@
             <div class="col-lg-8" th:text="${event.description}">Description</div>
             <img class="col-lg-4" th:src="${event.image}"></img>
         </div>
+        <div id="map"></div>
+        <div class="row justify-content-center my-3">
+            <div class="col-2">
+                <a href="/events" data-back="Events" data-front="Retour" class="btn-flip"></a>
+            </div>
+        </div>
     </div>
-    <div id="map"></div>
-    <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js" integrity="sha512-XQoYMqMTK8LvdxXYG3nZ448hOEQiglfqkJs1NOQV44cWnUrBc8PkAOcXy20w0vlaXaVUearIOBhiXZ5V3ynxwA==" crossorigin=""></script>
-<script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js" integrity="sha512-XQoYMqMTK8LvdxXYG3nZ448hOEQiglfqkJs1NOQV44cWnUrBc8PkAOcXy20w0vlaXaVUearIOBhiXZ5V3ynxwA==" crossorigin=""></script>
+
+    <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"
+            integrity="sha512-XQoYMqMTK8LvdxXYG3nZ448hOEQiglfqkJs1NOQV44cWnUrBc8PkAOcXy20w0vlaXaVUearIOBhiXZ5V3ynxwA=="
+            crossorigin=""></script>
+    <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"
+            integrity="sha512-XQoYMqMTK8LvdxXYG3nZ448hOEQiglfqkJs1NOQV44cWnUrBc8PkAOcXy20w0vlaXaVUearIOBhiXZ5V3ynxwA=="
+            crossorigin=""></script>
     <script th:inline="javascript">
-        console.log("toto");
         let cities = L.layerGroup();
         let user = [[${user}]];
         let event = [[${event}]];
 
-            // L.marker([allUsers[i].cartography.y, allUsers[i].cartography.x]).bindPopup('This is Golden, CO.').addTo(cities);
+        // L.marker([allUsers[i].cartography.y, allUsers[i].cartography.x]).bindPopup('This is Golden, CO.').addTo(cities);
 
-            L.marker([event.y, event.x], {icon: L.icon({
-                    className: 'image-icon',
-                    iconUrl: user.profil.avatar,
-                    shadowUrl: '/static/css/img/marker.png',
-                    iconSize:     [42, 42], // size of the icon
-                    shadowSize:   [42, 60], // size of the shadow
-                    iconAnchor:   [15, 44], // point of the icon which will correspond to marker's location
-                    shadowAnchor: [15, 44],  // the same for the shadow
-                    popupAnchor:  [-3, -76] // point from which the popup should open relative to the iconAnchor
-                })}).bindPopup("I am a green leaf.").addTo(cities);
-
-
+        L.marker([event.y, event.x], {
+            icon: L.icon({
+                className: 'image-icon',
+                iconUrl: user.profil.avatar,
+                shadowUrl: '/static/css/img/marker.png',
+                iconSize: [42, 42], // size of the icon
+                shadowSize: [42, 60], // size of the shadow
+                iconAnchor: [15, 44], // point of the icon which will correspond to marker's location
+                shadowAnchor: [15, 44],  // the same for the shadow
+                popupAnchor: [-3, -76] // point from which the popup should open relative to the iconAnchor
+            })
+        }).bindPopup("I am a green leaf.").addTo(cities);
 
 
         var Jawg_Terrain = L.tileLayer('https://{s}.tile.jawg.io/jawg-terrain/{z}/{x}/{y}{r}.png?access-token={accessToken}', {
-                attribution: '<a href="http://jawg.io" title="Tiles Courtesy of Jawg Maps" target="_blank">&copy; <b>Jawg</b>Maps</a> &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors', minZoom: 0,
+                attribution: '<a href="http://jawg.io" title="Tiles Courtesy of Jawg Maps" target="_blank">&copy; <b>Jawg</b>Maps</a> &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
+                minZoom: 0,
                 maxZoom: 22,
                 subdomains: 'abcd',
                 accessToken: 'LsV1RNeAnn9smXe7sluDMmWb5hnPQAuljgSvaK07bHR2R4oLt3YPUS3E1xYYZaQr'
@@ -72,8 +82,8 @@
 
         var baseLayers = {
             "Street": Jawg_Terrain,
-            "Dark" : Jawg_Matrix,
-            "Satelitte" : USGS_USImageryTopo,
+            "Dark": Jawg_Matrix,
+            "Satelitte": USGS_USImageryTopo,
         };
 
         var overlays = {
