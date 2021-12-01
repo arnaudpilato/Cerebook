@@ -61,7 +61,6 @@ public class ProfilController {
         List<CerebookCartography> cartographies = cartographyRepository.findAll();
         JsonNode json = new ObjectMapper().valueToTree(cartographies);
 
-
         String userName = principal.getName();
         CerebookUser userId = userRepository.findByUsername(userName);
 
