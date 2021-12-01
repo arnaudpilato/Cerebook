@@ -60,7 +60,7 @@
                         </div>
                     </div>
                     <div class="col-lg-2 banner-list d-flex justify-content-center">
-                        <img class="ornament-logo" src="/static/css/img/ornament.png" alt="Logo circulaire">
+                        <img class="ornament-logo" th:src="${user.profil.ornament}" alt="Logo circulaire">
                         <img class="profile-logo" th:src="${user.profil.avatar}" alt="Logo de profil">
                         <h1 class="profile-name" th:text="${user.username}"></h1>
                     </div>
