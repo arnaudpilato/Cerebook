@@ -14,6 +14,7 @@ import wcs.cerebook.repository.UserRepository;
 import wcs.cerebook.services.GeocodeService;
 import wcs.cerebook.services.CerebookUserService;
 
+import java.security.Principal;
 import java.util.List;
 
 
@@ -99,9 +100,11 @@ public class UserController {
     }
 
     @RequestMapping("/users")
-    public String viewUser(Model model, @Param("keyword") String keyword) {
+    public String viewUser(Model model, @Param("keyword") String keyword, Principal principal) {
         List<CerebookUser> listUsers = service.listAll(keyword);
+        CerebookUser actualUser = userRepository.findByUsername(principal.getName());
         model.addAttribute("users", listUsers);
+        model.addAttribute("actualUser", actualUser);
         model.addAttribute("keyword", keyword);
 
         return "cerebookUser/users";
