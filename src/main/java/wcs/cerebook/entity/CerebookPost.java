@@ -22,13 +22,8 @@ public class CerebookPost {
     private String content;
     private boolean privatePost;
 
-    //there I want to save status - liked/disliked;
-    @Column(columnDefinition = "boolean default false")
-    private boolean liked;
-    //fin propriete systeme de like
     // manyToone for post one user can have many post
     @ManyToOne(fetch = FetchType.LAZY)
-
     private CerebookUser cerebookUser;
 
     public List<CerebookComment> getComments() {
@@ -38,21 +33,20 @@ public class CerebookPost {
     // one post to  can have many comment
     @OneToMany(mappedBy = "cerebookPost", fetch = FetchType.LAZY,
             cascade = CascadeType.ALL)
-
     private final List<CerebookComment> comments = new ArrayList<CerebookComment>();
-    //oneTomany bidireictionelle one vers  les likes
+    //oneTomany one vers  les likes
     @OneToMany(
             mappedBy = "cerebookPost",
-            orphanRemoval = true,
+            fetch = FetchType.LAZY,
             cascade = CascadeType.ALL)
-    List<CerebookPostLike> cerebookPostLikes = new ArrayList<>();
+    private List<CerebookPostLike> cerebookPostLikes = new ArrayList<>();
 
-    public boolean isLiked() {
-        return liked;
+    public Long getId() {
+        return id;
     }
 
-    public void setLiked(boolean liked) {
-        this.liked = liked;
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public List<CerebookPostLike> getCerebookPostLikes() {
@@ -71,13 +65,7 @@ public class CerebookPost {
         this.cerebookUser = cerebookUser;
     }
 
-    public Long getId() {
-        return id;
-    }
 
-    public void setId(Long id) {
-        this.id = id;
-    }
     @Temporal(TemporalType.TIME)
     public Date getCreatedAt() {
         return createdAt;
@@ -106,13 +94,13 @@ public class CerebookPost {
     public CerebookPost() {
     }
 
-    public CerebookPost(Long id, Date createdAt, String content, boolean privatePost, boolean liked, CerebookUser cerebookUser, List<CerebookPostLike> cerebookPostLikes) {
+    public CerebookPost(Long id, Date createdAt, String content, boolean privatePost, CerebookUser cerebookUser, List<CerebookPostLike> cerebookPostLikes) {
         this.id = id;
         this.createdAt = createdAt;
         this.content = content;
         this.privatePost = privatePost;
-        this.liked = liked;
         this.cerebookUser = cerebookUser;
         this.cerebookPostLikes = cerebookPostLikes;
     }
+
 }

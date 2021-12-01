@@ -11,6 +11,7 @@ import wcs.cerebook.controller.exception.illegalArgumentException;
 import wcs.cerebook.entity.CerebookPost;
 import wcs.cerebook.entity.CerebookPostLike;
 import wcs.cerebook.entity.CerebookUser;
+import wcs.cerebook.repository.PostLikeRepository;
 import wcs.cerebook.repository.PostRepository;
 import wcs.cerebook.repository.UserRepository;
 
@@ -32,10 +33,10 @@ public class PostController {
         Principal principal = request.getUserPrincipal();
         return principal.getName();
     }
-
+    @Autowired
+    private PostLikeRepository likeRepository;
     @Autowired
     private UserRepository userRepository;
-
     @GetMapping("/postCreate")
     public String addPost(Principal principal, Model model) {
         String username = principal.getName();
@@ -56,15 +57,12 @@ public class PostController {
 
     //save post
     @RequestMapping("/save")
-    public String savePost(Principal principal, CerebookPost cerebookPost) {
+    public String savePost(Principal principal, CerebookPost cerebookPost,CerebookPostLike cerebookPostLike) {
         // save post to database
         String username = principal.getName();
         CerebookUser user = userRepository.getCerebookUserByUsername(username);
         cerebookPost.setCerebookUser(user);
-        CerebookPostLike cerebookPostLike =new CerebookPostLike();
-        //cerebookPost.setCerebookPostLikes(cerebookPostLike);
         repository.save(cerebookPost);
-
         return "redirect:/profil";
     }
 
@@ -123,14 +121,16 @@ public class PostController {
     }
 
     @GetMapping("/allPosts")
-    public String getAllPosts(Model model, Principal principal, @Valid CerebookPost cerebookPost, CerebookUser cerebookUser, CerebookPostLike cerebookPostLike) {
+    public String getAllPosts(Model model, Principal principal, @Valid CerebookPost cerebookPost, CerebookUser cerebookUser,CerebookPostLike cerebookPostLike) {
         model.addAttribute("user", userRepository.findByUsername(principal.getName()));
         String username = principal.getName();
         CerebookUser user = userRepository.getCerebookUserByUsername(username);
         List<CerebookPost> cerebookPosts = repository.findAll();
+
         model.addAttribute("listPosts", cerebookPosts);
         model.addAttribute("user", user);
-        model.addAttribute("like",cerebookPostLike);
+        model.addAttribute("like",cerebookPostLike.getCountLike());
+        model.addAttribute("dislike",cerebookPostLike.getCountdisLike());
         cerebookPost.setCreatedAt(new Date());
         model.addAttribute("localDateTime", new Date());
         boolean postStatu = cerebookPost.isPrivatePost();
