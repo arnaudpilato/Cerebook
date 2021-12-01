@@ -12,7 +12,6 @@ import wcs.cerebook.entity.CerebookPost;
 import wcs.cerebook.entity.CerebookProfil;
 import wcs.cerebook.entity.CerebookUser;
 import wcs.cerebook.repository.*;
-
 import javax.validation.Valid;
 import java.io.IOException;
 import java.nio.file.Files;
