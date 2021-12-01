@@ -3,3 +3,18 @@
 @import "style.scss";
 
 /***** Cartography *****/
+
+.cartography {
+  margin-top: 5vh;
+}
+
+#map {
+  height: 600px;
+  border-radius: 10px;
+}
+
+.map-section {
+  border-radius: 10px;
+  padding: 2px;
+  background-color: #F4A261;
+}
