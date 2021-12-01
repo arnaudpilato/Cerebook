@@ -72,7 +72,7 @@
             <div class="row justify-content-center mt-2" th:unless="${#httpServletRequest.remoteUser == null}">
                 <div class="col-10 col-lg-5 bg-primary panel text-center">
                     <h1 th:inline="text" class="text-center my-3">Bienvenue [[${#httpServletRequest.remoteUser}]]</h1>
-                    <a class="accueilButton btn--svg js-animated-button my-3" href="/profil">
+                    <a class="accueilButton btn--svg js-animated-button my-4" href="/profil">
                         <span class="btn--svg__label">Voir votre profil</span>
                         <svg class="btn--svg__circle" width="190" x="0px" y="0px" viewBox="0 0 60 60" enable-background="new 0 0 60 60">
                             <circle class="js-discover-circle" fill="#FFFFFF" cx="30" cy="30" r="28.7"></circle>
@@ -86,7 +86,7 @@
                             </g>
                         </svg>
                     </a>
-                    <a class="accueilButton btn--svg js-animated-button my-3" href="/logout">
+                    <a class="accueilButton btn--svg js-animated-button my-4" href="/logout">
                         <span class="btn--svg__label">Se déconnecter</span>
                         <svg class="btn--svg__circle" width="190" x="0px" y="0px" viewBox="0 0 60 60" enable-background="new 0 0 60 60">
                             <circle class="js-discover-circle" fill="#FFFFFF" cx="30" cy="30" r="28.7"></circle>

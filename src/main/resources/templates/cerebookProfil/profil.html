@@ -23,7 +23,7 @@
                     <div class="d-none d-lg-block col-lg-5 pr-0">
                         <ul class="banner-logo-list banner-left pl-3">
                             <li><a type="button" data-bs-toggle="modal" data-bs-target="#profilModal"><img class="banner-logo" src="/static/css/img/secured-profile.png" alt="Logo profil"></a></li>
-                            <li><a href="/profil/show"><img class="banner-logo" src="/static/css/img/map.png" alt="Logo carte"></a></li>
+                            <li><a href="/cartography"><img class="banner-logo" src="/static/css/img/map.png" alt="Logo carte"></a></li>
                             <li><a href="#"><img class="banner-logo" src="/static/css/img/friends.png" alt="Logo amis"></a></li>
                         </ul>
                         <div class="modal fade" id="profilModal" tabindex="-1" aria-labelledby="profilModalLabel" aria-hidden="true">
@@ -60,7 +60,7 @@
                         </div>
                     </div>
                     <div class="col-lg-2 banner-list d-flex justify-content-center">
-                        <img class="ornament-logo" src="/static/css/img/ornament.png" alt="Logo circulaire">
+                        <img class="ornament-logo" th:src="${user.profil.ornament}" alt="Logo circulaire">
                         <img class="profile-logo" th:src="${user.profil.avatar}" alt="Logo de profil">
                         <h1 class="profile-name" th:text="${user.username}"></h1>
                     </div>
