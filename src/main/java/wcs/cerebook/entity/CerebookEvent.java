@@ -1,7 +1,9 @@
 package wcs.cerebook.entity;
 
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.sql.Date;
@@ -9,8 +11,9 @@ import java.util.List;
 
 @Entity
 @JsonIdentityInfo(
-    generator = ObjectIdGenerators.PropertyGenerator.class,
-    property = "id")
+        generator = ObjectIdGenerators.PropertyGenerator.class,
+        property = "id")
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public class CerebookEvent {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -31,11 +34,13 @@ public class CerebookEvent {
             cascade = CascadeType.ALL)
     private final List<CerebookComment> comments = new ArrayList<CerebookComment>();
     private boolean roles;
+    private Double x;
+    private Double y;
 
     public CerebookEvent() {
     }
 
-    public CerebookEvent(Long id, String title, Date startEvent, Date endEvent, String address, String city, int phone, String email, String image, String description, CerebookUser cerebookUser, boolean roles) {
+    public CerebookEvent(Long id, String title, Date startEvent, Date endEvent, String address, String city, int phone, String email, String image, String description, CerebookUser cerebookUser, boolean roles, Double x, Double y) {
         this.id = id;
         this.title = title;
         this.startEvent = startEvent;
@@ -48,6 +53,8 @@ public class CerebookEvent {
         this.description = description;
         this.cerebookUser = cerebookUser;
         this.roles = roles;
+        this.x = x;
+        this.y = y;
     }
 
     public Long getId() {
@@ -148,5 +155,21 @@ public class CerebookEvent {
 
     public void setRoles(boolean roles) {
         this.roles = roles;
+    }
+
+    public Double getX() {
+        return x;
+    }
+
+    public void setX(Double x) {
+        this.x = x;
+    }
+
+    public Double getY() {
+        return y;
+    }
+
+    public void setY(Double y) {
+        this.y = y;
     }
 }

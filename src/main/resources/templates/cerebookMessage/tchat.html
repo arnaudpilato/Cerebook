@@ -18,13 +18,13 @@
                     <div class="row justify-content-start m-4" th:if="${message.getCurrentUser().getId() == user.getId()}">
                         <div class="alert alert-primary col-4 mr-5 ">
                             <img class="profile-section-logo mb-4" th:src="${message.getCurrentUser().getProfil().getAvatar()}" alt="Logo de profil"/>
-                            <p class="blockquote-footer" th:text="${#temporals.format(message.getDate(), 'dd-MM -- HH:mm')}" />
+                            <p class="blockquote-footer" th:text="${#dates.format(message.getDate(), 'dd-MMM-yyyy HH:mm')}"/>
                             <p th:text="${message.getMessage()}"/>
                         </div>
                     </div>
                     <div class="row justify-content-end ml-5" th:unless="${message.getCurrentUser().getId() == user.getId()}">
                         <div class="alert alert-success col-4 ">
-                            <p class="blockquote-footer" th:text="${#temporals.format(message.getDate(), 'dd-MM -- HH:mm')}"/>
+                            <p class="blockquote-footer" th:text="${#dates.format(message.getDate(), 'dd-MMM-yyyy HH:mm')}"/>
                             <p th:text="${message.getMessage()}"/>
                         </div>
                     </div>
