@@ -1,6 +1,7 @@
 package wcs.cerebook.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -13,6 +14,7 @@ import wcs.cerebook.repository.FriendRepository;
 import wcs.cerebook.repository.UserRepository;
 
 import java.security.Principal;
+import java.util.ArrayList;
 import java.util.List;
 
 @Controller
@@ -67,18 +69,41 @@ public class FirendController {
 
         return "redirect:/addFriends";
     }
-    @RequestMapping("/confirm/friend/{id}")
-    public String requestComfirmFriend(Principal principal, @PathVariable("id") Long id,
-                                   RedirectAttributes redirectAttributes
+
+    @RequestMapping("/confirm/friends")
+    public String requestComfirmFriend(Principal principal, Model model
     ) {
 
         // je récupére le user que je veux ajouté a ma list d'amis
         String userCurrentName = principal.getName();
         CerebookUser currentUser = userRepository.getCerebookUserByUsername(userCurrentName);
+        // je récupére l'objet de confirmation FALSE en relation avec la table Friend par rapport au user connecter
+        List<CerebookConfirmationFriend> notConfirmationFriend = confirmRepository.getByUserFriendId(currentUser);
+        // je crée une nouvelle liste de type friend
+        List<CerebookFriend> friends = new ArrayList<>();
+        // je boucle sur l'objet qui contient les amis non confirmé que le user posséde pour faire une
+        // recherche personalisé via une requette qui va récupérer tous les amis non confirmé via la clef primaire
+        // que j'ajoute à ma liste et renvoie ensuite cette liste dans la vue
+        for (CerebookConfirmationFriend notConfirm: notConfirmationFriend
+             ) {
+            CerebookFriend searchFriendFalse = friendRepository.getByConfirmationFriend_Id(notConfirm);
+           friends.add(searchFriendFalse);
+            }
 
-        List<CerebookConfirmationFriend> confirmationFriend = confirmRepository.getByUserFriendId(currentUser);
+        model.addAttribute("friends", friends);
+
+        return "cerebookFriends/confirm";
+    }
 
 
-        return "redirect:/addFriends";
+    // méthode pour confirmer l'amis en question
+    @RequestMapping("/confirm/friend")
+    public String requestComfirmTrueFriend(Principal principal, Model model, @RequestParam(required = true) Long id
+    ) {
+        CerebookFriend friend = friendRepository.getById(id);
+        friend.getConfirmationFriend().setAdd(true);
+        friendRepository.save(friend);
+
+        return "redirect:/confirm/friends";
     }
 }
