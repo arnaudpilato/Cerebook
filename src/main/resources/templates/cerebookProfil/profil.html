@@ -216,7 +216,7 @@
                                         <li><a href="video/"><img class="banner-logo" src="/static/css/img/video.png" alt="Logo Gallery"></a></li>
                                     </ul>
                                     <div class="row pb-3 px-3 justify-content-center">
-                                        <div class="trapdoor col-lg-3 my-2 mx-2" th:each="video : ${user.videos}">
+                                        <div class="trapdoor col-lg-3 my-2 mx-2" th:each="video : ${videos}">
                                             <div class="top door pd-2">
                                                 <video class="video-section-img">
                                                     <source th:src="${video.getVideoPath()}" preload="metadata" #t="0.5">
