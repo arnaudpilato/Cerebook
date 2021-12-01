@@ -43,13 +43,13 @@
                                             <li class="mb-4"><img class="modal-profile-logo" src="/static/css/img/mail.png" alt="Logo email"><span th:text="${user.email}"></span></li>
                                         </ul>
 
-                                        <h4 th:if="${user.profil}" class="text-center mb-3">Profil</h4>
+                                        <h4 th:if="${not user.profil.activity.isEmpty()} and ${user.profil.interestedInWoman} and ${user.profil.interestedInMen} and ${not user.profil.hometown.isEmpty()} and ${not user.profil.relashionship.isEmpty()}" class="text-center mb-3">Profil</h4>
                                         <ul class="modal-list">
-                                            <li th:if="${user.profil.activity}" class="mb-2"><img class="modal-profile-logo" src="/static/css/img/shield.png" alt="Logo profil"><span th:text="${user.profil.activity}"></span></li>
+                                            <li th:if="${not user.profil.activity.isEmpty()}" class="mb-2"><img class="modal-profile-logo" src="/static/css/img/shield.png" alt="Logo profil"><span th:text="${user.profil.activity}"></span></li>
                                             <li th:if="${user.profil.interestedInWoman}" class="mb-2"><img class="modal-profile-logo" src="/static/css/img/love.png" alt="Logo profil"><span>Intéréssé par les femmes</span></li>
                                             <li th:if="${user.profil.interestedInMen}" class="mb-2"><img class="modal-profile-logo" src="/static/css/img/love.png" alt="Logo profil"><span>Intéréssé par les hommes</span></li>
-                                            <li th:if="${user.profil.hometown}" class="mb-2"><img class="modal-profile-logo" src="/static/css/img/hometown.png" alt="Logo profil"><span th:text="'De ' + ${user.profil.hometown}"></span></li>
-                                            <li th:if="${user.profil.relashionship}"><img class="modal-profile-logo" src="/static/css/img/relationship.png" alt="Logo profil"><span th:text="'En relation avec ' + ${ user.profil.relashionship}"></span></li>
+                                            <li th:if="${not user.profil.hometown.isEmpty()}" class="mb-2"><img class="modal-profile-logo" src="/static/css/img/hometown.png" alt="Logo profil"><span th:text="'De ' + ${user.profil.hometown}"></span></li>
+                                            <li th:if="${not user.profil.relashionship.isEmpty()}"><img class="modal-profile-logo" src="/static/css/img/relationship.png" alt="Logo profil"><span th:text="'En relation avec ' + ${ user.profil.relashionship}"></span></li>
                                         </ul>
                                     </div>
                                     <div class="modal-footer">
@@ -87,12 +87,12 @@
                                         <li><p class="profile-section-username" th:text="${user.username}"></p></li>
                                     </ul>
                                     <ul class="py-3">
-                                        <li th:if="${user.profil.activity}" class="mb-2"><img class="modal-profile-logo" src="/static/css/img/shield.png" alt="Logo profil"><span th:text="${user.profil.activity}"></span></li>
+                                        <li th:if="${not user.profil.activity.isEmpty()}" class="mb-2"><img class="modal-profile-logo" src="/static/css/img/shield.png" alt="Logo profil"><span th:text="${user.profil.activity}"></span></li>
                                         <li class="mb-2"><img class="modal-profile-logo" src="/static/css/img/city.png" alt="Logo adresse"><span th:text="${user.city}"></span></li>
                                         <li th:if="${user.profil.interestedInWoman}" class="mb-2"><img class="modal-profile-logo" src="/static/css/img/love.png" alt="Logo profil"><span>Intéréssé par les femmes</span></li>
                                         <li th:if="${user.profil.interestedInMen}" class="mb-2"><img class="modal-profile-logo" src="/static/css/img/love.png" alt="Logo profil"><span>Intéréssé par les hommes</span></li>
-                                        <li th:if="${user.profil.hometown}" class="mb-2"><img class="modal-profile-logo" src="/static/css/img/hometown.png" alt="Logo profil"><span th:text="'De ' + ${user.profil.hometown}"></span></li>
-                                        <li th:if="${user.profil.relashionship}" class="mb-3"><img class="modal-profile-logo" src="/static/css/img/relationship.png" alt="Logo profil"><span th:text="'En relation avec ' + ${ user.profil.relashionship}"></span></li>
+                                        <li th:if="${not user.profil.hometown.isEmpty()}" class="mb-2"><img class="modal-profile-logo" src="/static/css/img/hometown.png" alt="Logo profil"><span th:text="'De ' + ${user.profil.hometown}"></span></li>
+                                        <li th:if="${not user.profil.relashionship.isEmpty()}" class="mb-3"><img class="modal-profile-logo" src="/static/css/img/relationship.png" alt="Logo profil"><span th:text="'En relation avec ' + ${ user.profil.relashionship}"></span></li>
                                     </ul>
                                 </div>
                             </div>
