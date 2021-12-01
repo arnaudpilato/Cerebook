@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="fr" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{fragments/_layout}">
+
+<th:block layout:fragment="config">
+    <link href="/static/css/style.css" rel="stylesheet"/>
+</th:block>
+
+<div layout:fragment="content">
+    <h1>Confirmation d'amis</h1>
+    <div th:each="friend : ${friends}">
+        <p th:text="${friend.getCurrentUser().getUsername()}"/>
+        <a th:href="@{/confirm/friend(id=${friend.id})}">ajouter</a>
+    </div>
+</div>
+</html>

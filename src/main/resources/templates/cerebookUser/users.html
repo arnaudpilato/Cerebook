@@ -13,8 +13,7 @@
         <h2 class="d-flex justify-content-center">Utilisateur</h2>
         <div class="container">
             <div class="row">
-                <!-- PIL : Section profil -->
-                <div th:each="user : ${users}" class="col-lg-4">
+                <div th:each="user : ${users}" th:if="(${actualUser.role} == ${user.role}) OR (${actualUser.role} == 'NEUTRE')" class="col-lg-4">
                     <div class="row">
                         <div class="col-lg-12">
                             <div class="profile-section userCards mb-3">
