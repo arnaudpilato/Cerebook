@@ -14,6 +14,7 @@ public class CerebookProfil {
     private Long id;
     private String activity;
     private String avatar;
+    private String ornament;
     private String banner;
     private boolean interestedInWoman;
     private boolean interestedInMen;
@@ -45,6 +46,14 @@ public class CerebookProfil {
 
     public void setAvatar(String avatar) {
         this.avatar = avatar;
+    }
+
+    public String getOrnament() {
+        return ornament;
+    }
+
+    public void setOrnament(String ornament) {
+        this.ornament = ornament;
     }
 
     public String getBanner() {
