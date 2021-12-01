@@ -58,10 +58,13 @@ public class UserController {
         user.setProfil(new CerebookProfil());
         if (user.getRole().equals("HERO")) {
             user.getProfil().setBanner("/static/css/img/banner.png");
+            user.getProfil().setOrnament("/static/css/img/ornament-good.png");
         } else if (user.getRole().equals("MECHANT")) {
             user.getProfil().setBanner("/static/css/img/magneto-banner.jpeg");
+            user.getProfil().setOrnament("/static/css/img/ornament-bad.png");
         } else {
             user.getProfil().setBanner("/static/css/img/New-York-Manhattan.jpeg");
+            user.getProfil().setOrnament("/static/css/img/ornament-neutral.png");
         }
         user.getProfil().setAvatar("/static/css/img/avatar.jpeg");
 
