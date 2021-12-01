@@ -48,13 +48,14 @@ public class VideoController {
 
     @PostMapping("/video/update")
     public String postVideoUpdate(@ModelAttribute CerebookVideo cerebookVideo, @RequestParam(value = "file_video") MultipartFile video, Principal principal) throws IOException {
-
-        Files.copy(video.getInputStream(), Paths.get("src/main/resources/public/static/css/data/" + video.getOriginalFilename()), StandardCopyOption.REPLACE_EXISTING);
-        cerebookVideo.setVideoPath("/static/css/data/" + video.getOriginalFilename());
-        if (cerebookVideo.getId() == null) {
-            cerebookVideo.setUser(userRepository.findByUsername(principal.getName()));
+        if (!video.isEmpty()) {
+            Files.copy(video.getInputStream(), Paths.get("src/main/resources/public/static/css/data/" + video.getOriginalFilename()), StandardCopyOption.REPLACE_EXISTING);
+            cerebookVideo.setVideoPath("/static/css/data/" + video.getOriginalFilename());
+            if (cerebookVideo.getId() == null) {
+                cerebookVideo.setUser(userRepository.findByUsername(principal.getName()));
+            }
+            videoRepository.save(cerebookVideo);
         }
-        videoRepository.save(cerebookVideo);
         return "redirect:/video";
     }
 

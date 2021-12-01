@@ -58,6 +58,7 @@ public class ProfilController {
         model.addAttribute("postStatus", postStatu);
         model.addAttribute("allUsers", userRepository.findAll());
         model.addAttribute("pictures", pictureRepository.lastPicture(user.getId()));
+        model.addAttribute("videos", videoRepository.lastVideo(user.getId()));
         List<CerebookCartography> cartographies = cartographyRepository.findAll();
         JsonNode json = new ObjectMapper().valueToTree(cartographies);
 
