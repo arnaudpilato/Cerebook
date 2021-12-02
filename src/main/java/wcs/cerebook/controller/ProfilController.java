@@ -12,6 +12,7 @@ import wcs.cerebook.entity.CerebookPost;
 import wcs.cerebook.entity.CerebookProfil;
 import wcs.cerebook.entity.CerebookUser;
 import wcs.cerebook.repository.*;
+
 import javax.validation.Valid;
 import java.io.IOException;
 import java.nio.file.Files;
@@ -45,11 +46,8 @@ public class ProfilController {
     @GetMapping("/profil")
     public String getProfil(Model model, Principal principal) {
         model.addAttribute("user", userRepository.findByUsername(principal.getName()));
-       CerebookUser user = userRepository.getCerebookUserByUsername(principal.getName());
-
+        CerebookUser user = userRepository.getCerebookUserByUsername(principal.getName());
         List<CerebookPost> cerebookPosts = user.getCerebookPosts();
-
-
         model.addAttribute("listPosts", cerebookPosts);
         model.addAttribute("localDateTime", new Date());
         model.addAttribute("allUsers", userRepository.findAll());
@@ -64,7 +62,16 @@ public class ProfilController {
     @GetMapping("/profil/{id}")
     public String getOtherProfil(Model model, @PathVariable Long id) {
         model.addAttribute("user", userRepository.getById(id));
-
+        CerebookUser user = userRepository.getById(id);
+        List<CerebookPost> cerebookPosts = user.getCerebookPosts();
+        model.addAttribute("listPosts", cerebookPosts);
+        model.addAttribute("localDateTime", new Date());
+        model.addAttribute("allUsers", userRepository.findAll());
+        model.addAttribute("pictures", pictureRepository.lastPicture(user.getId()));
+        model.addAttribute("videos", videoRepository.lastVideo(user.getId()));
+        List<CerebookCartography> cartographies = cartographyRepository.findAll();
+        JsonNode json = new ObjectMapper().valueToTree(cartographies);
+        model.addAttribute("cartography", json);
         return "cerebookProfil/profil";
     }
 
