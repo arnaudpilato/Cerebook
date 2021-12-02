@@ -60,8 +60,8 @@ public class FirendController {
         // je crée l'objet Friend au quel je passe en parmétres le user current et son futur amis
         // condition de sécurité pour pouvoir ajouté les amis par role et pour ne pas
         // pouvoir s'ajouter soit même en ami
-        if(userFriend != currentUser) {
-            if (userFriend.getRole() == currentUser.getRole()) {
+        if(userFriend.getId() != currentUser.getId()) {
+            if (userFriend.getRole().equals(currentUser.getRole())) {
                 CerebookFriend requestFriends = new CerebookFriend(currentUser, userFriend);
                 // je crée par la même occasion l'objet de confirmation de la demande d'amis
                 CerebookConfirmationFriend confirmate = new CerebookConfirmationFriend(false, userFriend);
@@ -91,12 +91,24 @@ public class FirendController {
         // que j'ajoute à ma liste et renvoie ensuite cette liste dans la vue
         for (CerebookConfirmationFriend notConfirm: notConfirmationFriend
              ) {
-            CerebookFriend searchFriendFalse = friendRepository.getByConfirmationFriend_Id(notConfirm);
+            CerebookFriend searchFriendFalse = friendRepository.getByNotConfirmationFriend_Id(notConfirm);
            friends.add(searchFriendFalse);
             }
 
         model.addAttribute("friends", friends);
+        List<CerebookFriend> confirmed = friendRepository.getByConfirmationFriend_Id(currentUser);
+        for (CerebookFriend friend: confirmed
+             ) {
+            System.out.println(friend.getCurrentFriends().getUsername() + "============================");
 
+        }
+
+        List<CerebookFriend> confirmey = friendRepository.getByConfirmationFriendUser_Id(currentUser);
+        for (CerebookFriend friend: confirmey
+             ) {
+            System.out.println(friend.getCurrentUser().getUsername() + "...............................");
+
+        }
         return "cerebookFriends/confirm";
     }
 
