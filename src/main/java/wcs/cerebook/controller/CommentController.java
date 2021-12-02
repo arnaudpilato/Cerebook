@@ -24,7 +24,6 @@ import java.util.Optional;
 public class CommentController {
     @Autowired
     private CommentRepository commentRepository;
-
     @Autowired
     private PostRepository postRepository;
     @Autowired
@@ -40,6 +39,7 @@ public class CommentController {
         model.addAttribute("comment", cerebookComment);
         model.addAttribute("post", cerebookPost);
         model.addAttribute("time", new Date());
+
         return "cerebookComment/addComment";
     }
 
@@ -51,17 +51,17 @@ public class CommentController {
         cerebookComment.setCerebookUser(user);
         cerebookComment.setCreatedAt(new Date());
         commentRepository.save(cerebookComment);
+
         return "redirect:/allPosts";
     }
 
     @GetMapping("/listComment/{postid}")
-    public String showComment(@PathVariable("postid") Long postid, Model model, Principal principal) {
+    public String showComment(@PathVariable("postid") Long postid, Model model) {
         List<CerebookUser> user = userRepository.findAll();
         List<CerebookComment> comments = postRepository.getById(postid).getComments();
         List<CerebookPost> post = postRepository.findAll();
         model.addAttribute("listComment", comments);
         model.addAttribute("user", user);
-
         model.addAttribute("post", post);
 
         return "cerebookComment/listComments";
@@ -75,6 +75,7 @@ public class CommentController {
         CerebookUser user = userRepository.getCerebookUserByUsername(principal.getName());
         model.addAttribute("comment", cerebookComment);
         model.addAttribute("event", cerebookEvent);
+
         return "cerebookComment/addEventComment";
     }
 
@@ -86,17 +87,17 @@ public class CommentController {
         cerebookComment.setCerebookUser(user);
         cerebookComment.setCreatedAt(new Date());
         commentRepository.save(cerebookComment);
+
         return "redirect:/listEventComment/"+cerebookEvent.getId();
     }
 
     @GetMapping("/listEventComment/{eventid}")
-    public String showEventComment(@PathVariable("eventid") Long eventid, Model model, Principal principal) {
+    public String showEventComment(@PathVariable("eventid") Long eventid, Model model) {
         List<CerebookUser> user = userRepository.findAll();
         List<CerebookComment> comments = eventRepository.getById(eventid).getComments();
         CerebookEvent event = eventRepository.getById(eventid);
         model.addAttribute("listComment", comments);
         model.addAttribute("user", user);
-
         model.addAttribute("event", event);
 
         return "cerebookComment/listEventComments";
