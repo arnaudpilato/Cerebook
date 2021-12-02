@@ -43,29 +43,20 @@ public class ProfilController {
     private VideoRepository videoRepository;
 
     @GetMapping("/profil")
-    public String getProfil(Model model, Principal principal,@Valid CerebookPost cerebookPost) {
+    public String getProfil(Model model, Principal principal) {
         model.addAttribute("user", userRepository.findByUsername(principal.getName()));
-        String username = principal.getName();
-       CerebookUser user = userRepository.getCerebookUserByUsername(username);
-        //List<CerebookUser> user = userRepository.findAll();
-        List<CerebookPost> cerebookPosts = postRepository.findAll();
+       CerebookUser user = userRepository.getCerebookUserByUsername(principal.getName());
+
+        List<CerebookPost> cerebookPosts = user.getCerebookPosts();
+
+
         model.addAttribute("listPosts", cerebookPosts);
-        model.addAttribute("user", user);
-        cerebookPost.setCreatedAt(new Date());
         model.addAttribute("localDateTime", new Date());
-        boolean postStatu = cerebookPost.isPrivatePost();
-        model.addAttribute("postStatus", postStatu);
         model.addAttribute("allUsers", userRepository.findAll());
         model.addAttribute("pictures", pictureRepository.lastPicture(user.getId()));
         model.addAttribute("videos", videoRepository.lastVideo(user.getId()));
         List<CerebookCartography> cartographies = cartographyRepository.findAll();
         JsonNode json = new ObjectMapper().valueToTree(cartographies);
-
-
-        String userName = principal.getName();
-        CerebookUser userId = userRepository.findByUsername(userName);
-
-        //model.addAttribute("pictures", pictureRepository.lastPicture(userId.getId()));
         model.addAttribute("cartography", json);
         return "cerebookProfil/profil";
     }
