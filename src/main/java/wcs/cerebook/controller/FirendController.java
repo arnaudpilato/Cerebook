@@ -58,15 +58,20 @@ public class FirendController {
         CerebookUser currentUser = userRepository.getCerebookUserByUsername(currentUsername);
 
         // je crée l'objet Friend au quel je passe en parmétres le user current et son futur amis
-        CerebookFriend requestFriends = new CerebookFriend(currentUser, userFriend);
-        // je crée par la même occasion l'objet de confirmation de la demande d'amis
-        CerebookConfirmationFriend confirmate = new CerebookConfirmationFriend(false, userFriend);
-        confirmRepository.save(confirmate);
-        // et je fait la relation entre les 2 objets en ajoutant la clef primaire que je sauvegarde dans la table friend
-        requestFriends.setConfirmationFriend(confirmate);
-        friendRepository.save(requestFriends);
+        // condition de sécurité pour pouvoir ajouté les amis par role et pour ne pas
+        // pouvoir s'ajouter soit même en ami
+        if(userFriend.getId() != currentUser.getId()) {
+            if (userFriend.getRole().equals(currentUser.getRole())) {
+                CerebookFriend requestFriends = new CerebookFriend(currentUser, userFriend);
+                // je crée par la même occasion l'objet de confirmation de la demande d'amis
+                CerebookConfirmationFriend confirmate = new CerebookConfirmationFriend(false, userFriend);
+                confirmRepository.save(confirmate);
+                // et je fait la relation entre les 2 objets en ajoutant la clef primaire que je sauvegarde dans la table friend
+                requestFriends.setConfirmationFriend(confirmate);
+                friendRepository.save(requestFriends);
 
-
+            }
+        }
         return "redirect:/addFriends";
     }
 
@@ -86,12 +91,24 @@ public class FirendController {
         // que j'ajoute à ma liste et renvoie ensuite cette liste dans la vue
         for (CerebookConfirmationFriend notConfirm: notConfirmationFriend
              ) {
-            CerebookFriend searchFriendFalse = friendRepository.getByConfirmationFriend_Id(notConfirm);
+            CerebookFriend searchFriendFalse = friendRepository.getByNotConfirmationFriend_Id(notConfirm);
            friends.add(searchFriendFalse);
             }
 
         model.addAttribute("friends", friends);
+        List<CerebookFriend> confirmed = friendRepository.getByConfirmationFriend_Id(currentUser);
+        for (CerebookFriend friend: confirmed
+             ) {
+            System.out.println(friend.getCurrentFriends().getUsername() + "============================");
 
+        }
+
+        List<CerebookFriend> confirmey = friendRepository.getByConfirmationFriendUser_Id(currentUser);
+        for (CerebookFriend friend: confirmey
+             ) {
+            System.out.println(friend.getCurrentUser().getUsername() + "...............................");
+
+        }
         return "cerebookFriends/confirm";
     }
 
