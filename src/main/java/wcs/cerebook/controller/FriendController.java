@@ -73,7 +73,7 @@ public class FriendController {
 
             }
         }
-        return "redirect:/addFriends";
+        return "redirect:/users";
     }
 
     @RequestMapping("/confirm/friends")

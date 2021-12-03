@@ -13,8 +13,6 @@
     <div class="container">
         <div class="row justify-content-center">
                 <h1>Demande d'amis</h1>
-
-
         </div>
 
         <div class="row">
@@ -34,6 +32,7 @@
                                 <li th:if="${friend.getCurrentUser().profil.interestedInMen}" class="mb-2"><img class="modal-profile-logo" src="/static/css/img/love.png" alt="Logo profil"><span>Intéréssé par les hommes</span></li>
                                 <li th:if="${friend.getCurrentUser().profil.hometown}" class="mb-2"><img class="modal-profile-logo" src="/static/css/img/hometown.png" alt="Logo profil"><span th:text="'De ' + ${friend.getCurrentUser().profil.hometown}"></span></li>
                                 <li th:if="${friend.getCurrentUser().profil.relashionship}" class="mb-3"><img class="modal-profile-logo" src="/static/css/img/relationship.png" alt="Logo profil"><span th:text="'En relation avec ' + ${ friend.getCurrentUser().profil.relashionship}"></span></li>
+                                <li class="mb-3"><a th:href="@{/confirm/friend(id=${friend.id})}">ajouter</a></li>
                             </ul>
                         </div>
                     </div>
