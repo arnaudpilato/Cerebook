@@ -43,6 +43,9 @@ public class ProfilController {
     @Autowired
     private MessageRepository messageRepository;
 
+    @Autowired
+    private FriendRepository friendRepository;
+
     @GetMapping("/profil")
     public String getProfil(Model model, Principal principal) {
         model.addAttribute("user", userRepository.findByUsername(principal.getName()));
@@ -68,8 +71,8 @@ public class ProfilController {
         JsonNode json = new ObjectMapper().valueToTree(cartographies);
         model.addAttribute("cartography", json);
 
-        String userName = principal.getName();
-        CerebookUser userId = userRepository.findByUsername(userName);
+        // PIL : Récupérations des 6 derniers amis
+        model.addAttribute("friends", friendRepository.lastfriends(user.getId()));
 
         return "cerebookProfil/profil";
     }
