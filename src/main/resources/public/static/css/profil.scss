@@ -154,8 +154,16 @@
   border-radius: 50%;;
 }
 
-.user-message {
+.username-message {
   font-weight: bold;
+}
+
+.message-text {
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .messages a {
