@@ -20,28 +20,19 @@ public class CerebookPost {
     private Date createdAt;
     private String content;
     private boolean privatePost;
-    // propriete systeme de like
-    //there I saved users, who has posed "like"
-    //private CerebookUser likes ;
     @Column(nullable = true)
     private Long countLike;
-    //there I want to save status - liked/disliked;
     @Column(columnDefinition = "boolean default false")
     private boolean liked;
-    //fin propriete systeme de like
-    // manyToone for post one user can have many post
     @ManyToOne(fetch = FetchType.LAZY)
-
     private CerebookUser cerebookUser;
 
     public List<CerebookComment> getComments() {
         return comments;
     }
 
-    // one post to  can have many comment
     @OneToMany(mappedBy = "cerebookPost", fetch = FetchType.LAZY,
             cascade = CascadeType.ALL)
-    //private CerebookPost cerebookPost;
     private final List<CerebookComment> comments = new ArrayList<CerebookComment>();
 
     public Long getCountLike() {
