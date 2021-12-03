@@ -9,7 +9,6 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import wcs.cerebook.entity.*;
 import wcs.cerebook.repository.*;
-import javax.validation.Valid;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
@@ -64,7 +63,7 @@ public class ProfilController {
         for (Long[] ids : messagesFromSQL) {
             messages.add(messageRepository.getById(ids[0]));
         }
-        model.addAttribute("messages", messages);
+        model.addAttribute("cerebookMessages", messages);
 
         // PIL : Récupération des données json longitude et latitude
         List<CerebookCartography> cartographies = cartographyRepository.findAll();
