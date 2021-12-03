@@ -21,6 +21,6 @@ public interface PostLikeRepository extends JpaRepository<CerebookPostLike, Long
     @Query("SELECT COUNT(pl) FROM CerebookPostLike pl WHERE  pl.cerebookPost.id = :countpost")
     public Long  countCerebookLikeByPostId(@Param("countpost") Long postid);
     @Query("SELECT pl FROM CerebookPostLike pl WHERE  pl.cerebookUser.id = :cerebookUser")
-    public Long  CerebookUserByLikeId(@Param("cerebookUser") CerebookPost cerebookPost);
+    public Long  CerebookUserByLikeId(@Param("cerebookUser") CerebookPostLike cerebookPostLike);
 
 }
