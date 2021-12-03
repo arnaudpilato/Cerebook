@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import wcs.cerebook.repository.UserRepository;
 
 @Controller
-public class CartographyController {
+public class  CartographyController {
     @Autowired
     private UserRepository userRepository;
 
