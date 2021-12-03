@@ -148,6 +148,9 @@ public class FriendController {
 
         System.out.println(friendsNotValidate.size());
 
+        // PIL : Récupération de l'user principal pour la navbar
+        model.addAttribute("user", user);
+
         model.addAttribute("users", friends);
         model.addAttribute("number", friendsNotValidate.size());
 

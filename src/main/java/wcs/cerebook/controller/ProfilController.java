@@ -9,7 +9,6 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import wcs.cerebook.entity.*;
 import wcs.cerebook.repository.*;
-import javax.validation.Valid;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
@@ -72,7 +71,9 @@ public class ProfilController {
         model.addAttribute("cartography", json);
 
         // PIL : Récupérations des 6 derniers amis
-        model.addAttribute("friends", friendRepository.lastfriends(user.getId()));
+        model.addAttribute("friends", friendRepository.getByConfirmationFriend_Id(user));
+
+        String userName = principal.getName();
 
         return "cerebookProfil/profil";
     }

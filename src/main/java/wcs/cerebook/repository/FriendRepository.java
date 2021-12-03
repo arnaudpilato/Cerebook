@@ -7,7 +7,6 @@ import org.springframework.stereotype.Repository;
 import wcs.cerebook.entity.CerebookConfirmationFriend;
 import wcs.cerebook.entity.CerebookFriend;
 import wcs.cerebook.entity.CerebookUser;
-import wcs.cerebook.entity.CerebookVideo;
 
 import java.util.List;
 
@@ -24,4 +23,6 @@ public interface FriendRepository extends JpaRepository<CerebookFriend, Long> {
 
     @Query(nativeQuery = true, value = "SELECT * FROM cerebook_friend f WHERE f.current_user_id = :userId ORDER BY id DESC LIMIT 6")
     List<CerebookFriend> lastfriends(@Param("userId") Long userId);
+
+
 }
