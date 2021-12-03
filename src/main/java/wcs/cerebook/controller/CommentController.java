@@ -33,6 +33,9 @@ public class CommentController {
 
     @GetMapping("/addComment/{postId}")
     public String addComment(@PathVariable("postId") Long postId, Model model, Principal principal) {
+        // PIL : Récupération de l'user principal pour la navbar
+        model.addAttribute("user", userRepository.findByUsername(principal.getName()));
+
         CerebookPost cerebookPost = postRepository.getById(postId);
         CerebookComment cerebookComment = new CerebookComment();
         CerebookUser user = userRepository.getCerebookUserByUsername(principal.getName());
