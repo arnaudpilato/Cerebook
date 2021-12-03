@@ -2,18 +2,18 @@ package wcs.cerebook.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import wcs.cerebook.controller.exception.postNotFoundException;
 import wcs.cerebook.entity.CerebookPost;
 import wcs.cerebook.entity.CerebookPostLike;
 import wcs.cerebook.entity.CerebookUser;
 import wcs.cerebook.repository.PostLikeRepository;
 import wcs.cerebook.repository.PostRepository;
+import wcs.cerebook.repository.UserRepository;
 
-import java.util.List;
-import java.util.Optional;
+import java.security.Principal;
 
 
 @Controller
@@ -22,41 +22,33 @@ public class CerebookPostLikeController {
     private PostLikeRepository postLikeRepository;
     @Autowired
     private PostRepository postRepository;
-
-    @PostMapping("/addLike/{postid}")
-    public String Like(@PathVariable("postid") Long postid, CerebookPostLike cerebookPostLike) throws postNotFoundException{
-            CerebookPost cerebookPost=postRepository.getById(postid);
-            if(cerebookPost != null){
-                cerebookPostLike.setCerebookPost(cerebookPost);
-                postLikeRepository.save(cerebookPostLike);
-            }else {
-                throw new postNotFoundException(String.format("cet post na pas été trouvé !"+postid));
-            }
-        return "redirect:/allPosts";
-    }
-    @PostMapping("/updateLike/{id}")
-    public String updateLike(@PathVariable("id") Long id) throws postNotFoundException {
-        CerebookPostLike cerebookPostLike = postLikeRepository.getById(id);
-        if (cerebookPostLike != null) {
-            boolean liked = cerebookPostLike.isLiked();
-            long countLike = cerebookPostLike.getCountLike();
-            if(liked=true && countLike > 1){
-                countLike = cerebookPostLike.getCountLike()-1;
-                cerebookPostLike.setLiked(false);
-                        }if (liked=false){
-                            countLike = cerebookPostLike.getCountLike()+1;
-                            cerebookPostLike.setLiked(true);
-                }
-            cerebookPostLike.setCerebookPost(cerebookPostLike.getCerebookPost());
-            cerebookPostLike.setCountLike(countLike);
-            postLikeRepository.updateLike(id,countLike,liked);
-
-        } else {
-            throw new postNotFoundException(String.format("cet like na pas été trouvé !"+id));
-
+    @Autowired
+    private UserRepository userRepository;
+    @RequestMapping("/addLike/{postid}")
+    public String Like(@PathVariable("postid") Long postid, Principal principal, Model model) throws postNotFoundException {
+        CerebookPost cerebookPost = postRepository.getById(postid);
+        String username = principal.getName();
+        CerebookUser user = userRepository.getCerebookUserByUsername(username);
+        Long countpost = postLikeRepository.countCerebookLikeByPostId(postid);
+        CerebookPostLike cerebookPostLike = new CerebookPostLike();
+        model.addAttribute("post",cerebookPost);
+        model.addAttribute("countLike",countpost);
+        //user connecte a til deja liker
+        // on verifie si il existe dans la table des likes par postid
+        Long userIdLikePost = postLikeRepository.CerebookUserByLikeId(cerebookPost);
+        System.out.println("========================================="+userIdLikePost+"---------------");
+        if(userIdLikePost != null){
+            return "cerebookPost/allPosts";
+        }else {
+            cerebookPostLike.setCerebookUser(user);
+            cerebookPostLike.setCerebookPost(cerebookPost);
+            postLikeRepository.save(cerebookPostLike);
         }
-        return "redirect:/allPosts";
+
+
+         return "cerebookPost/likePost";
     }
+
 }
 
 

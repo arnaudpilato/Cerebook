@@ -40,7 +40,11 @@ public class CerebookUser {
             orphanRemoval = true
     )
     private List<CerebookPost> cerebookPosts ;
-
+    @OneToMany(
+            mappedBy = "cerebookUser",
+            fetch = FetchType.LAZY,
+            cascade = CascadeType.ALL)
+    private List<CerebookPostLike> cerebookPostLikes = new ArrayList<>();
     @OneToMany(mappedBy = "currentUser")
     private List<CerebookMessage> messages;
 
@@ -60,8 +64,13 @@ public class CerebookUser {
     @OneToMany(mappedBy = "user")
     private List<CerebookVideo> videos;
 
+    public List<CerebookPostLike> getCerebookPostLikes() {
+        return cerebookPostLikes;
+    }
 
-
+    public void setCerebookPostLikes(List<CerebookPostLike> cerebookPostLikes) {
+        this.cerebookPostLikes = cerebookPostLikes;
+    }
 
     @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL, optional = true)
     private CerebookCartography cartography;
@@ -69,7 +78,7 @@ public class CerebookUser {
     public CerebookUser() {
     }
 
-    public CerebookUser(Long id, String username, String firstName, String lastName, String city, String address, String email, String password, Date birthday, String role, boolean enable, List<CerebookPost> cerebookPosts, List<CerebookMessage> messages, CerebookProfil profil) {
+    public CerebookUser(Long id, String username, String firstName, String lastName, String city, String address, String email, String password, Date birthday, String role, boolean enable, List<CerebookPost> cerebookPosts, List<CerebookPostLike> cerebookPostLikes, List<CerebookMessage> messages, CerebookProfil profil, List<CerebookComment> comments, List<CerebookPicture> pictures, List<CerebookVideo> videos, CerebookCartography cartography) {
         this.id = id;
         this.username = username;
         this.firstName = firstName;
@@ -82,8 +91,13 @@ public class CerebookUser {
         this.role = role;
         this.enable = enable;
         this.cerebookPosts = cerebookPosts;
+        this.cerebookPostLikes = cerebookPostLikes;
         this.messages = messages;
         this.profil = profil;
+        this.comments = comments;
+        this.pictures = pictures;
+        this.videos = videos;
+        this.cartography = cartography;
     }
 
     public Long getId() {

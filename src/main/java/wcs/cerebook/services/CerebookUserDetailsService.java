@@ -23,4 +23,5 @@ public class CerebookUserDetailsService implements UserDetailsService {
         return new MyUserDetails(user);
     }
 
+
 }

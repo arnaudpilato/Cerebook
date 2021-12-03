@@ -63,10 +63,12 @@ public class PostController {
         CerebookUser user = userRepository.getCerebookUserByUsername(username);
         cerebookPost.setCerebookUser(user);
         repository.save(cerebookPost);
+        cerebookPostLike.setCerebookPost(cerebookPost);
+        cerebookPostLike.setLiked(true);
+        cerebookPostLike.setCerebookUser(user);
+        likeRepository.save(cerebookPostLike);
         return "redirect:/profil";
     }
-
-
     // list all posts
     @RequestMapping("/posts")
     public String getAllPosts(Model model) {
@@ -127,7 +129,6 @@ public class PostController {
         CerebookUser user = userRepository.getCerebookUserByUsername(username);
         List<CerebookPostLike> cerebookPostLike = likeRepository.findAll();
         List<CerebookPost> cerebookPosts = repository.findAll();
-
         model.addAttribute("listPosts", cerebookPosts);
         model.addAttribute("user", user);
         model.addAttribute("like",cerebookPostLike);

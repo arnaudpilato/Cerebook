@@ -7,12 +7,20 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 import wcs.cerebook.entity.CerebookComment;
+import wcs.cerebook.entity.CerebookPost;
 import wcs.cerebook.entity.CerebookPostLike;
+import wcs.cerebook.entity.CerebookUser;
+
+import java.util.List;
 
 @Repository
 public interface PostLikeRepository extends JpaRepository<CerebookPostLike, Long> {
-    @Transactional
-    @Modifying
-    @Query("update CerebookPostLike p set p.countLike =:countLike , p.liked =:liked where p.id = :id")
-    void updateLike(@Param(value = "id") long id, @Param(value = "countLike") long countLike, @Param(value = "liked") boolean liked);
+
+    @Query("SELECT pl FROM CerebookPostLike pl  WHERE pl.cerebookUser = :cerebookUser")
+    public List<CerebookPostLike> cerebookLikeByUserId(@Param("cerebookUser") CerebookUser cerebookUser);
+    @Query("SELECT COUNT(pl) FROM CerebookPostLike pl WHERE  pl.cerebookPost.id = :countpost")
+    public Long  countCerebookLikeByPostId(@Param("countpost") Long postid);
+    @Query("SELECT pl FROM CerebookPostLike pl WHERE  pl.cerebookUser.id = :cerebookUser")
+    public Long  CerebookUserByLikeId(@Param("cerebookUser") CerebookPost cerebookPost);
+
 }

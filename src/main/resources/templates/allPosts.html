@@ -23,7 +23,7 @@
                     <a th:href="@{/postCreate}"><i class="fas fa-reply">ajouter un post</i></a>
                     <div class="row">
                         <tr th:each="p: ${listPosts}" >
-                                <div th:each="l: ${like}" >
+
                                                 <span th:if="${p.isPrivatePost == false}">
                                                     <div id="post-container" name="content">
                                                             <td th:text="${p.content}"></td>
@@ -35,31 +35,22 @@
                                                                   <td><a th:href="@{/addComment/{id}(id=${p.id})}"><i
                                                                           class="far fa-comment"></i>commenter</a></td>
                                                                     <td><a th:href="@{/listComment/{id}(id=${p.id})}"><i
-                                                                            class="far fa-comments"></i>voir les commentaires</a></td>
-                                                        <span th:if="${l.id != null }" >
-                                                        <form action="#" th:action="@{/updateLike/{id}(id=${l.id})}" method="POST">
-                                                                <td th:text="${'j''aime: '+l.countLike}"></td>
-                                                                <button type="submit"  name="like"><i
-                                                                    class="far fa-thumbs-up"></i> </button>
-                                                        </form>
-                                                            </span>
-                                                        <span th:unless="${l.id != null }" >
-                                                        <form action="#" th:action="@{/addLike/{id}(id=${l.id})}" method="POST">
-                                                                <td th:text="${'j''aime: '+l.countLike}"></td>
-                                                                <button type="submit"  name="like"><i
-                                                                        class="far fa-thumbs-up"></i> </button>
-                                                        </form>
-                                                        </span>
-                                                    </div>
+                                                                            class="far fa-comments"> </i>voir les commentaires  </a></td>
+                                                                    <td><a th:href="@{/addLike/{id}(id=${p.id})}">
+                                                                        <i class="far fa-thumbs-up"></i>Liker Ce post</a></td>
+                                                                </div>
 
-                                                    <div>
+                                                            <div>
 
-                                                    </div>
-                                                </span>
+                                                        </div>
+
+                                                    </span>
+
                                 </div>
-                        </tr>
 
-                    </div>
+                                        </tr>
+
+
                     <a th:href="@{/picture}"><i class="fas fa-images"></i>Ajouter une image</a>
                 </div>
             </div>
