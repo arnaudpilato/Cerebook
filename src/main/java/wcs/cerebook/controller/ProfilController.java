@@ -7,17 +7,16 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
-import wcs.cerebook.entity.CerebookCartography;
-import wcs.cerebook.entity.CerebookPost;
-import wcs.cerebook.entity.CerebookProfil;
-import wcs.cerebook.entity.CerebookUser;
+import wcs.cerebook.entity.*;
 import wcs.cerebook.repository.*;
+
 import javax.validation.Valid;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
 import java.security.Principal;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
@@ -42,38 +41,53 @@ public class ProfilController {
     @Autowired
     private VideoRepository videoRepository;
 
+    @Autowired
+    private MessageRepository messageRepository;
+
     @GetMapping("/profil")
-    public String getProfil(Model model, Principal principal,@Valid CerebookPost cerebookPost) {
+    public String getProfil(Model model, Principal principal) {
         model.addAttribute("user", userRepository.findByUsername(principal.getName()));
-        String username = principal.getName();
-       CerebookUser user = userRepository.getCerebookUserByUsername(username);
-        //List<CerebookUser> user = userRepository.findAll();
-        List<CerebookPost> cerebookPosts = postRepository.findAll();
+        CerebookUser user = userRepository.getCerebookUserByUsername(principal.getName());
+        List<CerebookPost> cerebookPosts = user.getCerebookPosts();
         model.addAttribute("listPosts", cerebookPosts);
-        model.addAttribute("user", user);
-        cerebookPost.setCreatedAt(new Date());
         model.addAttribute("localDateTime", new Date());
-        boolean postStatu = cerebookPost.isPrivatePost();
-        model.addAttribute("postStatus", postStatu);
         model.addAttribute("allUsers", userRepository.findAll());
         model.addAttribute("pictures", pictureRepository.lastPicture(user.getId()));
         model.addAttribute("videos", videoRepository.lastVideo(user.getId()));
+
+        // PIL : Récupération du dernier message des 3 derniers amis
+        List<Long[]> messagesFromSQL = messageRepository.lastThreeMessages(user.getId());
+        List<CerebookMessage> messages = new ArrayList<>();
+
+        for (Long[] ids : messagesFromSQL) {
+            messages.add(messageRepository.getById(ids[0]));
+        }
+        model.addAttribute("messages", messages);
+
+        // PIL : Récupération des données json longitude et latitude
         List<CerebookCartography> cartographies = cartographyRepository.findAll();
         JsonNode json = new ObjectMapper().valueToTree(cartographies);
-
+        model.addAttribute("cartography", json);
 
         String userName = principal.getName();
         CerebookUser userId = userRepository.findByUsername(userName);
 
-        //model.addAttribute("pictures", pictureRepository.lastPicture(userId.getId()));
-        model.addAttribute("cartography", json);
         return "cerebookProfil/profil";
     }
 
     @GetMapping("/profil/{id}")
     public String getOtherProfil(Model model, @PathVariable Long id) {
         model.addAttribute("user", userRepository.getById(id));
-
+        CerebookUser user = userRepository.getById(id);
+        List<CerebookPost> cerebookPosts = user.getCerebookPosts();
+        model.addAttribute("listPosts", cerebookPosts);
+        model.addAttribute("localDateTime", new Date());
+        model.addAttribute("allUsers", userRepository.findAll());
+        model.addAttribute("pictures", pictureRepository.lastPicture(user.getId()));
+        model.addAttribute("videos", videoRepository.lastVideo(user.getId()));
+        List<CerebookCartography> cartographies = cartographyRepository.findAll();
+        JsonNode json = new ObjectMapper().valueToTree(cartographies);
+        model.addAttribute("cartography", json);
         return "cerebookProfil/profil";
     }
 
