@@ -35,7 +35,7 @@ public class CerebookPostLikeController {
         model.addAttribute("countLike",countpost);
         //user connecte a til deja liker
         // on verifie si il existe dans la table des likes par postid
-        Long userIdLikePost = postLikeRepository.CerebookUserByLikeId(cerebookPostLike);
+        Long userIdLikePost = postLikeRepository.CerebookUserByLikeId(cerebookPost);
         System.out.println("========================================="+userIdLikePost+"---------------");
         if(userIdLikePost != null){
             return "cerebookPost/allPosts";

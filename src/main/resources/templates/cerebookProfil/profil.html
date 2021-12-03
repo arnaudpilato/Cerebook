@@ -24,7 +24,7 @@
                         <ul class="banner-logo-list banner-left pl-3">
                             <li><a type="button" data-bs-toggle="modal" data-bs-target="#profilModal"><img class="banner-logo" src="/static/css/img/secured-profile.png" alt="Logo profil"></a></li>
                             <li><a href="/cartography"><img class="banner-logo" src="/static/css/img/map.png" alt="Logo carte"></a></li>
-                            <li><a href="#"><img class="banner-logo" src="/static/css/img/friends.png" alt="Logo amis"></a></li>
+                            <li><a href="/my-friends"><img class="banner-logo" src="/static/css/img/friends.png" alt="Logo amis"></a></li>
                         </ul>
                         <div class="modal fade" id="profilModal" tabindex="-1" aria-labelledby="profilModalLabel" aria-hidden="true">
                             <div class="modal-dialog modal-dialog-centered">
@@ -43,13 +43,13 @@
                                             <li class="mb-4"><img class="modal-profile-logo" src="/static/css/img/mail.png" alt="Logo email"><span th:text="${user.email}"></span></li>
                                         </ul>
 
-                                        <h4 class="text-center mb-3">Profil</h4>
+                                        <h4 th:if="${user.profil.activity != null} or ${user.profil.interestedInWoman} or ${user.profil.interestedInMen} or ${user.profil.hometown != null} or ${user.profil.relashionship != null}" class="text-center mb-3">Profil</h4>
                                         <ul class="modal-list">
-                                            <li th:if="${user.profil.activity}" class="mb-2"><img class="modal-profile-logo" src="/static/css/img/shield.png" alt="Logo profil"><span th:text="${user.profil.activity}"></span></li>
+                                            <li th:if="${user.profil.activity != null}" class="mb-2"><img class="modal-profile-logo" src="/static/css/img/shield.png" alt="Logo profil"><span th:text="${user.profil.activity}"></span></li>
                                             <li th:if="${user.profil.interestedInWoman}" class="mb-2"><img class="modal-profile-logo" src="/static/css/img/love.png" alt="Logo profil"><span>Intéréssé par les femmes</span></li>
                                             <li th:if="${user.profil.interestedInMen}" class="mb-2"><img class="modal-profile-logo" src="/static/css/img/love.png" alt="Logo profil"><span>Intéréssé par les hommes</span></li>
-                                            <li th:if="${user.profil.hometown}" class="mb-2"><img class="modal-profile-logo" src="/static/css/img/hometown.png" alt="Logo profil"><span th:text="'De ' + ${user.profil.hometown}"></span></li>
-                                            <li th:if="${user.profil.relashionship}"><img class="modal-profile-logo" src="/static/css/img/relationship.png" alt="Logo profil"><span th:text="'En relation avec ' + ${ user.profil.relashionship}"></span></li>
+                                            <li th:if="${user.profil.hometown != null}" class="mb-2"><img class="modal-profile-logo" src="/static/css/img/hometown.png" alt="Logo profil"><span th:text="'De ' + ${user.profil.hometown}"></span></li>
+                                            <li th:if="${user.profil.relashionship != null}"><img class="modal-profile-logo" src="/static/css/img/relationship.png" alt="Logo profil"><span th:text="'En relation avec ' + ${ user.profil.relashionship}"></span></li>
                                         </ul>
                                     </div>
                                     <div class="modal-footer">
@@ -73,8 +73,8 @@
                     </div>
                 </div>
                 <div class="row">
+                    <!-- PIL : Section Profil -->
                     <div class="col-lg-3 ">
-                        <!-- PIL : Section Profil -->
                         <div class="row">
                             <div class="col-lg-12">
                                 <div class="profile-section">
@@ -87,52 +87,17 @@
                                         <li><p class="profile-section-username" th:text="${user.username}"></p></li>
                                     </ul>
                                     <ul class="py-3">
-                                        <li th:if="${user.profil.activity.isEmpty()}" class="mb-2"><img class="modal-profile-logo" src="/static/css/img/shield.png" alt="Logo profil"><span th:text="${user.profil.activity}"></span></li>
+                                        <li th:if="${user.profil.activity != null}" class="mb-2"><img class="modal-profile-logo" src="/static/css/img/shield.png" alt="Logo profil"><span th:text="${user.profil.activity}"></span></li>
                                         <li class="mb-2"><img class="modal-profile-logo" src="/static/css/img/city.png" alt="Logo adresse"><span th:text="${user.city}"></span></li>
                                         <li th:if="${user.profil.interestedInWoman}" class="mb-2"><img class="modal-profile-logo" src="/static/css/img/love.png" alt="Logo profil"><span>Intéréssé par les femmes</span></li>
                                         <li th:if="${user.profil.interestedInMen}" class="mb-2"><img class="modal-profile-logo" src="/static/css/img/love.png" alt="Logo profil"><span>Intéréssé par les hommes</span></li>
-                                        <li th:if="${user.profil.hometown}" class="mb-2"><img class="modal-profile-logo" src="/static/css/img/hometown.png" alt="Logo profil"><span th:text="'De ' + ${user.profil.hometown}"></span></li>
-                                        <li th:if="${user.profil.relashionship}" class="mb-3"><img class="modal-profile-logo" src="/static/css/img/relationship.png" alt="Logo profil"><span th:text="'En relation avec ' + ${ user.profil.relashionship}"></span></li>
+                                        <li th:if="${user.profil.hometown != null}" class="mb-2"><img class="modal-profile-logo" src="/static/css/img/hometown.png" alt="Logo profil"><span th:text="'De ' + ${user.profil.hometown}"></span></li>
+                                        <li th:if="${user.profil.relashionship != null}" class="mb-3"><img class="modal-profile-logo" src="/static/css/img/relationship.png" alt="Logo profil"><span th:text="'En relation avec ' + ${ user.profil.relashionship}"></span></li>
                                     </ul>
-                                </div>
-                            </div>
-                        </div>
-
-
-
-
-
-
-                        <!-- Section Message -->
-                        <div class="row">
-                            <div class="col-lg-12">
-                                <div class="message-section">
-                                    <ul class="d-flex justify-content-between py-3 px-3 pb-0">
-                                        <li class="title-section"><p>Messages</p></li>
-                                        <li><a href="/users?keyword="><img class="banner-logo" src="/static/css/img/message2.png" alt="Logo message"></a></li>
-                                    </ul>
-                                    <div class="px-3" th:each="message: ${messages}">
-                                        <div class="row d-flex">
-                                            <div class="col-lg-3 mb-2">
-                                                <img class="profil-message" th:src="${message.getCurrentUser().profil.avatar}" alt="Logo de profil">
-                                            </div>
-                                            <div class="col-lg-4 messages">
-                                                <div><a th:href="@{/message(username=${message.getCurrentUser().getUsername()})}" class="user-message" th:text="${message.getCurrentUser().getUsername()}"></a></div>
-                                                <div><a th:href="@{/message(username=${message.getCurrentUser().getUsername()})}" th:text="${message.getCurrentUser().getMessages().get(0).getMessage()}"></a></div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div></div>
                                 </div>
                             </div>
                         </div>
                     </div>
-
-
-
-
-
-
                     <!-- PIL : Section Map -->
                     <div class="col-lg-6 ">
                         <div class="row">
@@ -210,9 +175,8 @@
 
 
 
-
+                    <!-- PIL : Section Images -->
                     <div class="col-lg-3">
-                        <!-- PIL : Section Images -->
                         <div class="row">
                             <div class="col-lg-12">
                                 <div class="picture-section">
