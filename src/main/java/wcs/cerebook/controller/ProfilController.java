@@ -7,10 +7,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
-import wcs.cerebook.entity.CerebookCartography;
-import wcs.cerebook.entity.CerebookPost;
-import wcs.cerebook.entity.CerebookProfil;
-import wcs.cerebook.entity.CerebookUser;
+import wcs.cerebook.entity.*;
 import wcs.cerebook.repository.*;
 import javax.validation.Valid;
 import java.io.IOException;
@@ -18,6 +15,7 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
 import java.security.Principal;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
@@ -42,6 +40,9 @@ public class ProfilController {
     @Autowired
     private VideoRepository videoRepository;
 
+    @Autowired
+    private MessageRepository messageRepository;
+
     @GetMapping("/profil")
     public String getProfil(Model model, Principal principal,@Valid CerebookPost cerebookPost) {
         model.addAttribute("user", userRepository.findByUsername(principal.getName()));
@@ -58,15 +59,24 @@ public class ProfilController {
         model.addAttribute("allUsers", userRepository.findAll());
         model.addAttribute("pictures", pictureRepository.lastPicture(user.getId()));
         model.addAttribute("videos", videoRepository.lastVideo(user.getId()));
+
+        // PIL : Récupération du dernier message des 3 derniers amis
+        List<Long[]> messagesFromSQL = messageRepository.lastThreeMessages(user.getId());
+        List<CerebookMessage> messages = new ArrayList<>();
+
+        for (Long[] ids : messagesFromSQL) {
+            messages.add(messageRepository.getById(ids[0]));
+        }
+        model.addAttribute("messages", messages);
+
+        // PIL : Récupération des données json longitude et latitude
         List<CerebookCartography> cartographies = cartographyRepository.findAll();
         JsonNode json = new ObjectMapper().valueToTree(cartographies);
-
+        model.addAttribute("cartography", json);
 
         String userName = principal.getName();
         CerebookUser userId = userRepository.findByUsername(userName);
 
-        //model.addAttribute("pictures", pictureRepository.lastPicture(userId.getId()));
-        model.addAttribute("cartography", json);
         return "cerebookProfil/profil";
     }
 
