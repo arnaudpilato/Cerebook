@@ -17,4 +17,15 @@ public interface MessageRepository extends JpaRepository<CerebookMessage, Long> 
             @Param("currentUser") CerebookUser currentUser,
             @Param("currentDest") CerebookUser currentDest);
 
+    // PIL: Requête pour récupérer les 3 derniers messages reçu sur la page profil
+    @Query(nativeQuery = true, value = "SELECT min(m.id) as max_m_id, m.current_user_id " +
+            "FROM cerebook_message m " +
+            "JOIN cerebook_message_user_destination cmud ON m.id = cmud.cerebook_message_id " +
+            "JOIN cerebook_user c ON c.id = cmud.user_destination_id " +
+            "WHERE c.id = :current_user_id " +
+            "GROUP BY m.current_user_id " +
+            "ORDER BY max_m_id DESC LIMIT 3")
+    List<Long[]> lastThreeMessages(
+            @Param("current_user_id") Long user_id);
+
 }

@@ -13,5 +13,13 @@ import java.util.List;
 @Repository
 public interface FriendRepository extends JpaRepository<CerebookFriend, Long> {
     @Query("SELECT f FROM CerebookFriend f WHERE f.confirmationFriend = :confirmationFriend")
-    public CerebookFriend getByConfirmationFriend_Id(@Param("confirmationFriend") CerebookConfirmationFriend confirmationFriend);
+    public CerebookFriend getByNotConfirmationFriend_Id(@Param("confirmationFriend") CerebookConfirmationFriend confirmationFriend);
+
+    @Query("SELECT f FROM CerebookFriend f WHERE f.currentUser = :currentUser AND f.confirmationFriend.add = true ")
+    public List<CerebookFriend> getByConfirmationFriend_Id(@Param("currentUser") CerebookUser currentUser);
+
+    @Query("SELECT f FROM CerebookFriend f WHERE f.currentFriends = :currentFriends AND f.confirmationFriend.add = true ")
+    public List<CerebookFriend> getByConfirmationFriendUser_Id(@Param("currentFriends") CerebookUser currentFriends);
+
+
 }

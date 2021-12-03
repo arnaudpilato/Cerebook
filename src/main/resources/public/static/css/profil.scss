@@ -136,6 +136,33 @@
   font-size: 1.5rem;
 }
 
+/***** Message Section *****/
+
+.message-section {
+  background-color: #F4A261;
+  border-radius: 10px;
+}
+
+.message-section ul {
+  list-style-type: none;
+}
+
+.profil-message {
+  width: 90%;
+  object-fit: cover;
+  display:block;
+  border-radius: 50%;;
+}
+
+.user-message {
+  font-weight: bold;
+}
+
+.messages a {
+  text-decoration: none;
+  color: black;
+}
+
 /***** Map Section *****/
 
 #map {

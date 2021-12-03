@@ -21,8 +21,6 @@ public class CerebookPost {
     private Date createdAt;
     private String content;
     private boolean privatePost;
-
-    // manyToone for post one user can have many post
     @ManyToOne(fetch = FetchType.LAZY)
     private CerebookUser cerebookUser;
 
@@ -30,7 +28,6 @@ public class CerebookPost {
         return comments;
     }
 
-    // one post to  can have many comment
     @OneToMany(mappedBy = "cerebookPost", fetch = FetchType.LAZY,
             cascade = CascadeType.ALL)
     private final List<CerebookComment> comments = new ArrayList<CerebookComment>();
