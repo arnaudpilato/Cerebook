@@ -32,7 +32,10 @@ public class UserController {
     @GetMapping("/")
     public String login(Model model, Principal principal) {
         // PIL : Récupération de l'user principal pour la navbar
-        model.addAttribute("user", userRepository.findByUsername(principal.getName()));
+        if (principal != null) {
+            model.addAttribute("user", userRepository.findByUsername(principal.getName()));
+        }
+
         return "index";
     }
 
