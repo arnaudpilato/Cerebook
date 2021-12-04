@@ -105,6 +105,9 @@ public class UserController {
 
     @RequestMapping("/users")
     public String viewUser(Model model, @Param("keyword") String keyword, Principal principal) {
+        // PIL : Récupération de l'user principal pour la navbar
+        model.addAttribute("user", userRepository.findByUsername(principal.getName()));
+
         List<CerebookUser> listUsers = service.listAll(keyword);
         CerebookUser actualUser = userRepository.findByUsername(principal.getName());
         model.addAttribute("users", listUsers);
