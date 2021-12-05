@@ -10,8 +10,6 @@ import org.springframework.web.multipart.MultipartFile;
 import twitter4j.*;
 import wcs.cerebook.entity.*;
 import wcs.cerebook.repository.*;
-
-import javax.validation.Valid;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
@@ -45,6 +43,9 @@ public class ProfilController {
     @Autowired
     private MessageRepository messageRepository;
 
+    @Autowired
+    private FriendRepository friendRepository;
+
     @GetMapping("/profil")
 
     public String getProfil(Model model, Principal principal) {
@@ -64,16 +65,20 @@ public class ProfilController {
         for (Long[] ids : messagesFromSQL) {
             messages.add(messageRepository.getById(ids[0]));
         }
-        model.addAttribute("messages", messages);
+        model.addAttribute("cerebookMessages", messages);
 
         // PIL : Récupération des données json longitude et latitude
         List<CerebookCartography> cartographies = cartographyRepository.findAll();
         JsonNode json = new ObjectMapper().valueToTree(cartographies);
         model.addAttribute("cartography", json);
-
-
+        // PIL : Récupérations des 6 derniers amis
+        List<CerebookUser> friends = new ArrayList<>();
+        List<CerebookFriend> confirmed = friendRepository.getLastFriend_Id(user);
+        for (CerebookFriend friend: confirmed) {
+            friends.add(friend.getCurrentFriends());
+        }
+        model.addAttribute("friends", friends);
         String userName = principal.getName();
-        CerebookUser userId = userRepository.findByUsername(userName);
 
         return "cerebookProfil/profil";
 

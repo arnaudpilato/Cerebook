@@ -32,10 +32,11 @@ public class CommentController {
     @Autowired
     private UserRepository userRepository;
 
-    @RequestMapping("/addComment/{id}")
-    public String addComment(@PathVariable("id") Long id, Principal principal,Model model) {
-        //CerebookPost cerebookPost = postRepository.getById(postId);
-        CerebookPost cerebookPost =postRepository.getById(id);
+    @GetMapping("/addComment/{postId}")
+    public String addComment(@PathVariable("postId") Long postId, Model model, Principal principal) {
+        // PIL : Récupération de l'user principal pour la navbar
+        model.addAttribute("user", userRepository.findByUsername(principal.getName()));
+        CerebookPost cerebookPost = postRepository.getById(postId);
         CerebookUser user = userRepository.getCerebookUserByUsername(principal.getName());
         CerebookComment cerebookComment = new CerebookComment();
         model.addAttribute("commentObject", cerebookComment);
