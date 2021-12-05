@@ -107,7 +107,7 @@ public class ProfilController {
     }
 
     @PostMapping("/profil/update")
-    public String postProfilUpdate(@ModelAttribute CerebookProfil cerebookProfil, @RequestParam(value = "file_banner") MultipartFile banner, @RequestParam("file_avatar") MultipartFile avatar, Principal principal, Model model) throws IOException {
+    public String postProfilUpdate(@ModelAttribute CerebookProfil cerebookProfil, @ModelAttribute CerebookUser cerebookUser, @RequestParam(value = "file_banner") MultipartFile banner, @RequestParam("file_avatar") MultipartFile avatar, Principal principal, Model model) throws IOException {
         if (cerebookProfil.getId() != null) {
             if (!banner.isEmpty()) {
                 String bannerExtension = Optional.of(banner.getOriginalFilename()).filter(f -> f.contains(".")).map(f -> f.substring(banner.getOriginalFilename().lastIndexOf(".") + 1)).orElse("");
@@ -126,6 +126,7 @@ public class ProfilController {
             }
 
             profilRepository.save(cerebookProfil);
+            userRepository.save(cerebookUser);
         }
 
         return "redirect:/profil";
