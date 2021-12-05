@@ -11,6 +11,7 @@ import wcs.cerebook.entity.CerebookPost;
 import wcs.cerebook.entity.CerebookPostLike;
 import wcs.cerebook.entity.CerebookUser;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Repository
@@ -20,7 +21,7 @@ public interface PostLikeRepository extends JpaRepository<CerebookPostLike, Long
     public List<CerebookPostLike> cerebookLikeByUserId(@Param("cerebookUser") CerebookUser cerebookUser);
     @Query("SELECT COUNT(pl) FROM CerebookPostLike pl WHERE  pl.cerebookPost.id = :countpost")
     public Long  countCerebookLikeByPostId(@Param("countpost") Long postid);
-    @Query("SELECT pl FROM CerebookPostLike pl WHERE  pl.cerebookUser.id = :cerebookUser")
-    public Long  CerebookUserByLikeId(@Param("cerebookUser") CerebookPost cerebookPost);
+    @Query("SELECT pl.cerebookUser.id FROM CerebookPostLike pl WHERE  pl.cerebookPost.id = :cerebookPost")
+    public List<Long> CerebookUserByLikeId(@Param("cerebookPost") Long postid);
 
 }

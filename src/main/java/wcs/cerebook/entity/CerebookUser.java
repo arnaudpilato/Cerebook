@@ -34,18 +34,20 @@ public class CerebookUser {
     private Date birthday;
     private String role;
     private boolean enable;
-
+    @JsonIgnore
     @OneToMany(
             mappedBy = "cerebookUser",
             cascade = CascadeType.ALL,
             orphanRemoval = true
     )
     private List<CerebookPost> cerebookPosts ;
+    @JsonIgnore
     @OneToMany(
             mappedBy = "cerebookUser",
             fetch = FetchType.LAZY,
             cascade = CascadeType.ALL)
     private List<CerebookPostLike> cerebookPostLikes = new ArrayList<>();
+    @JsonIgnore
     @OneToMany(mappedBy = "currentUser")
     private List<CerebookMessage> messages;
 
@@ -58,10 +60,10 @@ public class CerebookUser {
             orphanRemoval = true
     )
     private List<CerebookComment> comments = new ArrayList<>();
-
+    @JsonIgnore
     @OneToMany(mappedBy = "user")
     private List<CerebookPicture> pictures;
-
+    @JsonIgnore
     @OneToMany(mappedBy = "user")
     private List<CerebookVideo> videos;
 

@@ -49,7 +49,6 @@ public class PostController {
         model.addAttribute("localDateTime", new Date());
         //cerebookPost.setPrivatePost(cerebookPost.isPrivatePost());
         boolean postStatu = cerebookPost.isPrivatePost();
-
         model.addAttribute("postStatus", postStatu);
 
         return "/cerebookPost/addPost";
@@ -101,16 +100,16 @@ public class PostController {
     @PostMapping("/updatePost/{id}")
     public String updatePost(@PathVariable("id") Long id, @Valid CerebookPost cerebookPost) {
 
-        return"/allPosts";
+        return"cerebookPost/allPosts";
     }
 
     @GetMapping("/deletePost/{id}")
-    public String deletePost(@PathVariable("id") Long id, Model model) throws illegalArgumentException {
+    public String deletePost(@PathVariable("id") Long id) throws illegalArgumentException {
         CerebookPost cerebookPost = this.repository.findById(id)
                 .orElseThrow(() -> new illegalArgumentException(" Invalid post id: " + id));
-        this.repository.delete(cerebookPost);
-        model.addAttribute("posts", this.repository.findAll());
-        return "/cerebookPost/posts";
+        repository.delete(cerebookPost);
+
+        return "redirect:/profil";
     }
 
     @GetMapping("/myPosts")
@@ -123,7 +122,7 @@ public class PostController {
     }
 
     @GetMapping("/allPosts")
-    public String getAllPosts(Model model, Principal principal, @Valid CerebookPost cerebookPost, CerebookUser cerebookUser) {
+    public String getAllPosts(Model model, Principal principal, @Valid CerebookPost cerebookPost, CerebookUser cerebookUser) throws TwitterException {
         model.addAttribute("user", userRepository.findByUsername(principal.getName()));
         String username = principal.getName();
         CerebookUser user = userRepository.getCerebookUserByUsername(username);
@@ -136,29 +135,21 @@ public class PostController {
         model.addAttribute("localDateTime", new Date());
         boolean postStatu = cerebookPost.isPrivatePost();
         model.addAttribute("postStatus", postStatu);
-
-
-        //twitter
-        /*try {
-            // gets Twitter instance with default credentials
+        //tweet cerebookUser
+        try {
             Twitter twitter = new TwitterFactory().getInstance();
-            User user = twitter.verifyCredentials();
-            List<Status> statuses = twitter.getHomeTimeline();
-            System.out.println("Showing @" + user.getScreenName() + "'s home timeline.");
-            for (Status status : statuses) {
-                System.out.println("@" + status.getUser().getScreenName() + " - " + status.getText());
-            }
+            User twitterUser = twitter.verifyCredentials();
+            List<Status> statuses = twitter.getUserTimeline();
+            model.addAttribute("tweet",statuses);
+            model.addAttribute("twitterUser",twitterUser.getScreenName());
+
         } catch (TwitterException te) {
             te.printStackTrace();
             System.out.println("Failed to get timeline: " + te.getMessage());
             System.exit(-1);
         }
-        Twitter twitter = TwitterFactory.getSingleton();
-        List<Status> tweets = twitter.getHomeTimeline();
-        model.addAttribute("tweet", tweets );*/
 
-        return "/allPosts";
-
+        return "cerebookPost/allPosts";
 
     }
 

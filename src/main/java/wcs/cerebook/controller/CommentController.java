@@ -3,6 +3,7 @@ package wcs.cerebook.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import wcs.cerebook.controller.exception.illegalArgumentException;
 import wcs.cerebook.entity.CerebookComment;
@@ -14,10 +15,10 @@ import wcs.cerebook.repository.EventRepository;
 import wcs.cerebook.repository.PostRepository;
 import wcs.cerebook.repository.UserRepository;
 
+import javax.validation.Valid;
 import java.security.Principal;
 import java.util.Date;
 import java.util.List;
-
 
 
 @Controller
@@ -31,28 +32,43 @@ public class CommentController {
     @Autowired
     private UserRepository userRepository;
 
-    @GetMapping("/addComment/{postId}")
-    public String addComment(@PathVariable("postId") Long postId, Model model, Principal principal) {
-        CerebookPost cerebookPost = postRepository.getById(postId);
-        CerebookComment cerebookComment = new CerebookComment();
+    @RequestMapping("/addComment/{id}")
+    public String addComment(@PathVariable("id") Long id, Principal principal,Model model) {
+        //CerebookPost cerebookPost = postRepository.getById(postId);
+        CerebookPost cerebookPost =postRepository.getById(id);
         CerebookUser user = userRepository.getCerebookUserByUsername(principal.getName());
-        model.addAttribute("comment", cerebookComment);
+        CerebookComment cerebookComment = new CerebookComment();
+        model.addAttribute("commentObject", cerebookComment);
         model.addAttribute("post", cerebookPost);
+        cerebookComment.setCreatedAt(new Date());
         model.addAttribute("time", new Date());
 
         return "cerebookComment/addComment";
+
+    }
+
+    @PostMapping("update/{commentid}")
+    public String updateComment(@PathVariable("commentid") long commentid, Model model) {
+        CerebookComment cerebookComment = commentRepository.getById(commentid);
+        if (cerebookComment != null) {
+            cerebookComment.setId(commentid);
+            return "redirect:/profil";
+        }
+        // mise a jour du commentaire
+        commentRepository.save(cerebookComment);
+        return "profil";
     }
 
     //save  comment
-    @RequestMapping("/savecomment")
-    public String saveComment(CerebookPost cerebookPost, @ModelAttribute CerebookComment cerebookComment, Principal principal) {
+    @PostMapping("/savecomment")
+    public String saveComment(@ModelAttribute CerebookComment cerebookComment,CerebookPost cerebookPost, Principal principal) {
         CerebookUser user = userRepository.getCerebookUserByUsername(principal.getName());
         cerebookComment.setCerebookPost(cerebookPost);
         cerebookComment.setCerebookUser(user);
         cerebookComment.setCreatedAt(new Date());
         commentRepository.save(cerebookComment);
 
-        return "redirect:/allPosts";
+        return "redirect:/profil";
     }
 
     @GetMapping("/listComment/{postid}")
@@ -88,7 +104,7 @@ public class CommentController {
         cerebookComment.setCreatedAt(new Date());
         commentRepository.save(cerebookComment);
 
-        return "redirect:/listEventComment/"+cerebookEvent.getId();
+        return "redirect:/listEventComment/" + cerebookEvent.getId();
     }
 
     @GetMapping("/listEventComment/{eventid}")

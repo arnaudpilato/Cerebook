@@ -3,46 +3,55 @@
       xmlns:th="http://www.thymeleaf.org"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{fragments/_layout}">
 
-    <th:block layout:fragment="config">
-        <title>List all posts</title>
-        <link href="/static/css/post.css" rel="stylesheet"/>
-        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.4.1/css/all.css" integrity="sha384-5sAR7xN1Nv6T6+dT2mhtzEpVJvfS3NScPQTrOxhwjIuvcA67KV2R5Jz6kr4abQsz" crossorigin="anonymous">
-    </th:block>
+<th:block layout:fragment="config">
+    <title>List all posts</title>
+    <link href="/static/css/post.css" rel="stylesheet"/>
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.4.1/css/all.css"
+          integrity="sha384-5sAR7xN1Nv6T6+dT2mhtzEpVJvfS3NScPQTrOxhwjIuvcA67KV2R5Jz6kr4abQsz" crossorigin="anonymous">
+</th:block>
 
-    <div layout:fragment="content">
-        <div class="container-fluid">
-            <div th:switch="${listPosts}">
-                <h2 th:case="null">No post yet!</h2>
-                <div th:case="*">
-                    <h2>All Posts</h2>
-                    <a th:href="@{/postCreate}"><i class="fas fa-reply">add post</i></a>
-                    <div class="row">
-                        <tr th:each="p: ${listPosts}">
-                            <span th:if="${p.isPrivatePost == false}">
-                                <div id="post-container">
-                                    <td th:text="${p.content}"></td>
-                                    <div id="by-user">
-                                        <td th:text="${p.createdAt}"></td>
-                                        <td th:text="${'Posted by: '+p.cerebookUser.username}"></td>
-                                    </div>
-                                     <form action="#" th:action="@{/updateLike/{id}(id=${p.id})}"
-                                           method="POST">
-                                         <td th:text="${'j''aime: '+p.countLike}"></td>
-                                            <button type="submit"  name="like"><i
-                                                    class="far fa-thumbs-up"></i> </button>
-                                            <button type="submit" value="-1" name="like"><i
-                                                    class="far fa-thumbs-down"></i> </button>
-                                     </form>
-                                </div>
-                                <div>
-                                    <td><a th:href="@{/addComment/{id}(id=${p.id})}"><i class="far fa-comment"></i></a>add</td>
-                                    <td><a th:href="@{/listComment/{id}(id=${p.id})}"><i class="far fa-comments"></i></a>view comments</td>
-                                </div>
-                            </span>
-                        </tr>
+<div layout:fragment="content">
+    <div class="container-fluid">
+        <div class="divtpost mt-5">
+            <!--- section post et commentaires -->
+            <div class="row">
+                <!--- section post et commentaires -->
+                <div th:switch="${listPosts}">
+                    <h2 th:case="null">Pas encore de post!</h2>
+                    <div th:case="*">
+                        <h2>Posts</h2>
+                        <a th:href="@{/postCreate}"><i class="fas fa-reply">ajouter un post</i></a>
+                        <div class="row">
+                                    <tr th:each="p: ${listPosts}">
+                                                <span th:if="${p.isPrivatePost == false}">
+                                                    <div id="post-container" name="content">
+                                                            <td th:text="${p.content}"></td>
+                                                        <td><a id="stiky" th:href="@{/deletePost/{id}(id=${p.id})}"><i class="far fa-trash-alt"></i></a></td>
+                                                        <div id="by-user">
+                                                            <td th:text="${'Le: '+p.createdAt}"></td>
+                                                            <td th:text="${'Posté par: '+p.cerebookUser.username}"></td>
+                                                        </div>
+                                                                  <td><a th:href="@{/addComment/${p.id}}"><i
+                                                                          class="far fa-comment"></i>commenter</a></td>
+                                                                    <td><a th:href="@{/listComment/{id}(id=${p.id})}"><i
+                                                                            class="far fa-comments"> </i>voir les commentaires  </a></td>
+                                                                    <td><a th:href="@{/addLike/{id}(id=${p.id})}">
+                                                                        <i class="far fa-thumbs-up"></i>Liker Ce post</a></td>
+                                                                </div>
+                                                            <div>
+                                                        </div>
+                                                </span>
+                        </div>
+                                    </tr>
                     </div>
                 </div>
+                <!-- fin section post et commentaires -->
             </div>
+            <div class="" th:each="t: ${tweet}">
+                <td th:text="${t.getText()}" ></td>
+            </div>
+
         </div>
     </div>
+</div>
 </html>
