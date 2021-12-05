@@ -39,7 +39,8 @@ public class CommentController {
         CerebookPost cerebookPost = postRepository.getById(postId);
         CerebookUser user = userRepository.getCerebookUserByUsername(principal.getName());
         CerebookComment cerebookComment = new CerebookComment();
-        model.addAttribute("commentObject", cerebookComment);
+        model.addAttribute("user", user);
+        model.addAttribute("comment", cerebookComment);
         model.addAttribute("post", cerebookPost);
         cerebookComment.setCreatedAt(new Date());
         model.addAttribute("time", new Date());
@@ -75,7 +76,7 @@ public class CommentController {
     @GetMapping("/listComment/{postid}")
     public String showComment(@PathVariable("postid") Long postid, Model model) {
         List<CerebookUser> user = userRepository.findAll();
-        List<CerebookComment> comments = postRepository.getById(postid).getComments();
+        List<CerebookComment> comments = commentRepository.findAll();
         List<CerebookPost> post = postRepository.findAll();
         model.addAttribute("listComment", comments);
         model.addAttribute("user", user);
