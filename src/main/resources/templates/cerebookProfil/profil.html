@@ -275,7 +275,7 @@
                                     <div class="row pb-3 px-3 justify-content-center">
                                         <div class="col-3 my-2 mx-2 p-0" th:each="friend : ${friends}">
 
-                                                <div class="friend-link"><a th:href="@{/profil/{id}(id=${friend.getCurrentFriends().getId()})}"><img class="friend-avatar" th:src="${friend.currentFriends.getProfil().getAvatar()}" alt="Logo de profil"></a></div>
+                                                <div class="friend-link"><a th:href="@{/profil/{id}(id=${friend.getId()})}"><img class="friend-avatar" th:src="${friend.profil.getAvatar()}" alt="Logo de profil"></a></div>
 
                                         </div>
                                 </div>
