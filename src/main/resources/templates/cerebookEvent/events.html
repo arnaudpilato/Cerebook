@@ -15,8 +15,10 @@
     <div class="container-fluid">
         <div class="row">
             <!-- PIL : Section profil -->
-            <div th:each="event : ${events}" th:if="${event.roles} == false OR ${event.cerebookUser.role} == ${user.role}" class="col-4">
-                <div  class="row">
+            <div th:each="event : ${events}"
+                 th:if="${event.roles} == false OR ${event.cerebookUser.role} == ${user.role} OR ${user.role} == 'NEUTRE'"
+                 class="col-4">
+                <div class="row">
                     <div class="col-lg-12">
                         <div class="profile-section userCards mb-3">
                             <ul class="d-flex justify-content-around px-3 align-items-center">
@@ -28,7 +30,8 @@
                                 </li>
                                 <li class="" th:if="${event.cerebookUser.id} == ${user.id}"><a
                                         th:href="@{/eventCreate(id=${event.id})}">
-                                    <img class="profile-section-logo" src="/static/css/img/setting.png" alt="delete"/></a>
+                                    <img class="profile-section-logo" src="/static/css/img/setting.png"
+                                         alt="delete"/></a>
                                 </li>
                                 <li class="" th:if="${event.cerebookUser.id} == ${user.id}"><a
                                         th:href="@{/deleteEvent/{id}(id=${event.id})}">
@@ -40,7 +43,8 @@
                                         th:text="${event.city}"></span>
                                 </li>
                                 <li><a th:href="@{/profil/{id}(id=${event.cerebookUser.id})}"><p
-                                        th:text="'profil organisateur :  &nbsp' + ${event.cerebookUser.username}"></p></a>
+                                        th:text="'profil organisateur :  &nbsp' + ${event.cerebookUser.username}"></p>
+                                </a>
                                     <div class="d-flex">
                                         <div>
                                             <a th:href="@{/message(username=${event.cerebookUser.username})}">
@@ -51,6 +55,11 @@
                                             <img class="logo d-block ml-5" src="/static/css/img/message.png">
                                         </div>
                                     </div>
+                                    <div>
+                                        <a th:href="@{/listEventComment/{id}(id=${event.id})}">Voir les commentaire</a> /
+                                        <a th:href="@{/addEventComment/{id}(id=${event.id})}">Ajout de commentaire</a>
+                                    </div>
+
                                 </li>
 
                             </ul>

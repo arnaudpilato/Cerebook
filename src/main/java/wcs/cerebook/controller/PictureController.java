@@ -30,7 +30,10 @@ public class PictureController {
     }
 
     @GetMapping("/picture/show")
-    public String showPicture(Model model, @RequestParam Long id) {
+    public String showPicture(Model model, @RequestParam Long id, Principal principal) {
+        // PIL : Récupération de l'user principal pour la navbar
+        model.addAttribute("user", userRepository.findByUsername(principal.getName()));
+
         model.addAttribute("picture", pictureRepository.findById(id));
 
         return "cerebookPicture/picture_show";
@@ -45,13 +48,15 @@ public class PictureController {
 
     @PostMapping("/picture/update")
     public String postProfilUpdate(@ModelAttribute CerebookPicture cerebookPicture, @RequestParam(value = "file_picture") MultipartFile picture, Principal principal) throws IOException {
+        if (!picture.isEmpty()) {
+            Files.copy(picture.getInputStream(), Paths.get("src/main/resources/public/static/css/data/" + picture.getOriginalFilename()), StandardCopyOption.REPLACE_EXISTING);
+            cerebookPicture.setPicturePath("/static/css/data/" + picture.getOriginalFilename());
+            if (cerebookPicture.getId() == null) {
+                cerebookPicture.setUser(userRepository.findByUsername(principal.getName()));
+            }
+            pictureRepository.save(cerebookPicture);
+        }
 
-        Files.copy(picture.getInputStream(), Paths.get("src/main/resources/public/static/css/data/" + picture.getOriginalFilename()), StandardCopyOption.REPLACE_EXISTING);
-                cerebookPicture.setPicturePath("/static/css/data/" + picture.getOriginalFilename());
-                if (cerebookPicture.getId() == null) {
-                    cerebookPicture.setUser(userRepository.findByUsername(principal.getName()));
-                }
-        pictureRepository.save(cerebookPicture);
         return "redirect:/picture";
     }
 

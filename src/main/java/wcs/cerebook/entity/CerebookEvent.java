@@ -32,6 +32,7 @@ public class CerebookEvent {
     private CerebookUser cerebookUser;
     @OneToMany(mappedBy = "cerebookEvent", fetch = FetchType.LAZY,
             cascade = CascadeType.ALL)
+    @OrderBy("id DESC")
     private final List<CerebookComment> comments = new ArrayList<CerebookComment>();
     private boolean roles;
     private Double x;

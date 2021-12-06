@@ -1,6 +1,7 @@
 package wcs.cerebook.entity;
 
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import javax.persistence.Entity;
@@ -14,8 +15,8 @@ import java.util.ArrayList;
 
 @Entity
 @JsonIdentityInfo(
-    generator = ObjectIdGenerators.PropertyGenerator.class,
-    property = "id")
+        generator = ObjectIdGenerators.PropertyGenerator.class,
+        property = "id")
 @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public class CerebookUser {
     @Id
@@ -41,17 +42,18 @@ public class CerebookUser {
     )
     private List<CerebookPost> cerebookPosts ;
 
+    @JsonIgnore
     @OneToMany(mappedBy = "currentUser")
     private List<CerebookMessage> messages;
 
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "profil_id", referencedColumnName = "id")
     private CerebookProfil profil;
-// relation oneToMany between user and comments
+    // relation oneToMany between user and comments
     @OneToMany(
-        cascade = CascadeType.ALL,
-        orphanRemoval = true
-        )
+            cascade = CascadeType.ALL,
+            orphanRemoval = true
+    )
     private List<CerebookComment> comments = new ArrayList<>();
 
     @OneToMany(mappedBy = "user")
@@ -60,21 +62,8 @@ public class CerebookUser {
     @OneToMany(mappedBy = "user")
     private List<CerebookVideo> videos;
 
-    public List<CerebookPost> getCerebookPosts() {
-        return cerebookPosts;
-    }
 
-    public void setCerebookPosts(List<CerebookPost> cerebookPosts) {
-        this.cerebookPosts = cerebookPosts;
-    }
 
-    public List<CerebookComment> getComments() {
-        return comments;
-    }
-
-    public void setComments(List<CerebookComment> comments) {
-        this.comments = comments;
-    }
 
     @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL, optional = true)
     private CerebookCartography cartography;
@@ -121,6 +110,22 @@ public class CerebookUser {
 
     public void setFirstName(String firstName) {
         this.firstName = firstName;
+    }
+
+    public List<CerebookPost> getCerebookPosts() {
+        return cerebookPosts;
+    }
+
+    public void setCerebookPosts(List<CerebookPost> cerebookPosts) {
+        this.cerebookPosts = cerebookPosts;
+    }
+
+    public List<CerebookComment> getComments() {
+        return comments;
+    }
+
+    public void setComments(List<CerebookComment> comments) {
+        this.comments = comments;
     }
 
     public String getLastName() {
@@ -246,4 +251,3 @@ public class CerebookUser {
                 '}';
     }
 }
-    

@@ -136,6 +136,41 @@
   font-size: 1.5rem;
 }
 
+/***** Message Section *****/
+
+.message-section {
+  background-color: #F4A261;
+  border-radius: 10px;
+}
+
+.message-section ul {
+  list-style-type: none;
+}
+
+.profil-message {
+  width: 90%;
+  object-fit: cover;
+  display:block;
+  border-radius: 50%;;
+}
+
+.username-message {
+  font-weight: bold;
+}
+
+.message-text {
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.messages a {
+  text-decoration: none;
+  color: black;
+}
+
 /***** Map Section *****/
 
 #map {
@@ -294,4 +329,36 @@
   transition: 0.3s;
   margin-left: auto;
   margin-right: auto;
+}
+
+/***** Friends Section *****/
+
+.friend-section {
+  background-color: #E9C46A;
+  border-radius: 10px;
+}
+
+.friend-section ul {
+  list-style-type: none;
+}
+
+.friend-avatar {
+  display: block;
+  object-fit: cover;
+  width: 100%;
+  border-radius: 50%;
+}
+
+.friend-link {
+  border-radius: 50%;
+  -webkit-transition: all .15s ease-in-out;
+  transition: all .15s ease-in-out;
+  color: #00d7c3;
+}
+.friend-link:hover {
+  box-shadow: 0 0 10px 0 #00d7c3 inset, 0 0 20px 2px #00d7c3;
+  border: 3px solid #00d7c3;
+  -webkit-transition: all .15s ease-in-out;
+  transition: all .15s ease-in-out;
+  color: #00d7c3;
 }

@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="fr" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{fragments/_layout}">
+
+<th:block layout:fragment="config">
+    <link href="/static/css/user.css" rel="stylesheet"/>
+    <link href="/static/css/profil.css" rel="stylesheet"/>
+</th:block>
+
+
+<div layout:fragment="content">
+
+    <div class="container">
+        <div class="row justify-content-center">
+                <h1>Demande d'amis</h1>
+        </div>
+
+        <div class="row">
+            <div th:each="friend : ${friends}" class="col-lg-4">
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="picture-section userCards mb-5">
+                            <ul class="d-flex justify-content-around px-3 align-items-center">
+                                <li><a th:href="@{/profil/{id}(id=${friend.id})}"><img class="profile-section-logo" th:src="${friend.getCurrentUser().profil.avatar}" alt="Logo de profil"></a></li>
+                                <li><a th:href="@{/profil/{id}(id=${friend.id})}"><p class="profile-section-username" th:text="${friend.getCurrentUser().username}"></p></a></li>
+                                <a th:href="@{/message(username=${friend.getCurrentUser().getUsername()})}"><img class="logo" src="/static/css/img/message.png"></a>
+                            </ul>
+                            <ul class="essai">
+                                <li th:if="${friend.getCurrentUser().profil.activity}" class="mb-2"><img class="modal-profile-logo" src="/static/css/img/shield.png" alt="Logo profil"><span th:text="${friend.getCurrentUser().profil.activity}"></span></li>
+                                <li class="mt-3"><img class="modal-profile-logo m1" src="/static/css/img/city.png" alt="Logo adresse"><span th:text="${friend.getCurrentUser().city}"></span></li>
+                                <li th:if="${friend.getCurrentUser().profil.interestedInWoman}" class="mb-2"><img class="modal-profile-logo" src="/static/css/img/love.png" alt="Logo profil"><span>Intéréssé par les femmes</span></li>
+                                <li th:if="${friend.getCurrentUser().profil.interestedInMen}" class="mb-2"><img class="modal-profile-logo" src="/static/css/img/love.png" alt="Logo profil"><span>Intéréssé par les hommes</span></li>
+                                <li th:if="${friend.getCurrentUser().profil.hometown}" class="mb-2"><img class="modal-profile-logo" src="/static/css/img/hometown.png" alt="Logo profil"><span th:text="'De ' + ${friend.getCurrentUser().profil.hometown}"></span></li>
+                                <li th:if="${friend.getCurrentUser().profil.relashionship}" class="mb-3"><img class="modal-profile-logo" src="/static/css/img/relationship.png" alt="Logo profil"><span th:text="'En relation avec ' + ${ friend.getCurrentUser().profil.relashionship}"></span></li>
+                                <li class="mb-3"><a th:href="@{/confirm/friend(id=${friend.id})}">ajouter</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+</html>

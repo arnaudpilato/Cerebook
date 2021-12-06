@@ -14,6 +14,7 @@ import wcs.cerebook.repository.UserRepository;
 import wcs.cerebook.services.GeocodeService;
 import wcs.cerebook.services.CerebookUserService;
 
+import java.security.Principal;
 import java.util.List;
 
 
@@ -29,7 +30,12 @@ public class UserController {
     private CerebookUserService service;
 
     @GetMapping("/")
-    public String login() {
+    public String login(Model model, Principal principal) {
+        // PIL : Récupération de l'user principal pour la navbar
+        if (principal != null) {
+            model.addAttribute("user", userRepository.findByUsername(principal.getName()));
+        }
+
         return "index";
     }
 
@@ -57,10 +63,13 @@ public class UserController {
         user.setProfil(new CerebookProfil());
         if (user.getRole().equals("HERO")) {
             user.getProfil().setBanner("/static/css/img/banner.png");
+            user.getProfil().setOrnament("/static/css/img/ornament-good.png");
         } else if (user.getRole().equals("MECHANT")) {
             user.getProfil().setBanner("/static/css/img/magneto-banner.jpeg");
+            user.getProfil().setOrnament("/static/css/img/ornament-bad.png");
         } else {
             user.getProfil().setBanner("/static/css/img/New-York-Manhattan.jpeg");
+            user.getProfil().setOrnament("/static/css/img/ornament-neutral.png");
         }
         user.getProfil().setAvatar("/static/css/img/avatar.jpeg");
 
@@ -89,8 +98,7 @@ public class UserController {
     }
 
     @GetMapping("/user")
-    public String getUser(Model model,
-                          @RequestParam(required = false) Long id) {
+    public String getUser(Model model, @RequestParam(required = false) Long id) {
 
         CerebookUser user = new CerebookUser();
         model.addAttribute("user", user);
@@ -99,9 +107,14 @@ public class UserController {
     }
 
     @RequestMapping("/users")
-    public String viewUser(Model model, @Param("keyword") String keyword) {
+    public String viewUser(Model model, @Param("keyword") String keyword, Principal principal) {
+        // PIL : Récupération de l'user principal pour la navbar
+        model.addAttribute("user", userRepository.findByUsername(principal.getName()));
+
         List<CerebookUser> listUsers = service.listAll(keyword);
+        CerebookUser actualUser = userRepository.findByUsername(principal.getName());
         model.addAttribute("users", listUsers);
+        model.addAttribute("actualUser", actualUser);
         model.addAttribute("keyword", keyword);
 
         return "cerebookUser/users";
