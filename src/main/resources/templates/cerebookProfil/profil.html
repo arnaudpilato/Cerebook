@@ -117,6 +117,31 @@
                                 </div>
                             </div>
                         </div>
+                        <!--section tweet-->
+                        <div class="row">
+                            <div class="col-12">
+                                <div class="message-section">
+                                    <ul class="d-flex justify-content-between py-3 px-3 pb-0">
+                                        <li class="title-section"><p>Tweets</p></li>
+                                        <li><a href="#"><img class="banner-logo" src="/static/css/img/twitter.png" alt="Logo tweet"></a></li>
+                                    </ul>
+                                    <div class="row d-flex pb-3 px-3 my-2 mx-2" >
+                                        <div class="col-3 mb-2">
+                                            <!--<img class="profil-message" th:src="${message.getCurrentUser().profil.avatar}" alt="Logo de profil">-->
+                                        </div>
+                                            <div th:switch="${tweet}">
+                                                <h2 th:case="null">Pas encore de tweet!</h2>
+                                                    <div th:case="*">
+                                                        <div class="col-9 messages" th:each="t: ${tweet}" >
+                                                        <td th:text="${t.getText()}" ></td>
+                                                        </div>
+                                                    </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!--fin tweet-->
                     </div>
                     <!-- PIL : Section Map -->
                     <div class="col-lg-6 ">
@@ -139,41 +164,33 @@
                             <div th:switch="${listPosts}">
                                 <h2 th:case="null">Pas encore de post!</h2>
                                 <div th:case="*">
-                                    <h2>Posts</h2>
-                                    <a th:href="@{/postCreate}"><i class="fas fa-reply">ajouter un post</i></a>
+                                    <h5>Mes posts</h5>
+                                    <a th:href="@{/postCreate}"><i class="far fa-comment-dots">Ajouter un post</i></a>
                                     <div class="row">
-                                        <tr th:each="p: ${listPosts}">
+                                        <tr th:each="p: ${listPosts}" >
                                                 <span th:if="${p.isPrivatePost == false}">
                                                     <div id="post-container" name="content">
                                                             <td th:text="${p.content}"></td>
+                                                            <!--<td><a id="stiky" th:href="@{/deletePost/{id}(id=${p.id})}"><i class="far fa-trash-alt"></i></a></td>-->
                                                         <div id="by-user">
-                                                            <td th:text="${'Le: '+p.createdAt}"></td>
+                                                            <td th:text="${'Le:'+#dates.format(p.createdAt,'dd/MM/yyyy HH:mm')}"></td>
                                                             <td th:text="${'Posté par: '+p.cerebookUser.username}"></td>
                                                         </div>
-                                                                    <td><a th:href="@{/addComment/{id}(id=${p.id})}"><i
-                                                                            class="far fa-comment"></i>commenter</a></td>
+                                                                  <td><a th:href="@{/addComment/{id}(id=${p.id})}"><i
+                                                                          class="far fa-comment"></i>commenter</a></td>
                                                                     <td><a th:href="@{/listComment/{id}(id=${p.id})}"><i
-                                                                            class="far fa-comments"></i>voir les commentaires</a></td>
-                                                                <form action="#" th:action="@{/update/{id}(id=${p.id})}"
-                                                                      method="POST">
-                                                                        <button type="submit" value="1" name="like"><i
-                                                                                class="far fa-thumbs-up"></i> </button>
-                                                                        <button type="submit" value="-1" name="like"><i
-                                                                                class="far fa-thumbs-down"></i> </button>
-                                                                </form>
+                                                                            class="far fa-comments"> </i>voir les commentaires  </a></td>
+                                                                    <td><a th:href="@{/addLike/{id}(id=${p.id})}">
+                                                                        <i class="far fa-thumbs-up"></i>Liker ce post</a></td>
+                                                                </div>
+                                                            <div>
                                                         </div>
-
-                                                    <div>
-
-                                                    </div>
                                                 </span>
-                                        </tr>
-
                                     </div>
+                                    </tr>
                                 </div>
                             </div>
-                            <!-- fin section post et commentaires -->
-                        </div>
+                        </div><!-- fin section post et commentaires -->
 
 
 
@@ -207,10 +224,10 @@
                                     <div class="row pb-3 px-3 justify-content-center">
                                         <div class="trapdoor col-lg-3 my-2 mx-2" th:each="picture : ${pictures}">
                                             <div class="top door pd-2">
-                                                <img class="picture-section-img" th:src="${picture.getPicturePath()}">
+                                                <img class="picture-section-img" th:src="'https://wcs-2-be-or-not-2-be.s3.eu-west-3.amazonaws.com/'+${picture.getPicturePath()}">
                                             </div>
                                             <div class="bottom door">
-                                                <img class="picture-section-img-bottom" th:src="${picture.getPicturePath()}">
+                                                <img class="picture-section-img-bottom" th:src="'https://wcs-2-be-or-not-2-be.s3.eu-west-3.amazonaws.com/'+${picture.getPicturePath()}">
                                             </div>
                                             <div class="picture-button">
                                                 <div class="row row-picture-logo">
@@ -239,12 +256,12 @@
                                         <div class="trapdoor col-lg-3 my-2 mx-2" th:each="video : ${videos}">
                                             <div class="top door pd-2">
                                                 <video class="video-section-img">
-                                                    <source th:src="${video.getVideoPath()}" preload="metadata" #t="0.5">
+                                                    <source th:src="'https://wcs-2-be-or-not-2-be.s3.eu-west-3.amazonaws.com/'+${video.getVideoPath()}" preload="metadata" #t="0.5">
                                                 </video>
                                             </div>
                                             <div class="bottom door">
                                                 <video class="video-section-img-bottom">
-                                                    <source th:src="${video.getVideoPath()}" preload="metadata" #t="0.5">
+                                                    <source th:src="'https://wcs-2-be-or-not-2-be.s3.eu-west-3.amazonaws.com/'+${video.getVideoPath()}" preload="metadata" #t="0.5">
                                                 </video>
                                             </div>
                                             <div class="video-button">

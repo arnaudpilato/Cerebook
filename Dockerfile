@@ -13,3 +13,4 @@ ADD . /app
 RUN mvn install
 
 CMD mvn spring-boot:run
+
