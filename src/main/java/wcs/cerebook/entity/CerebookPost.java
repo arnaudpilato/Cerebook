@@ -1,6 +1,8 @@
 package wcs.cerebook.entity;
 
+
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import org.springframework.format.annotation.DateTimeFormat;
 import javax.persistence.*;
@@ -12,6 +14,7 @@ import java.util.List;
 @JsonIdentityInfo(
     generator = ObjectIdGenerators.PropertyGenerator.class,
     property = "id")
+@JsonIgnoreProperties(value = {"hibernateLazyInitializer","handler"})
 public class CerebookPost {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -20,10 +23,6 @@ public class CerebookPost {
     private Date createdAt;
     private String content;
     private boolean privatePost;
-    @Column(nullable = true)
-    private Long countLike;
-    @Column(columnDefinition = "boolean default false")
-    private boolean liked;
     @ManyToOne(fetch = FetchType.LAZY)
     private CerebookUser cerebookUser;
 
@@ -32,23 +31,27 @@ public class CerebookPost {
     }
 
     @OneToMany(mappedBy = "cerebookPost", fetch = FetchType.LAZY,
-            cascade = CascadeType.ALL)
+            cascade = CascadeType.REMOVE, orphanRemoval = true)
     private final List<CerebookComment> comments = new ArrayList<CerebookComment>();
+    //oneTomany one vers  les likes
+    @OneToMany(
+            mappedBy = "cerebookPost")
+    private List<CerebookPostLike> cerebookPostLikes = new ArrayList<>();
 
-    public Long getCountLike() {
-        return countLike;
+    public Long getId() {
+        return id;
     }
 
-    public void setCountLike(Long countLike) {
-        this.countLike = countLike;
+    public void setId(Long id) {
+        this.id = id;
     }
 
-    public boolean isLiked() {
-        return liked;
+    public List<CerebookPostLike> getCerebookPostLikes() {
+        return cerebookPostLikes;
     }
 
-    public void setLiked(boolean liked) {
-        liked = liked;
+    public void setCerebookPostLikes(List<CerebookPostLike> cerebookPostLikes) {
+        this.cerebookPostLikes = cerebookPostLikes;
     }
 
     public CerebookUser getCerebookUser() {
@@ -59,13 +62,7 @@ public class CerebookPost {
         this.cerebookUser = cerebookUser;
     }
 
-    public Long getId() {
-        return id;
-    }
 
-    public void setId(Long id) {
-        this.id = id;
-    }
     @Temporal(TemporalType.TIME)
     public Date getCreatedAt() {
         return createdAt;
@@ -94,14 +91,13 @@ public class CerebookPost {
     public CerebookPost() {
     }
 
-    public CerebookPost(Long id, Date createdAt, String content, boolean privatePost, Long countLike, boolean liked, CerebookUser cerebookUser) {
+    public CerebookPost(Long id, Date createdAt, String content, boolean privatePost, CerebookUser cerebookUser, List<CerebookPostLike> cerebookPostLikes) {
         this.id = id;
         this.createdAt = createdAt;
         this.content = content;
         this.privatePost = privatePost;
-        this.countLike = countLike;
-        liked = liked;
         this.cerebookUser = cerebookUser;
+        this.cerebookPostLikes = cerebookPostLikes;
     }
 
 }
