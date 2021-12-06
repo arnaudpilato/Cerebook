@@ -106,8 +106,9 @@ public class CommentController {
 
     //save  comment
     @RequestMapping("/saveEventComment")
-    public String saveEventComment(CerebookEvent cerebookEvent, @ModelAttribute CerebookComment cerebookComment, Principal principal) {
+    public String saveEventComment(@RequestParam(value = "eventid") Long eventid, @ModelAttribute CerebookComment cerebookComment, Principal principal) {
         CerebookUser user = userRepository.getCerebookUserByUsername(principal.getName());
+        CerebookEvent cerebookEvent = eventRepository.getById(eventid);
         cerebookComment.setCerebookEvent(cerebookEvent);
         cerebookComment.setCerebookUser(user);
         cerebookComment.setCreatedAt(new Date());
