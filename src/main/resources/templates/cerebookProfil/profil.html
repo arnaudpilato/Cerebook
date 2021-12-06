@@ -207,10 +207,10 @@
                                     <div class="row pb-3 px-3 justify-content-center">
                                         <div class="trapdoor col-lg-3 my-2 mx-2" th:each="picture : ${pictures}">
                                             <div class="top door pd-2">
-                                                <img class="picture-section-img" th:src="${picture.getPicturePath()}">
+                                                <img class="picture-section-img" th:src="'https://wcs-2-be-or-not-2-be.s3.eu-west-3.amazonaws.com/'+${picture.getPicturePath()}">
                                             </div>
                                             <div class="bottom door">
-                                                <img class="picture-section-img-bottom" th:src="${picture.getPicturePath()}">
+                                                <img class="picture-section-img-bottom" th:src="'https://wcs-2-be-or-not-2-be.s3.eu-west-3.amazonaws.com/'+${picture.getPicturePath()}">
                                             </div>
                                             <div class="picture-button">
                                                 <div class="row row-picture-logo">
