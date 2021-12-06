@@ -21,6 +21,12 @@ body {
 
 .navbar-nav {
   align-items: center;
+  margin-right: 2%;
+}
+
+.nav-bar-profile-username {
+  color: white;
+  font-size: 1.5rem;
 }
 
 .logo {
@@ -72,6 +78,13 @@ body {
   text-decoration: none;
   padding-top: 5px;
   padding-left: 10px;
+}
+
+.nav-bar-profile-logo {
+  border-radius: 50%;
+  display: block;
+  width: 100%;
+  object-fit: cover;
 }
 
 /***** Leaflet *****/
