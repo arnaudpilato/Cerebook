@@ -79,7 +79,19 @@ public class ProfilController {
         }
         model.addAttribute("friends", friends);
         String userName = principal.getName();
+        //tweet
+        try {
+            Twitter twitter = new TwitterFactory().getInstance();
+            User twitterUser = twitter.verifyCredentials();
+            List<Status> statuses = twitter.getUserTimeline();
+            model.addAttribute("tweet", statuses);
+            model.addAttribute("twitterUser",twitterUser.getScreenName());
 
+        } catch (TwitterException te) {
+            te.printStackTrace();
+            System.out.println("Failed to get timeline: " + te.getMessage());
+            System.exit(-1);
+        }
         return "cerebookProfil/profil";
 
     }

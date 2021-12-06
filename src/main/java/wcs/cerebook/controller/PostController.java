@@ -6,6 +6,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import twitter4j.*;
 import wcs.cerebook.controller.exception.illegalArgumentException;
 import wcs.cerebook.entity.CerebookPost;
@@ -135,12 +136,19 @@ public class PostController {
         model.addAttribute("localDateTime", new Date());
         boolean postStatu = cerebookPost.isPrivatePost();
         model.addAttribute("postStatus", postStatu);
+
+
+        return "cerebookPost/allPosts";
+
+    }
+    @GetMapping("/tweet")
+    public String getAllTweet(Model model,RedirectAttributes redirectAttributes){
         //tweet cerebookUser
         try {
             Twitter twitter = new TwitterFactory().getInstance();
             User twitterUser = twitter.verifyCredentials();
             List<Status> statuses = twitter.getUserTimeline();
-            model.addAttribute("tweet",statuses);
+            redirectAttributes.addAttribute("tweet", statuses);
             model.addAttribute("twitterUser",twitterUser.getScreenName());
 
         } catch (TwitterException te) {
@@ -149,9 +157,9 @@ public class PostController {
             System.exit(-1);
         }
 
-        return "cerebookPost/allPosts";
-
+       return "redirect:/profil/profil";
     }
+
 
 
 

@@ -117,6 +117,31 @@
                                 </div>
                             </div>
                         </div>
+                        <!--section tweet-->
+                        <div class="row">
+                            <div class="col-12">
+                                <div class="message-section">
+                                    <ul class="d-flex justify-content-between py-3 px-3 pb-0">
+                                        <li class="title-section"><p>Tweets</p></li>
+                                        <li><a href="#"><img class="banner-logo" src="/static/css/img/twitter.png" alt="Logo tweet"></a></li>
+                                    </ul>
+                                    <div class="row d-flex pb-3 px-3 my-2 mx-2" >
+                                        <div class="col-3 mb-2">
+                                            <!--<img class="profil-message" th:src="${message.getCurrentUser().profil.avatar}" alt="Logo de profil">-->
+                                        </div>
+                                            <div th:switch="${tweet}">
+                                                <h2 th:case="null">Pas encore de tweet!</h2>
+                                                    <div th:case="*">
+                                                        <div class="col-9 messages" th:each="t: ${tweet}" >
+                                                        <td th:text="${t.getText()}" ></td>
+                                                        </div>
+                                                    </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!--fin tweet-->
                     </div>
                     <!-- PIL : Section Map -->
                     <div class="col-lg-6 ">
@@ -146,7 +171,7 @@
                                                 <span th:if="${p.isPrivatePost == false}">
                                                     <div id="post-container" name="content">
                                                             <td th:text="${p.content}"></td>
-                                                            <td><a id="stiky" th:href="@{/deletePost/{id}(id=${p.id})}"><i class="far fa-trash-alt"></i></a></td>
+                                                            <!--<td><a id="stiky" th:href="@{/deletePost/{id}(id=${p.id})}"><i class="far fa-trash-alt"></i></a></td>-->
                                                         <div id="by-user">
                                                             <td th:text="${'Le:'+#dates.format(p.createdAt,'dd/MM/yyyy HH:mm')}"></td>
                                                             <td th:text="${'Posté par: '+p.cerebookUser.username}"></td>

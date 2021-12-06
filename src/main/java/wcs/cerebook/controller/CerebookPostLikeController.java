@@ -35,6 +35,7 @@ public class CerebookPostLikeController {
         CerebookPostLike cerebookPostLike = new CerebookPostLike();
         model.addAttribute("post", cerebookPost);
         model.addAttribute("countLike", countpost);
+        model.addAttribute("user", user);
         //user connecte a til deja liker
         // on verifie si il existe dans la table des likes par postid
         List<Long> cerebookUserIdlikedPost = postLikeRepository.CerebookUserByLikeId(postid);
