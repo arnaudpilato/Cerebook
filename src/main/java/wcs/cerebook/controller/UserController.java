@@ -30,7 +30,12 @@ public class UserController {
     private CerebookUserService service;
 
     @GetMapping("/")
-    public String login() {
+    public String login(Model model, Principal principal) {
+        // PIL : Récupération de l'user principal pour la navbar
+        if (principal != null) {
+            model.addAttribute("user", userRepository.findByUsername(principal.getName()));
+        }
+
         return "index";
     }
 
@@ -93,8 +98,7 @@ public class UserController {
     }
 
     @GetMapping("/user")
-    public String getUser(Model model,
-                          @RequestParam(required = false) Long id) {
+    public String getUser(Model model, @RequestParam(required = false) Long id) {
 
         CerebookUser user = new CerebookUser();
         model.addAttribute("user", user);
@@ -104,6 +108,9 @@ public class UserController {
 
     @RequestMapping("/users")
     public String viewUser(Model model, @Param("keyword") String keyword, Principal principal) {
+        // PIL : Récupération de l'user principal pour la navbar
+        model.addAttribute("user", userRepository.findByUsername(principal.getName()));
+
         List<CerebookUser> listUsers = service.listAll(keyword);
         CerebookUser actualUser = userRepository.findByUsername(principal.getName());
         model.addAttribute("users", listUsers);

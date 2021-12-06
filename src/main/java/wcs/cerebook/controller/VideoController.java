@@ -33,7 +33,10 @@ public class VideoController {
     }
 
     @GetMapping("/video/show")
-    public String showVideo(Model model, @RequestParam Long id) {
+    public String showVideo(Model model, @RequestParam Long id, Principal principal) {
+        // PIL : Récupération de l'user pour la navbar
+        model.addAttribute("user", userRepository.findByUsername(principal.getName()));
+
         model.addAttribute("video", videoRepository.findById(id));
 
         return "cerebookVideo/video_show";
