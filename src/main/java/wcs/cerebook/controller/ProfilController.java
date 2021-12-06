@@ -7,6 +7,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+import twitter4j.*;
 import wcs.cerebook.entity.*;
 import wcs.cerebook.repository.*;
 import wcs.cerebook.services.MediaService;
@@ -51,6 +52,7 @@ public class ProfilController {
     private MediaService mediaService;
 
     @GetMapping("/profil")
+
     public String getProfil(Model model, Principal principal) {
         model.addAttribute("user", userRepository.findByUsername(principal.getName()));
         CerebookUser user = userRepository.getCerebookUserByUsername(principal.getName());
@@ -74,7 +76,6 @@ public class ProfilController {
         List<CerebookCartography> cartographies = cartographyRepository.findAll();
         JsonNode json = new ObjectMapper().valueToTree(cartographies);
         model.addAttribute("cartography", json);
-
         // PIL : Récupérations des 6 derniers amis
         List<CerebookUser> friends = new ArrayList<>();
         List<CerebookFriend> confirmed = friendRepository.getLastFriend_Id(user);
@@ -83,7 +84,23 @@ public class ProfilController {
         }
         model.addAttribute("friends", friends);
 
+        String userName = principal.getName();
+        //tweet
+        try {
+            Twitter twitter = new TwitterFactory().getInstance();
+            User twitterUser = twitter.verifyCredentials();
+            List<Status> statuses = twitter.getUserTimeline();
+            model.addAttribute("tweet", statuses);
+            model.addAttribute("twitterUser",twitterUser.getScreenName());
+
+        } catch (TwitterException te) {
+            te.printStackTrace();
+            System.out.println("Failed to get timeline: " + te.getMessage());
+            System.exit(-1);
+        }
+
         return "cerebookProfil/profil";
+
     }
 
     @GetMapping("/profil/{id}")
@@ -99,6 +116,19 @@ public class ProfilController {
         List<CerebookCartography> cartographies = cartographyRepository.findAll();
         JsonNode json = new ObjectMapper().valueToTree(cartographies);
         model.addAttribute("cartography", json);
+        //tweet cerebookUser
+        try {
+            Twitter twitter = new TwitterFactory().getInstance();
+            User twitterUser = twitter.verifyCredentials();
+            List<Status> statuses = twitter.getUserTimeline();
+            model.addAttribute("tweet",statuses);
+            model.addAttribute("twitterUser",twitterUser.getScreenName());
+
+        } catch (TwitterException te) {
+            te.printStackTrace();
+            System.out.println("Failed to get timeline: " + te.getMessage());
+            System.exit(-1);
+        }
         return "cerebookProfil/profil";
     }
 
