@@ -33,8 +33,8 @@
                     <div class="row mt-4 container-video">
                         <a th:href="@{/video/show(id=${video.id})}" class="video-btn">
                             <video class="video">
-                            <source th:src="${video.getVideoPath()}" type="video/webm">
-                            <source th:src="${video.getVideoPath()}" type="video/mp4" preload="metadata"#t="0.5">
+                            <source th:src="'https://wcs-2-be-or-not-2-be.s3.eu-west-3.amazonaws.com/'+${video.getVideoPath()}" type="video/webm">
+                            <source th:src="'https://wcs-2-be-or-not-2-be.s3.eu-west-3.amazonaws.com/'+${video.getVideoPath()}" type="video/mp4" preload="metadata"#t="0.5">
                                 Désolé mais votre navigateur ne supporte pas ce format de vidéo
                             </video>
                         </a>

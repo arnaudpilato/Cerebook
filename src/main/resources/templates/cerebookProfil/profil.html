@@ -256,12 +256,12 @@
                                         <div class="trapdoor col-lg-3 my-2 mx-2" th:each="video : ${videos}">
                                             <div class="top door pd-2">
                                                 <video class="video-section-img">
-                                                    <source th:src="${video.getVideoPath()}" preload="metadata" #t="0.5">
+                                                    <source th:src="'https://wcs-2-be-or-not-2-be.s3.eu-west-3.amazonaws.com/'+${video.getVideoPath()}" preload="metadata" #t="0.5">
                                                 </video>
                                             </div>
                                             <div class="bottom door">
                                                 <video class="video-section-img-bottom">
-                                                    <source th:src="${video.getVideoPath()}" preload="metadata" #t="0.5">
+                                                    <source th:src="'https://wcs-2-be-or-not-2-be.s3.eu-west-3.amazonaws.com/'+${video.getVideoPath()}" preload="metadata" #t="0.5">
                                                 </video>
                                             </div>
                                             <div class="video-button">

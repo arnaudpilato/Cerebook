@@ -69,7 +69,7 @@ public class PictureController {
             }
 
             try {
-                mediaService.uploadMedia(
+                mediaService.uploadPicture(
                         filename,
                         picture.getInputStream(),
                         picture.getSize(),
