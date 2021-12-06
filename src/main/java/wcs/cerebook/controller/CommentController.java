@@ -77,9 +77,12 @@ public class CommentController {
     public String showComment(@PathVariable("postid") Long postid, Model model,Principal principal) {
         CerebookUser user = userRepository.getCerebookUserByUsername(principal.getName());
         List<CerebookComment> comments = commentRepository.findAll();
+
         List<CerebookPost> post = postRepository.findAll();
         model.addAttribute("listComment", comments);
-        model.addAttribute("user", user);
+
+        // PIL : Récupération de l'user principal pour la navbar
+        model.addAttribute("user", userRepository.findByUsername(principal.getName()));
         model.addAttribute("post", post);
 
         return "cerebookComment/listComments";
@@ -91,6 +94,10 @@ public class CommentController {
         CerebookEvent cerebookEvent = eventRepository.getById(eventid);
         CerebookComment cerebookComment = new CerebookComment();
         CerebookUser user = userRepository.getCerebookUserByUsername(principal.getName());
+
+        // PIL : Récupération de l'user principal pour la navbar
+        model.addAttribute("user", userRepository.findByUsername(principal.getName()));
+
         model.addAttribute("comment", cerebookComment);
         model.addAttribute("event", cerebookEvent);
 
@@ -110,12 +117,16 @@ public class CommentController {
     }
 
     @GetMapping("/listEventComment/{eventid}")
-    public String showEventComment(@PathVariable("eventid") Long eventid, Model model) {
+    public String showEventComment(@PathVariable("eventid") Long eventid, Model model, Principal principal) {
         List<CerebookUser> user = userRepository.findAll();
         List<CerebookComment> comments = eventRepository.getById(eventid).getComments();
         CerebookEvent event = eventRepository.getById(eventid);
         model.addAttribute("listComment", comments);
-        model.addAttribute("user", user);
+
+        // PIL : Récupération de l'user principal pour la navbar
+        model.addAttribute("user", userRepository.findByUsername(principal.getName()));
+
+        //model.addAttribute("user", user);
         model.addAttribute("event", event);
 
         return "cerebookComment/listEventComments";
