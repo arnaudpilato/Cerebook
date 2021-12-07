@@ -19,7 +19,6 @@ public class CerebookComment {
     private Date createdAt;
     //many (comment) to one for one post
     @ManyToOne(fetch = FetchType.LAZY)
-    //@JoinColumn(name = "cerebookPost")
     private CerebookPost cerebookPost;
     @ManyToOne(fetch = FetchType.LAZY)
     private CerebookEvent cerebookEvent;

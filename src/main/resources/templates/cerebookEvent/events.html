@@ -23,7 +23,7 @@
                         <div class="profile-section userCards mb-3">
                             <ul class="d-flex justify-content-around px-3 align-items-center">
                                 <li class="" th:if="${event.image}"><a th:href="@{/event/{id}(id=${event.id})}"><img
-                                        class="profile-section-logo" th:src="${event.image}" alt="Logo de l'evenement"></a>
+                                        class="profile-section-logo" th:src="'https://wcs-2-be-or-not-2-be.s3.eu-west-3.amazonaws.com/'+${event.image}" alt="Logo de l'evenement"></a>
                                 </li>
                                 <li><a th:href="@{/event/{id}(id=${event.id})}"><p class="profile-section-username"
                                                                                    th:text="${event.title}"></p></a>

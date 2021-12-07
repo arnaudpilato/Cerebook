@@ -23,7 +23,7 @@ public class CerebookUser {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(nullable = true, unique = true)
+    @Column(nullable = false, unique = true)
     private String username;
     private String firstName;
     private String lastName;
@@ -34,14 +34,19 @@ public class CerebookUser {
     private Date birthday;
     private String role;
     private boolean enable;
-
+    @JsonIgnore
     @OneToMany(
             mappedBy = "cerebookUser",
             cascade = CascadeType.ALL,
             orphanRemoval = true
     )
     private List<CerebookPost> cerebookPosts ;
-
+    @JsonIgnore
+    @OneToMany(
+            mappedBy = "cerebookUser",
+            fetch = FetchType.LAZY,
+            cascade = CascadeType.ALL)
+    private List<CerebookPostLike> cerebookPostLikes = new ArrayList<>();
     @JsonIgnore
     @OneToMany(mappedBy = "currentUser")
     private List<CerebookMessage> messages;
@@ -55,18 +60,23 @@ public class CerebookUser {
             orphanRemoval = true
     )
     private List<CerebookComment> comments = new ArrayList<>();
-
+    @JsonIgnore
     @OneToMany(mappedBy = "user")
     private List<CerebookPicture> pictures;
-
+    @JsonIgnore
     @OneToMany(mappedBy = "user")
     private List<CerebookVideo> videos;
 
     @OneToMany(mappedBy = "user")
     private List<CerebookMovie> movies;
 
+    public List<CerebookPostLike> getCerebookPostLikes() {
+        return cerebookPostLikes;
+    }
 
-
+    public void setCerebookPostLikes(List<CerebookPostLike> cerebookPostLikes) {
+        this.cerebookPostLikes = cerebookPostLikes;
+    }
 
     @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL, optional = true)
     private CerebookCartography cartography;
@@ -74,7 +84,7 @@ public class CerebookUser {
     public CerebookUser() {
     }
 
-    public CerebookUser(Long id, String username, String firstName, String lastName, String city, String address, String email, String password, Date birthday, String role, boolean enable, List<CerebookPost> cerebookPosts, List<CerebookMessage> messages, CerebookProfil profil) {
+    public CerebookUser(Long id, String username, String firstName, String lastName, String city, String address, String email, String password, Date birthday, String role, boolean enable, List<CerebookPost> cerebookPosts, List<CerebookPostLike> cerebookPostLikes, List<CerebookMessage> messages, CerebookProfil profil, List<CerebookComment> comments, List<CerebookPicture> pictures, List<CerebookVideo> videos, CerebookCartography cartography) {
         this.id = id;
         this.username = username;
         this.firstName = firstName;
@@ -87,8 +97,13 @@ public class CerebookUser {
         this.role = role;
         this.enable = enable;
         this.cerebookPosts = cerebookPosts;
+        this.cerebookPostLikes = cerebookPostLikes;
         this.messages = messages;
         this.profil = profil;
+        this.comments = comments;
+        this.pictures = pictures;
+        this.videos = videos;
+        this.cartography = cartography;
     }
 
     public Long getId() {

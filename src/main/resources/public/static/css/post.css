@@ -1,0 +1,66 @@
+/*# sourceMappingURL=profil.css.map */
+@import "style.css";
+#post-container {
+  background: #f9f9f9;
+  border: 1px solid #aaa;
+  border-radius: 4px;
+  box-shadow: 0 1px 1px rgba(0, 0, 0, 0.05);
+  display: table;
+  margin-bottom: 1em;
+  padding: 10px;
+  position: relative;
+  width: auto;
+}
+
+#by-user {
+  font-size: 10px;
+  color: blue;
+}
+
+.content td:nth-child(2n+1) {
+  background-color: #d48c8c;
+}
+
+.content {
+  border: 2px solid #dedede;
+  background-color: #f1f1f1;
+  border-radius: 5px;
+  padding: 10px;
+  margin: 10px 0;
+}
+
+.darker {
+  border-color: #ccc;
+  background-color: #ddd;
+}
+
+.content::after {
+  content: "";
+  clear: both;
+  display: table;
+}
+
+.divpost {
+  margin: 4px;
+  padding: 4px;
+  width: auto;
+  height: 600px;
+  overflow-y: auto;
+  overflow-x: hidden;
+  text-align: justify;
+}
+.divpost .profile-section-logo {
+  width: 64px;
+  height: auto;
+  display: inline-block;
+  border-radius: 50%;
+}
+.divpost .form {
+  resize: both;
+  min-width: 100px;
+  min-height: 100px;
+  max-width: 200px;
+  max-height: 200px;
+}
+
+/*# sourceMappingURL=post.css.map */

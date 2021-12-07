@@ -38,3 +38,4 @@ target/*
 *.css
 *.map
 src/main/resources/public/static/css/data/*
+src/main/resources/twitter4j.properties
