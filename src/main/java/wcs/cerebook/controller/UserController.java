@@ -1,5 +1,6 @@
 package wcs.cerebook.controller;
 
+import org.apache.catalina.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.repository.query.Param;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -8,14 +9,20 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.bind.annotation.GetMapping;
 import wcs.cerebook.entity.CerebookCartography;
+import wcs.cerebook.entity.CerebookFriend;
 import wcs.cerebook.entity.CerebookProfil;
 import wcs.cerebook.entity.CerebookUser;
+import wcs.cerebook.repository.FriendRepository;
 import wcs.cerebook.repository.UserRepository;
 import wcs.cerebook.services.GeocodeService;
 import wcs.cerebook.services.CerebookUserService;
 
 import java.security.Principal;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
+import java.util.TreeSet;
+import java.util.stream.Collectors;
 
 
 @Controller
@@ -28,6 +35,10 @@ public class UserController {
 
     @Autowired
     private CerebookUserService service;
+
+    @Autowired
+    private FriendRepository friendRepository;
+
 
     @GetMapping("/")
     public String login(Model model, Principal principal) {
@@ -113,9 +124,27 @@ public class UserController {
 
         List<CerebookUser> listUsers = service.listAll(keyword);
         CerebookUser actualUser = userRepository.findByUsername(principal.getName());
+
+        List<CerebookUser> friends = new ArrayList<>();
+
+        List<CerebookFriend> confirmed = friendRepository.getByConfirmationFriend_Id(actualUser);
+        for (CerebookFriend friend: confirmed
+        ) {
+            friends.add(friend.getCurrentFriends());
+        }
+
+        List<CerebookFriend> confirmey = friendRepository.getByConfirmationFriendUser_Id(actualUser);
+        for (CerebookFriend friend: confirmey
+        ) {
+            friends.add(friend.getCurrentUser());
+        }
+
         model.addAttribute("users", listUsers);
         model.addAttribute("actualUser", actualUser);
         model.addAttribute("keyword", keyword);
+        Set<String> usernameSet = new TreeSet<>();
+        usernameSet.addAll(friends.stream().map(CerebookUser::getUsername).collect(Collectors.toSet()));
+        model.addAttribute("friendsUsername", usernameSet);
 
         return "cerebookUser/users";
     }
