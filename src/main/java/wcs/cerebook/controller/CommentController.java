@@ -76,7 +76,7 @@ public class CommentController {
     @GetMapping("/listComment/{postid}")
     public String showComment(@PathVariable("postid") Long postid, Model model,Principal principal) {
         CerebookUser user = userRepository.getCerebookUserByUsername(principal.getName());
-        List<CerebookComment> comments = commentRepository.findAll();
+        List<CerebookComment> comments = postRepository.getById(postid).getComments();
 
         List<CerebookPost> post = postRepository.findAll();
         model.addAttribute("listComment", comments);

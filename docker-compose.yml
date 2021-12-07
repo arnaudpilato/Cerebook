@@ -12,7 +12,10 @@ services:
       JDBC_DATABASE_URL: postgresql://db:5432/postgres
       DATABASE_USERNAME: postgres
       DATABASE_PASSWORD: postgres
-
+      twitter4j.oauth.consumerKey: ly1sAxhPZXAufEmKsSS1mFCnw
+      twitter4j.oauth.consumerSecret: kRxrulMOpHdc17FuiIlF8XRExiHEJQt4wo0JAnJ1JjGPb80Y3G
+      twitter4j.oauth.accessToken: 765448580-Xs4kRHLaYfZl4u34VzHeZ4MQUYu8KDtRh9gzkGGK
+      twitter4j.oauth.accessTokenSecret: tqq5zA2Qoeo205s6CceEAprGnXrLMjbmKs8uCxtW9NiPZ
     command: mvn spring-boot:run
     volumes:
       - .:/app

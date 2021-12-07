@@ -137,30 +137,8 @@ public class PostController {
         boolean postStatu = cerebookPost.isPrivatePost();
         model.addAttribute("postStatus", postStatu);
 
-
         return "cerebookPost/allPosts";
 
     }
-    @GetMapping("/tweet")
-    public String getAllTweet(Model model,RedirectAttributes redirectAttributes){
-        //tweet cerebookUser
-        try {
-            Twitter twitter = new TwitterFactory().getInstance();
-            User twitterUser = twitter.verifyCredentials();
-            List<Status> statuses = twitter.getUserTimeline();
-            redirectAttributes.addAttribute("tweet", statuses);
-            model.addAttribute("twitterUser",twitterUser.getScreenName());
-
-        } catch (TwitterException te) {
-            te.printStackTrace();
-            System.out.println("Failed to get timeline: " + te.getMessage());
-            System.exit(-1);
-        }
-
-       return "redirect:/profil/profil";
-    }
-
-
-
 
 }

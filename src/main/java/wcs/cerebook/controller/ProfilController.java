@@ -83,9 +83,12 @@ public class ProfilController {
         try {
             Twitter twitter = new TwitterFactory().getInstance();
             User twitterUser = twitter.verifyCredentials();
-            List<Status> statuses = twitter.getUserTimeline();
-            model.addAttribute("tweet", statuses);
-            model.addAttribute("twitterUser",twitterUser.getScreenName());
+            if(user.getUsername().equals(twitterUser.getScreenName()) ){
+                List<Status> statuses = twitter.getUserTimeline();
+                model.addAttribute("tweet", statuses);
+                model.addAttribute("twitterUser",twitterUser.getScreenName());
+
+            }
 
         } catch (TwitterException te) {
             te.printStackTrace();
@@ -109,19 +112,7 @@ public class ProfilController {
         List<CerebookCartography> cartographies = cartographyRepository.findAll();
         JsonNode json = new ObjectMapper().valueToTree(cartographies);
         model.addAttribute("cartography", json);
-        //tweet cerebookUser
-        try {
-            Twitter twitter = new TwitterFactory().getInstance();
-            User twitterUser = twitter.verifyCredentials();
-            List<Status> statuses = twitter.getUserTimeline();
-            model.addAttribute("tweet",statuses);
-            model.addAttribute("twitterUser",twitterUser.getScreenName());
 
-        } catch (TwitterException te) {
-            te.printStackTrace();
-            System.out.println("Failed to get timeline: " + te.getMessage());
-            System.exit(-1);
-        }
         return "cerebookProfil/profil";
     }
 
