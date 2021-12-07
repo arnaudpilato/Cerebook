@@ -35,7 +35,5 @@ package-lock.json
 package.json
 node_modules/
 target/*
-*.css
-*.map
 src/main/resources/public/static/css/data/*
 src/main/resources/twitter4j.properties

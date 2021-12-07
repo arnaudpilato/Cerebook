@@ -52,7 +52,7 @@ public class PostController {
         boolean postStatu = cerebookPost.isPrivatePost();
         model.addAttribute("postStatus", postStatu);
 
-        return "/cerebookPost/addPost";
+        return "cerebookPost/addPost";
     }
 
     //save post
@@ -76,7 +76,7 @@ public class PostController {
 
         model.addAttribute("listPosts", cerebookPosts);
 
-        return "/cerebookPost/posts";
+        return "cerebookPost/posts";
     }
 
     @RequestMapping("/editPost/{id}")
@@ -95,7 +95,7 @@ public class PostController {
         model.addAttribute("postStatus", postStatu);
 
         //model.addAttribute("posts",cerebookPost);
-        return "/cerebookPost/post";
+        return "cerebookPost/post";
     }
 
     @PostMapping("/updatePost/{id}")
