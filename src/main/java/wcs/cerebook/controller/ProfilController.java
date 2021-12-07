@@ -138,7 +138,7 @@ public class ProfilController {
                 String bannerName = "static/css/data/" +banner.getOriginalFilename();
                 String bannerExtension = Optional.of(banner.getOriginalFilename()).filter(f -> f.contains(".")).map(f -> f.substring(banner.getOriginalFilename().lastIndexOf(".") + 1)).orElse("");
                 Files.copy(banner.getInputStream(), Paths.get("src/main/resources/public/static/css/data/" + principal.getName() + "_banner." + bannerExtension), StandardCopyOption.REPLACE_EXISTING);
-                cerebookProfil.setBanner("/static/css/data/" + principal.getName() + "_banner." + bannerExtension);
+                cerebookProfil.setBanner("static/css/data/" + principal.getName() + "_banner." + bannerExtension);
                 try {
                 mediaService.uploadBanner(
                         bannerName,
@@ -159,7 +159,7 @@ public class ProfilController {
                 String avatarName = "static/css/data/" +avatar.getOriginalFilename();
                 String avatarExtension = Optional.of(avatar.getOriginalFilename()).filter(f -> f.contains(".")).map(f -> f.substring(avatar.getOriginalFilename().lastIndexOf(".") + 1)).orElse("");
                 Files.copy(avatar.getInputStream(), Paths.get("src/main/resources/public/static/css/data/" + principal.getName() + "_avatar." + avatarExtension), StandardCopyOption.REPLACE_EXISTING);
-                cerebookProfil.setAvatar("/static/css/data/" + principal.getName() + "_avatar." + avatarExtension);
+                cerebookProfil.setAvatar("static/css/data/" + principal.getName() + "_avatar." + avatarExtension);
                 try {
                 mediaService.uploadBanner(
                         avatarName,
