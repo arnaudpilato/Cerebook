@@ -79,7 +79,7 @@ public class ProfilController {
         // PIL : Récupérations des 6 derniers amis
         List<CerebookUser> friends = new ArrayList<>();
         List<CerebookFriend> confirmed = friendRepository.getLastFriend_Id(user);
-        for (CerebookFriend friend: confirmed) {
+        for (CerebookFriend friend : confirmed) {
             friends.add(friend.getCurrentFriends());
         }
         model.addAttribute("friends", friends);
@@ -89,10 +89,10 @@ public class ProfilController {
         try {
             Twitter twitter = new TwitterFactory().getInstance();
             User twitterUser = twitter.verifyCredentials();
-            if(user.getUsername().equals(twitterUser.getScreenName()) ){
+            if (user.getUsername().equals(twitterUser.getScreenName())) {
                 List<Status> statuses = twitter.getUserTimeline();
                 model.addAttribute("tweet", statuses);
-                model.addAttribute("twitterUser",twitterUser.getScreenName());
+                model.addAttribute("twitterUser", twitterUser.getScreenName());
 
             }
 
@@ -135,49 +135,48 @@ public class ProfilController {
         CerebookUser user = userRepository.getCerebookUserByUsername(principal.getName());
         if (cerebookProfil.getId() != null) {
             if (!banner.isEmpty()) {
-                String bannerName = "static/css/data/" +banner.getOriginalFilename();
                 String bannerExtension = Optional.of(banner.getOriginalFilename()).filter(f -> f.contains(".")).map(f -> f.substring(banner.getOriginalFilename().lastIndexOf(".") + 1)).orElse("");
+                String bannerName = "static/css/data/" + principal.getName() + "_banner." + bannerExtension;
                 Files.copy(banner.getInputStream(), Paths.get("src/main/resources/public/static/css/data/" + principal.getName() + "_banner." + bannerExtension), StandardCopyOption.REPLACE_EXISTING);
-                cerebookProfil.setBanner("/static/css/data/" + principal.getName() + "_banner." + bannerExtension);
+                cerebookProfil.setBanner("static/css/data/" + principal.getName() + "_banner." + bannerExtension);
                 try {
-                mediaService.uploadBanner(
-                        bannerName,
-                        banner.getInputStream(),
-                        banner.getSize(),
-                        user
-                );
-            } catch (IOException e) {
+                    mediaService.uploadBanner(
+                            bannerName,
+                            banner.getInputStream(),
+                            banner.getSize(),
+                            user
+                    );
+                } catch (IOException e) {
 /*
                 redirectAttributes.addAttribute("errorMessage", e.getMessage());
 */
-            }
+                }
             } else {
                 cerebookProfil.setBanner(profilRepository.getById(cerebookProfil.getId()).getBanner());
             }
 
             if (!avatar.isEmpty()) {
-                String avatarName = "static/css/data/" +avatar.getOriginalFilename();
                 String avatarExtension = Optional.of(avatar.getOriginalFilename()).filter(f -> f.contains(".")).map(f -> f.substring(avatar.getOriginalFilename().lastIndexOf(".") + 1)).orElse("");
+                String avatarName = "static/css/data/" + principal.getName() + "_avatar." + avatarExtension;
                 Files.copy(avatar.getInputStream(), Paths.get("src/main/resources/public/static/css/data/" + principal.getName() + "_avatar." + avatarExtension), StandardCopyOption.REPLACE_EXISTING);
-                cerebookProfil.setAvatar("/static/css/data/" + principal.getName() + "_avatar." + avatarExtension);
+                cerebookProfil.setAvatar("static/css/data/" + principal.getName() + "_avatar." + avatarExtension);
                 try {
-                mediaService.uploadBanner(
-                        avatarName,
-                        banner.getInputStream(),
-                        banner.getSize(),
-                        user
-                );
-            } catch (IOException e) {
+                    mediaService.uploadBanner(
+                            avatarName,
+                            avatar.getInputStream(),
+                            avatar.getSize(),
+                            user
+                    );
+                } catch (IOException e) {
 /*
                 redirectAttributes.addAttribute("errorMessage", e.getMessage());
 */
-            }
+                }
             } else {
                 cerebookProfil.setAvatar(profilRepository.getById(cerebookProfil.getId()).getAvatar());
             }
-
-
-
+            String ornament = user.getProfil().getOrnament();
+            cerebookProfil.setOrnament(ornament);
             profilRepository.save(cerebookProfil);
         }
 
