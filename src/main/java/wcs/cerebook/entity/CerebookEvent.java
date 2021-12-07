@@ -189,4 +189,20 @@ public class CerebookEvent {
     public void setY(Double y) {
         this.y = y;
     }
+
+    public Type getMediaType() {
+        return mediaType;
+    }
+
+    public void setMediaType(Type mediaType) {
+        this.mediaType = mediaType;
+    }
+
+    public boolean isAmazonS3Hosted() {
+        return amazonS3Hosted;
+    }
+
+    public void setAmazonS3Hosted(boolean amazonS3Hosted) {
+        this.amazonS3Hosted = amazonS3Hosted;
+    }
 }
