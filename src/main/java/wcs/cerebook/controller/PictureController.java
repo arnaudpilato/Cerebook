@@ -8,11 +8,14 @@ import org.springframework.web.multipart.MultipartFile;
 import wcs.cerebook.entity.CerebookPicture;
 import wcs.cerebook.repository.PictureRepository;
 import wcs.cerebook.repository.UserRepository;
+
+import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
 import java.security.Principal;
+import java.util.Map;
 
 @Controller
 public class PictureController {
@@ -54,6 +57,7 @@ public class PictureController {
             if (cerebookPicture.getId() == null) {
                 cerebookPicture.setUser(userRepository.findByUsername(principal.getName()));
             }
+
             pictureRepository.save(cerebookPicture);
         }
 

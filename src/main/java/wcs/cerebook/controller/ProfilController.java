@@ -45,6 +45,9 @@ public class ProfilController {
     @Autowired
     private FriendRepository friendRepository;
 
+    @Autowired
+    private MovieRepository movieRepository;
+
     @GetMapping("/profil")
     public String getProfil(Model model, Principal principal) {
         model.addAttribute("user", userRepository.findByUsername(principal.getName()));
@@ -59,6 +62,9 @@ public class ProfilController {
         // PIL : Récupération du dernier message des 3 derniers amis
         List<Long[]> messagesFromSQL = messageRepository.lastThreeMessages(user.getId());
         List<CerebookMessage> messages = new ArrayList<>();
+
+        // PIL : Récupération des 6 derniers films
+        model.addAttribute("movies", movieRepository.lastMovie(user.getId()));
 
         for (Long[] ids : messagesFromSQL) {
             messages.add(messageRepository.getById(ids[0]));

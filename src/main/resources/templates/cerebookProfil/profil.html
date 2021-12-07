@@ -117,6 +117,27 @@
                                 </div>
                             </div>
                         </div>
+                        <!-- Section Films -->
+                        <div class="row mt-3">
+                            <div class="col-lg-12 ">
+                                <div class="movies-section">
+                                    <ul class="d-flex justify-content-between py-3 px-3 pb-0">
+                                        <li class="title-section"><p>Films</p></li>
+                                        <li><a href="/movie"><img class="banner-logo" src="/static/css/img/movie.png" alt="Logo Gallery"></a></li>
+                                    </ul>
+                                    <div class="row pb-3 px-3 justify-content-center">
+                                        <div class="col-3 my-2 mx-2 p-0" th:each="movie : ${movies}">
+                                            <div class="movie-link"><img class="movie-avatar" th:src="${movie.getMoviePath()}" alt="Logo de profil"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+
+
+
+
                     </div>
                     <!-- PIL : Section Map -->
                     <div class="col-lg-6 ">

@@ -62,6 +62,9 @@ public class CerebookUser {
     @OneToMany(mappedBy = "user")
     private List<CerebookVideo> videos;
 
+    @OneToMany(mappedBy = "user")
+    private List<CerebookMovie> movies;
+
 
 
 
@@ -230,6 +233,14 @@ public class CerebookUser {
 
     public void setVideos(List<CerebookVideo> videos) {
         this.videos = videos;
+    }
+
+    public List<CerebookMovie> getMovies() {
+        return movies;
+    }
+
+    public void setMovies(List<CerebookMovie> movies) {
+        this.movies = movies;
     }
 
     @Override
