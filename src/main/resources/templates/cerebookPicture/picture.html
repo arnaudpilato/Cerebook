@@ -32,7 +32,7 @@
                 <div class="col-lg-3" th:each="picture : ${user.pictures}">
                     <div class="row mt-4 container-picture">
                         <a th:href="@{/picture/show(id=${picture.id})}" class="video-btn">
-                            <img class="picture" th:src="${picture.getPicturePath()}" alt="Logo Gallery">
+                            <img class="picture" th:src="'https://wcs-2-be-or-not-2-be.s3.eu-west-3.amazonaws.com/'+${picture.getPicturePath()}" alt="Logo Gallery">
                         </a>
                         <div class="link-delete">
                             <a  th:href="@{/picture/delete(id=${picture.id})}" class="delete-img picture-btn d-block"><img class="delete-logo" src="/static/css/img/delete.png" alt="Logo Gallery"></a>

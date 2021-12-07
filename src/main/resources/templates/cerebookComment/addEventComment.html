@@ -18,7 +18,7 @@
                     <input type="text" th:field="*{comment}" id="comment" placeholder="content" class="form-control mb-4 col-4">
                 </div>
 
-                <input type="hidden" th:value="${event.id}" th:field="${event.id}" class="form-control mb-4 col-4">
+                <input type="hidden" th:value="${event.id}" name="eventid" class="form-control mb-4 col-4">
                 <button type="submit" class="btn btn-info col-2"> Save</button>
             </form>
             <hr>

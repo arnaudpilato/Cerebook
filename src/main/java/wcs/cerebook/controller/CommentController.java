@@ -5,11 +5,9 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 import wcs.cerebook.controller.exception.illegalArgumentException;
-import wcs.cerebook.entity.CerebookComment;
-import wcs.cerebook.entity.CerebookEvent;
-import wcs.cerebook.entity.CerebookPost;
-import wcs.cerebook.entity.CerebookUser;
+import wcs.cerebook.entity.*;
 import wcs.cerebook.repository.CommentRepository;
 import wcs.cerebook.repository.EventRepository;
 import wcs.cerebook.repository.PostRepository;
@@ -63,8 +61,9 @@ public class CommentController {
 
     //save  comment
     @PostMapping("/savecomment")
-    public String saveComment(@ModelAttribute CerebookComment cerebookComment,CerebookPost cerebookPost, Principal principal) {
+    public String saveComment(@ModelAttribute CerebookComment cerebookComment, @RequestParam(value = "postid") Long postid, Principal principal) {
         CerebookUser user = userRepository.getCerebookUserByUsername(principal.getName());
+        CerebookPost cerebookPost = postRepository.getById(postid);
         cerebookComment.setCerebookPost(cerebookPost);
         cerebookComment.setCerebookUser(user);
         cerebookComment.setCreatedAt(new Date());
@@ -80,6 +79,7 @@ public class CommentController {
 
         List<CerebookPost> post = postRepository.findAll();
         model.addAttribute("listComment", comments);
+
 
         // PIL : Récupération de l'user principal pour la navbar
         model.addAttribute("user", userRepository.findByUsername(principal.getName()));
@@ -106,8 +106,9 @@ public class CommentController {
 
     //save  comment
     @RequestMapping("/saveEventComment")
-    public String saveEventComment(CerebookEvent cerebookEvent, @ModelAttribute CerebookComment cerebookComment, Principal principal) {
+    public String saveEventComment(@RequestParam(value = "eventid") Long eventid, @ModelAttribute CerebookComment cerebookComment, Principal principal) {
         CerebookUser user = userRepository.getCerebookUserByUsername(principal.getName());
+        CerebookEvent cerebookEvent = eventRepository.getById(eventid);
         cerebookComment.setCerebookEvent(cerebookEvent);
         cerebookComment.setCerebookUser(user);
         cerebookComment.setCreatedAt(new Date());

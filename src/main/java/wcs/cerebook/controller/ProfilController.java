@@ -10,6 +10,8 @@ import org.springframework.web.multipart.MultipartFile;
 import twitter4j.*;
 import wcs.cerebook.entity.*;
 import wcs.cerebook.repository.*;
+import wcs.cerebook.services.MediaService;
+
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
@@ -46,6 +48,9 @@ public class ProfilController {
     @Autowired
     private FriendRepository friendRepository;
 
+    @Autowired
+    private MediaService mediaService;
+
     @GetMapping("/profil")
 
     public String getProfil(Model model, Principal principal) {
@@ -78,6 +83,7 @@ public class ProfilController {
             friends.add(friend.getCurrentFriends());
         }
         model.addAttribute("friends", friends);
+
         String userName = principal.getName();
         //tweet
         try {
@@ -95,6 +101,7 @@ public class ProfilController {
             System.out.println("Failed to get timeline: " + te.getMessage());
             System.exit(-1);
         }
+
         return "cerebookProfil/profil";
 
     }
@@ -143,7 +150,6 @@ public class ProfilController {
             }
 
             profilRepository.save(cerebookProfil);
-            userRepository.save(cerebookUser);
         }
 
         return "redirect:/profil";
