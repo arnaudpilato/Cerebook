@@ -32,6 +32,7 @@ public class MovieController {
     public String gettAllMovie(Model model, Principal principal) {
         // PIL : Récupération de l'user principal pour la navbar
         model.addAttribute("user", userRepository.findByUsername(principal.getName()));
+        model.addAttribute("movies", movieRepository.findAll());
 
         return "/cerebookMovie/movie";
     }
