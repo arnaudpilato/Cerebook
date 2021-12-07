@@ -159,7 +159,6 @@ public class ProfilController {
             }
 
             profilRepository.save(cerebookProfil);
-            userRepository.save(cerebookUser);
         }
 
         return "redirect:/profil";
