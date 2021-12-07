@@ -11,6 +11,7 @@ import wcs.cerebook.entity.CerebookUser;
 import wcs.cerebook.repository.EventRepository;
 import wcs.cerebook.repository.UserRepository;
 import wcs.cerebook.services.GeocodeService;
+import wcs.cerebook.services.MediaService;
 
 import java.io.IOException;
 import java.nio.file.Files;
@@ -27,6 +28,8 @@ public class EventController {
     private UserRepository userRepository;
     @Autowired
     private GeocodeService geocodeService;
+    @Autowired
+    private MediaService mediaService;
 
     @GetMapping("/eventCreate")
     public String addPost(Principal principal, Model model, @RequestParam(required = false, value = "id") Long id) {
@@ -46,7 +49,7 @@ public class EventController {
 
 
     @RequestMapping("/eventSave")
-    public String saveEvent(Model model, @ModelAttribute CerebookEvent cerebookEvent, Principal principal, @RequestParam(value = "image_file") MultipartFile image) throws IOException {
+    public String saveEvent(Model model, @ModelAttribute CerebookEvent cerebookEvent, Principal principal, @RequestParam(value = "picture") MultipartFile picture) throws IOException {
         CerebookUser user = userRepository.getCerebookUserByUsername(principal.getName());
         try {
             cerebookEvent.setX(geocodeService.getAdressAsJson(cerebookEvent.getCity() + " " + cerebookEvent.getAddress()).get("data").get(0).get("longitude").asDouble());
@@ -58,19 +61,33 @@ public class EventController {
             model.addAttribute("error_cartography", error_cartography);
             return "cerebookEvent/eventCreate";
         }
-        if (!image.isEmpty()) {
+        if (!picture.isEmpty()) {
             if (cerebookEvent.getId() != null) {
-                if (!image.isEmpty()) {
-                    saveImage(cerebookEvent, principal, image);
+                if (!picture.isEmpty()) {
+                    saveImage(cerebookEvent, principal, picture);
                 } else {
                     cerebookEvent.setImage(eventRepository.getById(cerebookEvent.getId()).getImage());
                 }
             } else {
-                saveImage(cerebookEvent, principal, image);
+                saveImage(cerebookEvent, principal, picture);
             }
         }
-        cerebookEvent.setCerebookUser(user);
-        eventRepository.save(cerebookEvent);
+        String filename = "static/css/data/" + picture.getOriginalFilename();
+
+        try {
+            mediaService.uploadEventImage(
+                    filename,
+                    picture.getInputStream(),
+                    picture.getSize(),
+                    user,
+                    cerebookEvent
+            );
+        } catch (IOException e) {
+/*
+            redirectAttributes.addAttribute("errorMessage", e.getMessage());
+*/
+        }
+
 
         Long eventId = cerebookEvent.getId();
 

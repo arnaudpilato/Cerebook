@@ -89,9 +89,12 @@ public class ProfilController {
         try {
             Twitter twitter = new TwitterFactory().getInstance();
             User twitterUser = twitter.verifyCredentials();
-            List<Status> statuses = twitter.getUserTimeline();
-            model.addAttribute("tweet", statuses);
-            model.addAttribute("twitterUser",twitterUser.getScreenName());
+            if(user.getUsername().equals(twitterUser.getScreenName()) ){
+                List<Status> statuses = twitter.getUserTimeline();
+                model.addAttribute("tweet", statuses);
+                model.addAttribute("twitterUser",twitterUser.getScreenName());
+
+            }
 
         } catch (TwitterException te) {
             te.printStackTrace();
@@ -116,19 +119,7 @@ public class ProfilController {
         List<CerebookCartography> cartographies = cartographyRepository.findAll();
         JsonNode json = new ObjectMapper().valueToTree(cartographies);
         model.addAttribute("cartography", json);
-        //tweet cerebookUser
-        try {
-            Twitter twitter = new TwitterFactory().getInstance();
-            User twitterUser = twitter.verifyCredentials();
-            List<Status> statuses = twitter.getUserTimeline();
-            model.addAttribute("tweet",statuses);
-            model.addAttribute("twitterUser",twitterUser.getScreenName());
 
-        } catch (TwitterException te) {
-            te.printStackTrace();
-            System.out.println("Failed to get timeline: " + te.getMessage());
-            System.exit(-1);
-        }
         return "cerebookProfil/profil";
     }
 
@@ -141,22 +132,51 @@ public class ProfilController {
 
     @PostMapping("/profil/update")
     public String postProfilUpdate(@ModelAttribute CerebookProfil cerebookProfil, @ModelAttribute CerebookUser cerebookUser, @RequestParam(value = "file_banner") MultipartFile banner, @RequestParam("file_avatar") MultipartFile avatar, Principal principal, Model model) throws IOException {
+        CerebookUser user = userRepository.getCerebookUserByUsername(principal.getName());
         if (cerebookProfil.getId() != null) {
             if (!banner.isEmpty()) {
+                String bannerName = "static/css/data/" +banner.getOriginalFilename();
                 String bannerExtension = Optional.of(banner.getOriginalFilename()).filter(f -> f.contains(".")).map(f -> f.substring(banner.getOriginalFilename().lastIndexOf(".") + 1)).orElse("");
                 Files.copy(banner.getInputStream(), Paths.get("src/main/resources/public/static/css/data/" + principal.getName() + "_banner." + bannerExtension), StandardCopyOption.REPLACE_EXISTING);
                 cerebookProfil.setBanner("/static/css/data/" + principal.getName() + "_banner." + bannerExtension);
+                try {
+                mediaService.uploadBanner(
+                        bannerName,
+                        banner.getInputStream(),
+                        banner.getSize(),
+                        user
+                );
+            } catch (IOException e) {
+/*
+                redirectAttributes.addAttribute("errorMessage", e.getMessage());
+*/
+            }
             } else {
                 cerebookProfil.setBanner(profilRepository.getById(cerebookProfil.getId()).getBanner());
             }
 
             if (!avatar.isEmpty()) {
+                String avatarName = "static/css/data/" +avatar.getOriginalFilename();
                 String avatarExtension = Optional.of(avatar.getOriginalFilename()).filter(f -> f.contains(".")).map(f -> f.substring(avatar.getOriginalFilename().lastIndexOf(".") + 1)).orElse("");
                 Files.copy(avatar.getInputStream(), Paths.get("src/main/resources/public/static/css/data/" + principal.getName() + "_avatar." + avatarExtension), StandardCopyOption.REPLACE_EXISTING);
                 cerebookProfil.setAvatar("/static/css/data/" + principal.getName() + "_avatar." + avatarExtension);
+                try {
+                mediaService.uploadBanner(
+                        avatarName,
+                        banner.getInputStream(),
+                        banner.getSize(),
+                        user
+                );
+            } catch (IOException e) {
+/*
+                redirectAttributes.addAttribute("errorMessage", e.getMessage());
+*/
+            }
             } else {
                 cerebookProfil.setAvatar(profilRepository.getById(cerebookProfil.getId()).getAvatar());
             }
+
+
 
             profilRepository.save(cerebookProfil);
         }

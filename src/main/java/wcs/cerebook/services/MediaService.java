@@ -2,10 +2,9 @@ package wcs.cerebook.services;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import wcs.cerebook.entity.CerebookPicture;
-import wcs.cerebook.entity.CerebookUser;
-import wcs.cerebook.entity.CerebookVideo;
+import wcs.cerebook.entity.*;
 import wcs.cerebook.model.SimpleHostedMedia;
+import wcs.cerebook.repository.EventRepository;
 import wcs.cerebook.repository.PictureRepository;
 import wcs.cerebook.repository.VideoRepository;
 
@@ -20,7 +19,8 @@ public class MediaService {
     PictureRepository pictureRepository;
     @Autowired
     VideoRepository videoRepository;
-
+    @Autowired
+    EventRepository eventRepository;
     @Autowired
     HostingService hostingService;
 
@@ -48,9 +48,16 @@ public class MediaService {
         videoRepository.save(cerebookVideo);
     }
 
+    public void uploadEventImage(String filename, InputStream inputStream, long size, CerebookUser user, CerebookEvent cerebookEvent) {
+        hostingService.uploadPictureImage(filename, inputStream, size);
 
+        cerebookEvent.setCerebookUser(user);
+        cerebookEvent.setMediaType(CerebookEvent.Type.SimpleMedia);
+        cerebookEvent.setImage(filename);
+        cerebookEvent.setAmazonS3Hosted(hostingService.isAmazon());
 
-
+        eventRepository.save(cerebookEvent);
+    }
 
     public List<SimpleHostedMedia> getMediaList() {
         return pictureRepository
@@ -61,5 +68,12 @@ public class MediaService {
                         cm
                 ))
                 .collect(Collectors.toList());
+    }
+
+    public void uploadBanner(String bannerName, InputStream inputStream, long size, CerebookUser user) {
+                hostingService.uploadPictureImage(bannerName, inputStream, size);
+                user.getProfil().setMediaType(CerebookProfil.Type.SimpleMedia);
+                user.getProfil().setBanner(bannerName);
+                user.getProfil().setAmazonS3Hosted(hostingService.isAmazon());
     }
 }

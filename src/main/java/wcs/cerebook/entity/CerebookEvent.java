@@ -15,6 +15,11 @@ import java.util.List;
         property = "id")
 @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public class CerebookEvent {
+    public static enum Type {
+        SimpleMedia,
+        ResizedPicture
+    }
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -37,12 +42,13 @@ public class CerebookEvent {
     private boolean roles;
     private Double x;
     private Double y;
+    private Type mediaType;
+    private boolean amazonS3Hosted;
 
     public CerebookEvent() {
     }
 
-    public CerebookEvent(Long id, String title, Date startEvent, Date endEvent, String address, String city, int phone, String email, String image, String description, CerebookUser cerebookUser, boolean roles, Double x, Double y) {
-        this.id = id;
+    public CerebookEvent(String title, Date startEvent, Date endEvent, String address, String city, int phone, String email, String image, String description, CerebookUser cerebookUser, boolean roles, Double x, Double y, Type mediaType) {
         this.title = title;
         this.startEvent = startEvent;
         this.endEvent = endEvent;
@@ -56,6 +62,16 @@ public class CerebookEvent {
         this.roles = roles;
         this.x = x;
         this.y = y;
+        this.mediaType = mediaType;
+    }
+
+    public CerebookEvent(String mediaType,String picturePath) {
+        this(picturePath, Type.valueOf(mediaType));
+    }
+
+    public CerebookEvent(String image, Type mediaType) {
+        this.image = image;
+        this.mediaType = mediaType;
     }
 
     public Long getId() {
@@ -172,5 +188,21 @@ public class CerebookEvent {
 
     public void setY(Double y) {
         this.y = y;
+    }
+
+    public Type getMediaType() {
+        return mediaType;
+    }
+
+    public void setMediaType(Type mediaType) {
+        this.mediaType = mediaType;
+    }
+
+    public boolean isAmazonS3Hosted() {
+        return amazonS3Hosted;
+    }
+
+    public void setAmazonS3Hosted(boolean amazonS3Hosted) {
+        this.amazonS3Hosted = amazonS3Hosted;
     }
 }
