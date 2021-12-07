@@ -2,10 +2,7 @@ package wcs.cerebook.services;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import wcs.cerebook.entity.CerebookEvent;
-import wcs.cerebook.entity.CerebookPicture;
-import wcs.cerebook.entity.CerebookUser;
-import wcs.cerebook.entity.CerebookVideo;
+import wcs.cerebook.entity.*;
 import wcs.cerebook.model.SimpleHostedMedia;
 import wcs.cerebook.repository.EventRepository;
 import wcs.cerebook.repository.PictureRepository;
@@ -73,4 +70,10 @@ public class MediaService {
                 .collect(Collectors.toList());
     }
 
+    public void uploadBanner(String bannerName, InputStream inputStream, long size, CerebookUser user) {
+                hostingService.uploadPictureImage(bannerName, inputStream, size);
+                user.getProfil().setMediaType(CerebookProfil.Type.SimpleMedia);
+                user.getProfil().setBanner(bannerName);
+                user.getProfil().setAmazonS3Hosted(hostingService.isAmazon());
+    }
 }
