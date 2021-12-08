@@ -28,4 +28,14 @@ public interface FriendRepository extends JpaRepository<CerebookFriend, Long> {
             "WHERE f.current_user_id = :user_id AND ccf.add = true " +
             "ORDER BY f.id DESC LIMIT 6")
     public List<CerebookFriend> getLastFriend_Id(@Param("user_id") CerebookUser user_id);
+
+    // Math : Récupérer les 6 dernières accepations d'amis
+    @Query(nativeQuery = true, value = "SELECT * FROM cerebook_friend AS f " +
+            "JOIN cerebook_confirmation_friend AS ccf " +
+            "ON f.confirmation_friend_id = ccf.id " +
+            "WHERE (f.current_user_id = :user_id OR ccf.friend_user_id = :user_id) " +
+            "AND f.current_user_id != ccf.friend_user_id "+
+            "AND ccf.add = true " +
+            "ORDER BY f.id DESC LIMIT 6")
+    public List<CerebookFriend> getLastFriend(@Param("user_id") CerebookUser user_id);
 }

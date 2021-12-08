@@ -78,7 +78,7 @@ public class ProfilController {
         model.addAttribute("cartography", json);
         // PIL : Récupérations des 6 derniers amis
         List<CerebookUser> friends = new ArrayList<>();
-        List<CerebookFriend> confirmed = friendRepository.getLastFriend_Id(user);
+        List<CerebookFriend> confirmed = friendRepository.getLastFriend(user);
         for (CerebookFriend friend : confirmed) {
             friends.add(friend.getCurrentFriends());
         }
