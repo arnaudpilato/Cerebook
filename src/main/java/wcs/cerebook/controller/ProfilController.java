@@ -3,12 +3,14 @@ package wcs.cerebook.controller;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.session.SessionRegistry;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import twitter4j.*;
 import wcs.cerebook.entity.*;
+import wcs.cerebook.model.MyUserDetails;
 import wcs.cerebook.repository.*;
 import wcs.cerebook.services.MediaService;
 
@@ -21,6 +23,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Controller
 public class ProfilController {
@@ -51,9 +54,39 @@ public class ProfilController {
     @Autowired
     private MediaService mediaService;
 
-    @GetMapping("/profil")
+    @Autowired
+    private SessionRegistry sessionRegistry;
 
+
+    public List<Object> getUsersFromSessionRegistry() {
+        return sessionRegistry.getAllPrincipals().stream()
+                .filter(u -> !sessionRegistry.getAllSessions(u, false).isEmpty())
+                .collect(Collectors.toList());
+    }
+
+    public List<String> getUsersSessionRegistry() {
+        return sessionRegistry.getAllPrincipals().stream()
+                .filter(u -> !sessionRegistry.getAllSessions(u, false).isEmpty())
+                .map(Object::toString)
+                .collect(Collectors.toList());
+    }
+
+    @GetMapping("/profil")
     public String getProfil(Model model, Principal principal) {
+
+        List<Object> principals = sessionRegistry.getAllPrincipals();
+
+        List<String> usersNamesList = new ArrayList<String>();
+
+        for (Object princip : principals) {
+            if (princip instanceof MyUserDetails) {
+                usersNamesList.add(((MyUserDetails) princip).getUsername());
+            }
+        }
+        for (String usersName : usersNamesList) {
+            System.out.println(usersName);
+        }
+
         model.addAttribute("user", userRepository.findByUsername(principal.getName()));
         CerebookUser user = userRepository.getCerebookUserByUsername(principal.getName());
         List<CerebookPost> cerebookPosts = user.getCerebookPosts();
