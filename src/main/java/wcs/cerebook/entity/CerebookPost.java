@@ -5,6 +5,7 @@ import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import org.springframework.format.annotation.DateTimeFormat;
+
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.Date;
@@ -12,9 +13,9 @@ import java.util.List;
 
 @Entity
 @JsonIdentityInfo(
-    generator = ObjectIdGenerators.PropertyGenerator.class,
-    property = "id")
-@JsonIgnoreProperties(value = {"hibernateLazyInitializer","handler"})
+        generator = ObjectIdGenerators.PropertyGenerator.class,
+        property = "id")
+@JsonIgnoreProperties(value = {"hibernateLazyInitializer", "handler"})
 public class CerebookPost {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -32,6 +33,7 @@ public class CerebookPost {
 
     @OneToMany(mappedBy = "cerebookPost", fetch = FetchType.LAZY,
             cascade = CascadeType.REMOVE, orphanRemoval = true)
+    @OrderBy("id DESC")
     private final List<CerebookComment> comments = new ArrayList<CerebookComment>();
     //oneTomany one vers  les likes
     @OneToMany(
