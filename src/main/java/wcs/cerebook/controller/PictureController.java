@@ -11,7 +11,6 @@ import wcs.cerebook.entity.CerebookUser;
 import wcs.cerebook.repository.PictureRepository;
 import wcs.cerebook.repository.UserRepository;
 import wcs.cerebook.services.MediaService;
-
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
@@ -78,9 +77,6 @@ public class PictureController {
             } catch (IOException e) {
                 redirectAttributes.addAttribute("errorMessage", e.getMessage());
             }
-            /*
-            pictureRepository.save(cerebookPicture);
-            */
         }
 
         return "redirect:/picture";

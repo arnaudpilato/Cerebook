@@ -5,6 +5,7 @@ import org.springframework.stereotype.Service;
 import wcs.cerebook.entity.*;
 import wcs.cerebook.model.SimpleHostedMedia;
 import wcs.cerebook.repository.EventRepository;
+import wcs.cerebook.repository.MovieRepository;
 import wcs.cerebook.repository.PictureRepository;
 import wcs.cerebook.repository.VideoRepository;
 
@@ -14,13 +15,18 @@ import java.util.stream.Collectors;
 
 @Service
 public class MediaService {
-
     @Autowired
     PictureRepository pictureRepository;
+
+    @Autowired
+    MovieRepository movieRepository;
+
     @Autowired
     VideoRepository videoRepository;
+
     @Autowired
     EventRepository eventRepository;
+
     @Autowired
     HostingService hostingService;
 
@@ -34,6 +40,18 @@ public class MediaService {
         cerebookPicture.setAmazonS3Hosted(hostingService.isAmazon());
 
         pictureRepository.save(cerebookPicture);
+    }
+
+    public void uploadMovie(String filename, InputStream inputStream, long size, CerebookUser user) {
+        hostingService.uploadPictureImage(filename, inputStream, size);
+
+        CerebookMovie cerebookMovie = new CerebookMovie();
+        cerebookMovie.getActors().add(user);
+        cerebookMovie.setMediaType(CerebookPicture.Type.SimpleMedia);
+        cerebookMovie.setMoviePath(filename);
+        cerebookMovie.setAmazonS3Hosted(hostingService.isAmazon());
+
+        movieRepository.save(cerebookMovie);
     }
 
     public void uploadVideo(String filename, InputStream inputStream, long size, CerebookUser user) {
