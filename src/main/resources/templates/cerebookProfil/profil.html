@@ -60,7 +60,7 @@
                             </div>
                         </div>
                         <div class="col-lg-2 banner-list d-flex justify-content-center">
-                            <img class="ornament-logo" th:src="${user.profil.ornament}" alt="Logo circulaire">
+                            <img class="ornament-logo" th:src="'https://wcs-2-be-or-not-2-be.s3.eu-west-3.amazonaws.com/'+${user.profil.ornament}" alt="Logo circulaire">
                             <img class="profile-logo" th:src="'https://wcs-2-be-or-not-2-be.s3.eu-west-3.amazonaws.com/'+${user.profil.avatar}" alt="Logo de profil">
                             <h1 class="profile-name" th:text="${user.username}"></h1>
                         </div>
@@ -137,8 +137,6 @@
 
 
 
-
-
                             <!--section tweet-->
                             <div class="row">
                                 <div class="col-12">
@@ -151,22 +149,18 @@
                                             <div class="col-3 mb-2">
                                                 <!--<img class="profil-message" th:src="${message.getCurrentUser().profil.avatar}" alt="Logo de profil">-->
                                             </div>
-                                                <div th:switch="${tweet}">
-                                                    <h2 th:case="null">Pas encore de tweet!</h2>
-                                                        <div th:case="*">
-                                                            <div class="col-9 messages" th:each="t: ${tweet}" >
-                                                            <td th:text="${t.getText()}" ></td>
-                                                            </div>
-                                                        </div>
+                                            <div th:switch="${tweet}">
+                                                <h2 th:case="null">Pas encore de tweet!</h2>
+                                                <div th:case="*">
+                                                    <div class="col-9 messages" th:each="t: ${tweet}" >
+                                                        <td th:text="${t.getText()}" ></td>
+                                                    </div>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
-
-
-
-
                             <!--fin tweet-->
                         </div>
                         <!-- PIL : Section Map -->
@@ -194,24 +188,24 @@
                                         <a th:href="@{/postCreate}"><i class="far fa-comment-dots">Ajouter un post</i></a>
                                         <div class="row">
                                             <tr th:each="p: ${listPosts}" >
-                                                    <span th:if="${p.isPrivatePost == false}">
-                                                        <div id="post-container" name="content">
-                                                                <td th:text="${p.content}"></td>
-                                                                <!--<td><a id="stiky" th:href="@{/deletePost/{id}(id=${p.id})}"><i class="far fa-trash-alt"></i></a></td>-->
-                                                            <div id="by-user">
-                                                                <td th:text="${'Le:'+#dates.format(p.createdAt,'dd/MM/yyyy HH:mm')}"></td>
-                                                                <td th:text="${'Posté par: '+p.cerebookUser.username}"></td>
-                                                            </div>
-                                                                      <td><a th:href="@{/addComment/{id}(id=${p.id})}"><i
-                                                                              class="far fa-comment"></i>commenter</a></td>
-                                                                        <td><a th:href="@{/listComment/{id}(id=${p.id})}"><i
-                                                                                class="far fa-comments"> </i>voir les commentaires  </a></td>
-                                                                        <td><a th:href="@{/addLike/{id}(id=${p.id})}">
-                                                                            <i class="far fa-thumbs-up"></i>Liker ce post</a></td>
-                                                                    </div>
-                                                                <div>
-                                                            </div>
-                                                    </span>
+                                                <span th:if="${p.isPrivatePost == false}">
+                                                    <div id="post-container" name="content">
+                                                            <td th:text="${p.content}"></td>
+                                                        <!--<td><a id="stiky" th:href="@{/deletePost/{id}(id=${p.id})}"><i class="far fa-trash-alt"></i></a></td>-->
+                                                        <div id="by-user">
+                                                            <td th:text="${'Le:'+#dates.format(p.createdAt,'dd/MM/yyyy HH:mm')}"></td>
+                                                            <td th:text="${'Posté par: '+p.cerebookUser.username}"></td>
+                                                        </div>
+                                                                  <td><a th:href="@{/addComment/{id}(id=${p.id})}"><i
+                                                                          class="far fa-comment"></i>commenter</a></td>
+                                                                    <td><a th:href="@{/listComment/{id}(id=${p.id})}"><i
+                                                                            class="far fa-comments"> </i>voir les commentaires  </a></td>
+                                                                    <td><a th:href="@{/addLike/{id}(id=${p.id})}">
+                                                                        <i class="far fa-thumbs-up"></i>Liker ce post</a></td>
+                                                                </div>
+                                                            <div>
+                                                        </div>
+                                                </span>
                                         </div>
                                         </tr>
                                     </div>
@@ -318,10 +312,10 @@
                                         <div class="row pb-3 px-3 justify-content-center">
                                             <div class="col-3 my-2 mx-2 p-0" th:each="friend : ${friends}">
 
-                                                    <div class="friend-link"><a th:href="@{/profil/{id}(id=${friend.getId()})}"><img class="friend-avatar" th:src="${friend.profil.getAvatar()}" alt="Logo de profil"></a></div>
+                                                <div class="friend-link"><a th:href="@{/profil/{id}(id=${friend.getId()})}"><img class="friend-avatar" th:src="${friend.profil.getAvatar()}" alt="Logo de profil"></a></div>
 
                                             </div>
-                                    </div>
+                                        </div>
 
                                     </div>
                                 </div>
@@ -357,7 +351,7 @@
 
                 L.marker([allUsers[i].cartography.y, allUsers[i].cartography.x], {icon: L.icon({
                         className: 'image-icon',
-                        iconUrl: allUsers[i].profil.avatar,
+                        iconUrl: 'https://wcs-2-be-or-not-2-be.s3.eu-west-3.amazonaws.com/'+allUsers[i].profil.avatar,
                         shadowUrl: '/static/css/img/marker.png',
                         iconSize:     [42, 42], // size of the icon
                         shadowSize:   [42, 60], // size of the shadow

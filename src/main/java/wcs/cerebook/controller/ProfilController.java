@@ -70,7 +70,7 @@ public class ProfilController {
         List<CerebookMessage> messages = new ArrayList<>();
 
         // PIL : Récupération des 6 derniers films
-        //model.addAttribute("movies", movieRepository.lastMovie(user.getId()));
+        model.addAttribute("movies", movieRepository.lastMovie(user.getId()));
 
         for (Long[] ids : messagesFromSQL) {
             messages.add(messageRepository.getById(ids[0]));
@@ -83,13 +83,11 @@ public class ProfilController {
         model.addAttribute("cartography", json);
         // PIL : Récupérations des 6 derniers amis
         List<CerebookUser> friends = new ArrayList<>();
-        List<CerebookFriend> confirmed = friendRepository.getLastFriend_Id(user);
+        List<CerebookFriend> confirmed = friendRepository.getLastFriend(user);
         for (CerebookFriend friend : confirmed) {
             friends.add(friend.getCurrentFriends());
         }
         model.addAttribute("friends", friends);
-
-        String userName = principal.getName();
         //tweet
         try {
             Twitter twitter = new TwitterFactory().getInstance();
@@ -136,7 +134,7 @@ public class ProfilController {
     }
 
     @PostMapping("/profil/update")
-    public String postProfilUpdate(@ModelAttribute CerebookProfil cerebookProfil, @ModelAttribute CerebookUser cerebookUser, @RequestParam(value = "file_banner") MultipartFile banner, @RequestParam("file_avatar") MultipartFile avatar, Principal principal, Model model) throws IOException {
+    public String postProfilUpdate(@ModelAttribute CerebookProfil cerebookProfil, @ModelAttribute CerebookUser cerebookUser, @RequestParam(value = "file_banner") MultipartFile banner, @RequestParam("file_avatar") MultipartFile avatar, Principal principal) throws IOException {
         CerebookUser user = userRepository.getCerebookUserByUsername(principal.getName());
         if (cerebookProfil.getId() != null) {
             if (!banner.isEmpty()) {
