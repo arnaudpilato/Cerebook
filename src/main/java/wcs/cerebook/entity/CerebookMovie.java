@@ -4,23 +4,42 @@ import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Set;
+import java.util.TreeSet;
 
 @Entity
 @JsonIdentityInfo(
     generator = ObjectIdGenerators.PropertyGenerator.class,
     property = "id")
 public class CerebookMovie {
+    public static enum Type {
+        SimpleMedia,
+        ResizedPicture
+    }
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String moviePath;
-    private boolean actor;
+    private CerebookPicture.Type mediaType;
+    private boolean amazonS3Hosted;
 
-    @ManyToOne
-    @JoinColumn(name = "user_id")
-    private CerebookUser user;
+    // PIL : One To many vers Movie
+    @ManyToMany(cascade = CascadeType.ALL, mappedBy = "userMovies")
+    private Set<CerebookUser> actors = new TreeSet<>();
 
     public CerebookMovie() {
+    }
+
+    public CerebookMovie(String mediaType,String moviePath) {
+        this(moviePath, CerebookPicture.Type.valueOf(mediaType));
+    }
+
+    public CerebookMovie(String moviePath, CerebookPicture.Type mediaType) {
+        this.moviePath = moviePath;
+        this.mediaType = mediaType;
     }
 
     public Long getId() {
@@ -39,19 +58,23 @@ public class CerebookMovie {
         this.moviePath = moviePath;
     }
 
-    public boolean isActor() {
-        return actor;
+    public CerebookPicture.Type getMediaType() {
+        return mediaType;
     }
 
-    public void setActor(boolean actor) {
-        this.actor = actor;
+    public void setMediaType(CerebookPicture.Type mediaType) {
+        this.mediaType = mediaType;
     }
 
-    public CerebookUser getUser() {
-        return user;
+    public boolean isAmazonS3Hosted() {
+        return amazonS3Hosted;
     }
 
-    public void setUser(CerebookUser user) {
-        this.user = user;
+    public void setAmazonS3Hosted(boolean amazonS3Hosted) {
+        this.amazonS3Hosted = amazonS3Hosted;
+    }
+
+    public Set<CerebookUser> getActors() {
+        return actors;
     }
 }

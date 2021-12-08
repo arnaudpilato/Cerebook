@@ -11,6 +11,6 @@ import java.util.List;
 
 @Repository
 public interface MovieRepository extends JpaRepository<CerebookMovie, Long> {
-    @Query(nativeQuery = true, value = "SELECT * FROM cerebook_movie AS m WHERE m.user_id = :user_id ORDER BY id DESC LIMIT 6")
-    List<CerebookMovie> lastMovie(@Param("user_id") Long user_id);
+    //@Query(nativeQuery = true, value = "SELECT * FROM cerebook_movie AS m WHERE m.user_id = :user_id ORDER BY id DESC LIMIT 6")
+    //List<CerebookMovie> lastMovie(@Param("user_id") Long user_id);
 }

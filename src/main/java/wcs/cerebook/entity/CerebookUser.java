@@ -18,7 +18,7 @@ import java.util.ArrayList;
         generator = ObjectIdGenerators.PropertyGenerator.class,
         property = "id")
 @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
-public class CerebookUser {
+public class CerebookUser implements Comparable<CerebookUser> {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -67,8 +67,9 @@ public class CerebookUser {
     @OneToMany(mappedBy = "user")
     private List<CerebookVideo> videos;
 
-    @OneToMany(mappedBy = "user")
-    private List<CerebookMovie> movies;
+    // Pil : One to many vers User
+    @ManyToMany(cascade = CascadeType.ALL)
+    private List<CerebookMovie> userMovies = new ArrayList<>();
 
     public List<CerebookPostLike> getCerebookPostLikes() {
         return cerebookPostLikes;
@@ -250,12 +251,12 @@ public class CerebookUser {
         this.videos = videos;
     }
 
-    public List<CerebookMovie> getMovies() {
-        return movies;
+    public List<CerebookMovie> getUserMovies() {
+        return userMovies;
     }
 
-    public void setMovies(List<CerebookMovie> movies) {
-        this.movies = movies;
+    public void setUserMovies(List<CerebookMovie> userMovies) {
+        this.userMovies = userMovies;
     }
 
     @Override
@@ -275,5 +276,10 @@ public class CerebookUser {
                 ", messages=" + messages +
                 ", profil=" + (profil == null ? "null" : profil.getId()) +
                 '}';
+    }
+
+    @Override
+    public int compareTo(CerebookUser o) {
+        return id.compareTo(o.id);
     }
 }

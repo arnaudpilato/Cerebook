@@ -9,16 +9,16 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 import wcs.cerebook.entity.CerebookMovie;
+import wcs.cerebook.entity.CerebookUser;
 import wcs.cerebook.repository.MovieRepository;
 import wcs.cerebook.repository.UserRepository;
-
+import wcs.cerebook.services.MediaService;
 import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
 import java.security.Principal;
-import java.util.List;
 
 @Controller
 public class MovieController {
@@ -27,6 +27,9 @@ public class MovieController {
 
     @Autowired
     private MovieRepository movieRepository;
+
+    @Autowired
+    private MediaService mediaService;
 
     @GetMapping("/movie")
     public String gettAllMovie(Model model, Principal principal) {
@@ -56,30 +59,45 @@ public class MovieController {
 
     @PostMapping("/movie/update")
     public String postMovieUpdate(@ModelAttribute CerebookMovie cerebookMovie, @RequestParam(value = "file_movie") MultipartFile movie, Principal principal, HttpServletRequest httpServletRequest) throws IOException {
+        CerebookUser user = userRepository.getCerebookUserByUsername(principal.getName());
+
         if (!movie.isEmpty()) {
-            Files.copy(movie.getInputStream(), Paths.get("src/main/resources/public/static/css/data/" + movie.getOriginalFilename()), StandardCopyOption.REPLACE_EXISTING);
-            cerebookMovie.setMoviePath("/static/css/data/" + movie.getOriginalFilename());
-            if (cerebookMovie.getId() == null) {
-                cerebookMovie.setUser(userRepository.findByUsername(principal.getName()));
+            String filename = "static/css/data/" + movie.getOriginalFilename();
+            Files.copy(movie.getInputStream(), Paths.get("src/main/resources/public/" + filename), StandardCopyOption.REPLACE_EXISTING);
+            cerebookMovie.setMoviePath(filename);
+
+            try {
+                mediaService.uploadMovie(
+                        filename,
+                        movie.getInputStream(),
+                        movie.getSize(),
+                        user
+                );
+            } catch (IOException e) {
+                //redirectAttributes.addAttribute("errorMessage", e.getMessage());
             }
 
-            movieRepository.save(cerebookMovie);
         }
 
-        List<CerebookMovie> coverCerebookMovies = movieRepository.findAll();
-        for (CerebookMovie coverMovie : coverCerebookMovies) {
-            coverMovie.setActor(false);
-            movieRepository.save(coverMovie);
-        }
+        System.out.println("**************");
+        System.out.println(httpServletRequest.getParameterMap().keySet());
+        System.out.println(user.getUserMovies());
+        System.out.println("**************");
+        user.getUserMovies().clear();
 
         for (String entry : httpServletRequest.getParameterMap().keySet()) {
             try {
-                movieRepository.getById(Long.parseLong(entry)).setActor(true);
-                movieRepository.save(movieRepository.getById(Long.parseLong(entry)));
+              CerebookMovie checkedMovie =  movieRepository.getById(Long.parseLong(entry));
+              user.getUserMovies().add(checkedMovie);
             } catch (Exception e) {
                 // Pil : Aucune valeur à catcher
             }
         }
+
+        user = userRepository.saveAndFlush(user);
+        System.out.println("**************");
+        System.out.println(user.getUserMovies());
+        System.out.println("**************");
 
         return "redirect:/movie";
     }

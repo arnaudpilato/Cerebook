@@ -30,8 +30,8 @@
             </div>
             <div>
                 <div class="l-container">
-                    <div class="form-check b-game-card" th:each="movie, iter : ${user.movies}">
-                        <input class="form-check-input check" type="checkbox" th:value="${iter.index}" th:name="${movie.id}" th:id="'checkbox' + ${iter.index}" th:checked="${movie.isActor()}">
+                    <div class="form-check b-game-card" th:each="movie, iter : ${movies}">
+                        <input class="form-check-input check" type="checkbox" th:value="${iter.index}" th:name="${movie.id}" th:id="'checkbox' + ${iter.index}" th:checked="${movie.getActors().contains(user)}">
                         <label class="form-check-label b-game-card__cover" th:for="'checkbox' + ${iter.index}">
                             <img class="movie-cover" th:src="${movie.getMoviePath()}" alt="Image de film">
                         </label>

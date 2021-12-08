@@ -11,7 +11,6 @@ import twitter4j.*;
 import wcs.cerebook.entity.*;
 import wcs.cerebook.repository.*;
 import wcs.cerebook.services.MediaService;
-
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
@@ -71,7 +70,7 @@ public class ProfilController {
         List<CerebookMessage> messages = new ArrayList<>();
 
         // PIL : Récupération des 6 derniers films
-        model.addAttribute("movies", movieRepository.lastMovie(user.getId()));
+        //model.addAttribute("movies", movieRepository.lastMovie(user.getId()));
 
         for (Long[] ids : messagesFromSQL) {
             messages.add(messageRepository.getById(ids[0]));
