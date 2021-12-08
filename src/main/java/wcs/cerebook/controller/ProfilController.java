@@ -74,6 +74,7 @@ public class ProfilController {
     @GetMapping("/profil")
     public String getProfil(Model model, Principal principal) {
 
+        // getAllPrincipal a changer par getAllSession
         List<Object> principals = sessionRegistry.getAllPrincipals();
 
         List<String> usersNamesList = new ArrayList<String>();
