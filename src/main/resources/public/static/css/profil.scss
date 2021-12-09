@@ -117,7 +117,8 @@
 }
 .profile-section {
   border-radius: 10px;
-  background-color: #E9C46A;
+  background: linear-gradient(#E9C46A, #e9ce7e);
+  box-shadow: rgba(0, 0, 0, 0.45) 0px 25px 20px -20px;
 }
 
 .profile-section ul {
@@ -139,8 +140,9 @@
 /***** Message Section *****/
 
 .message-section {
-  background-color: #F4A261;
+  background: linear-gradient(#F4A261, #f4b675);
   border-radius: 10px;
+  box-shadow: rgba(0, 0, 0, 0.45) 0px 25px 20px -20px;
 }
 
 .message-section ul {
@@ -188,7 +190,7 @@
 }
 
 .movies-section {
-  background-color: #E76F51;
+  background: linear-gradient(#E76F51, #e7835b);
   border-radius: 10px;
   padding: 2px;
 }
@@ -207,14 +209,16 @@
 .map-section {
   border-radius: 10px;
   padding: 2px;
-  background-color: #F4A261;
+  background: linear-gradient(#F4A261, #f4b675);
+  box-shadow: rgba(0, 0, 0, 0.45) 0px 25px 20px -20px;
 }
 
 /***** Picture Section *****/
 
 .picture-section {
-  background-color: #F4A261;
+  background: linear-gradient(#F4A261, #f4b675);
   border-radius: 10px;
+  box-shadow: rgba(0, 0, 0, 0.45) 0px 25px 20px -20px;
 }
 
 .picture-section ul, .video-section ul {
@@ -332,8 +336,9 @@
 /***** Video Section *****/
 
 .video-section {
-  background-color: #E76F51;
+  background: linear-gradient(#E76F51, #e7835b);
   border-radius: 10px;
+  box-shadow: rgba(0, 0, 0, 0.45) 0px 25px 20px -20px;
 }
 
 .video-button {
@@ -360,8 +365,9 @@
 /***** Friends Section *****/
 
 .friend-section {
-  background-color: #E9C46A;
+  background: linear-gradient(#E9C46A, #e9ce7e);
   border-radius: 10px;
+  box-shadow: rgba(0, 0, 0, 0.45) 0px 25px 20px -20px;
 }
 
 .friend-section ul {

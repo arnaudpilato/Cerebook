@@ -1,4 +1,20 @@
 /***** Imports *****/
+:root {
+  --movement: 0.85;
+  --stop: 0.5;
+  --duration: calc((var(--movement) * (1 / var(--stop))));
+  --stagger: 0.1125;
+  --perspective: 500;
+  --size: 50;
+  --ease: cubic-bezier(1, -0.52, 0.26, 0.89);
+  --bg: #e6e6e6;
+  --panel: #fff;
+  --color: #0d0d0d;
+  --hue: 23;
+  --saturation: 100;
+  --lightness: 55;
+}
+
 /***** Body *****/
 body {
   background-color: #C4C4C4;
@@ -204,7 +220,8 @@ body {
 
 .profile-section {
   border-radius: 10px;
-  background-color: #E9C46A;
+  background: linear-gradient(#E9C46A, #e9ce7e);
+  box-shadow: rgba(0, 0, 0, 0.45) 0px 25px 20px -20px;
 }
 
 .profile-section ul {
@@ -225,8 +242,9 @@ body {
 
 /***** Message Section *****/
 .message-section {
-  background-color: #F4A261;
+  background: linear-gradient(#F4A261, #f4b675);
   border-radius: 10px;
+  box-shadow: rgba(0, 0, 0, 0.45) 0px 25px 20px -20px;
 }
 
 .message-section ul {
@@ -273,7 +291,7 @@ body {
 }
 
 .movies-section {
-  background-color: #E76F51;
+  background: linear-gradient(#E76F51, #e7835b);
   border-radius: 10px;
   padding: 2px;
 }
@@ -291,13 +309,15 @@ body {
 .map-section {
   border-radius: 10px;
   padding: 2px;
-  background-color: #F4A261;
+  background: linear-gradient(#F4A261, #f4b675);
+  box-shadow: rgba(0, 0, 0, 0.45) 0px 25px 20px -20px;
 }
 
 /***** Picture Section *****/
 .picture-section {
-  background-color: #F4A261;
+  background: linear-gradient(#F4A261, #f4b675);
   border-radius: 10px;
+  box-shadow: rgba(0, 0, 0, 0.45) 0px 25px 20px -20px;
 }
 
 .picture-section ul, .video-section ul {
@@ -407,8 +427,9 @@ body {
 
 /***** Video Section *****/
 .video-section {
-  background-color: #E76F51;
+  background: linear-gradient(#E76F51, #e7835b);
   border-radius: 10px;
+  box-shadow: rgba(0, 0, 0, 0.45) 0px 25px 20px -20px;
 }
 
 .video-button {
@@ -434,8 +455,9 @@ body {
 
 /***** Friends Section *****/
 .friend-section {
-  background-color: #E9C46A;
+  background: linear-gradient(#E9C46A, #e9ce7e);
   border-radius: 10px;
+  box-shadow: rgba(0, 0, 0, 0.45) 0px 25px 20px -20px;
 }
 
 .friend-section ul {
