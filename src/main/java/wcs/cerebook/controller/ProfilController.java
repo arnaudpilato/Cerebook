@@ -3,6 +3,7 @@ package wcs.cerebook.controller;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.session.SessionInformation;
 import org.springframework.security.core.session.SessionRegistry;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -13,6 +14,7 @@ import wcs.cerebook.entity.*;
 import wcs.cerebook.model.MyUserDetails;
 import wcs.cerebook.repository.*;
 import wcs.cerebook.services.MediaService;
+
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
@@ -76,20 +78,53 @@ public class ProfilController {
     @GetMapping("/profil")
     public String getProfil(Model model, Principal principal) {
 
+        final List<Object> getAllPrincipals = sessionRegistry.getAllPrincipals();
+        List<String> usersConnected = new ArrayList<String>();
+
+        for (final Object principalConnect : getAllPrincipals) {
+            if (principalConnect instanceof MyUserDetails) {
+                final MyUserDetails myUserDetails = (MyUserDetails) principalConnect;
+
+                List<SessionInformation> activeUserSessions =
+                        sessionRegistry.getAllSessions(principalConnect,
+                                /* includeExpiredSessions */ false); // Should not return null;
+
+                if (!activeUserSessions.isEmpty()) {
+                    usersConnected.add(myUserDetails.getUsername());
+                }
+            }
+        }
+        model.addAttribute("usersConnected", usersConnected);
+
+
+
+
+      /*
+        List<Object> usersFromSession = getUsersFromSessionRegistry();
+        List<String> usersNamesSessionList = new ArrayList<String>();
+
+        for (Object princip : usersFromSession) {
+            if (princip instanceof MyUserDetails) {
+                usersNamesSessionList.add(((MyUserDetails) princip).getUsername());
+            }
+        }
+        for (String usersName : usersNamesSessionList) {
+            System.out.println("users connecté  en session : " + usersName);
+        }
+        System.out.println("TOTOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO");
+
         // getAllPrincipal a changer par getAllSession
         List<Object> principals = sessionRegistry.getAllPrincipals();
-
         List<String> usersNamesList = new ArrayList<String>();
-
         for (Object princip : principals) {
             if (princip instanceof MyUserDetails) {
                 usersNamesList.add(((MyUserDetails) princip).getUsername());
             }
         }
         for (String usersName : usersNamesList) {
-            System.out.println(usersName);
+            System.out.println("users connecté  1 fois : " + usersName);
         }
-
+*/
         model.addAttribute("user", userRepository.findByUsername(principal.getName()));
         CerebookUser user = userRepository.getCerebookUserByUsername(principal.getName());
         List<CerebookPost> cerebookPosts = user.getCerebookPosts();
