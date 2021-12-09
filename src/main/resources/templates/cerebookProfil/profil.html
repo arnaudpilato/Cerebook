@@ -172,7 +172,7 @@
                                     <div class="row d-flex pb-3 px-3 my-2 mx-2" th:each="message: ${cerebookMessages}">
                                         <div class="col-3 mb-2">
                                             <img class="profil-message"
-                                                 th:src="${message.getCurrentUser().profil.avatar}"
+                                                 th:src="'https://wcs-2-be-or-not-2-be.s3.eu-west-3.amazonaws.com/'+${message.getCurrentUser().profil.avatar}"
                                                  alt="Logo de profil">
                                         </div>
                                         <div class="col-9 messages">
@@ -200,7 +200,7 @@
                                     <div class="row pb-3 px-3 justify-content-center">
                                         <div class="col-3 my-2 mx-2 p-0" th:each="movie : ${movies}">
                                             <div class="movie-link"><img class="movie-avatar"
-                                                                         th:src="${movie.getMoviePath()}"
+                                                                         th:src="'https://wcs-2-be-or-not-2-be.s3.eu-west-3.amazonaws.com/'+${movie.getMoviePath()}"
                                                                          alt="Logo de profil"></div>
                                         </div>
                                     </div>
@@ -385,7 +385,7 @@
                                         <div class="col-3 my-2 mx-2 p-0" th:each="friend : ${friends}">
 
                                             <div class="friend-link"><a th:href="@{/profil/{id}(id=${friend.getId()})}"><img
-                                                    class="friend-avatar" th:src="${friend.profil.getAvatar()}"
+                                                    class="friend-avatar" th:src="'https://wcs-2-be-or-not-2-be.s3.eu-west-3.amazonaws.com/'+${friend.profil.getAvatar()}"
                                                     alt="Logo de profil"></a></div>
 
                                         </div>
