@@ -19,7 +19,7 @@ public class CerebookPost {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @DateTimeFormat(pattern = "dd/MM/yyyy h:mm ")
+    @DateTimeFormat(pattern = "dd/MM/yyyy hh:mm ")
     private Date createdAt;
     private String content;
     private boolean privatePost;
