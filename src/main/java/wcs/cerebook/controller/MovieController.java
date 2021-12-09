@@ -37,7 +37,7 @@ public class MovieController {
         model.addAttribute("user", userRepository.findByUsername(principal.getName()));
         model.addAttribute("movies", movieRepository.findAll());
 
-        return "/cerebookMovie/movie";
+        return "cerebookMovie/movie";
     }
 
     @GetMapping("/movie/show")
@@ -47,14 +47,14 @@ public class MovieController {
 
         model.addAttribute("movie", movieRepository.findById(id));
 
-        return "/cerebookVideo/movie_show";
+        return "cerebookVideo/movie_show";
     }
 
     @GetMapping("/movie/update")
     public String updateMovie(Model model, Principal principal) {
         model.addAttribute("user", userRepository.findByUsername(principal.getName()));
 
-        return "/cerebookVideo/movie_update";
+        return "cerebookVideo/movie_update";
     }
 
     @PostMapping("/movie/update")
@@ -79,10 +79,6 @@ public class MovieController {
 
         }
 
-        System.out.println("**************");
-        System.out.println(httpServletRequest.getParameterMap().keySet());
-        System.out.println(user.getUserMovies());
-        System.out.println("**************");
         user.getUserMovies().clear();
 
         for (String entry : httpServletRequest.getParameterMap().keySet()) {
@@ -95,9 +91,6 @@ public class MovieController {
         }
 
         user = userRepository.saveAndFlush(user);
-        System.out.println("**************");
-        System.out.println(user.getUserMovies());
-        System.out.println("**************");
 
         return "redirect:/movie";
     }

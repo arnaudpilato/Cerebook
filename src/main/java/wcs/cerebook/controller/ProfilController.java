@@ -61,20 +61,6 @@ public class ProfilController {
     @Autowired
     private SessionRegistry sessionRegistry;
 
-
-    public List<Object> getUsersFromSessionRegistry() {
-        return sessionRegistry.getAllPrincipals().stream()
-                .filter(u -> !sessionRegistry.getAllSessions(u, false).isEmpty())
-                .collect(Collectors.toList());
-    }
-
-    public List<String> getUsersSessionRegistry() {
-        return sessionRegistry.getAllPrincipals().stream()
-                .filter(u -> !sessionRegistry.getAllSessions(u, false).isEmpty())
-                .map(Object::toString)
-                .collect(Collectors.toList());
-    }
-
     @GetMapping("/profil")
     public String getProfil(Model model, Principal principal) {
 
