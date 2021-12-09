@@ -11,7 +11,7 @@
         <h1> Messagerie </h1>
         <div th:each="user : ${users}">
             <p th:text="${user.username}">name</p>
-            <a th:href="@{/message(username=${user.username})}">ajouter</a>
+            <a th:href="@{/message#message(username=${user.username})}">ajouter</a>
         </div>
     </div>
 </html>
