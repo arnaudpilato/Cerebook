@@ -10,6 +10,15 @@
 
     <div layout:fragment="content">
         <div class="container-fluid imageAccueil">
+            <div class="wrapper">
+                <div class="circle"></div>
+                <div class="circle"></div>
+                <div class="circle"></div>
+                <div class="shadow"></div>
+                <div class="shadow"></div>
+                <div class="shadow"></div>
+                <span>Chargement</span>
+            </div>
             <div class="row justify-content-center">
                 <div class="col-10 col-lg-5 bg-primary panel text-center">
                     <form id="newUserForm" class="row justify-content-center" method="post" th:action="@{/userCreate}" th:object="${user}">
@@ -118,7 +127,7 @@
                             </div>
                         </div>
                         <div class="row justify-content-center my-3">
-                            <a class="accueilButton btn--svg js-animated-button my-3" href="#" onclick="document.getElementById('submitButton').click()">
+                            <a id="formValues" class="accueilButton btn--svg js-animated-button my-3" href="#" onclick="document.getElementById('submitButton').click()">
                                 <span class="btn--svg__label">Créer le compte</span>
                                 <svg class="btn--svg__circle" width="190" x="0px" y="0px" viewBox="0 0 60 60" enable-background="new 0 0 60 60">
                                     <circle class="js-discover-circle" fill="#FFFFFF" cx="30" cy="30" r="28.7"></circle>
@@ -137,5 +146,28 @@
                 </div>
             </div>
         </div>
+        <script>
+            var essai = document.getElementById("user-username").value;
+            if (essai != null) {
+                console.log(("coucou"));
+            }
+            $(document).ready(function(){
+                $('.wrapper').hide();
+                //var essai = $("#user-username").val();
+
+
+                console.log(essai);
+
+                $("a").click(function(){
+                    if ($("#user-username").val() != null) {
+                        $(".wrapper").show();
+                        console.log(essai);
+                        /*function submitForm() {
+                            document.getElementById("loginForm").submit();
+                        }*/
+                    }
+                });
+            });
+        </script>
     </div>
 </html>
