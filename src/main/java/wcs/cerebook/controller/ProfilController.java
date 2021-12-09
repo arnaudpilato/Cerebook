@@ -64,31 +64,11 @@ public class ProfilController {
     @GetMapping("/profil")
     public String getProfil(Model model, Principal principal) {
 
-        final List<Object> getAllPrincipals = sessionRegistry.getAllPrincipals();
-        List<CerebookUser> usersConnected = new ArrayList<>();
-
-        for (final Object principalConnect : getAllPrincipals) {
-            if (principalConnect instanceof MyUserDetails) {
-                final MyUserDetails myUserDetails = (MyUserDetails) principalConnect;
-                List<SessionInformation> activeUserSessions =
-                        sessionRegistry.getAllSessions(principalConnect,
-                                /* includeExpiredSessions */ false); // Should not return null;
-                if (!activeUserSessions.isEmpty()) {
-                    usersConnected.add(userRepository.findByUsername(myUserDetails.getUsername()));
-                }
-            }
-        }
-
-        model.addAttribute("usersConnected", usersConnected);
+        getAllUsersConnected(model);
 
         model.addAttribute("user", userRepository.findByUsername(principal.getName()));
         CerebookUser user = userRepository.getCerebookUserByUsername(principal.getName());
-        List<CerebookPost> cerebookPosts = user.getCerebookPosts();
-        model.addAttribute("listPosts", cerebookPosts);
-        model.addAttribute("localDateTime", new Date());
-        model.addAttribute("allUsers", userRepository.findAll());
-        model.addAttribute("pictures", pictureRepository.lastPicture(user.getId()));
-        model.addAttribute("videos", videoRepository.lastVideo(user.getId()));
+        getUserAndPostAttribut(model, user);
 
         // PIL : Récupération du dernier message des 3 derniers amis
         List<Long[]> messagesFromSQL = messageRepository.lastThreeMessages(user.getId());
@@ -103,16 +83,7 @@ public class ProfilController {
         model.addAttribute("cerebookMessages", messages);
 
         // PIL : Récupération des données json longitude et latitude
-        List<CerebookCartography> cartographies = cartographyRepository.findAll();
-        JsonNode json = new ObjectMapper().valueToTree(cartographies);
-        model.addAttribute("cartography", json);
-        // PIL : Récupérations des 6 derniers amis
-        List<CerebookUser> friends = new ArrayList<>();
-        List<CerebookFriend> confirmed = friendRepository.getLastFriend(user);
-        for (CerebookFriend friend : confirmed) {
-            friends.add(friend.getCurrentFriends());
-        }
-        model.addAttribute("friends", friends);
+        getCartographyAndFriends(model, user);
         //tweet
         try {
             Twitter twitter = new TwitterFactory().getInstance();
@@ -136,19 +107,54 @@ public class ProfilController {
 
     @GetMapping("/profil/{id}")
     public String getOtherProfil(Model model, @PathVariable Long id) {
+
+        getAllUsersConnected(model);
         model.addAttribute("user", userRepository.getById(id));
         CerebookUser user = userRepository.getById(id);
-        List<CerebookPost> cerebookPosts = user.getCerebookPosts();
-        model.addAttribute("listPosts", cerebookPosts);
-        model.addAttribute("localDateTime", new Date());
-        model.addAttribute("allUsers", userRepository.findAll());
-        model.addAttribute("pictures", pictureRepository.lastPicture(user.getId()));
-        model.addAttribute("videos", videoRepository.lastVideo(user.getId()));
+        getUserAndPostAttribut(model, user);
+        getCartographyAndFriends(model, user);
+
+        return "cerebookProfil/profil";
+    }
+
+    private void getAllUsersConnected(Model model) {
+        final List<Object> getAllPrincipals = sessionRegistry.getAllPrincipals();
+        List<CerebookUser> usersConnected = new ArrayList<>();
+
+        for (final Object principalConnect : getAllPrincipals) {
+            if (principalConnect instanceof MyUserDetails) {
+                final MyUserDetails myUserDetails = (MyUserDetails) principalConnect;
+                List<SessionInformation> activeUserSessions =
+                        sessionRegistry.getAllSessions(principalConnect,
+                                /* includeExpiredSessions */ false); // Should not return null;
+                if (!activeUserSessions.isEmpty()) {
+                    usersConnected.add(userRepository.findByUsername(myUserDetails.getUsername()));
+                }
+            }
+        }
+        model.addAttribute("usersConnected", usersConnected);
+    }
+
+
+
+    private void getCartographyAndFriends(Model model, CerebookUser user) {
         List<CerebookCartography> cartographies = cartographyRepository.findAll();
         JsonNode json = new ObjectMapper().valueToTree(cartographies);
         model.addAttribute("cartography", json);
+        List<CerebookUser> friends = new ArrayList<>();
+        List<CerebookFriend> confirmed = friendRepository.getLastFriend(user);
+        for (CerebookFriend friend : confirmed) {
+            friends.add(friend.getCurrentFriends());
+        }
+        model.addAttribute("friends", friends);
+    }
 
-        return "cerebookProfil/profil";
+    private void getUserAndPostAttribut(Model model, CerebookUser user) {
+        List<CerebookPost> cerebookPosts = user.getCerebookPosts();
+        model.addAttribute("listPosts", cerebookPosts);
+        model.addAttribute("allUsers", userRepository.findAll());
+        model.addAttribute("pictures", pictureRepository.lastPicture(user.getId()));
+        model.addAttribute("videos", videoRepository.lastVideo(user.getId()));
     }
 
     @GetMapping("/profil/update")
