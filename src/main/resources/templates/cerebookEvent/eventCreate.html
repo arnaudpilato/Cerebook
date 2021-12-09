@@ -87,7 +87,7 @@
                         </div>
                         <div class="row col-7 g-1 justify-content-between my-3">
                             <div class="col-1">
-                                <input class="form-check-input" id="event-role" type="radio" name="role" th:value="false" checked>
+                                <input class="form-check-input" id="event-role" type="radio" name="role" th:value="false">
                             </div>
                             <div class="col-5">
                                 <label class="form-check-label" for="event-role">Public</label>
@@ -104,7 +104,7 @@
                                 <label class="col-form-label" for="event-description">Description :</label>
                             </div>
                             <div class="col-12">
-                                <input class="form-control" id="event-description" name="address" placeholder="Description de l'évènement..." th:field="*{description}" type="text">
+                                <textarea class="form-control" id="event-description" name="address" placeholder="Description de l'évènement..." th:field="*{description}" type="text"/>
                             </div>
                         </div>
                         <div class="row justify-content-center my-3">

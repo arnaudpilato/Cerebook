@@ -3,12 +3,15 @@ package wcs.cerebook.controller;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.session.SessionInformation;
+import org.springframework.security.core.session.SessionRegistry;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import twitter4j.*;
 import wcs.cerebook.entity.*;
+import wcs.cerebook.model.MyUserDetails;
 import wcs.cerebook.repository.*;
 import wcs.cerebook.services.MediaService;
 
@@ -21,6 +24,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Controller
 public class ProfilController {
@@ -49,11 +53,48 @@ public class ProfilController {
     private FriendRepository friendRepository;
 
     @Autowired
+    private MovieRepository movieRepository;
+
+    @Autowired
     private MediaService mediaService;
 
-    @GetMapping("/profil")
+    @Autowired
+    private SessionRegistry sessionRegistry;
 
+
+    public List<Object> getUsersFromSessionRegistry() {
+        return sessionRegistry.getAllPrincipals().stream()
+                .filter(u -> !sessionRegistry.getAllSessions(u, false).isEmpty())
+                .collect(Collectors.toList());
+    }
+
+    public List<String> getUsersSessionRegistry() {
+        return sessionRegistry.getAllPrincipals().stream()
+                .filter(u -> !sessionRegistry.getAllSessions(u, false).isEmpty())
+                .map(Object::toString)
+                .collect(Collectors.toList());
+    }
+
+    @GetMapping("/profil")
     public String getProfil(Model model, Principal principal) {
+
+        final List<Object> getAllPrincipals = sessionRegistry.getAllPrincipals();
+        List<CerebookUser> usersConnected = new ArrayList<>();
+
+        for (final Object principalConnect : getAllPrincipals) {
+            if (principalConnect instanceof MyUserDetails) {
+                final MyUserDetails myUserDetails = (MyUserDetails) principalConnect;
+                List<SessionInformation> activeUserSessions =
+                        sessionRegistry.getAllSessions(principalConnect,
+                                /* includeExpiredSessions */ false); // Should not return null;
+                if (!activeUserSessions.isEmpty()) {
+                    usersConnected.add(userRepository.findByUsername(myUserDetails.getUsername()));
+                }
+            }
+        }
+
+        model.addAttribute("usersConnected", usersConnected);
+
         model.addAttribute("user", userRepository.findByUsername(principal.getName()));
         CerebookUser user = userRepository.getCerebookUserByUsername(principal.getName());
         List<CerebookPost> cerebookPosts = user.getCerebookPosts();
@@ -67,6 +108,9 @@ public class ProfilController {
         List<Long[]> messagesFromSQL = messageRepository.lastThreeMessages(user.getId());
         List<CerebookMessage> messages = new ArrayList<>();
 
+        // PIL : Récupération des 6 derniers films
+        model.addAttribute("movies", movieRepository.lastMovie(user.getId()));
+
         for (Long[] ids : messagesFromSQL) {
             messages.add(messageRepository.getById(ids[0]));
         }
@@ -78,13 +122,11 @@ public class ProfilController {
         model.addAttribute("cartography", json);
         // PIL : Récupérations des 6 derniers amis
         List<CerebookUser> friends = new ArrayList<>();
-        List<CerebookFriend> confirmed = friendRepository.getLastFriend_Id(user);
+        List<CerebookFriend> confirmed = friendRepository.getLastFriend(user);
         for (CerebookFriend friend : confirmed) {
             friends.add(friend.getCurrentFriends());
         }
         model.addAttribute("friends", friends);
-
-        String userName = principal.getName();
         //tweet
         try {
             Twitter twitter = new TwitterFactory().getInstance();
@@ -131,7 +173,7 @@ public class ProfilController {
     }
 
     @PostMapping("/profil/update")
-    public String postProfilUpdate(@ModelAttribute CerebookProfil cerebookProfil, @ModelAttribute CerebookUser cerebookUser, @RequestParam(value = "file_banner") MultipartFile banner, @RequestParam("file_avatar") MultipartFile avatar, Principal principal, Model model) throws IOException {
+    public String postProfilUpdate(@ModelAttribute CerebookProfil cerebookProfil, @ModelAttribute CerebookUser cerebookUser, @RequestParam(value = "file_banner") MultipartFile banner, @RequestParam("file_avatar") MultipartFile avatar, Principal principal) throws IOException {
         CerebookUser user = userRepository.getCerebookUserByUsername(principal.getName());
         if (cerebookProfil.getId() != null) {
             if (!banner.isEmpty()) {
