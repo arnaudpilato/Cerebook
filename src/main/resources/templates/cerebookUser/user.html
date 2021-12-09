@@ -10,17 +10,75 @@
 
     <div layout:fragment="content">
         <div class="container-fluid imageAccueil">
-            <div class="wrapper">
-                <div class="circle"></div>
-                <div class="circle"></div>
-                <div class="circle"></div>
-                <div class="shadow"></div>
-                <div class="shadow"></div>
-                <div class="shadow"></div>
-                <span>Chargement</span>
-            </div>
             <div class="row justify-content-center">
                 <div class="col-10 col-lg-5 bg-primary panel text-center">
+                    <div class="scene" style="--hue: 260; --saturation: 76; --lightness: 51">
+                        <div class="word">
+                            <div class="letter__wrap" style="--index: 0">
+                                <div class="letter" data-letter="L">
+                                    <span class="letter__panel" aria-hidden="true">L</span>
+                                    <span class="letter__panel" aria-hidden="true">W</span>
+                                    <span class="letter__panel" aria-hidden="true">L</span>
+                                    <span class="letter__panel" aria-hidden="true">W</span>
+                                    <span class="letter__panel"></span>
+                                </div>
+                            </div>
+                            <div class="letter__wrap" style="--index: 1">
+                                <div class="letter" data-letter="o">
+                                    <span class="letter__panel" aria-hidden="true">o</span>
+                                    <span class="letter__panel" aria-hidden="true">a</span>
+                                    <span class="letter__panel" aria-hidden="true">o</span>
+                                    <span class="letter__panel" aria-hidden="true">a</span>
+                                    <span class="letter__panel"></span>
+                                </div>
+                            </div>
+                            <div class="letter__wrap" style="--index: 2">
+                                <div class="letter" data-letter="a">
+                                    <span class="letter__panel" aria-hidden="true">a</span>
+                                    <span class="letter__panel" aria-hidden="true">i</span>
+                                    <span class="letter__panel" aria-hidden="true">a</span>
+                                    <span class="letter__panel" aria-hidden="true">i</span>
+                                    <span class="letter__panel"></span>
+                                </div>
+                            </div>
+                            <div class="letter__wrap" style="--index: 3">
+                                <div class="letter" data-letter="d">
+                                    <span class="letter__panel" aria-hidden="true">d</span>
+                                    <span class="letter__panel" aria-hidden="true">t</span>
+                                    <span class="letter__panel" aria-hidden="true">d</span>
+                                    <span class="letter__panel" aria-hidden="true">t</span>
+                                    <span class="letter__panel"></span>
+                                </div>
+                            </div>
+                            <div class="letter__wrap" style="--index: 4">
+                                <div class="letter" data-letter="i">
+                                    <span class="letter__panel" aria-hidden="true">i</span>
+                                    <span class="letter__panel" aria-hidden="true">.</span>
+                                    <span class="letter__panel" aria-hidden="true">i</span>
+                                    <span class="letter__panel" aria-hidden="true">.</span>
+                                    <span class="letter__panel"></span>
+                                </div>
+                            </div>
+                            <div class="letter__wrap" style="--index: 5">
+                                <div class="letter" data-letter="n">
+                                    <span class="letter__panel" aria-hidden="true">n</span>
+                                    <span class="letter__panel" aria-hidden="true">.</span>
+                                    <span class="letter__panel" aria-hidden="true">n</span>
+                                    <span class="letter__panel" aria-hidden="true">.</span>
+                                    <span class="letter__panel"></span>
+                                </div>
+                            </div>
+                            <div class="letter__wrap" style="--index: 6">
+                                <div class="letter" data-letter="g">
+                                    <span class="letter__panel" aria-hidden="true">g</span>
+                                    <span class="letter__panel" aria-hidden="true">.</span>
+                                    <span class="letter__panel" aria-hidden="true">g</span>
+                                    <span class="letter__panel" aria-hidden="true">.</span>
+                                    <span class="letter__panel"></span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                     <form id="newUserForm" class="row justify-content-center" method="post" th:action="@{/userCreate}" th:object="${user}">
                         <input name="id" th:field="*{id}" type="hidden">
                         <input id="submitButton" type="submit" hidden>
@@ -127,7 +185,7 @@
                             </div>
                         </div>
                         <div class="row justify-content-center my-3">
-                            <a id="formValues" class="accueilButton btn--svg js-animated-button my-3" href="#" onclick="document.getElementById('submitButton').click()">
+                            <a id="formValues" class="accueilButton btn--svg js-animated-button my-3" href="#" >
                                 <span class="btn--svg__label">Créer le compte</span>
                                 <svg class="btn--svg__circle" width="190" x="0px" y="0px" viewBox="0 0 60 60" enable-background="new 0 0 60 60">
                                     <circle class="js-discover-circle" fill="#FFFFFF" cx="30" cy="30" r="28.7"></circle>
@@ -147,24 +205,24 @@
             </div>
         </div>
         <script>
-            var essai = document.getElementById("user-username").value;
-            if (essai != null) {
-                console.log(("coucou"));
-            }
             $(document).ready(function(){
-                $('.wrapper').hide();
-                //var essai = $("#user-username").val();
-
-
-                console.log(essai);
-
-                $("a").click(function(){
-                    if ($("#user-username").val() != null) {
-                        $(".wrapper").show();
-                        console.log(essai);
-                        /*function submitForm() {
-                            document.getElementById("loginForm").submit();
-                        }*/
+                $('.scene').hide();
+                $("#formValues").click(function(){
+                    if ($("#user-username").val() == ""
+                        || $("#user-firstName").val() == ""
+                        || $("#user-lastName").val() == ""
+                        || $("#user-city").val() == ""
+                        || $("#user-email").val() == ""
+                        || $("#user-birthday").val() == ""
+                        || $("#user-password").val() == ""
+                        || $("#confirm").val() == ""
+                    ) {
+                        $('.scene').hide();
+                    } else {
+                        $('.scene').show();
+                        $(document).ready(function($){
+                            $('#newUserForm').submit();
+                        });
                     }
                 });
             });
