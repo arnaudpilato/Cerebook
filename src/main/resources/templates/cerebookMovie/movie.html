@@ -33,7 +33,7 @@
                     <div class="form-check b-game-card" th:each="movie, iter : ${movies}">
                         <input class="form-check-input check" type="checkbox" th:value="${iter.index}" th:name="${movie.id}" th:id="'checkbox' + ${iter.index}" th:checked="${movie.getActors().contains(user)}">
                         <label class="form-check-label b-game-card__cover" th:for="'checkbox' + ${iter.index}">
-                            <img class="movie-cover" th:src="${movie.getMoviePath()}" alt="Image de film">
+                            <img class="movie-cover" th:src="'https://wcs-2-be-or-not-2-be.s3.eu-west-3.amazonaws.com/'+${movie.getMoviePath()}" alt="Image de film">
                         </label>
                         <div class="link-delete">
                             <a  th:href="@{/movie/delete(id=${movie.id})}" class="delete-img video-btn d-block"><img class="delete-logo" src="/static/css/img/delete.png" alt="Logo Gallery"></a>
