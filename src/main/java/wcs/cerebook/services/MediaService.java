@@ -4,10 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import wcs.cerebook.entity.*;
 import wcs.cerebook.model.SimpleHostedMedia;
-import wcs.cerebook.repository.EventRepository;
-import wcs.cerebook.repository.MovieRepository;
-import wcs.cerebook.repository.PictureRepository;
-import wcs.cerebook.repository.VideoRepository;
+import wcs.cerebook.repository.*;
 
 import java.io.InputStream;
 import java.util.List;
@@ -26,6 +23,8 @@ public class MediaService {
 
     @Autowired
     EventRepository eventRepository;
+    @Autowired
+    PostRepository repository;
 
     @Autowired
     HostingService hostingService;
@@ -75,6 +74,15 @@ public class MediaService {
         cerebookEvent.setAmazonS3Hosted(hostingService.isAmazon());
 
         eventRepository.save(cerebookEvent);
+
+    }
+    public void uploadPostImage(String filename, InputStream inputStream, long size,CerebookUser user,CerebookPost cerebookPost){
+        hostingService.uploadPictureImage(filename, inputStream, size);
+        cerebookPost.setMediaType(CerebookPost.Type.SimpleMedia);
+        cerebookPost.setCerebookUser(user);
+        cerebookPost.setImage(filename);
+        cerebookPost.setAmazonS3Hosted(hostingService.isAmazon());
+        repository.save(cerebookPost);
     }
 
     public List<SimpleHostedMedia> getMediaList() {

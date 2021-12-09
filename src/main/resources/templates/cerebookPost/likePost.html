@@ -4,34 +4,33 @@
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{fragments/_layout}">
 
 <th:block layout:fragment="config">
-    <title>Add post</title>
+    <title>liker</title>
     <link href="/static/css/post.css" rel="stylesheet"/>
+    <link href="/static/css/profil.css" rel="stylesheet"/>
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.4.1/css/all.css"
           integrity="sha384-5sAR7xN1Nv6T6+dT2mhtzEpVJvfS3NScPQTrOxhwjIuvcA67KV2R5Jz6kr4abQsz" crossorigin="anonymous">
 </th:block>
-<div class="container-fluid">
     <div layout:fragment="content">
-        <a th:href="@{/profil}"><i class="fas fa-arrow-circle-left">Retour</i>  </a>
         <div class="container">
-            <div id="post-container" name="content">
-                    <td th:text="${post.content}"></td>
-                <div id="by-user">
-                        <td th:text="${'Le: '+post.createdAt}"></td>
-                        <td th:text="${'Posté par: '+post.cerebookUser.username}"></td>
-                </div>
-                    <td><a th:href="@{/addComment/{id}(id=${post.id})}"><i
-                            class="far fa-comment"></i>commenter</a></td>
-                    <td><a th:href="@{/listComment/{id}(id=${post.id})}"><i
-                            class="far fa-comments"> </i>voir les commentaires </a></td>
-                    <form th:action="${'/addLike/' + {post.id} }" method="POST">
-                        <td th:text="${'j''aime: '+countLike}"></td>
-                        <button type="submit"><i
-                                class="far fa-thumbs-up"></i></button>
-                    </form>
-            </div>
-                    </span>
+                            <a th:href="@{/profil}"><i class="fas fa-arrow-circle-left">Retour</i>  </a>
+                    <div id="like-container" class="justify-content" name="content">
+                                    <td th:text="${post.content}"></td>
+                                    <td class="list-inline-item" th:text="${'Le: '+post.createdAt}"></td>
+                                    <td class="list-inline-item" th:text="${'Posté par: '+post.cerebookUser.username}"></td>
+                            <div class="btn-group">
+                                        <div class="justify-content-between d-flex" id ="list" >
+                                            <!--<td class="" ><a class="btn btn-outline-primary" th:href="@{/addComment/{id}(id=${post.id})}"><i
+                                                    class="far fa-comment"></i>Commenter</a></td>
+                                            <td class=""><a class="btn btn-outline-primary" th:href="@{/listComment/{id}(id=${post.id})}"><i
+                                                    class="far fa-comments"> </i>Voir les commentaires </a></td>-->
+                                            <form id="aime" class="" th:action="${'/addLike/' + {post.id} }" method="POST">
+                                                <td th:text="${'j''aime: '+countLike}" disabled></td><button  class="btn btn-primary btn-lg active"  type="submit"><i
+                                                    class="far fa-thumbs-up"></i></button>
+                                            </form>
+                                        </div>
+                            </div>
+                    </div>
+                        </span>
         </div>
-
     </div>
-</div>
 </html>
