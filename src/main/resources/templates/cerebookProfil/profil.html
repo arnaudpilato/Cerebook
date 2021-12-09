@@ -8,6 +8,7 @@
     <link href="/static/css/profil.css" rel="stylesheet"/>
     <link href="/static/css/post.css" rel="stylesheet"/>
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.4.1/css/all.css" integrity="sha384-5sAR7xN1Nv6T6+dT2mhtzEpVJvfS3NScPQTrOxhwjIuvcA67KV2R5Jz6kr4abQsz" crossorigin="anonymous">
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet">
 </th:block>
 
 <div layout:fragment="content">
@@ -119,28 +120,27 @@
                         </div>
                         <!--section tweet-->
                         <div class="row">
-                            <div class="col-12">
-                                <div class="message-section">
-                                    <ul class="d-flex justify-content-between py-3 px-3 pb-0">
-                                        <li class="title-section"><p>Tweets</p></li>
-                                        <li><a href="#"><img class="banner-logo" src="/static/css/img/twitter.png" alt="Logo tweet"></a></li>
-                                    </ul>
-                                    <div class="row d-flex pb-3 px-3 my-2 mx-2" >
-                                        <div class="col-3 mb-2">
-                                            <!--<img class="profil-message" th:src="${message.getCurrentUser().profil.avatar}" alt="Logo de profil">-->
-                                        </div>
-                                            <div th:switch="${tweet}">
-                                                <h2 th:case="null">Pas encore de tweet!</h2>
-                                                    <div th:case="*">
-                                                        <div class="col-9 messages" th:each="t: ${tweet}" >
-                                                        <td th:text="${t.getText()}" ></td>
-                                                        </div>
-                                                    </div>
-                                        </div>
+                            <div>
+                                <div class="panel panel-danger">
+                                    <div class="panel-heading" th:if="${tweet} != null">
+                                                                        <span class="panel-title">
+                                                                            <h3 th:text="${'@'+twitterUser}"><i
+                                                                                    class="fab fa-twitter"></i></h3>
+                                                                        </span>
+                                    </div>
+                                    <div class="panel-heading" th:if="${tweet} == null">
+                                        <h3 class="panel-title" th:text="${'@'+user.getUsername()}"><img
+                                                class="banner-logo" src="/static/css/img/twitter.png" alt="Logo tweet">
+                                        </h3>
+                                    </div>
+                                    <div class="panel-body" th:each="t: ${tweet}">
+                                        <i class="fab fa-twitter"></i>
+                                        <td th:text="${t.getText()}"></td>
                                     </div>
                                 </div>
                             </div>
                         </div>
+                        <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
                         <!--fin tweet-->
                     </div>
                     <!-- PIL : Section Map -->
@@ -169,29 +169,27 @@
                                     <div class="row">
                                         <tr th:each="p: ${listPosts}" >
                                                 <span th:if="${p.isPrivatePost == false}">
-                                                    <div id="post-container" name="content">
+                                                    <div id="post-container" class="justify-content " name="content">
                                                             <td th:text="${p.content}"></td>
                                                             <!--<td><a id="stiky" th:href="@{/deletePost/{id}(id=${p.id})}"><i class="far fa-trash-alt"></i></a></td>-->
-                                                        <div id="by-user">
-                                                            <td th:text="${'Le:'+#dates.format(p.createdAt,'dd/MM/yyyy HH:mm')}"></td>
-                                                            <td th:text="${'Posté par: '+p.cerebookUser.username}"></td>
-                                                        </div>
-                                                                  <td><a th:href="@{/addComment/{id}(id=${p.id})}"><i
-                                                                          class="far fa-comment"></i>commenter</a></td>
-                                                                    <td><a th:href="@{/listComment/{id}(id=${p.id})}"><i
-                                                                            class="far fa-comments"> </i>voir les commentaires  </a></td>
-                                                                    <td><a th:href="@{/addLike/{id}(id=${p.id})}">
-                                                                        <i class="far fa-thumbs-up"></i>Liker ce post</a></td>
+                                                            <td class="list-inline-item" th:text="${'Le:'+#dates.format(p.createdAt,'dd/MM/yyyy HH:mm')}"></td>
+                                                            <td class="list-inline-item" th:text="${'Posté par: '+p.cerebookUser.username}"></td>
+                                                                <div class="btn-group">
+                                                                    <div class="justify-content-between d-flex" id ="list">
+                                                                        <td class=""><a class="btn btn-outline-primary" th:href="@{/addComment/{id}(id=${p.id})}"><i
+                                                                                class="far fa-comment"></i>Commenter</a></td><td class=""><a class="btn btn-outline-primary" th:href="@{/listComment/{id}(id=${p.id})}"><i
+                                                                                class="far fa-comments"> </i>Voir les commentaires</a></td>
+                                                                        <td class=""><a class="btn btn-outline-primary" th:href="@{/addLike/{id}(id=${p.id})}"><i class="far fa-thumbs-up"></i>liker</a></td>
+                                                                    </div>
                                                                 </div>
-                                                            <div>
-                                                        </div>
+                                                    </div>
                                                 </span>
+                                        </tr>
                                     </div>
-                                    </tr>
                                 </div>
                             </div>
-                        </div><!-- fin section post et commentaires -->
-
+                        </div>
+                        <!-- fin section post et commentaires -->
 
 
 
