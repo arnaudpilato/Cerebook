@@ -294,6 +294,7 @@ body {
   background: linear-gradient(#E76F51, #e7835b);
   border-radius: 10px;
   padding: 2px;
+  box-shadow: rgba(0, 0, 0, 0.45) 0px 25px 20px -20px;
 }
 
 .movies-section ul {

@@ -9,26 +9,6 @@
     </th:block>
 
     <div layout:fragment="content">
-
-
-        <div class="loader-wrapper">
-            <div class="loader">
-                <div class="roller"></div>
-                <div class="roller"></div>
-            </div>
-
-            <div id="loader2" class="loader">
-                <div class="roller"></div>
-                <div class="roller"></div>
-            </div>
-
-            <div id="loader3" class="loader">
-                <div class="roller"></div>
-                <div class="roller"></div>
-            </div>
-        </div>
-
-
         <div class="container-fluid imageAccueil">
             <div class="row justify-content-center" th:if="${#httpServletRequest.remoteUser == null}">
                 <div class="col-10 col-lg-5 bg-primary panel text-center">
@@ -124,20 +104,9 @@
             </div>
         </div>
         <script>
-            $('.loader-wrapper').hide();
-            $('.container').css('background-color', 'black');
-
             function submitForm() {
                 document.getElementById("loginForm").submit();
             }
-
-            $("a").click(function(){
-                $(".loader-wrapper").show();
-            });
-
-            $("boutton").click(function(){
-                $(".loader-wrapper").show();
-            });
         </script>
     </div>
 </html>
