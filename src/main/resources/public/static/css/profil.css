@@ -519,4 +519,9 @@ body {
   transform: translateY(0) rotateX(0);
 }
 
+.userConnected {
+  height: 75px;
+  width: 75px;
+}
+
 /*# sourceMappingURL=profil.css.map */
