@@ -1,4 +1,3 @@
-/*# sourceMappingURL=profil.css.map */
 /***** Body *****/
 body {
   background-color: #C4C4C4;
@@ -152,6 +151,11 @@ body {
   word-break: break-all;
 }
 
+.image img {
+  width: 180px;
+  height: 180px;
+}
+
 #aime {
   position: relative;
 }
@@ -235,7 +239,6 @@ body {
   list-style-type: none;
   margin: 0;
   padding: 0;
-  @import "style.css";
 }
 .link ul .link li {
   display: inline;
