@@ -7,9 +7,10 @@
     <title>Profil</title>
     <link href="/static/css/profil.css" rel="stylesheet"/>
     <link href="/static/css/post.css" rel="stylesheet"/>
-
+    <link href="/static/css/tweets.css" rel="stylesheet"/>
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.4.1/css/all.css"
           integrity="sha384-5sAR7xN1Nv6T6+dT2mhtzEpVJvfS3NScPQTrOxhwjIuvcA67KV2R5Jz6kr4abQsz" crossorigin="anonymous">
+    <script async src=”https://platform.twitter.com/widgets.js" charset=”utf-8"></script>
 </th:block>
 
 <div layout:fragment="content">
@@ -210,25 +211,24 @@
 
 
                         <!--section tweet-->
-                        <div class="row">
-                            <div>
-                                <div class="panel panel-danger">
-                                    <div class="panel-heading" th:if="${tweet} != null">
-                                                                        <span class="panel-title">
+                        <div class="">
+                            <div class="twitter-widget">
+
+                                    <div class="twitter-widget-header-holder" th:if="${tweet} != null">
+                                                                        <span class="twitter-widget-header">
                                                                             <h3 th:text="${'@'+twitterUser}"><i
                                                                                     class="fab fa-twitter"></i></h3>
                                                                         </span>
                                     </div>
-                                    <div class="panel-heading" th:if="${tweet} == null">
-                                        <h3 class="panel-title" th:text="${'@'+user.getUsername()}"><img
-                                                class="banner-logo" src="/static/css/img/twitter.png" alt="Logo tweet">
+                                    <div class="" th:if="${tweet} == null">
+                                        <h3 class="" th:text="${'@'+user.getUsername()}"><img class="banner-logo" src="/static/css/img/twitter.png" alt="Logo tweet"></img>
                                         </h3>
                                     </div>
-                                    <div class="panel-body" th:each="t: ${tweet}">
+                                    <div class="twitter-timeline" th:each="t: ${tweet}">
                                         <i class="fab fa-twitter"></i>
-                                        <td th:text="${t.getText()}"></td>
+                                        <p th:text="${t.getText()}"></p>
                                     </div>
-                                </div>
+
                             </div>
                         </div>
                         <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
@@ -257,6 +257,7 @@
                                                 <span th:if="${p.isPrivatePost == false}">
                                                     <div id="post-container" class="justify-content " name="content">
                                                             <td th:text="${p.content}"></td>
+                                                         <div class="image"><img class="col-lg-4" th:src="'https://wcs-2-be-or-not-2-be.s3.eu-west-3.amazonaws.com/'+${p.image}"></img></div>
                                                             <!--<td><a id="stiky" th:href="@{/deletePost/{id}(id=${p.id})}"><i class="far fa-trash-alt"></i></a></td>-->
                                                             <td class="list-inline-item" th:text="${'Le:'+#dates.format(p.createdAt,'dd/MM/yyyy HH:mm')}"></td>
                                                             <td class="list-inline-item" th:text="${'Posté par: '+p.cerebookUser.username}"></td>
