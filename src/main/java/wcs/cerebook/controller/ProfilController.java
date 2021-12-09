@@ -3,12 +3,15 @@ package wcs.cerebook.controller;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.session.SessionInformation;
+import org.springframework.security.core.session.SessionRegistry;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import twitter4j.*;
 import wcs.cerebook.entity.*;
+import wcs.cerebook.model.MyUserDetails;
 import wcs.cerebook.repository.*;
 import wcs.cerebook.services.MediaService;
 
@@ -21,6 +24,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Controller
 public class ProfilController {
@@ -49,23 +53,29 @@ public class ProfilController {
     private FriendRepository friendRepository;
 
     @Autowired
+    private MovieRepository movieRepository;
+
+    @Autowired
     private MediaService mediaService;
 
-    @GetMapping("/profil")
+    @Autowired
+    private SessionRegistry sessionRegistry;
 
+    @GetMapping("/profil")
     public String getProfil(Model model, Principal principal) {
+
+        getAllUsersConnected(model);
+
         model.addAttribute("user", userRepository.findByUsername(principal.getName()));
         CerebookUser user = userRepository.getCerebookUserByUsername(principal.getName());
-        List<CerebookPost> cerebookPosts = user.getCerebookPosts();
-        model.addAttribute("listPosts", cerebookPosts);
-        model.addAttribute("localDateTime", new Date());
-        model.addAttribute("allUsers", userRepository.findAll());
-        model.addAttribute("pictures", pictureRepository.lastPicture(user.getId()));
-        model.addAttribute("videos", videoRepository.lastVideo(user.getId()));
+        getUserAndPostAttribut(model, user);
 
         // PIL : Récupération du dernier message des 3 derniers amis
         List<Long[]> messagesFromSQL = messageRepository.lastThreeMessages(user.getId());
         List<CerebookMessage> messages = new ArrayList<>();
+
+        // PIL : Récupération des 6 derniers films
+        model.addAttribute("movies", movieRepository.lastMovie(user.getId()));
 
         for (Long[] ids : messagesFromSQL) {
             messages.add(messageRepository.getById(ids[0]));
@@ -73,18 +83,7 @@ public class ProfilController {
         model.addAttribute("cerebookMessages", messages);
 
         // PIL : Récupération des données json longitude et latitude
-        List<CerebookCartography> cartographies = cartographyRepository.findAll();
-        JsonNode json = new ObjectMapper().valueToTree(cartographies);
-        model.addAttribute("cartography", json);
-        // PIL : Récupérations des 6 derniers amis
-        List<CerebookUser> friends = new ArrayList<>();
-        List<CerebookFriend> confirmed = friendRepository.getLastFriend_Id(user);
-        for (CerebookFriend friend : confirmed) {
-            friends.add(friend.getCurrentFriends());
-        }
-        model.addAttribute("friends", friends);
-
-        String userName = principal.getName();
+        getCartographyAndFriends(model, user);
         //tweet
         try {
             Twitter twitter = new TwitterFactory().getInstance();
@@ -108,19 +107,54 @@ public class ProfilController {
 
     @GetMapping("/profil/{id}")
     public String getOtherProfil(Model model, @PathVariable Long id) {
+
+        getAllUsersConnected(model);
         model.addAttribute("user", userRepository.getById(id));
         CerebookUser user = userRepository.getById(id);
-        List<CerebookPost> cerebookPosts = user.getCerebookPosts();
-        model.addAttribute("listPosts", cerebookPosts);
-        model.addAttribute("localDateTime", new Date());
-        model.addAttribute("allUsers", userRepository.findAll());
-        model.addAttribute("pictures", pictureRepository.lastPicture(user.getId()));
-        model.addAttribute("videos", videoRepository.lastVideo(user.getId()));
+        getUserAndPostAttribut(model, user);
+        getCartographyAndFriends(model, user);
+
+        return "cerebookProfil/profil";
+    }
+
+    private void getAllUsersConnected(Model model) {
+        final List<Object> getAllPrincipals = sessionRegistry.getAllPrincipals();
+        List<CerebookUser> usersConnected = new ArrayList<>();
+
+        for (final Object principalConnect : getAllPrincipals) {
+            if (principalConnect instanceof MyUserDetails) {
+                final MyUserDetails myUserDetails = (MyUserDetails) principalConnect;
+                List<SessionInformation> activeUserSessions =
+                        sessionRegistry.getAllSessions(principalConnect,
+                                /* includeExpiredSessions */ false); // Should not return null;
+                if (!activeUserSessions.isEmpty()) {
+                    usersConnected.add(userRepository.findByUsername(myUserDetails.getUsername()));
+                }
+            }
+        }
+        model.addAttribute("usersConnected", usersConnected);
+    }
+
+
+
+    private void getCartographyAndFriends(Model model, CerebookUser user) {
         List<CerebookCartography> cartographies = cartographyRepository.findAll();
         JsonNode json = new ObjectMapper().valueToTree(cartographies);
         model.addAttribute("cartography", json);
+        List<CerebookUser> friends = new ArrayList<>();
+        List<CerebookFriend> confirmed = friendRepository.getLastFriend(user);
+        for (CerebookFriend friend : confirmed) {
+            friends.add(friend.getCurrentFriends());
+        }
+        model.addAttribute("friends", friends);
+    }
 
-        return "cerebookProfil/profil";
+    private void getUserAndPostAttribut(Model model, CerebookUser user) {
+        List<CerebookPost> cerebookPosts = user.getCerebookPosts();
+        model.addAttribute("listPosts", cerebookPosts);
+        model.addAttribute("allUsers", userRepository.findAll());
+        model.addAttribute("pictures", pictureRepository.lastPicture(user.getId()));
+        model.addAttribute("videos", videoRepository.lastVideo(user.getId()));
     }
 
     @GetMapping("/profil/update")
@@ -131,7 +165,7 @@ public class ProfilController {
     }
 
     @PostMapping("/profil/update")
-    public String postProfilUpdate(@ModelAttribute CerebookProfil cerebookProfil, @ModelAttribute CerebookUser cerebookUser, @RequestParam(value = "file_banner") MultipartFile banner, @RequestParam("file_avatar") MultipartFile avatar, Principal principal, Model model) throws IOException {
+    public String postProfilUpdate(@ModelAttribute CerebookProfil cerebookProfil, @ModelAttribute CerebookUser cerebookUser, @RequestParam(value = "file_banner") MultipartFile banner, @RequestParam("file_avatar") MultipartFile avatar, Principal principal) throws IOException {
         CerebookUser user = userRepository.getCerebookUserByUsername(principal.getName());
         if (cerebookProfil.getId() != null) {
             if (!banner.isEmpty()) {
