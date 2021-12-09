@@ -36,7 +36,7 @@ public class VideoController {
     public String getAllVideo(Model model, Principal principal) {
         model.addAttribute("user", userRepository.findByUsername(principal.getName()));
 
-        return "/cerebookVideo/video";
+        return "cerebookVideo/video";
     }
 
     @GetMapping("/video/show")
@@ -46,14 +46,14 @@ public class VideoController {
 
         model.addAttribute("video", videoRepository.findById(id));
 
-        return "/cerebookVideo/video_show";
+        return "cerebookVideo/video_show";
     }
 
     @GetMapping("/video/update")
     public String updateVideo(Model model, Principal principal) {
         model.addAttribute("user", userRepository.findByUsername(principal.getName()));
 
-        return "/cerebookVideo/video_update";
+        return "cerebookVideo/video_update";
     }
 
     @PostMapping("/video/update")

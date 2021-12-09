@@ -9,6 +9,11 @@ import javax.persistence.*;
     generator = ObjectIdGenerators.PropertyGenerator.class,
     property = "id")
 public class CerebookProfil {
+    public static enum Type {
+        SimpleMedia,
+        ResizedPicture
+    }
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -20,9 +25,33 @@ public class CerebookProfil {
     private boolean interestedInMen;
     private String hometown;
     private String relashionship;
+    private Type mediaType;
+    private boolean amazonS3Hosted;
 
     @OneToOne(mappedBy = "profil")
     private CerebookUser user;
+
+    public CerebookProfil() {
+    }
+
+    public CerebookProfil(String activity, String avatar, String ornament, String banner, boolean interestedInWoman, boolean interestedInMen, String hometown, String relashionship, Type mediaType, CerebookUser user) {
+        this.activity = activity;
+        this.avatar = avatar;
+        this.ornament = ornament;
+        this.banner = banner;
+        this.interestedInWoman = interestedInWoman;
+        this.interestedInMen = interestedInMen;
+        this.hometown = hometown;
+        this.relashionship = relashionship;
+        this.mediaType = mediaType;
+        this.user = user;
+    }
+
+    public CerebookProfil(String avatar, String banner, Type mediaType) {
+        this.avatar = avatar;
+        this.banner = banner;
+        this.mediaType = mediaType;
+    }
 
     public Long getId() {
         return id;
@@ -102,6 +131,22 @@ public class CerebookProfil {
 
     public void setUser(CerebookUser user) {
         this.user = user;
+    }
+
+    public Type getMediaType() {
+        return mediaType;
+    }
+
+    public void setMediaType(Type mediaType) {
+        this.mediaType = mediaType;
+    }
+
+    public boolean isAmazonS3Hosted() {
+        return amazonS3Hosted;
+    }
+
+    public void setAmazonS3Hosted(boolean amazonS3Hosted) {
+        this.amazonS3Hosted = amazonS3Hosted;
     }
 
     @Override
