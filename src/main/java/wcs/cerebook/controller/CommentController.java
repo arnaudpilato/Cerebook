@@ -70,6 +70,18 @@ public class CommentController {
         commentRepository.save(cerebookComment);
 
         return "redirect:/profil";
+    }  //save
+    //  comment
+    @PostMapping("/saveCommentHome")
+    public String saveCommentHome(@ModelAttribute CerebookComment cerebookComment, @RequestParam(value = "postid") Long postid, Principal principal) {
+        CerebookUser user = userRepository.getCerebookUserByUsername(principal.getName());
+        CerebookPost cerebookPost = postRepository.getById(postid);
+        cerebookComment.setCerebookPost(cerebookPost);
+        cerebookComment.setCerebookUser(user);
+        cerebookComment.setCreatedAt(new Date());
+        commentRepository.save(cerebookComment);
+
+        return "redirect:/actus";
     }
 
     @GetMapping("/listComment/{postid}")

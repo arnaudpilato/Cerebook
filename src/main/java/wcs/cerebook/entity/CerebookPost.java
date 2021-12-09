@@ -32,6 +32,7 @@ public class CerebookPost {
 
     @OneToMany(mappedBy = "cerebookPost", fetch = FetchType.LAZY,
             cascade = CascadeType.REMOVE, orphanRemoval = true)
+    @OrderBy("id DESC")
     private final List<CerebookComment> comments = new ArrayList<CerebookComment>();
     //oneTomany one vers  les likes
     @OneToMany(

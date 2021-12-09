@@ -12,5 +12,5 @@ import java.util.List;
 
 @Repository
 public interface PostRepository extends JpaRepository<CerebookPost, Long> {
-
+    public List<CerebookPost> findAllByOrderByIdDesc();
 }

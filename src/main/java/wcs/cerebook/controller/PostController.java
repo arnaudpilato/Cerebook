@@ -69,6 +69,20 @@ public class PostController {
         likeRepository.save(cerebookPostLike);
         return "redirect:/profil";
     }
+
+    @RequestMapping("/save/home")
+    public String savePostHome(Principal principal, CerebookPost cerebookPost,CerebookPostLike cerebookPostLike) {
+        // save post to database
+        String username = principal.getName();
+        CerebookUser user = userRepository.getCerebookUserByUsername(username);
+        cerebookPost.setCerebookUser(user);
+        repository.save(cerebookPost);
+        cerebookPostLike.setCerebookPost(cerebookPost);
+        cerebookPostLike.setLiked(true);
+        cerebookPostLike.setCerebookUser(user);
+        likeRepository.save(cerebookPostLike);
+        return "redirect:/actus";
+    }
     // list all posts
     @RequestMapping("/posts")
     public String getAllPosts(Model model) {
