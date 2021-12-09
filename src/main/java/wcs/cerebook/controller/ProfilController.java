@@ -136,7 +136,6 @@ public class ProfilController {
     }
 
 
-
     private void getCartographyAndFriends(Model model, CerebookUser user) {
         List<CerebookCartography> cartographies = cartographyRepository.findAll();
         JsonNode json = new ObjectMapper().valueToTree(cartographies);
@@ -144,7 +143,11 @@ public class ProfilController {
         List<CerebookUser> friends = new ArrayList<>();
         List<CerebookFriend> confirmed = friendRepository.getLastFriend(user);
         for (CerebookFriend friend : confirmed) {
-            friends.add(friend.getCurrentFriends());
+            if (friend.getCurrentFriends().getId().equals(user.getId())) {
+                friends.add(friend.getCurrentUser());
+            } else {
+                friends.add(friend.getCurrentFriends());
+            }
         }
         model.addAttribute("friends", friends);
     }
