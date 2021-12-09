@@ -13,7 +13,6 @@ import wcs.cerebook.entity.*;
 import wcs.cerebook.model.MyUserDetails;
 import wcs.cerebook.repository.*;
 import wcs.cerebook.services.MediaService;
-
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
@@ -50,6 +49,9 @@ public class ProfilController {
 
     @Autowired
     private FriendRepository friendRepository;
+
+    @Autowired
+    private MovieRepository movieRepository;
 
     @Autowired
     private MediaService mediaService;
@@ -101,6 +103,9 @@ public class ProfilController {
         List<Long[]> messagesFromSQL = messageRepository.lastThreeMessages(user.getId());
         List<CerebookMessage> messages = new ArrayList<>();
 
+        // PIL : Récupération des 6 derniers films
+        model.addAttribute("movies", movieRepository.lastMovie(user.getId()));
+
         for (Long[] ids : messagesFromSQL) {
             messages.add(messageRepository.getById(ids[0]));
         }
@@ -117,8 +122,6 @@ public class ProfilController {
             friends.add(friend.getCurrentFriends());
         }
         model.addAttribute("friends", friends);
-
-        String userName = principal.getName();
         //tweet
         try {
             Twitter twitter = new TwitterFactory().getInstance();
@@ -165,7 +168,7 @@ public class ProfilController {
     }
 
     @PostMapping("/profil/update")
-    public String postProfilUpdate(@ModelAttribute CerebookProfil cerebookProfil, @ModelAttribute CerebookUser cerebookUser, @RequestParam(value = "file_banner") MultipartFile banner, @RequestParam("file_avatar") MultipartFile avatar, Principal principal, Model model) throws IOException {
+    public String postProfilUpdate(@ModelAttribute CerebookProfil cerebookProfil, @ModelAttribute CerebookUser cerebookUser, @RequestParam(value = "file_banner") MultipartFile banner, @RequestParam("file_avatar") MultipartFile avatar, Principal principal) throws IOException {
         CerebookUser user = userRepository.getCerebookUserByUsername(principal.getName());
         if (cerebookProfil.getId() != null) {
             if (!banner.isEmpty()) {
