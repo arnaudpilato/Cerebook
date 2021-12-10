@@ -415,18 +415,19 @@
                         </div>
                     </div>
                 </div>
+                <!-- PIL : Section amis connectés -->
                 <div class="d-none d-lg-block col-lg-1 friend-connected">
                     <ul th:each="userConnected : ${usersConnected}">
-                        <a th:href="@{/profil/{id}(id=${userConnected.id})}">
-                            <li>
+
+                            <li><a th:href="@{/profil/{id}(id=${userConnected.id})}">
                                 <img class="baniere-logo userConnected" th:src="'https://wcs-2-be-or-not-2-be.s3.eu-west-3.amazonaws.com/'+${userConnected.profil.avatar}">
-                            </li>
-                        </a>
-                        <a th:href="@{/message#message(username=${userConnected.username})}">
-                            <li>
+                            </a></li>
+
+
+                            <li><a th:href="@{/message#message(username=${userConnected.username})}">
                                 <p class="message-text baniere-logo" th:text="${userConnected.username}"></p>
-                            </li>
-                        </a>
+                            </a> </li>
+
                     </ul>
                 </div>
             </div>
