@@ -1,6 +1,5 @@
 package wcs.cerebook.controller;
 
-import org.apache.catalina.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.repository.query.Param;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -16,14 +15,12 @@ import wcs.cerebook.repository.FriendRepository;
 import wcs.cerebook.repository.UserRepository;
 import wcs.cerebook.services.GeocodeService;
 import wcs.cerebook.services.CerebookUserService;
-
 import java.security.Principal;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 import java.util.TreeSet;
 import java.util.stream.Collectors;
-
 
 @Controller
 public class UserController {
@@ -40,19 +37,19 @@ public class UserController {
     private FriendRepository friendRepository;
 
 
-    @GetMapping("/")
+    @GetMapping("/home")
     public String login(Model model, Principal principal) {
         // PIL : Récupération de l'user principal pour la navbar
         if (principal != null) {
             model.addAttribute("user", userRepository.findByUsername(principal.getName()));
         }
 
-        return "index";
+        return "cerebookUser/login";
     }
 
     @GetMapping("/login")
     public String loginError() {
-        return "index";
+        return "cerebookUser/login";
     }
 
     @RequestMapping("/userCreate")
@@ -105,7 +102,7 @@ public class UserController {
             return "cerebookUser/user";
         }
 
-        return "redirect:/";
+        return "redirect:/home";
     }
 
     @GetMapping("/user")
