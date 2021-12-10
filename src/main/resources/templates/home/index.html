@@ -57,11 +57,7 @@
                             </div>
                             <p th:text="${post.content}" class="mt-4 mb-4">
 
-                            <footer><a class="btn btn-primary" data-bs-toggle="collapse"
-                                       th:href="'#collapseExample'+ ${iter.index}"
-                                       aria-expanded="false" aria-controls="collapseExample">
-                                <i class="far fa-comment"></i> ajouter un commentaire</a>
-
+                            <footer>
                                 <a id="commentExpansionButton" class="btn btn-primary" data-bs-toggle="collapse"
                                    th:href="'#collapseExamplo'+ ${iter.index}"
                                    aria-expanded="false" aria-controls="collapseExamplo">
@@ -70,6 +66,7 @@
                                 <p>commentaire posté par <cite th:text="${post.getCerebookUser().getUsername()}"
                                                                title="Source Title"/></p>
 
+
                             </footer>
 
 
@@ -77,21 +74,7 @@
 
                     <div class="collapse" th:id="'collapseExample'+*{iter.index}">
                         <div class="card card-body">
-                            <form action="#" th:action="@{/saveCommentHome}" th:object="${comment}" method="POST">
-                                <div class="form-group">
-                                    <label for="comment">Commentaire: </label>
-                                    <input type="text" th:field="*{comment}" id="comment"
-                                           placeholder="entrez votre commentaire" class="form-control mb-4 col-4">
-                                </div>
-                                <div class="form-group">
-                                    <input type="hidden" th:value="${time}" th:field="*{createdAt}"
-                                           placeholder=" created at" class="form-control mb-4 col-4"/>
-                                </div>
-                                <input type="hidden" th:field="${comment.id}" class="form-control mb-4 col-4">
-                                <input type="hidden" name="postid" th:value="${post.id}"
-                                       class="form-control mb-4 col-4">
-                                <button type="submit" class="btn btn-primary col-2"> Envoyer</button>
-                            </form>
+
                         </div>
                     </div>
 
@@ -108,24 +91,26 @@
                             </div>
                             <p  th:text="${comment.getComment()}" class="p-3">
                         </div>
+
                     </div>
+                    <form action="#" th:action="@{/saveCommentHome}" th:object="${comment}" method="POST">
+                                <div class="form-group">
+                                    <label for="comment">Commentaire: </label>
+                                    <input type="text" th:field="*{comment}" id="comment"
+                                           placeholder="entrez votre commentaire" class="form-control mb-4 col-4">
+                                </div>
+                                <div class="form-group">
+                                    <input type="hidden" th:value="${time}" th:field="*{createdAt}"
+                                           placeholder=" created at" class="form-control mb-4 col-4"/>
+                                </div>
+                                <input type="hidden" th:field="${comment.id}" class="form-control mb-4 col-4">
+                                <input type="hidden" name="postid" th:value="${post.id}"
+                                       class="form-control mb-4 col-4">
+                                <button type="submit" class="btn btn-primary col-2"> Envoyer</button>
+                            </form>
                 </div>
             </div>
         </div>
     </div>
-    <script>
-        console.log("toto");
-        $( document ).ready(function() {
-            console.log( "ready!" );
-
-            var btn = $("#commentExpansionButton");
-            console.log( btn );
-            console.log( $("#collapseExamplo0").attr("class", "collapse") );
-
-            $(btn).click(function() {
-                $("#collapseExamplo0").attr("class", "collapse");
-            });
-        });
-    </script>
 </div>
 </html>
