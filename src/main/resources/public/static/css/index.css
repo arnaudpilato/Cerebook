@@ -166,6 +166,13 @@
 }
 
 /***** Cerebook Animation *****/
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg: #1a1a1a;
+    --panel: #000;
+    --color: #f2f2f2;
+  }
+}
 body {
   background: #D30215;
   overflow: hidden;

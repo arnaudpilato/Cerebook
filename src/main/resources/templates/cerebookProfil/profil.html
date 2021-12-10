@@ -234,17 +234,21 @@
                                 </div>
                             </div>
                             <!--section tweet-->
-                            <div class="">
-                                <div class="twitter-widget">
-                                    <div class="twitter-widget-header-holder" th:if="${tweet} != null">
-                                        <span class="twitter-widget-header"><h3 th:text="${'@'+twitterUser}"><i class="fab fa-twitter"></i></h3></span>
-                                    </div>
-                                    <div class="" th:if="${tweet} == null">
-                                        <h3 class="" th:text="${'@'+user.getUsername()}"><img class="banner-logo" src="/static/css/img/twitter.png" alt="Logo tweet"></img></h3>
-                                    </div>
-                                    <div class="twitter-timeline" th:each="t: ${tweet}">
-                                        <i class="fab fa-twitter"></i>
-                                        <p th:text="${t.getText()}"></p>
+                            <div class="row">
+                                <div class="col-lg-12">
+                                    <div class="twitter-widget">
+                                        <div class="py-3 px-3 pb-0">
+                                            <div class="twitter-widget-header-holder" th:if="${tweet} != null">
+                                                <span class="twitter-widget-header"><h3 th:text="${'@'+twitterUser}"><i class="fab fa-twitter"></i></h3></span>
+                                            </div>
+                                            <div class="" th:if="${tweet} == null">
+                                                <h3 class="" th:text="${'@'+user.getUsername()}"><img class="banner-logo" src="/static/css/img/twitter.png" alt="Logo tweet"></img></h3>
+                                            </div>
+                                            <div class="twitter-timeline" th:each="t: ${tweet}">
+                                                <i class="fab fa-twitter"></i>
+                                                <p th:text="${t.getText()}"></p>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
