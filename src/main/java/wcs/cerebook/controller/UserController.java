@@ -15,6 +15,7 @@ import wcs.cerebook.repository.FriendRepository;
 import wcs.cerebook.repository.UserRepository;
 import wcs.cerebook.services.GeocodeService;
 import wcs.cerebook.services.CerebookUserService;
+
 import java.security.Principal;
 import java.util.ArrayList;
 import java.util.List;
@@ -41,7 +42,7 @@ public class UserController {
     public String login(Model model, Principal principal) {
         // PIL : Récupération de l'user principal pour la navbar
         if (principal != null) {
-        model.addAttribute("userActual", userRepository.findByUsername(principal.getName()));
+            model.addAttribute("userActual", userRepository.findByUsername(principal.getName()));
         }
 
         return "cerebookUser/login";
@@ -115,7 +116,11 @@ public class UserController {
 
         CerebookUser user = new CerebookUser();
         model.addAttribute("user", user);
-        model.addAttribute("userActual", userRepository.findByUsername(principal.getName()));
+        if (principal != null) {
+            model.addAttribute("userActual", userRepository.findByUsername(principal.getName()));
+        } else {
+            model.addAttribute("userActual", user);
+        }
         return "cerebookUser/user";
     }
 
@@ -131,13 +136,13 @@ public class UserController {
         List<CerebookUser> friends = new ArrayList<>();
 
         List<CerebookFriend> confirmed = friendRepository.getByConfirmationFriend_Id(actualUser);
-        for (CerebookFriend friend: confirmed
+        for (CerebookFriend friend : confirmed
         ) {
             friends.add(friend.getCurrentFriends());
         }
 
         List<CerebookFriend> confirmey = friendRepository.getByConfirmationFriendUser_Id(actualUser);
-        for (CerebookFriend friend: confirmey
+        for (CerebookFriend friend : confirmey
         ) {
             friends.add(friend.getCurrentUser());
         }
