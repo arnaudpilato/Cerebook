@@ -23,7 +23,7 @@
                             <ul class="d-flex justify-content-around px-3 align-items-center">
                                 <li><a th:href="@{/profil/{id}(id=${friend.id})}"><img class="profile-section-logo" th:src="'https://wcs-2-be-or-not-2-be.s3.eu-west-3.amazonaws.com/'+${friend.getCurrentUser().profil.avatar}" alt="Logo de profil"></a></li>
                                 <li><a th:href="@{/profil/{id}(id=${friend.id})}"><p class="profile-section-username" th:text="${friend.getCurrentUser().username}"></p></a></li>
-                                <a th:href="@{/message(username=${friend.getCurrentUser().getUsername()})}"><img class="logo" src="/static/css/img/message.png"></a>
+                                <a th:href="@{/message#message(username=${friend.getCurrentUser().getUsername()})}"><img class="logo" src="/static/css/img/message.png"></a>
                             </ul>
                             <ul class="essai">
                                 <li th:if="${friend.getCurrentUser().profil.activity}" class="mb-2"><img class="modal-profile-logo" src="/static/css/img/shield.png" alt="Logo profil"><span th:text="${friend.getCurrentUser().profil.activity}"></span></li>

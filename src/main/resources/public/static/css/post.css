@@ -1,4 +1,19 @@
-/*# sourceMappingURL=profil.css.map */
+:root {
+  --movement: 0.85;
+  --stop: 0.5;
+  --duration: calc((var(--movement) * (1 / var(--stop))));
+  --stagger: 0.1125;
+  --perspective: 500;
+  --size: 50;
+  --ease: cubic-bezier(1, -0.52, 0.26, 0.89);
+  --bg: #e6e6e6;
+  --panel: #fff;
+  --color: #0d0d0d;
+  --hue: 23;
+  --saturation: 100;
+  --lightness: 55;
+}
+
 /***** Body *****/
 body {
   background-color: #C4C4C4;
@@ -29,7 +44,7 @@ body {
   font-size: 1.5rem;
 }
 
-.logo {
+.logo-navbar {
   display: block;
   height: 25px;
   width: 25px;
@@ -152,6 +167,11 @@ body {
   word-break: break-all;
 }
 
+.image img {
+  width: 180px;
+  height: 180px;
+}
+
 #aime {
   position: relative;
 }
@@ -235,7 +255,6 @@ body {
   list-style-type: none;
   margin: 0;
   padding: 0;
-  @import "style.css";
 }
 .link ul .link li {
   display: inline;

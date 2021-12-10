@@ -26,6 +26,7 @@
                                                 <span th:if="${p.isPrivatePost == false}">
                                                     <div id="post-container" name="content">
                                                             <td th:text="${p.content}"></td>
+                                                        <div class="image"><img class="col-lg-4" th:src="'https://wcs-2-be-or-not-2-be.s3.eu-west-3.amazonaws.com/'+${p.image}"></img></div>
                                                         <!--<td><a id="stiky" th:href="@{/deletePost/{id}(id=${p.id})}"><i class="far fa-trash-alt"></i></a></td>-->
                                                         <div id="by-user">
                                                             <td th:text="${'Le: '+#dates.format(p.createdAt,'dd/MM/yyyy HH:mm')}"></td>

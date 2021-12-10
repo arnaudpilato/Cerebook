@@ -110,6 +110,10 @@
   list-style-type: none;
 }
 
+.modal-button-close {
+  color: black;
+}
+
 /***** Profil Section *****/
 
 .title-section {
@@ -117,7 +121,8 @@
 }
 .profile-section {
   border-radius: 10px;
-  background-color: #E9C46A;
+  background: linear-gradient(#E9C46A, #e9ce7e);
+  box-shadow: rgba(0, 0, 0, 0.45) 0px 25px 20px -20px;
 }
 
 .profile-section ul {
@@ -139,8 +144,9 @@
 /***** Message Section *****/
 
 .message-section {
-  background-color: #F4A261;
+  background: linear-gradient(#F4A261, #f4b675);
   border-radius: 10px;
+  box-shadow: rgba(0, 0, 0, 0.45) 0px 25px 20px -20px;
 }
 
 .message-section ul {
@@ -188,9 +194,10 @@
 }
 
 .movies-section {
-  background-color: #E76F51;
+  background: linear-gradient(#E76F51, #e7835b);
   border-radius: 10px;
   padding: 2px;
+  box-shadow: rgba(0, 0, 0, 0.45) 0px 25px 20px -20px;
 }
 
 .movies-section ul {
@@ -207,14 +214,16 @@
 .map-section {
   border-radius: 10px;
   padding: 2px;
-  background-color: #F4A261;
+  background: linear-gradient(#F4A261, #f4b675);
+  box-shadow: rgba(0, 0, 0, 0.45) 0px 25px 20px -20px;
 }
 
 /***** Picture Section *****/
 
 .picture-section {
-  background-color: #F4A261;
+  background: linear-gradient(#F4A261, #f4b675);
   border-radius: 10px;
+  box-shadow: rgba(0, 0, 0, 0.45) 0px 25px 20px -20px;
 }
 
 .picture-section ul, .video-section ul {
@@ -332,8 +341,9 @@
 /***** Video Section *****/
 
 .video-section {
-  background-color: #E76F51;
+  background: linear-gradient(#E76F51, #e7835b);
   border-radius: 10px;
+  box-shadow: rgba(0, 0, 0, 0.45) 0px 25px 20px -20px;
 }
 
 .video-button {
@@ -360,8 +370,9 @@
 /***** Friends Section *****/
 
 .friend-section {
-  background-color: #E9C46A;
+  background: linear-gradient(#E9C46A, #e9ce7e);
   border-radius: 10px;
+  box-shadow: rgba(0, 0, 0, 0.45) 0px 25px 20px -20px;
 }
 
 .friend-section ul {
@@ -442,7 +453,69 @@
   transform: translateY(0) rotateX(0);
 }
 
+//template tweets
+.twitter-widget {
+  width : 100%;
+  height : auto;
+  min-height: 60px;
+  min-width: 300px;
+  border-radius: 10px;
+  //box-shadow: 2px 2px 3px rgba(0, 0, 0, .2);
+  background-color:#E9C46A;
+  display:flex;
+  align-items:stretch;
+  flex-direction:column;
+  margin-top: 15px;
+}
+.twitter-widget-header-holder {
+  height:2%;
+  min-height: 40px;
+  max-height: 60px;
+  padding-top: 2%;
+  padding-right: 2%;
+  padding-left: 2%;
+  display: table;
+}
+.twitter-widget-header {
+   background-color: #E76F51;
+   border-radius: 10px;
+   color: darkslateblue;
+   text-align: center;
+   display: table-cell;
+   vertical-align: middle;
+   font-size: 120%;
+ }
+.twitter-widget-timeline-holder {
+  height: 100%;
+  padding-left: 2%;
+  padding-right: 2%;
+  padding-bottom: 2%;
+  margin-top: 10px;
+}
+.twitter-timeline {
+  border-radius: 10px;
+  //box-shadow: 2px 2px 3px rgba(0, 0, 0, .2);
+  padding: 5px;
+}
+
+/***** Friends connected section *****/
+
 .userConnected {
   height: 75px;
   width: 75px;
+  border-radius: 50%;
+}
+
+.friend-connected ul {
+  padding: 0;
+  text-align: center;
+}
+
+.friend-connected a {
+  text-decoration: none;
+  color: white;
+}
+
+.friend-connected a:hover {
+  color: black;
 }

@@ -36,14 +36,14 @@
 
                 L.marker([users[i].cartography.y, users[i].cartography.x], {icon: L.icon({
                         className: 'image-icon',
-                        iconUrl: users[i].profil.avatar,
+                        iconUrl: 'https://wcs-2-be-or-not-2-be.s3.eu-west-3.amazonaws.com/'+users[i].profil.avatar,
                         shadowUrl: '/static/css/img/marker.png',
                         iconSize:     [50, 50], // size of the icon
                         shadowSize:   [50, 70], // size of the shadow
                         iconAnchor:   [15, 45], // point of the icon which will correspond to marker's location
                         shadowAnchor: [15, 44],  // the same for the shadow
-                        popupAnchor:  [-3, -26] // point from which the popup should open relative to the iconAnchor
-                    })}).bindPopup('<a href="/profil"><img class="banner-logo" src="/static/css/img/video.png" alt="Logo vidéos">' + users[i].username + '</a>').addTo(cities);
+                        popupAnchor:  [10, -50] // point from which the popup should open relative to the iconAnchor
+                    })}).bindPopup('<a href="/profil">' + users[i].username + '</a>').addTo(cities);
 
             }
 
@@ -80,7 +80,7 @@
             };
 
             var overlays = {
-                "Cities": cities
+                "Utilisateurs": cities
             };
 
             L.control.layers(baseLayers, overlays).addTo(map);

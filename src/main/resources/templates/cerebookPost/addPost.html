@@ -12,7 +12,7 @@
     <div layout:fragment="content">
         <div class="container">
             <h2>Ajouter un post</h2>
-            <form action="#" th:action="@{/save}" th:object="${post}" method="POST">
+            <form action="#" th:action="@{/save}" th:object="${post}" method="POST" enctype="multipart/form-data">
                 <div class="form-group">
                     <label for="content">Contenu: </label>
                     <input type="text" id="posttextearea" th:field="*{content}" placeholder="content" class="form-control mb-4 col-4">
@@ -22,6 +22,12 @@
                 </div>
                 <div class="form-group">Is private:
                     <input type="checkbox" name="postStatus" th:checked="${postStatus}" th:field="${post.privatePost}" class="form-check-input"/>
+                </div>
+                <div class="col-auto">
+                    <label class="col-form-label" for="post-image">Image</label>
+                </div>
+                <div class="col-6">
+                    <input class="form-control" id="post-image" name="picture" type="file">
                 </div>
                 <button type="submit" class="btn btn-info col-2"> Valider</button>
             </form>
