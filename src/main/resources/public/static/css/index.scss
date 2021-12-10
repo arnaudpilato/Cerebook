@@ -170,6 +170,14 @@
 
 /***** Cerebook Animation *****/
 
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg: #1a1a1a;
+    --panel: #000;
+    --color: #f2f2f2;
+  }
+}
+
 @mixin double-keyframes($name) {
   @at-root {
     @for $i from 1 through 2 {
