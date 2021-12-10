@@ -5,108 +5,40 @@
 
     <th:block layout:fragment="config">
         <title>Cerebook index</title>
-        <link href="/static/css/user.css" rel="stylesheet"/>
+        <link href="/static/css/index.css" rel="stylesheet"/>
     </th:block>
 
     <div layout:fragment="content">
-        <div class="container-fluid imageAccueil">
-            <div class="row justify-content-center" th:if="${#httpServletRequest.remoteUser == null}">
-                <div class="col-10 col-lg-5 bg-primary panel text-center">
-                    <form id="loginForm" class="row justify-content-center" name="f" th:action="@{/login}" method="post">
-                        <h1 class="text-center my-4">Connexion</h1>
-                        <div th:if="${param.error}" class="alert alert-danger col-11 pl-1 pr-1 mb-4">
-                            Utilisateur ou mot de passe invalide.
-                        </div>
-                        <div th:if="${param.logout}" class="alert alert-success col-11 pl-1 pr-1 mb-4">
-                            Vous avez été deconnecté.
-                        </div>
-                        <div class="row col-7 g-1 justify-content-between">
-                            <div class="col-auto">
-                                <label class="col-form-label" for="username">Username</label>
-                            </div>
-                            <div class="col-7">
-                                <input type="text" id="username" name="username" class="form-control">
-                            </div>
-                        </div>
-                        <div class="row col-7 g-1  justify-content-between mb-3">
-                            <div class="col-auto">
-                                <label class="col-form-label" for="password">Password</label>
-                            </div>
-                            <div class="col-7">
-                                <input type="password" id="password" name="password" class="form-control">
-                            </div>
-                        </div>
-                        <div class="justify-content-around my-3">
-                            <a class="accueilButton btn--svg js-animated-button my-3 mx-2" href="#" onclick="submitForm()">
-                                <span class="btn--svg__label">Se connecter</span>
-                                <svg class="btn--svg__circle" width="190" x="0px" y="0px" viewBox="0 0 60 60" enable-background="new 0 0 60 60">
-                                    <circle class="js-discover-circle" fill="#FFFFFF" cx="30" cy="30" r="28.7"></circle>
-                                </svg>
-                                <svg class="btn--svg__border" x="0px" y="0px" preserveaspectratio="none" viewBox="2 29.3 56.9 13.4" enable-background="new 2 29.3 56.9 13.4" width="190">
-                                    <g class="btn--svg__border--left js-discover-left-border" id="Calque_2">
-                                        <path fill="none" stroke="#FFF" stroke-width="0.5" stroke-miterlimit="1" d="M30.4,41.9H9c0,0-6.2-0.3-6.2-5.9S9,30.1,9,30.1h21.4"></path>
-                                    </g>
-                                    <g class="btn--svg__border--right js-discover-right-border" id="Calque_3">
-                                        <path fill="none" stroke="#FFF" stroke-width="0.5" stroke-miterlimit="1" d="M30.4,41.9h21.5c0,0,6.1-0.4,6.1-5.9s-6-5.9-6-5.9H30.4"></path>
-                                    </g>
-                                </svg>
-                            </a>
-                            <a class="accueilButton btn--svg js-animated-button my-3 mx-2" href="/user">
-                                <span class="btn--svg__label">Créer un compte</span>
-                                <svg class="btn--svg__circle" width="190" x="0px" y="0px" viewBox="0 0 60 60" enable-background="new 0 0 60 60">
-                                    <circle class="js-discover-circle" fill="#FFFFFF" cx="30" cy="30" r="28.7"></circle>
-                                </svg>
-                                <svg class="btn--svg__border" x="0px" y="0px" preserveaspectratio="none" viewBox="2 29.3 56.9 13.4" enable-background="new 2 29.3 56.9 13.4" width="190">
-                                    <g class="btn--svg__border--left js-discover-left-border" id="Calque_2">
-                                        <path fill="none" stroke="#FFF" stroke-width="0.5" stroke-miterlimit="1" d="M30.4,41.9H9c0,0-6.2-0.3-6.2-5.9S9,30.1,9,30.1h21.4"></path>
-                                    </g>
-                                    <g class="btn--svg__border--right js-discover-right-border" id="Calque_3">
-                                        <path fill="none" stroke="#FFF" stroke-width="0.5" stroke-miterlimit="1" d="M30.4,41.9h21.5c0,0,6.1-0.4,6.1-5.9s-6-5.9-6-5.9H30.4"></path>
-                                    </g>
-                                </svg>
-                            </a>
-                        </div>
-                    </form>
-                </div>
-            </div>
-            <div class="row justify-content-center" th:unless="${#httpServletRequest.remoteUser == null}">
-                <div class="col-10 col-lg-5 bg-primary panel text-center">
-                    <h1 th:inline="text" class="text-center my-3">Bienvenue [[${#httpServletRequest.remoteUser}]]</h1>
-                    <a class="accueilButton btn--svg js-animated-button my-4" href="/profil">
-                        <span class="btn--svg__label">Voir votre profil</span>
-                        <svg class="btn--svg__circle" width="190" x="0px" y="0px" viewBox="0 0 60 60" enable-background="new 0 0 60 60">
-                            <circle class="js-discover-circle" fill="#FFFFFF" cx="30" cy="30" r="28.7"></circle>
-                        </svg>
-                        <svg class="btn--svg__border" x="0px" y="0px" preserveaspectratio="none" viewBox="2 29.3 56.9 13.4" enable-background="new 2 29.3 56.9 13.4" width="190">
-                            <g class="btn--svg__border--left js-discover-left-border" id="Calque_2">
-                                <path fill="none" stroke="#FFF" stroke-width="0.5" stroke-miterlimit="1" d="M30.4,41.9H9c0,0-6.2-0.3-6.2-5.9S9,30.1,9,30.1h21.4"></path>
-                            </g>
-                            <g class="btn--svg__border--right js-discover-right-border" id="Calque_3">
-                                <path fill="none" stroke="#FFF" stroke-width="0.5" stroke-miterlimit="1" d="M30.4,41.9h21.5c0,0,6.1-0.4,6.1-5.9s-6-5.9-6-5.9H30.4"></path>
-                            </g>
-                        </svg>
-                    </a>
-                    <a class="accueilButton btn--svg js-animated-button my-4" href="/logout">
-                        <span class="btn--svg__label">Se déconnecter</span>
-                        <svg class="btn--svg__circle" width="190" x="0px" y="0px" viewBox="0 0 60 60" enable-background="new 0 0 60 60">
-                            <circle class="js-discover-circle" fill="#FFFFFF" cx="30" cy="30" r="28.7"></circle>
-                        </svg>
-                        <svg class="btn--svg__border" x="0px" y="0px" preserveaspectratio="none" viewBox="2 29.3 56.9 13.4" enable-background="new 2 29.3 56.9 13.4" width="190">
-                            <g class="btn--svg__border--left js-discover-left-border" id="Calque_2">
-                                <path fill="none" stroke="#FFF" stroke-width="0.5" stroke-miterlimit="1" d="M30.4,41.9H9c0,0-6.2-0.3-6.2-5.9S9,30.1,9,30.1h21.4"></path>
-                            </g>
-                            <g class="btn--svg__border--right js-discover-right-border" id="Calque_3">
-                                <path fill="none" stroke="#FFF" stroke-width="0.5" stroke-miterlimit="1" d="M30.4,41.9h21.5c0,0,6.1-0.4,6.1-5.9s-6-5.9-6-5.9H30.4"></path>
-                            </g>
-                        </svg>
-                    </a>
-                </div>
+        <input class="retrigger" type="radio" name="rerun" id="retrigger" checked="checked" />
+        <div class="bg"></div>
+        <div class="pane">
+            <div class="rotate">
+                <div class="logo">CEREBOOK</div>
+                <div class="logo">CEREBOOK</div>
+                <div class="logo">CEREBOOK</div>
+                <div class="logo">CEREBOOK</div>
+                <div class="logo">CEREBOOK</div>
+                <div class="logo">CEREBOOK</div>
+                <div class="logo">CEREBOOK</div>
+                <div class="logo">CEREBOOK</div>
+                <div class="logo">CEREBOOK</div>
+                <div class="logo">CEREBOOK</div>
+                <div class="logo">CEREBOOK</div>
+                <div class="logo">CEREBOOK</div>
+                <div class="logo">CEREBOOK</div>
+                <div class="logo">CEREBOOK</div>
+                <div class="logo">CEREBOOK</div>
+                <div class="logo">CEREBOOK</div>
+                <div class="logo">CEREBOOK</div>
+                <div class="logo">CEREBOOK</div>
+                <div class="logo">CEREBOOK</div>
+                <div class="logo">CEREBOOK</div>
             </div>
         </div>
-        <script>
-            function submitForm() {
-                document.getElementById("loginForm").submit();
-            }
-        </script>
+        <div class="buttons">
+            <div class="home-button button--1">
+                <a href="/home">ENTRER</a>
+            </div>
+        </div>
     </div>
 </html>
