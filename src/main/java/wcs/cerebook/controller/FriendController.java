@@ -100,6 +100,7 @@ public class FriendController {
 
         // PIL : Récupération de l'user principal pour la navbar
         model.addAttribute("user", userRepository.findByUsername(principal.getName()));
+        model.addAttribute("userActual", userRepository.findByUsername(principal.getName()));
 
         model.addAttribute("friends", friends);
         return "cerebookFriends/confirm";
@@ -154,6 +155,7 @@ public class FriendController {
 
         // PIL : Récupération de l'user principal pour la navbar
         model.addAttribute("user", user);
+        model.addAttribute("userActual", userRepository.findByUsername(principal.getName()));
 
         model.addAttribute("users", friends);
         model.addAttribute("number", friendsNotValidate.size());

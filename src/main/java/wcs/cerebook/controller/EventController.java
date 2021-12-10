@@ -43,6 +43,7 @@ public class EventController {
 
         model.addAttribute("event", cerebookEvent);
         model.addAttribute("user", user);
+        model.addAttribute("userActual", userRepository.findByUsername(principal.getName()));
 
         return "cerebookEvent/eventCreate";
     }
@@ -58,6 +59,7 @@ public class EventController {
             boolean error_cartography = true;
             model.addAttribute("event", cerebookEvent);
             model.addAttribute("user", user);
+            model.addAttribute("userActual", userRepository.findByUsername(principal.getName()));
             model.addAttribute("error_cartography", error_cartography);
             return "cerebookEvent/eventCreate";
         }
@@ -106,6 +108,7 @@ public class EventController {
 
         model.addAttribute("events", cerebookEvent);
         model.addAttribute("user", cerebookUser);
+        model.addAttribute("userActual", userRepository.findByUsername(principal.getName()));
 
         return "cerebookEvent/events";
     }
@@ -114,6 +117,7 @@ public class EventController {
     public String getEventById(Model model, @PathVariable Long id, Principal principal) {
         model.addAttribute("event", eventRepository.getById(id));
         model.addAttribute("user", userRepository.getCerebookUserByUsername(principal.getName()));
+        model.addAttribute("userActual", userRepository.findByUsername(principal.getName()));
         return "cerebookEvent/event";
     }
 

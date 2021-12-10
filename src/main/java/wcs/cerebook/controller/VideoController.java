@@ -35,6 +35,7 @@ public class VideoController {
     @GetMapping("/video")
     public String getAllVideo(Model model, Principal principal) {
         model.addAttribute("user", userRepository.findByUsername(principal.getName()));
+        model.addAttribute("userActual", userRepository.findByUsername(principal.getName()));
 
         return "cerebookVideo/video";
     }
@@ -43,6 +44,7 @@ public class VideoController {
     public String showVideo(Model model, @RequestParam Long id, Principal principal) {
         // PIL : Récupération de l'user pour la navbar
         model.addAttribute("user", userRepository.findByUsername(principal.getName()));
+        model.addAttribute("userActual", userRepository.findByUsername(principal.getName()));
 
         model.addAttribute("video", videoRepository.findById(id));
 
@@ -52,6 +54,7 @@ public class VideoController {
     @GetMapping("/video/update")
     public String updateVideo(Model model, Principal principal) {
         model.addAttribute("user", userRepository.findByUsername(principal.getName()));
+        model.addAttribute("userActual", userRepository.findByUsername(principal.getName()));
 
         return "cerebookVideo/video_update";
     }

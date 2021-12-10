@@ -17,7 +17,7 @@ public class IndexController {
     @GetMapping("/")
     public String index(Principal principal, Model model) {
         if (principal != null) {
-            model.addAttribute("user", userRepository.findByUsername(principal.getName()));
+        model.addAttribute("userActual", userRepository.findByUsername(principal.getName()));
         }
         return "index";
     }

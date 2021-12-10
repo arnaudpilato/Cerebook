@@ -31,6 +31,7 @@ public class CerebookHomeController {
     @GetMapping("/actus")
     public String getCartography(Model model, Principal principal) {
         model.addAttribute("user", userRepository.findByUsername(principal.getName()));
+        model.addAttribute("userActual", userRepository.findByUsername(principal.getName()));
 
         String username = principal.getName();
         CerebookUser user = userRepository.getCerebookUserByUsername(username);
@@ -38,6 +39,7 @@ public class CerebookHomeController {
         model.addAttribute("post", cerebookPost);
         cerebookPost.setCerebookUser(user);
         model.addAttribute("user", user);
+        model.addAttribute("userActual", userRepository.findByUsername(principal.getName()));
         cerebookPost.setCreatedAt(new Date());
         model.addAttribute("localDateTime", new Date());
         //cerebookPost.setPrivatePost(cerebookPost.isPrivatePost());
@@ -59,7 +61,7 @@ public class CerebookHomeController {
         ) {
             friends.add(friend.getCurrentUser());
         }
-
+        model.addAttribute("userActual", userRepository.findByUsername(principal.getName()));
         CerebookComment cerebookComment = new CerebookComment();
         model.addAttribute("user", user);
         model.addAttribute("comment", cerebookComment);

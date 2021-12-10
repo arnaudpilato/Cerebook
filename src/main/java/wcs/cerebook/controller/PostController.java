@@ -57,6 +57,8 @@ public class PostController {
         model.addAttribute("post", cerebookPost);
         cerebookPost.setCerebookUser(user);
         model.addAttribute("user", user);
+        model.addAttribute("userActual", userRepository.findByUsername(principal.getName()));
+
         cerebookPost.setCreatedAt(new Date());
         model.addAttribute("localDateTime", new Date());
         //cerebookPost.setPrivatePost(cerebookPost.isPrivatePost());
@@ -149,6 +151,7 @@ public class PostController {
         model.addAttribute("post", cerebookPost);
         //cerebookPost.setCerebookUser(user);
         model.addAttribute("user", user);
+        model.addAttribute("userActual", userRepository.findByUsername(principal.getName()));
         cerebookPost.setCreatedAt(new Date());
         model.addAttribute("localDateTime", new Date());
         boolean postStatu = cerebookPost.isPrivatePost();
@@ -180,6 +183,7 @@ public class PostController {
         CerebookUser user = userRepository.getCerebookUserByUsername(username);
         model.addAttribute("listMyPosts", repository.findAll());
         model.addAttribute("user", user);
+        model.addAttribute("userActual", userRepository.findByUsername(principal.getName()));
         return "cerebookPost/myPosts";
     }
 
@@ -187,12 +191,14 @@ public class PostController {
     public String getAllPosts(Model model, Principal principal, @Valid CerebookPost cerebookPost, CerebookUser
             cerebookUser) throws TwitterException {
         model.addAttribute("user", userRepository.findByUsername(principal.getName()));
+        model.addAttribute("userActual", userRepository.findByUsername(principal.getName()));
         String username = principal.getName();
         CerebookUser user = userRepository.getCerebookUserByUsername(username);
         List<CerebookPostLike> cerebookPostLike = likeRepository.findAll();
         List<CerebookPost> cerebookPosts = repository.findAll();
         model.addAttribute("listPosts", cerebookPosts);
         model.addAttribute("user", user);
+        model.addAttribute("userActual", userRepository.findByUsername(principal.getName()));
         model.addAttribute("like", cerebookPostLike);
         cerebookPost.setCreatedAt(new Date());
         model.addAttribute("localDateTime", new Date());
