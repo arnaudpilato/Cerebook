@@ -31,6 +31,7 @@ public class PictureController {
     @GetMapping("/picture")
     public String getAllPicture(Model model, Principal principal) {
         model.addAttribute("user", userRepository.findByUsername(principal.getName()));
+        model.addAttribute("userActual", userRepository.findByUsername(principal.getName()));
 
         return "cerebookPicture/picture";
     }
@@ -39,6 +40,7 @@ public class PictureController {
     public String showPicture(Model model, @RequestParam Long id, Principal principal) {
         // PIL : Récupération de l'user principal pour la navbar
         model.addAttribute("user", userRepository.findByUsername(principal.getName()));
+        model.addAttribute("userActual", userRepository.findByUsername(principal.getName()));
 
         model.addAttribute("picture", pictureRepository.findById(id));
 
@@ -48,6 +50,7 @@ public class PictureController {
     @GetMapping("/picture/update")
     public String updatePicture(Model model, Principal principal) {
         model.addAttribute("user", userRepository.findByUsername(principal.getName()));
+        model.addAttribute("userActual", userRepository.findByUsername(principal.getName()));
 
         return "cerebookPicture/picture_update";
     }

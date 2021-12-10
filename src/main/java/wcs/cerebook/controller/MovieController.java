@@ -36,6 +36,7 @@ public class MovieController {
         // PIL : Récupération de l'user principal pour la navbar
         model.addAttribute("user", userRepository.findByUsername(principal.getName()));
         model.addAttribute("movies", movieRepository.findAll());
+        model.addAttribute("userActual", userRepository.findByUsername(principal.getName()));
 
         return "cerebookMovie/movie";
     }
@@ -44,7 +45,7 @@ public class MovieController {
     public String showMovie(Model model, @RequestParam Long id, Principal principal) {
         // PIL : Récupération de l'user pour la navbar
         model.addAttribute("user", userRepository.findByUsername(principal.getName()));
-
+        model.addAttribute("userActual", userRepository.findByUsername(principal.getName()));
         model.addAttribute("movie", movieRepository.findById(id));
 
         return "cerebookVideo/movie_show";
@@ -53,6 +54,7 @@ public class MovieController {
     @GetMapping("/movie/update")
     public String updateMovie(Model model, Principal principal) {
         model.addAttribute("user", userRepository.findByUsername(principal.getName()));
+        model.addAttribute("userActual", userRepository.findByUsername(principal.getName()));
 
         return "cerebookVideo/movie_update";
     }
