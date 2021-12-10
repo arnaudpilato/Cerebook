@@ -95,7 +95,7 @@
                                             </ul>
                                         </div>
                                         <div class="modal-footer">
-                                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                            <button type="button" class="btn btn-primary modal-button-close" data-bs-dismiss="modal">Close</button>
                                         </div>
                                     </div>
                                 </div>
@@ -418,16 +418,16 @@
                 <!-- PIL : Section amis connectés -->
                 <div class="d-none d-lg-block col-lg-1 friend-connected">
                     <ul th:each="userConnected : ${usersConnected}">
-
-                            <li><a th:href="@{/profil/{id}(id=${userConnected.id})}">
+                        <li>
+                            <a th:href="@{/profil/{id}(id=${userConnected.id})}">
                                 <img class="baniere-logo userConnected" th:src="'https://wcs-2-be-or-not-2-be.s3.eu-west-3.amazonaws.com/'+${userConnected.profil.avatar}">
-                            </a></li>
-
-
-                            <li><a th:href="@{/message#message(username=${userConnected.username})}">
+                            </a>
+                        </li>
+                        <li>
+                            <a th:href="@{/message#message(username=${userConnected.username})}">
                                 <p class="message-text baniere-logo" th:text="${userConnected.username}"></p>
-                            </a> </li>
-
+                            </a>
+                        </li>
                     </ul>
                 </div>
             </div>
