@@ -62,7 +62,7 @@
                                        aria-expanded="false" aria-controls="collapseExample">
                                 <i class="far fa-comment"></i> ajouter un commentaire</a>
 
-                                <a class="btn btn-primary" data-bs-toggle="collapse"
+                                <a id="commentExpansionButton" class="btn btn-primary" data-bs-toggle="collapse"
                                    th:href="'#collapseExamplo'+ ${iter.index}"
                                    aria-expanded="false" aria-controls="collapseExamplo">
                                     <i class="far fa-comment"></i> voir les commentaires</a>
@@ -75,7 +75,7 @@
 
                     </div>
 
-                    <div class="collapse" th:id="'collapseExample' + *{iter.index}">
+                    <div class="collapse" th:id="'collapseExample'+*{iter.index}">
                         <div class="card card-body">
                             <form action="#" th:action="@{/saveCommentHome}" th:object="${comment}" method="POST">
                                 <div class="form-group">
@@ -95,7 +95,7 @@
                         </div>
                     </div>
 
-                    <div class="collapse" th:id="'collapseExamplo' + ${iter.index}">
+                    <div class="collapse" th:id="'collapseExamplo'+*{iter.index}">
                         <div class="jusitfy-content-between" th:each="comment : ${post.getComments()}">
                             <hr>
                             <div class="justify-content-start d-flex align-items-center">
@@ -113,15 +113,19 @@
             </div>
         </div>
     </div>
+    <script>
+        console.log("toto");
+        $( document ).ready(function() {
+            console.log( "ready!" );
+
+            var btn = $("#commentExpansionButton");
+            console.log( btn );
+            console.log( $("#collapseExamplo0").attr("class", "collapse") );
+
+            $(btn).click(function() {
+                $("#collapseExamplo0").attr("class", "collapse");
+            });
+        });
+    </script>
 </div>
-
-<script>var collapseElementList = [].slice.call(document.querySelectorAll('.collapse'))
-var collapseList = collapseElementList.map(function (collapseEl) {
-    return new bootstrap.Collapse(collapseEl)
-})</script>
-<script>var myCollapse = document.getElementById('collapseExample')
-var bsCollapse = new bootstrap.Collapse(myCollapse, {
-    toggle: false
-})</script>
-
 </html>
