@@ -21,7 +21,7 @@
                         <div class="form-group ">
                             <div class="justify-content-between">
                                 <a class="nav-link" th:href="@{/profil}"><img style="width: 50px;"
-                                                                              class="nav-bar-profile-logo col-2"
+                                                                              class="nav-bar-profile-logo col-2 "
                                                                               th:src="'https://wcs-2-be-or-not-2-be.s3.eu-west-3.amazonaws.com/'+${user.profil.avatar}"
                                                                               alt="Logo profil"></a>
                                 <input type="text" id="postextearea" th:field="*{content}" placeholder="Quoi de neuf "
@@ -33,11 +33,7 @@
                             <input type="hidden" th:value="${localDateTime}" th:field="*{createdAt}"
                                    placeholder=" created at" class="form-control mb-4 col-4"/>
                         </div>
-                        <div class="form-group">Is private:
-                            <input type="checkbox" name="postStatus" th:checked="${postStatus}"
-                                   th:field="${post.privatePost}" class="form-check-input"/>
-                        </div>
-                        <div class="justify-content-center text-center">
+                        <div class="justify-content-center text-center mb-4">
                             <button type="submit" class="btn btn-primary "> Valider</button>
                         </div>
 
@@ -50,7 +46,6 @@
             <div class="justify-content-center d-flex">
                 <div class=" card col-5 mb-4 mt-4 ">
                     <div class="card-body">
-                        <blockquote class="blockquote mb-0">
                             <div class="justify-content-start d-flex align-items-center">
 
                                 <a class="nav-link d-block " th:href="@{/profil/{id}(id=${post.getCerebookUser().id})}">
@@ -64,12 +59,11 @@
 
                             <footer><a class="btn btn-primary" data-bs-toggle="collapse"
                                        th:href="'#collapseExample'+ ${iter.index}"
-                                       role="button"
-                                       aria-expanded="true" aria-controls="collapseExample">
+                                       aria-expanded="false" aria-controls="collapseExample">
                                 <i class="far fa-comment"></i> ajouter un commentaire</a>
 
                                 <a class="btn btn-primary" data-bs-toggle="collapse"
-                                   th:href="'#collapseExamplo'+ ${iter.index}" role="button"
+                                   th:href="'#collapseExamplo'+ ${iter.index}"
                                    aria-expanded="false" aria-controls="collapseExamplo">
                                     <i class="far fa-comment"></i> voir les commentaires</a>
 
@@ -77,11 +71,11 @@
                                                                title="Source Title"/></p>
 
                             </footer>
-                        </blockquote>
+
 
                     </div>
 
-                    <div class="collapse" th:id="'collapseExample' + ${iter.index}">
+                    <div class="collapse" th:id="'collapseExample' + *{iter.index}">
                         <div class="card card-body">
                             <form action="#" th:action="@{/saveCommentHome}" th:object="${comment}" method="POST">
                                 <div class="form-group">
@@ -103,14 +97,16 @@
 
                     <div class="collapse" th:id="'collapseExamplo' + ${iter.index}">
                         <div class="jusitfy-content-between" th:each="comment : ${post.getComments()}">
-                            <div class="justify-content-between">
-                                <a class="nav-link" th:href="@{/profil}"><img style="width: 50px;"
-                                                                              class="nav-bar-profile-logo col-2"
-                                                                              th:src="'https://wcs-2-be-or-not-2-be.s3.eu-west-3.amazonaws.com/'+${comment.getCerebookUser().profil.avatar}"
-                                                                              alt="Logo profil"></a>
+                            <hr>
+                            <div class="justify-content-start d-flex align-items-center">
+                                <a class="nav-link d-block " th:href="@{/profil/{id}(id=${comment.getCerebookUser().id})}">
+                                    <img style="width: 40px;"
+                                         class="nav-bar-profile-logo col-2"
+                                         th:src="'https://wcs-2-be-or-not-2-be.s3.eu-west-3.amazonaws.com/'+${comment.getCerebookUser().profil.avatar}"
+                                         alt="Logo profil"></a>
                                 <p th:text="${comment.getCerebookUser().getUsername()}"/>
                             </div>
-                            <p th:text="${comment.getComment()}"></p>
+                            <p  th:text="${comment.getComment()}" class="p-3">
                         </div>
                     </div>
                 </div>
@@ -119,5 +115,13 @@
     </div>
 </div>
 
+<script>var collapseElementList = [].slice.call(document.querySelectorAll('.collapse'))
+var collapseList = collapseElementList.map(function (collapseEl) {
+    return new bootstrap.Collapse(collapseEl)
+})</script>
+<script>var myCollapse = document.getElementById('collapseExample')
+var bsCollapse = new bootstrap.Collapse(myCollapse, {
+    toggle: false
+})</script>
 
 </html>
