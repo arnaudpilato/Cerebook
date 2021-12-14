@@ -1,6 +1,7 @@
 package wcs.cerebook.entity;
 
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
 import javax.persistence.*;
@@ -25,6 +26,7 @@ public class CerebookMovie {
     private boolean amazonS3Hosted;
 
     // PIL : One To many vers Movie
+    @JsonIgnore
     @ManyToMany(cascade = CascadeType.ALL, mappedBy = "userMovies")
     private Set<CerebookUser> actors = new TreeSet<>();
 
