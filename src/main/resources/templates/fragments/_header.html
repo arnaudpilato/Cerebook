@@ -33,11 +33,11 @@
                     <li class="nav-item">
                         <a class="nav-link setting" href="/logout"><img class="logo-navbar" src="/static/css/img/login.png"></a>
                     </li>
-                    <li class="nav-item">
-                        <a class="nav-link" th:href="@{/profil}"><img style="width: 50px;" class="nav-bar-profile-logo" th:src="'https://wcs-2-be-or-not-2-be.s3.eu-west-3.amazonaws.com/'+${userActual.profil.avatar}" alt="Logo profil"></a>
+                    <li th:if="${userActual}" class="nav-item">
+                        <a class="nav-link" th:href="@{/profil}"><img style="width: 50px;" class="nav-bar-profile-logo" th:src="'https://wcs-2-be-or-not-2-be.s3.eu-west-3.amazonaws.com/'+${userActual?.profil.avatar}" alt="Logo profil"></a>
                     </li>
-                    <li class="nav-item">
-                        <a class="nav-link" th:href="@{/profil}"><span class="nav-bar-profile-username" th:text="${userActual.username}"></span></a>
+                    <li th:if="${userActual}" class="nav-item">
+                        <a class="nav-link" th:href="@{/profil}"><span class="nav-bar-profile-username" th:text="${userActual?.username}"></span></a>
                     </li>
                 </ul>
             </div>
