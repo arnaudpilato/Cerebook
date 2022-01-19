@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="fr"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{fragments/_layout}">
+
+    <th:block layout:fragment="config">
+        <title>Image</title>
+        <link href="/static/css/picture.css" rel="stylesheet"/>
+    </th:block>
+
+    <div layout:fragment="content">
+        <div class="container">
+            <div class="row form-button">
+                <h1 class="text-center my-3 col-12 col-lg-5" th:text="'Photos de ' + ${user.username}"></h1>
+                <form id="pictureForm" class="col-12 col-lg-7" method="post" th:action="@{/picture/update}" enctype="multipart/form-data">
+                    <div class="row">
+                        <div class="col-4">
+                            <a data-back="Suppression" data-front="Modifier" class="button-hide-delete btn-flip"></a>
+                        </div>
+                        <div class="col-4">
+                            <label data-back="Ajouter" data-front="Image" class="btn-flip" for="file_v"></label>
+                            <input class="form-control" id="file_v" name="file_picture" type="file">
+                        </div>
+                        <div class="col-4">
+                            <a href="#" data-back="Image" data-front="Valider" class="btn-flip button-submit" onclick="submitForm()"></a>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <hr>
+            <div class="row justify-content-around">
+                <div class="col-lg-3" th:each="picture : ${user.pictures}">
+                    <div class="row mt-4 container-picture">
+                        <a th:href="@{/picture/show(id=${picture.id})}" class="video-btn">
+                            <img class="picture" th:src="'https://wcs-2-be-or-not-2-be.s3.eu-west-3.amazonaws.com/'+${picture.getPicturePath()}" alt="Logo Gallery">
+                        </a>
+                        <div class="link-delete">
+                            <a  th:href="@{/picture/delete(id=${picture.id})}" class="delete-img picture-btn d-block"><img class="delete-logo" src="/static/css/img/delete.png" alt="Logo Gallery"></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row justify-content-center my-3">
+                <div class="col-2">
+                    <a href="/profil" data-back="Profil" data-front="Retour" class="btn-flip"></a>
+                </div>
+            </div>
+        </div>
+        <script>
+            $(document).ready(function(){
+                $(".link-delete").hide();
+
+                $(".button-hide-delete").click(function(){
+                    $(".link-delete").toggle();
+                });
+
+                $(".button-submit").click(function(){
+                    $("#pictureForm").submit();
+                });
+            });
+        </script>
+    </div>
+</html>

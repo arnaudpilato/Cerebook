@@ -1,0 +1,315 @@
+:root {
+  --movement: 0.85;
+  --stop: 0.5;
+  --duration: calc((var(--movement) * (1 / var(--stop))));
+  --stagger: 0.1125;
+  --perspective: 500;
+  --size: 50;
+  --ease: cubic-bezier(1, -0.52, 0.26, 0.89);
+  --bg: #e6e6e6;
+  --panel: #fff;
+  --color: #0d0d0d;
+  --hue: 23;
+  --saturation: 100;
+  --lightness: 55;
+}
+
+/***** Body *****/
+body {
+  background-color: #C4C4C4;
+}
+
+/***** Bootstrap *****/
+.bg-primary {
+  background-color: #264653 !important;
+}
+
+.navbar-light, .navbar-brand {
+  color: #F4A261 !important;
+}
+
+/***** Navbar *****/
+.navbar-brand {
+  font-size: 2.3rem;
+  margin-left: 1%;
+}
+
+.navbar-nav {
+  align-items: center;
+  margin-right: 2%;
+}
+
+.nav-bar-profile-username {
+  color: white;
+  font-size: 1.5rem;
+}
+
+.logo-navbar {
+  display: block;
+  height: 25px;
+  width: 25px;
+}
+
+.searchbar {
+  margin-bottom: auto;
+  margin-top: auto;
+  margin-right: 10px;
+  height: 25px;
+  background-color: white;
+  border-radius: 50px;
+}
+
+.search_input {
+  color: #264653 !important;
+  border: 0;
+  outline: 0;
+  background: none;
+  width: 80px;
+  padding-left: 10px;
+  caret-color: transparent;
+  line-height: 10px;
+  transition: width 0.4s linear;
+}
+
+.searchbar:hover > .search_input {
+  padding-left: 10px;
+  padding-bottom: 10px;
+  width: 400px;
+  caret-color: red;
+  transition: width 0.4s linear;
+}
+
+.search_icon {
+  height: 22px;
+  width: 22px;
+  float: left;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 50%;
+  background: none;
+  border: none;
+  color: white;
+  text-decoration: none;
+  padding-top: 5px;
+  padding-left: 10px;
+}
+
+.nav-bar-profile-logo {
+  border-radius: 50%;
+  display: block;
+  width: 100%;
+  object-fit: cover;
+}
+
+/***** Leaflet *****/
+.image-icon {
+  border-radius: 50%;
+}
+
+/***** Cards *****/
+.movie-cover {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.l-container {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  grid-gap: 30px;
+  width: 100%;
+  padding: 30px;
+}
+
+@media screen and (max-width: 760px) {
+  .l-container {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+.b-game-card {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  padding-bottom: 150%;
+  perspective: 1000px;
+}
+
+.b-game-card__cover {
+  position: absolute;
+  z-index: 1;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  background-image: linear-gradient(120deg, #f6d365 0%, #fda085 100%);
+  background-size: cover;
+  perspective-origin: 50% 50%;
+  transform-style: preserve-3d;
+  transform-origin: top center;
+  will-change: transform;
+  transform: skewX(0.001deg);
+  transition: transform 0.35s ease-in-out;
+}
+
+.b-game-card__cover::after {
+  display: block;
+  content: "";
+  position: absolute;
+  z-index: 100;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 120%;
+  background: linear-gradient(226deg, rgba(255, 255, 255, 0.4) 0%, rgba(255, 255, 255, 0.4) 35%, rgba(255, 255, 255, 0.2) 42%, rgba(255, 255, 255, 0) 60%);
+  transform: translateY(-20%);
+  will-change: transform;
+  transition: transform 0.65s cubic-bezier(0.18, 0.9, 0.58, 1);
+}
+
+.b-game-card:hover .b-game-card__cover {
+  transform: rotateX(7deg) translateY(-6px);
+}
+
+.b-game-card:hover .b-game-card__cover::after {
+  transform: translateY(0%);
+}
+
+.b-game-card::before {
+  display: block;
+  content: "";
+  position: absolute;
+  top: 5%;
+  left: 5%;
+  width: 90%;
+  height: 90%;
+  background: rgba(0, 0, 0, 0.5);
+  box-shadow: 0 6px 12px 12px rgba(0, 0, 0, 0.4);
+  will-change: opacity;
+  transform-origin: top center;
+  transform: skewX(0.001deg);
+  transition: transform 0.35s ease-in-out, opacity 0.5s ease-in-out;
+}
+
+.b-game-card:hover::before {
+  opacity: 0.6;
+  transform: rotateX(7deg) translateY(-6px) scale(1.05);
+}
+
+.delete-img {
+  position: absolute;
+  top: 8px;
+  right: 10px;
+  background: white;
+  border-radius: 50%;
+  transition: 0.3s;
+  z-index: 20;
+}
+
+.delete-img:hover {
+  background: red;
+  transition: 0.5s;
+}
+
+.delete-logo {
+  width: 40px;
+  height: auto;
+  display: block;
+}
+
+/***** Button *****/
+.form-button {
+  align-items: center;
+}
+
+.btn-flip {
+  opacity: 1;
+  outline: 0;
+  color: #fff;
+  line-height: 40px;
+  position: relative;
+  text-align: center;
+  letter-spacing: 1px;
+  display: inline-block;
+  text-decoration: none;
+  font-family: "Open Sans";
+  text-transform: uppercase;
+  width: 100%;
+}
+
+.btn-flip:hover:after {
+  opacity: 1;
+  transform: translateY(0) rotateX(0);
+}
+
+.btn-flip:hover:before {
+  opacity: 0;
+  transform: translateY(50%) rotateX(90deg);
+}
+
+.btn-flip:after {
+  top: 0;
+  left: 0;
+  opacity: 0;
+  width: 100%;
+  color: #323237;
+  display: block;
+  transition: 0.5s;
+  position: absolute;
+  background: #adadaf;
+  content: attr(data-back);
+  transform: translateY(-50%) rotateX(90deg);
+}
+
+.btn-flip:before {
+  top: 0;
+  left: 0;
+  opacity: 1;
+  color: #adadaf;
+  display: block;
+  padding: 0 30px;
+  line-height: 40px;
+  transition: 0.5s;
+  position: relative;
+  background: #323237;
+  content: attr(data-front);
+  transform: translateY(0) rotateX(0);
+}
+
+input[type=file] {
+  display: none;
+}
+
+.check {
+  z-index: 10;
+  position: absolute;
+  bottom: 8px;
+  right: 8px;
+  transition: 0.2s;
+  width: 0;
+  height: 0;
+  border-radius: 50%;
+  background-color: transparent;
+}
+
+.check:checked {
+  background-image: url("/static/css/img/check.png");
+  width: 50px;
+  height: 50px;
+  right: 8px;
+  bottom: 8px;
+  border-radius: 50%;
+  transition: 0.5s;
+}
+
+.check:checked:hover {
+  transform: rotateX(7deg) translateY(-6px);
+  height: 50px;
+  width: 52px;
+  right: 6px;
+  border: none;
+  transition: 0.5s;
+}
+
+/*# sourceMappingURL=movie.css.map */

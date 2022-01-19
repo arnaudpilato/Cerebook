@@ -1,0 +1,25 @@
+@import "style";
+
+.divtchat {
+  margin:4px;
+  padding:4px;
+  width: auto;
+  height: 600px;
+  overflow-y: auto;
+  overflow-x: hidden;
+  text-align:justify;
+
+  .profile-section-logo {
+    width: 64px;
+    height: auto;
+    display: inline-block;
+    border-radius: 50%;
+  }
+  .form{
+    resize : both;
+    min-width : 100px;
+    min-height : 100px;
+    max-width : 200px;
+    max-height : 200px
+  }
+}

@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="fr"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{fragments/_layout}">
+
+    <th:block layout:fragment="config">
+        <title>Ajouter un commentaire</title>
+        <link href="/static/css/post.css" rel="stylesheet"/>
+        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.4.1/css/all.css" integrity="sha384-5sAR7xN1Nv6T6+dT2mhtzEpVJvfS3NScPQTrOxhwjIuvcA67KV2R5Jz6kr4abQsz" crossorigin="anonymous">
+    </th:block>
+
+    <div layout:fragment="content">
+        <div class="container">
+            <h2>Ajouter un commentaire </h2>
+            <form action="#" th:action="@{/savecomment}" th:object="${comment}" method="POST">
+                <div class="form-group">
+                    <label for="comment">Comment: </label>
+                    <input type="text" th:field="*{comment}" id="comment" placeholder="content" class="form-control mb-4 col-4">
+                </div>
+                <div class="form-group">
+                    <input type="hidden" th:value="${time}" th:field="*{createdAt}" placeholder=" created at" class="form-control mb-4 col-4"/>
+                </div>
+                <input type="hidden" th:field="${comment.id}" class="form-control mb-4 col-4">
+                <input type="hidden" name="postid" th:value="${post.id}" class="form-control mb-4 col-4">
+                <button type="submit" class="btn btn-info col-2"> Save</button>
+            </form>
+            <hr>
+        </div>
+        <a th:href="@{/}"> Back </a>
+    </div>
+</html>

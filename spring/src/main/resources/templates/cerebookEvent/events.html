@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="fr"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{fragments/_layout}">
+
+<th:block layout:fragment="config">
+    <title>Users</title>
+    <link href="/static/css/event.css" rel="stylesheet"/>
+    <link href="/static/css/profil.css" rel="stylesheet"/>
+</th:block>
+
+<div layout:fragment="content">
+    <h2 class="d-flex justify-content-center">Evènements</h2>
+    <div class="d-flex justify-content-center mb-2"><a th:href="@{/eventCreate}">Créer un évènement</a></div>
+    <div class="container-fluid">
+        <div class="row">
+            <!-- PIL : Section profil -->
+            <div th:each="event : ${events}"
+                 th:if="${event.roles} == false OR ${event.cerebookUser.role} == ${user.role} OR ${user.role} == 'NEUTRE'"
+                 class="col-4">
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="profile-section userCards mb-3">
+                            <ul class="d-flex justify-content-around px-3 align-items-center">
+                                <li class="" th:if="${event.image}"><a th:href="@{/event/{id}(id=${event.id})}"><img
+                                        class="profile-section-logo" th:src="'https://wcs-2-be-or-not-2-be.s3.eu-west-3.amazonaws.com/'+${event.image}" alt="Logo de l'evenement"></a>
+                                </li>
+                                <li><a th:href="@{/event/{id}(id=${event.id})}"><p class="profile-section-username"
+                                                                                   th:text="${event.title}"></p></a>
+                                </li>
+                                <li class="" th:if="${event.cerebookUser.id} == ${user.id}"><a
+                                        th:href="@{/eventCreate(id=${event.id})}">
+                                    <img class="profile-section-logo" src="/static/css/img/setting.png"
+                                         alt="delete"/></a>
+                                </li>
+                                <li class="" th:if="${event.cerebookUser.id} == ${user.id}"><a
+                                        th:href="@{/deleteEvent/{id}(id=${event.id})}">
+                                    <img class="profile-section-logo" src="/static/css/img/poubelle.png" alt="delete"/></a>
+                                </li>
+                            </ul>
+                            <ul class="essai">
+                                <li class="mb-2"><img class="" src="/static/css/img/city.png" alt="City"><span
+                                        th:text="${event.city}"></span>
+                                </li>
+                                <li><a th:href="@{/profil/{id}(id=${event.cerebookUser.id})}"><p
+                                        th:text="'profil organisateur :  &nbsp' + ${event.cerebookUser.username}"></p>
+                                </a>
+                                    <div class="d-flex">
+                                        <div>
+                                            <a th:href="@{/message#message(username=${event.cerebookUser.username})}">
+                                                Message à l'organisateur : &nbsp
+                                            </a>
+                                        </div>
+                                        <div>
+                                            <img class="logo d-block ml-5" src="/static/css/img/message.png">
+                                        </div>
+                                    </div>
+                                    <div>
+                                        <a th:href="@{/listEventComment/{id}(id=${event.id})}">Voir les commentaire</a> /
+                                        <a th:href="@{/addEventComment/{id}(id=${event.id})}">Ajout de commentaire</a>
+                                    </div>
+
+                                </li>
+
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</html>

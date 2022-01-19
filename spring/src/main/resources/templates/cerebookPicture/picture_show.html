@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="fr"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{fragments/_layout}">
+
+    <th:block layout:fragment="config">
+        <title>Image</title>
+        <link href="/static/css/picture.css" rel="stylesheet"/>
+    </th:block>
+
+    <div layout:fragment="content">
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-lg-12 mt-5">
+                    <img class="picture-show" th:src="'https://wcs-2-be-or-not-2-be.s3.eu-west-3.amazonaws.com/'+${picture.get().getPicturePath()}">
+                </div>
+            </div>
+            <div class="row justify-content-center my-3">
+                <div class="col-2">
+                    <a href="/picture" data-back="Photos" data-front="Retour" class="btn-flip"></a>
+                </div>
+            </div>
+        </div>
+    </div>
+</html>

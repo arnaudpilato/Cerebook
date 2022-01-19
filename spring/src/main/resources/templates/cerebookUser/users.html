@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="fr"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{fragments/_layout}">
+
+    <th:block layout:fragment="config">
+        <title>Users</title>
+        <link href="/static/css/user.css" rel="stylesheet"/>
+    </th:block>
+
+    <div layout:fragment="content">
+        <h1 class="text-center my-3">Utilisateur</h1>
+        <div class="container">
+            <div class="row">
+                <div th:each="user : ${users}" th:if="(${actualUser.role} == ${user.role}) OR (${actualUser.role} == 'NEUTRE')" class="col-lg-4">
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <div class="wrapper">
+                                <div class="cols">
+                                    <div class="col col-lg-12" ontouchstart="this.classList.toggle('hover');">
+                                        <div class="card-container mt-4">
+                                            <div class="front" >
+                                                <div class="inner">
+                                                    <div class="front-card"><img class="list-user-logo mb-2" th:src="'https://wcs-2-be-or-not-2-be.s3.eu-west-3.amazonaws.com/'+${user.profil.avatar}" alt="Logo de profil"></a></div>
+                                                    <span th:text="${user.username}">Lorem ipsum</span>
+                                                </div>
+                                            </div>
+                                            <div class="back">
+                                                <div class="inner">
+                                                    <span class="back-card" th:text="${user.username}"></span>
+                                                    <ul class="card-options d-flex px-0 py-0 justify-content-around">
+                                                        <li><a th:href="@{/profil/{id}(id=${user.id})}"><img class="back-card-add" src="/static/css/img/user-profil.png" alt="Logo de profil"></a></li>
+                                                        <li><a th:href="@{/message#message(username=${user.username})}"><img class="modal-profile-logo" src="/static/css/img/user-messenger.png" alt="Logo de message"></a></li>
+                                                        <div th:if="${!friendsUsername.contains(user.getUsername())}">
+                                                        <li><a th:href="@{/add/friend/{id}(id=${user.id})}"><img class="modal-profile-logo" src="/static/css/img/user-add.png" alt="Logo d'ajout"></a></li>
+                                                        </div>
+                                                    </ul>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row justify-content-center my-3">
+                <div class="col-2">
+                    <a href="/profil" data-back="Profil" data-front="Retour" class="btn-flip"></a>
+                </div>
+            </div>
+        </div>
+    </div>
+</html>

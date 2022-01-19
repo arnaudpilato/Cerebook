@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="fr"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{fragments/_layout}">
+
+    <th:block layout:fragment="config">
+        <title>Add Event Comment</title>
+        <link href="/static/css/post.css" rel="stylesheet"/>
+        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.4.1/css/all.css" integrity="sha384-5sAR7xN1Nv6T6+dT2mhtzEpVJvfS3NScPQTrOxhwjIuvcA67KV2R5Jz6kr4abQsz" crossorigin="anonymous">
+    </th:block>
+
+    <div layout:fragment="content">
+        <div class="container">
+            <h2>Add comment </h2>
+            <form action="#" th:action="@{/saveEventComment}" th:object="${comment}" method="POST">
+                <div class="form-group">
+                    <label for="comment">Comment: </label>
+                    <input type="text" th:field="*{comment}" id="comment" placeholder="content" class="form-control mb-4 col-4">
+                </div>
+
+                <input type="hidden" th:value="${event.id}" name="eventid" class="form-control mb-4 col-4">
+                <button type="submit" class="btn btn-info col-2"> Save</button>
+            </form>
+            <hr>
+        </div>
+        <a th:href="@{/}"> Back </a>
+    </div>
+</html>
