@@ -8,3 +8,4 @@ import wcs.cerebook.entity.CerebookPost;
 public interface PostRepository extends JpaRepository<CerebookPost, Long> {
 
 }
+rge
