@@ -63,7 +63,7 @@ public class ProfilController {
     public String getProfil(Model model, Principal principal) {
 
         getAllUsersConnected(model);
-
+        model.addAttribute("userActual", userRepository.findByUsername(principal.getName()));
         model.addAttribute("user", userRepository.findByUsername(principal.getName()));
         CerebookUser user = userRepository.getCerebookUserByUsername(principal.getName());
         getUserAndPostAttribut(model, user);
@@ -104,10 +104,11 @@ public class ProfilController {
     }
 
     @GetMapping("/profil/{id}")
-    public String getOtherProfil(Model model, @PathVariable Long id) {
+    public String getOtherProfil(Model model, @PathVariable Long id, Principal principal) {
 
         getAllUsersConnected(model);
         model.addAttribute("user", userRepository.getById(id));
+        model.addAttribute("userActual", userRepository.findByUsername(principal.getName()));
         CerebookUser user = userRepository.getById(id);
         getUserAndPostAttribut(model, user);
         getCartographyAndFriends(model, user);
@@ -161,6 +162,7 @@ public class ProfilController {
     @GetMapping("/profil/update")
     public String getProfilUpdate(Model model, Principal principal) {
         model.addAttribute("user", userRepository.findByUsername(principal.getName()));
+        model.addAttribute("userActual", userRepository.findByUsername(principal.getName()));
 
         return "cerebookProfil/profil_update";
     }

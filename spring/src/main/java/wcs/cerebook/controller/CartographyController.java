@@ -17,6 +17,7 @@ public class  CartographyController {
     public String getCartography(Model model, Principal principal) {
         // PIL : Récupération de l'user principal pour la navbar
         model.addAttribute("user", userRepository.findByUsername(principal.getName()));
+        model.addAttribute("userActual", userRepository.findByUsername(principal.getName()));
 
         model.addAttribute("users", userRepository.findAll());
 

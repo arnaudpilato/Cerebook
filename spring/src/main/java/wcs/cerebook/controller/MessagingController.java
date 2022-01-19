@@ -64,6 +64,7 @@ public class MessagingController {
         // j'utilise le collections.sort() pour tiré la list
         Collections.sort(finalList, comparator);
         model.addAttribute("user", userDestinate);
+        model.addAttribute("userActual", userRepository.findByUsername(principal.getName()));
         // j'envoie la list des messages trié dans le front
         model.addAttribute("messages", finalList);
 

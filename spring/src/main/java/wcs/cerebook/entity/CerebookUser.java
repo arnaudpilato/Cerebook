@@ -40,6 +40,7 @@ public class CerebookUser implements Comparable<CerebookUser> {
             cascade = CascadeType.ALL,
             orphanRemoval = true
     )
+    @OrderBy("id DESC")
     private List<CerebookPost> cerebookPosts ;
     @JsonIgnore
     @OneToMany(

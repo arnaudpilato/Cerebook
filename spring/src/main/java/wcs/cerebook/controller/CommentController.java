@@ -30,10 +30,12 @@ public class CommentController {
     public String addComment(@PathVariable("postId") Long postId, Model model, Principal principal) {
         // PIL : Récupération de l'user principal pour la navbar
         model.addAttribute("user", userRepository.findByUsername(principal.getName()));
+        model.addAttribute("userActual", userRepository.findByUsername(principal.getName()));
         CerebookPost cerebookPost = postRepository.getById(postId);
         CerebookUser user = userRepository.getCerebookUserByUsername(principal.getName());
         CerebookComment cerebookComment = new CerebookComment();
         model.addAttribute("user", user);
+        model.addAttribute("userActual", userRepository.findByUsername(principal.getName()));
         model.addAttribute("comment", cerebookComment);
         model.addAttribute("post", cerebookPost);
         cerebookComment.setCreatedAt(new Date());
@@ -66,6 +68,18 @@ public class CommentController {
         commentRepository.save(cerebookComment);
 
         return "redirect:/profil";
+    }  //save
+    //  comment
+    @PostMapping("/saveCommentHome")
+    public String saveCommentHome(@ModelAttribute CerebookComment cerebookComment, @RequestParam(value = "postid") Long postid, Principal principal) {
+        CerebookUser user = userRepository.getCerebookUserByUsername(principal.getName());
+        CerebookPost cerebookPost = postRepository.getById(postid);
+        cerebookComment.setCerebookPost(cerebookPost);
+        cerebookComment.setCerebookUser(user);
+        cerebookComment.setCreatedAt(new Date());
+        commentRepository.save(cerebookComment);
+
+        return "redirect:/actus";
     }
 
     @GetMapping("/listComment/{postid}")
@@ -79,6 +93,7 @@ public class CommentController {
 
         // PIL : Récupération de l'user principal pour la navbar
         model.addAttribute("user", userRepository.findByUsername(principal.getName()));
+        model.addAttribute("userActual", userRepository.findByUsername(principal.getName()));
         model.addAttribute("post", post);
 
         return "cerebookComment/listComments";
@@ -93,7 +108,7 @@ public class CommentController {
 
         // PIL : Récupération de l'user principal pour la navbar
         model.addAttribute("user", userRepository.findByUsername(principal.getName()));
-
+        model.addAttribute("userActual", userRepository.findByUsername(principal.getName()));
         model.addAttribute("comment", cerebookComment);
         model.addAttribute("event", cerebookEvent);
 
@@ -122,6 +137,7 @@ public class CommentController {
 
         // PIL : Récupération de l'user principal pour la navbar
         model.addAttribute("user", userRepository.findByUsername(principal.getName()));
+        model.addAttribute("userActual", userRepository.findByUsername(principal.getName()));
 
         //model.addAttribute("user", user);
         model.addAttribute("event", event);

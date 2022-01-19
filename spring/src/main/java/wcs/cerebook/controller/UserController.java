@@ -41,7 +41,7 @@ public class UserController {
     public String login(Model model, Principal principal) {
         // PIL : Récupération de l'user principal pour la navbar
         if (principal != null) {
-            model.addAttribute("user", userRepository.findByUsername(principal.getName()));
+        model.addAttribute("userActual", userRepository.findByUsername(principal.getName()));
         }
 
         return "cerebookUser/login";
@@ -54,12 +54,15 @@ public class UserController {
 
     @RequestMapping("/userCreate")
     public String postUser(@ModelAttribute CerebookUser user, Model model,
-                           @Param("confirm") String confirm, @Param("city") String city
+                           @Param("confirm") String confirm, @Param("city") String city,
+                           Principal principal
     ) {
         if (!confirm.equals(user.getPassword())) {
             boolean error = true;
             model.addAttribute("errorPassword", error);
             model.addAttribute("user", user);
+            model.addAttribute("userActual", userRepository.findByUsername(principal.getName()));
+
             return "cerebookUser/user";
         }
 
@@ -90,6 +93,7 @@ public class UserController {
             boolean error_cartography = true;
             model.addAttribute("error_cartography", error_cartography);
             model.addAttribute("user", user);
+            model.addAttribute("userActual", userRepository.findByUsername(principal.getName()));
             return "cerebookUser/user";
         }
 
@@ -99,6 +103,7 @@ public class UserController {
             boolean error = true;
             model.addAttribute("error", error);
             model.addAttribute("user", user);
+            model.addAttribute("userActual", userRepository.findByUsername(principal.getName()));
             return "cerebookUser/user";
         }
 
@@ -106,11 +111,11 @@ public class UserController {
     }
 
     @GetMapping("/user")
-    public String getUser(Model model, @RequestParam(required = false) Long id) {
+    public String getUser(Model model, @RequestParam(required = false) Long id, Principal principal) {
 
         CerebookUser user = new CerebookUser();
         model.addAttribute("user", user);
-
+        model.addAttribute("userActual", userRepository.findByUsername(principal.getName()));
         return "cerebookUser/user";
     }
 
@@ -118,6 +123,7 @@ public class UserController {
     public String viewUser(Model model, @Param("keyword") String keyword, Principal principal) {
         // PIL : Récupération de l'user principal pour la navbar
         model.addAttribute("user", userRepository.findByUsername(principal.getName()));
+        model.addAttribute("userActual", userRepository.findByUsername(principal.getName()));
 
         List<CerebookUser> listUsers = service.listAll(keyword);
         CerebookUser actualUser = userRepository.findByUsername(principal.getName());

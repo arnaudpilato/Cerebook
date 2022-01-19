@@ -37,12 +37,14 @@ public class PostController {
         Principal principal = request.getUserPrincipal();
         return principal.getName();
     }
+
     @Autowired
     private PostLikeRepository likeRepository;
     @Autowired
     private UserRepository userRepository;
     @Autowired
     private MediaService mediaService;
+
     @GetMapping("/postCreate")
     public String addPost(Principal principal, Model model) {
         String username = principal.getName();
@@ -51,6 +53,8 @@ public class PostController {
         model.addAttribute("post", cerebookPost);
         cerebookPost.setCerebookUser(user);
         model.addAttribute("user", user);
+        model.addAttribute("userActual", userRepository.findByUsername(principal.getName()));
+
         cerebookPost.setCreatedAt(new Date());
         model.addAttribute("localDateTime", new Date());
         //cerebookPost.setPrivatePost(cerebookPost.isPrivatePost());
@@ -62,7 +66,7 @@ public class PostController {
 
     //save post
     @RequestMapping("/save")
-    public String savePost(Principal principal,@ModelAttribute() CerebookPost cerebookPost,CerebookPostLike cerebookPostLike,@RequestParam(value = "picture") MultipartFile picture) throws IOException {
+    public String savePost(Principal principal, @ModelAttribute() CerebookPost cerebookPost, CerebookPostLike cerebookPostLike, @RequestParam(value = "picture") MultipartFile picture) throws IOException {
         // save post to database
         String username = principal.getName();
         CerebookUser user = userRepository.getCerebookUserByUsername(username);
@@ -102,10 +106,27 @@ public class PostController {
 
         return "redirect:/profil";
     }
-    private void saveImage(@ModelAttribute CerebookPost cerebookPost, Principal principal, @RequestParam("picture") MultipartFile image) throws IOException {
+
+    @RequestMapping("/save/home")
+    public String savePostHome(Principal principal, CerebookPost cerebookPost, CerebookPostLike cerebookPostLike) {
+        // save post to database
+        String username = principal.getName();
+        CerebookUser user = userRepository.getCerebookUserByUsername(username);
+        cerebookPost.setCerebookUser(user);
+        repository.save(cerebookPost);
+        cerebookPostLike.setCerebookPost(cerebookPost);
+        cerebookPostLike.setLiked(true);
+        cerebookPostLike.setCerebookUser(user);
+        likeRepository.save(cerebookPostLike);
+        return "redirect:/actus";
+    }
+
+    private void saveImage(@ModelAttribute CerebookPost cerebookPost, Principal
+            principal, @RequestParam("picture") MultipartFile image) throws IOException {
         Files.copy(image.getInputStream(), Paths.get("src/main/resources/public/static/css/data/" + principal.getName() + "_image_" + image.getOriginalFilename()), StandardCopyOption.REPLACE_EXISTING);
         cerebookPost.setImage("/static/css/data/" + principal.getName() + "_image_" + image.getOriginalFilename());
     }
+
     // list all posts
     @RequestMapping("/posts")
     public String getAllPosts(Model model) {
@@ -117,7 +138,8 @@ public class PostController {
     }
 
     @RequestMapping("/editPost/{id}")
-    public String showPostForm(@PathVariable("id") long id, Model model, Principal principal) throws illegalArgumentException {
+    public String showPostForm(@PathVariable("id") long id, Model model, Principal principal) throws
+            illegalArgumentException {
         CerebookPost cerebookPost = this.repository.findById(id)
                 .orElseThrow(() -> new illegalArgumentException(" Invalid post id: " + id));
         String username = principal.getName();
@@ -125,6 +147,7 @@ public class PostController {
         model.addAttribute("post", cerebookPost);
         //cerebookPost.setCerebookUser(user);
         model.addAttribute("user", user);
+        model.addAttribute("userActual", userRepository.findByUsername(principal.getName()));
         cerebookPost.setCreatedAt(new Date());
         model.addAttribute("localDateTime", new Date());
         boolean postStatu = cerebookPost.isPrivatePost();
@@ -138,7 +161,7 @@ public class PostController {
     @PostMapping("/updatePost/{id}")
     public String updatePost(@PathVariable("id") Long id, @Valid CerebookPost cerebookPost) {
 
-        return"cerebookPost/allPosts";
+        return "cerebookPost/allPosts";
     }
 
     @GetMapping("/deletePost/{id}")
@@ -156,19 +179,23 @@ public class PostController {
         CerebookUser user = userRepository.getCerebookUserByUsername(username);
         model.addAttribute("listMyPosts", repository.findAll());
         model.addAttribute("user", user);
+        model.addAttribute("userActual", userRepository.findByUsername(principal.getName()));
         return "cerebookPost/myPosts";
     }
 
     @GetMapping("/allPosts")
-    public String getAllPosts(Model model, Principal principal, @Valid CerebookPost cerebookPost, CerebookUser cerebookUser) throws TwitterException {
+    public String getAllPosts(Model model, Principal principal, @Valid CerebookPost cerebookPost, CerebookUser
+            cerebookUser) throws TwitterException {
         model.addAttribute("user", userRepository.findByUsername(principal.getName()));
+        model.addAttribute("userActual", userRepository.findByUsername(principal.getName()));
         String username = principal.getName();
         CerebookUser user = userRepository.getCerebookUserByUsername(username);
         List<CerebookPostLike> cerebookPostLike = likeRepository.findAll();
         List<CerebookPost> cerebookPosts = repository.findAll();
         model.addAttribute("listPosts", cerebookPosts);
         model.addAttribute("user", user);
-        model.addAttribute("like",cerebookPostLike);
+        model.addAttribute("userActual", userRepository.findByUsername(principal.getName()));
+        model.addAttribute("like", cerebookPostLike);
         cerebookPost.setCreatedAt(new Date());
         model.addAttribute("localDateTime", new Date());
         boolean postStatu = cerebookPost.isPrivatePost();
