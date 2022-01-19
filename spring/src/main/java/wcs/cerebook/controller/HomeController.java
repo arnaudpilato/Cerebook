@@ -17,7 +17,7 @@ import java.util.*;
 import java.util.stream.Collectors;
 
 @Controller
-public class CerebookHomeController {
+public class HomeController {
 
     @Autowired
     PostRepository postRepo;

@@ -18,7 +18,7 @@ import java.util.List;
 
 
 @Controller
-public class CerebookPostLikeController {
+public class PostLikeController {
     @Autowired
     private PostLikeRepository postLikeRepository;
     @Autowired

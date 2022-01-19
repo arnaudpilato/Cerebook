@@ -6,8 +6,8 @@ import javax.persistence.*;
 
 @Entity
 @JsonIdentityInfo(
-    generator = ObjectIdGenerators.PropertyGenerator.class,
-    property = "id")
+        generator = ObjectIdGenerators.PropertyGenerator.class,
+        property = "id")
 public class CerebookProfil {
     public static enum Type {
         SimpleMedia,
