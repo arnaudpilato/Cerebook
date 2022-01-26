@@ -62,7 +62,7 @@ public class UserController {
             boolean error = true;
             model.addAttribute("errorPassword", error);
             model.addAttribute("user", user);
-            model.addAttribute("userActual", userRepository.findByUsername(principal.getName()));
+            //model.addAttribute("userActual", userRepository.findByUsername(principal.getName()));
 
             return "cerebookUser/user";
         }
@@ -94,7 +94,7 @@ public class UserController {
             boolean error_cartography = true;
             model.addAttribute("error_cartography", error_cartography);
             model.addAttribute("user", user);
-            model.addAttribute("userActual", userRepository.findByUsername(principal.getName()));
+            //model.addAttribute("userActual", userRepository.findByUsername(principal.getName()));
             return "cerebookUser/user";
         }
 
@@ -104,7 +104,7 @@ public class UserController {
             boolean error = true;
             model.addAttribute("error", error);
             model.addAttribute("user", user);
-            model.addAttribute("userActual", userRepository.findByUsername(principal.getName()));
+            //model.addAttribute("userActual", userRepository.findByUsername(principal.getName()));
             return "cerebookUser/user";
         }
 
